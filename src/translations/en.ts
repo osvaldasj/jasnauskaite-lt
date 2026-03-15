@@ -208,6 +208,163 @@ export const en = {
     back: "Go back",
   },
 
+  // Bento Hero
+  bento: {
+    subtitle: "Content Creator",
+    tagline: "Creating content that doesn't just look good — it delivers results.",
+    cta: "Collaborate",
+    viewWork: "View work",
+    followers: "Instagram followers",
+    engagement: "Engagement rate",
+    brands: "Brands worked with",
+    experience: "Years of experience",
+    services: "What I create",
+    viewInstagram: "View on Instagram",
+  },
+
+  // Case Studies
+  caseStudies: {
+    label: "Results",
+    title: "Campaign",
+    titleHighlight: "results",
+    subtitle:
+      "Real numbers from real brand collaborations — reach, engagement, and business impact.",
+    objective: "Objective",
+    deliverables: "Deliverables",
+    results: "Results",
+    reach: "Reach",
+    engagement: "Engagement",
+    views: "Views",
+    saves: "Saves",
+    clicks: "Link clicks",
+    roi: "ROI",
+    conversion: "Conversion lift",
+    awareness: "Brand awareness",
+    repeat: "Repeat rate",
+    longTerm: "Long-term partner",
+    campaign: "Campaign",
+    ambassador: "Ambassador",
+    contentSeries: "Content series",
+    dragToScroll: "Drag to explore",
+    tags: {
+      longTerm: "Long-term partnership",
+      campaign: "Seasonal campaign",
+      ambassador: "Year-long ambassador",
+      contentSeries: "Content series",
+      holidayCampaign: "Holiday campaign",
+    },
+    studies: {
+      stiliausKodas: {
+        objective:
+          "Build ongoing brand awareness for Lithuania's leading fashion retailer through consistent, authentic content.",
+      },
+      aruelle: {
+        objective:
+          "Launch new loungewear collection targeting the 25-35 demographic with lifestyle-driven storytelling.",
+      },
+      odoro: {
+        objective:
+          "Position fragrance brand as a premium lifestyle choice through year-round ambassador content.",
+      },
+      eurovaistine: {
+        objective:
+          "Drive online pharmacy visits through authentic, seasonal content series that build trust.",
+      },
+      hellmanns: {
+        objective:
+          "Create viral Easter recipe content with full production value that resonates with Lithuanian audience.",
+      },
+    },
+    metrics: {
+      reach: "Reach",
+      engagement: "Engagement",
+      conversionLift: "Conversion lift",
+      storyViews: "Story views",
+      roi: "ROI",
+      engagementRate: "Eng. rate",
+      brandAwareness: "Brand awareness",
+      linkClicks: "Link clicks",
+      repeatCollab: "Repeat collab",
+      views: "Views",
+      saves: "Saves",
+      topCreator: "Top creator",
+    },
+  },
+
+  // Media Kit
+  mediaKit: {
+    header: {
+      label: "Media Kit",
+      name: "Inide Jasnauskaite",
+      positioning: "Fashion, beauty and lifestyle content creator based in Lithuania. Creating scroll-stopping content that delivers measurable results for brands.",
+    },
+    metrics: {
+      label: "Key metrics",
+      title: "Numbers that",
+      titleHighlight: "matter",
+      followers: "Instagram followers",
+      tiktok: "TikTok followers",
+      engagement: "Engagement rate",
+      brands: "Brand collaborations",
+      experience: "Years experience",
+      reach: "Average monthly reach",
+    },
+    audience: {
+      label: "Audience",
+      title: "Audience",
+      titleHighlight: "demographics",
+      gender: "Gender",
+      female: "Female",
+      male: "Male",
+      age: "Age",
+      topLocations: "Top locations",
+      loc_lithuania: "Lithuania",
+      loc_latvia: "Latvia",
+      loc_estonia: "Estonia",
+      loc_other: "Other",
+    },
+    services: {
+      label: "Services",
+      title: "Content formats",
+      titleHighlight: "and pricing",
+      fromPrice: "From \u20AC{price}",
+      custom: "Custom pricing",
+      reels: {
+        title: "Instagram Reels",
+        description: "Scroll-stopping short-form video with storytelling, transitions, and full post-production.",
+      },
+      stories: {
+        title: "Story series",
+        description: "Engaging long-form story series that connect with the audience and organically introduce your brand.",
+      },
+      tiktok: {
+        title: "TikTok",
+        description: "Native, authentic TikTok content. Reshare option for your brand channel included.",
+      },
+      posts: {
+        title: "Posts",
+        description: "High-quality photo and carousel content for feed, styled and edited to match your brand.",
+      },
+      ambassador: {
+        title: "Ambassador program",
+        description: "Long-term brand representation with consistent content flow, face usage, and authentic advocacy.",
+      },
+      campaign: {
+        title: "Full campaign",
+        description: "Multi-format campaign packages tailored to your goals, from concept to reporting.",
+      },
+    },
+    partners: {
+      label: "Partners",
+      title: "Trusted by",
+      titleHighlight: "leading brands",
+    },
+    cta: {
+      title: "Let's work together",
+      description: "Looking for a content creator for your next campaign? Get in touch and let's discuss how we can create something that delivers real results.",
+    },
+  },
+
   // Links page (page.tsx)
   links: {
     title: "Inide Jasnauskaite",

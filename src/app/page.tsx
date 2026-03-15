@@ -70,6 +70,12 @@ export default function LinksPage() {
       icon: linkIcons.portfolio,
     },
     {
+      title: "Media Kit",
+      subtitle: t("links.portfolioSub"),
+      href: "/media-kit",
+      icon: linkIcons.portfolio,
+    },
+    {
       title: t("links.collaborate"),
       subtitle: "osvaldas@reelize.lt",
       href: "mailto:osvaldas@reelize.lt",

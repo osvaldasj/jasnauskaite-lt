@@ -210,6 +210,163 @@ export const lt: TranslationKeys = {
     back: "Grįžti",
   },
 
+  // Bento Hero
+  bento: {
+    subtitle: "Turinio kurėja",
+    tagline: "Kuriu turinį, kuris ne tik gerai atrodo — jis duoda rezultatų.",
+    cta: "Bendradarbiauti",
+    viewWork: "Žiūrėti darbus",
+    followers: "Instagram sekėjų",
+    engagement: "Įsitraukimo rodiklis",
+    brands: "Prekės ženklų",
+    experience: "Metai patirties",
+    services: "Ką kuriu",
+    viewInstagram: "Žiūrėti Instagram",
+  },
+
+  // Case Studies
+  caseStudies: {
+    label: "Rezultatai",
+    title: "Kampanijų",
+    titleHighlight: "rezultatai",
+    objective: "Tikslas",
+    deliverables: "Turinys",
+    results: "Rezultatai",
+    reach: "Pasiekiamumas",
+    engagement: "Įsitraukimas",
+    views: "Peržiūros",
+    saves: "Išsaugojimai",
+    clicks: "Paspaudimai",
+    roi: "ROI",
+    conversion: "Konversijos augimas",
+    awareness: "Žinomumas",
+    repeat: "Pakartotinumas",
+    longTerm: "Ilgalaikis partneris",
+    campaign: "Kampanija",
+    ambassador: "Ambasadorystė",
+    contentSeries: "Turinio serija",
+    dragToScroll: "Tempkite naršyti",
+    subtitle:
+      "Tikri skaičiai iš tikrų bendradarbiavimų — pasiekiamumas, įsitraukimas ir verslo poveikis.",
+    tags: {
+      longTerm: "Ilgalaikė partnerystė",
+      campaign: "Sezoninė kampanija",
+      ambassador: "Metinė ambasadorystė",
+      contentSeries: "Turinio serija",
+      holidayCampaign: "Šventinė kampanija",
+    },
+    studies: {
+      stiliausKodas: {
+        objective:
+          "Kurti nuolatinį prekės ženklo žinomumą Lietuvos pirmaujančiam mados prekybininkui per nuoseklų, autentišką turinį.",
+      },
+      aruelle: {
+        objective:
+          "Pristatyti naują namų drabužių kolekciją 25-35 m. auditorijai per gyvenimo būdo pasakojimus.",
+      },
+      odoro: {
+        objective:
+          "Pozicionuoti kvepalų prekės ženklą kaip premium gyvenimo būdo pasirinkimą per ištisų metų ambasadorystę.",
+      },
+      eurovaistine: {
+        objective:
+          "Skatinti internetinės vaistinės lankymą per autentiškas, sezonines turinio serijas, kuriančias pasitikėjimą.",
+      },
+      hellmanns: {
+        objective:
+          "Sukurti viralinį Velykų receptų turinį su pilna produkcija, rezonuojantį su Lietuvos auditorija.",
+      },
+    },
+    metrics: {
+      reach: "Pasiekiamumas",
+      engagement: "Įsitraukimas",
+      conversionLift: "Konversijų augimas",
+      storyViews: "Story peržiūros",
+      roi: "ROI",
+      engagementRate: "Įsitr. rodiklis",
+      brandAwareness: "Žinomumas",
+      linkClicks: "Paspaudimai",
+      repeatCollab: "Pakart. bendradarbiavimas",
+      views: "Peržiūros",
+      saves: "Išsaugojimai",
+      topCreator: "Top kūrėjas",
+    },
+  },
+
+  // Media Kit
+  mediaKit: {
+    header: {
+      label: "Media Kit",
+      name: "Inid\u0117 Jasnauskait\u0117",
+      positioning: "Mados, gro\u017eio ir gyvenimo b\u016bdo turinio k\u016br\u0117ja Lietuvoje. Kuriu turin\u012f, kuris patraukia d\u0117mes\u012f ir duoda i\u0161matuojam\u0173 rezultat\u0173 preki\u0173 \u017eenklams.",
+    },
+    metrics: {
+      label: "Pagrindin\u0117s metrikos",
+      title: "Skai\u010diai, kurie",
+      titleHighlight: "kalba",
+      followers: "Instagram sek\u0117j\u0173",
+      tiktok: "TikTok sek\u0117j\u0173",
+      engagement: "\u012esitraukimo rodiklis",
+      brands: "Bendradarbiavim\u0173 su brendais",
+      experience: "Met\u0173 patirties",
+      reach: "Vidutinis m\u0117nesinis pasiekiamumas",
+    },
+    audience: {
+      label: "Auditorija",
+      title: "Auditorijos",
+      titleHighlight: "demografija",
+      gender: "Lytis",
+      female: "Moterys",
+      male: "Vyrai",
+      age: "Am\u017eius",
+      topLocations: "Lokacijos",
+      loc_lithuania: "Lietuva",
+      loc_latvia: "Latvija",
+      loc_estonia: "Estija",
+      loc_other: "Kita",
+    },
+    services: {
+      label: "Paslaugos",
+      title: "Turinio formatai",
+      titleHighlight: "ir kainos",
+      fromPrice: "Nuo \u20AC{price}",
+      custom: "Individuali kaina",
+      reels: {
+        title: "Instagram Reels",
+        description: "D\u0117mes\u012f patraukiantys trumpi vaizdo \u012fra\u0161ai su istorij\u0173 pasakojimu, per\u0117jimais ir pilna postprodukcija.",
+      },
+      stories: {
+        title: "Stories serijos",
+        description: "\u012etraukian\u010dios ilgos stories serijos, kurios sujungia su auditorija ir organi\u0161kai pristato j\u016bs\u0173 prek\u0117s \u017eenkl\u0105.",
+      },
+      tiktok: {
+        title: "TikTok",
+        description: "Nat\u016bralus, autenti\u0161kas TikTok turinys. Perdalinimo galimyb\u0117 j\u016bs\u0173 prek\u0117s \u017eenklo kanale \u012ftraukta.",
+      },
+      posts: {
+        title: "Posts",
+        description: "Auk\u0161tos kokyb\u0117s nuotrauk\u0173 ir karusel\u0117s turinys, stilizuotas ir redaguotas pagal j\u016bs\u0173 prek\u0117s \u017eenkl\u0105.",
+      },
+      ambassador: {
+        title: "Ambasadoryst\u0117",
+        description: "Ilgalaikis prek\u0117s \u017eenklo atstovavimas su nuolatiniu turinio srautu, veido naudojimu ir autenti\u0161ku palaikymu.",
+      },
+      campaign: {
+        title: "Pilna kampanija",
+        description: "Keli\u0173 format\u0173 kampanij\u0173 paketai, pritaikyti j\u016bs\u0173 tikslams \u2014 nuo koncepcijos iki ataskaitos.",
+      },
+    },
+    partners: {
+      label: "Partneriai",
+      title: "Pasitiki",
+      titleHighlight: "pirmaujantys brendai",
+    },
+    cta: {
+      title: "Dirbkime kartu",
+      description: "Ie\u0161kote turinio k\u016br\u0117jos kitai kampanijai? Susisiekite ir aptarkime, kaip galime sukurti ka\u017ek\u0105, kas duos tikr\u0173 rezultat\u0173.",
+    },
+  },
+
   // Links page (page.tsx)
   links: {
     title: "Inidė Jasnauskaitė",
