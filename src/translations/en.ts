@@ -177,6 +177,37 @@ export const en = {
     text: "Collaborate",
   },
 
+  // Portfolio Hero (phone mockups)
+  portfolioHero: {
+    subtitle: "Content Creator Portfolio",
+    title1: "Content that",
+    title2: "delivers",
+    description:
+      "Fashion, beauty & lifestyle creator with 354K+ followers. Scroll-stopping reels, authentic stories, and campaigns that drive real results for brands.",
+    cta: "Collaborate",
+    viewWork: "View work",
+    phone1Label: "Reels",
+    phone2Label: "Stories",
+    phone3Label: "TikTok",
+  },
+
+  // Video Showcase
+  videoShowcase: {
+    label: "Featured work",
+    title: "Selected",
+    titleHighlight: "campaigns",
+    description:
+      "A selection of brand collaborations showcasing scroll-stopping content that drives engagement and delivers measurable results.",
+    viewAll: "View all on Instagram",
+  },
+
+  // Coming Soon
+  comingSoon: {
+    title: "Coming Soon",
+    description: "Portfolio page is being prepared. In the meantime, visit Instagram.",
+    back: "Go back",
+  },
+
   // Links page (page.tsx)
   links: {
     title: "Inide Jasnauskaite",

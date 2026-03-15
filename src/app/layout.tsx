@@ -41,6 +41,9 @@ export const metadata: Metadata = {
   creator: "Inide Jasnauskaite",
   publisher: "Reelize",
   metadataBase: new URL("https://jasnauskaite.lt"),
+  icons: {
+    icon: "/favicon.ico",
+  },
   alternates: {
     canonical: "/",
   },
@@ -50,7 +53,8 @@ export const metadata: Metadata = {
     title: "Inide Jasnauskaite — Content Creator",
     description:
       "Fashion, Beauty & Lifestyle Content Creator. 354K+ Instagram followers. Creating content that delivers results.",
-    locale: "en_US",
+    locale: "lt_LT",
+    alternateLocale: "en_US",
     siteName: "Inide Jasnauskaite",
   },
   twitter: {
@@ -104,7 +108,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="lt" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"

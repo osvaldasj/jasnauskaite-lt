@@ -249,6 +249,40 @@ a:focus-visible {
   opacity: 0.4;
 }
 
+/* ============================================
+   PHONE MOCKUP STYLES
+   ============================================ */
+
+.phone-mockup {
+  background: var(--surface);
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.phone-mockup:hover {
+  transform: translateY(-4px);
+}
+
+.dark .phone-mockup {
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+/* Animated gradient inside phone placeholder */
+@keyframes phone-gradient-shift {
+  0% { background-position: 50% 0%; }
+  50% { background-position: 50% 100%; }
+  100% { background-position: 50% 0%; }
+}
+
+.phone-gradient-bg {
+  background-size: 100% 200%;
+  animation: phone-gradient-shift 6s ease infinite;
+}
+
 /* Floating CTA button for mobile */
 .floating-cta {
   position: fixed;

@@ -179,6 +179,37 @@ export const lt: TranslationKeys = {
     text: "Bendradarbiauti",
   },
 
+  // Portfolio Hero (phone mockups)
+  portfolioHero: {
+    subtitle: "Turinio kurėjos portfolio",
+    title1: "Turinys, kuris",
+    title2: "veikia",
+    description:
+      "Mados, grožio ir gyvenimo būdo kūrėja su 354K+ sekėjų. Dėmesį patraukiantys reels, autentiški storiai ir kampanijos, duodančios realių rezultatų.",
+    cta: "Bendradarbiauti",
+    viewWork: "Žiūrėti darbus",
+    phone1Label: "Reels",
+    phone2Label: "Stories",
+    phone3Label: "TikTok",
+  },
+
+  // Video Showcase
+  videoShowcase: {
+    label: "Geriausi darbai",
+    title: "Pasirinktos",
+    titleHighlight: "kampanijos",
+    description:
+      "Prekės ženklų bendradarbiavimų atranka — turinys, kuris patraukia dėmesį, skatina įsitraukimą ir duoda išmatuojamų rezultatų.",
+    viewAll: "Žiūrėti viską Instagram",
+  },
+
+  // Coming Soon
+  comingSoon: {
+    title: "Jau greitai",
+    description: "Portfolio puslapis ruošiamas. Tuo tarpu apsilankykite Instagram.",
+    back: "Grįžti",
+  },
+
   // Links page (page.tsx)
   links: {
     title: "Inidė Jasnauskaitė",
