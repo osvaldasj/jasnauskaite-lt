@@ -1,65 +1,155 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { motion } from "framer-motion";
+import { IGGradientLine } from "@/components/layout/IGGradientLine";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { CursorGlow } from "@/components/effects/CursorGlow";
+import { GrainTexture } from "@/components/effects/GrainTexture";
+
+const links = [
+  {
+    title: "Instagram",
+    subtitle: "@jasnauskaite",
+    href: "https://instagram.com/jasnauskaite",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+      </svg>
+    ),
+  },
+  {
+    title: "TikTok",
+    subtitle: "@jasnauskaite",
+    href: "https://tiktok.com/@jasnauskaite",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+      </svg>
+    ),
+  },
+  {
+    title: "Inide's Closet",
+    subtitle: "Rent my wardrobe",
+    href: "https://www.rentboutique.com/lt/katalogas/inides-spinta/",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20.38 3.46L16 2 12 5.5 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Portfolio",
+    subtitle: "My best work",
+    href: "/portfolio",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="7" height="7" />
+        <rect x="14" y="3" width="7" height="7" />
+        <rect x="3" y="14" width="7" height="7" />
+        <rect x="14" y="14" width="7" height="7" />
+      </svg>
+    ),
+  },
+  {
+    title: "Collaborate",
+    subtitle: "Let's work together",
+    href: "mailto:osvaldas@reelize.lt",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+        <polyline points="22,6 12,13 2,6" />
+      </svg>
+    ),
+  },
+];
+
+export default function LinksPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <>
+      <CursorGlow />
+      <GrainTexture />
+      <div className="min-h-screen bg-[var(--background)] flex flex-col items-center justify-center px-6 py-16 relative">
+        {/* Theme toggle top-right */}
+        <div className="absolute top-4 right-4">
+          <ThemeToggle />
+        </div>
+
+        {/* Profile */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+          className="text-center mb-10"
+        >
+          <div className="w-24 h-24 rounded-full mx-auto mb-4 overflow-hidden" style={{ background: 'linear-gradient(135deg, #833AB4, #C13584, #F77737)' }}>
+            {/* Will be replaced with photo */}
+          </div>
+          <h1 className="font-[family-name:var(--font-outfit)] font-semibold text-2xl tracking-[0.02em]">
+            Inide Jasnauskaite
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-sm text-[var(--muted)] font-[family-name:var(--font-inter)] mt-1">
+            Content Creator
           </p>
+        </motion.div>
+
+        {/* Links with staggered entrance */}
+        <div className="w-full max-w-md space-y-3">
+          {links.map((link, i) => (
+            <motion.a
+              key={link.title}
+              href={link.href}
+              target={link.href.startsWith("http") ? "_blank" : undefined}
+              rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.1 + i * 0.08,
+                duration: 0.5,
+                ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+              }}
+              className="flex items-center gap-4 p-4 rounded-xl border border-[var(--border-color)] hover:border-[#C13584]/30 hover:shadow-lg hover:shadow-[#C13584]/5 transition-all duration-300 hover:scale-[1.02] group"
+            >
+              <div className="text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
+                {link.icon}
+              </div>
+              <div className="flex-1">
+                <p className="font-[family-name:var(--font-outfit)] font-semibold text-sm">
+                  {link.title}
+                </p>
+                <p className="text-xs text-[var(--muted)] font-[family-name:var(--font-inter)]">
+                  {link.subtitle}
+                </p>
+              </div>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className="text-[var(--muted)] group-hover:text-[var(--foreground)] group-hover:translate-x-1 transition-all"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </motion.a>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        {/* Animated IG Gradient Line */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="mt-12 text-center"
+        >
+          <div className="w-24 mx-auto mb-4 h-[2px] animated-ig-gradient-line" />
+          <p className="text-xs text-[var(--muted)] font-[family-name:var(--font-inter)]">
+            @jasnauskaite
+          </p>
+        </motion.div>
+      </div>
+    </>
   );
 }

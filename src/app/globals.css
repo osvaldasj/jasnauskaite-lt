@@ -1,26 +1,288 @@
 @import "tailwindcss";
 
+/* ============================================
+   REELIZE BRAND BOOK v2.2 — CSS Configuration
+   ============================================ */
+
+/* Light mode (default) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FFFFFF;
+  --foreground: #1A1A1A;
+  --surface: #F5F5F3;
+  --muted: #4A4A4A;
+  --border-color: #E5E5E0;
+}
+
+/* Dark mode */
+.dark {
+  --background: #0A0A0A;
+  --foreground: #E5E5E0;
+  --surface: #1A1A1A;
+  --muted: #888888;
+  --border-color: #2A2A2A;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-border: var(--border-color);
+  --color-graphite: #1A1A1A;
+  --color-mid-graphite: #4A4A4A;
+  --color-light-bg: #F5F5F3;
+  --color-line-color: #E5E5E0;
+  --color-ig-purple: #833AB4;
+  --color-ig-magenta: #C13584;
+  --color-ig-pink: #E1306C;
+  --color-ig-orange: #F77737;
+  --color-ig-yellow: #FCAF45;
+  --font-outfit: var(--font-outfit);
+  --font-inter: var(--font-inter);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+/* IG Gradient Line — Reelize signature */
+.ig-gradient-line {
+  height: 2px;
+  background: linear-gradient(90deg, #833AB4, #C13584, #E1306C, #F77737, #FCAF45);
+}
+
+/* IG Gradient text */
+.ig-gradient-text {
+  background: linear-gradient(135deg, #833AB4, #C13584, #F77737);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Shimmer button animation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer-button {
+  background: linear-gradient(90deg, #833AB4, #C13584, #F77737, #C13584, #833AB4);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.shimmer-button:hover {
+  filter: brightness(1.1);
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(131, 58, 180, 0.2);
+  color: inherit;
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+/* Skip to content link */
+.skip-to-content {
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  padding: 0.75rem 1.5rem;
+  background: var(--foreground);
+  color: var(--background);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0 0 0.75rem 0.75rem;
+  transition: top 0.2s ease;
+  text-decoration: none;
+}
+
+.skip-to-content:focus {
+  top: 0;
+  outline: 2px solid #C13584;
+  outline-offset: 2px;
+}
+
+/* Focus indicators */
+*:focus-visible {
+  outline: 2px solid #C13584;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #C13584;
+  outline-offset: 2px;
+}
+
+/* Reduced motion — respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-marquee {
+    animation: none;
+  }
+
+  .shimmer-button {
+    animation: none;
+  }
+}
+
+/* ============================================
+   INTERACTIVE ELEMENTS
+   ============================================ */
+
+/* Magnetic hover effect for buttons */
+.magnetic-button {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Glass card effect */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Social feed grid thumbnail hover */
+.social-thumb {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  aspect-ratio: 1;
+  cursor: pointer;
+}
+
+.social-thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.social-thumb:hover::after {
+  opacity: 1;
+}
+
+/* Tab indicator animation */
+.tab-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #833AB4, #C13584, #F77737);
+  transition: left 0.3s cubic-bezier(0.22, 1, 0.36, 1), width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* FAQ accordion */
+.faq-answer {
+  overflow: hidden;
+}
+
+/* Glow effect on hover */
+.glow-hover {
+  position: relative;
+}
+
+.glow-hover::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #833AB4, #C13584, #F77737);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  filter: blur(8px);
+}
+
+.glow-hover:hover::before {
+  opacity: 0.4;
+}
+
+/* Floating CTA button for mobile */
+.floating-cta {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 40;
+  border-radius: 9999px;
+  padding: 0.875rem 1.5rem;
+  box-shadow: 0 8px 32px rgba(193, 53, 132, 0.3);
+}
+
+/* Text gradient animation on hover */
+.animated-gradient-text {
+  background-size: 200% auto;
+  background-image: linear-gradient(90deg, #833AB4, #C13584, #F77737, #833AB4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 4s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
+/* Animated IG Gradient Line — flowing signature element */
+.animated-ig-gradient-line {
+  background: linear-gradient(90deg, #833AB4, #C13584, #E1306C, #F77737, #FCAF45, #F77737, #E1306C, #C13584, #833AB4);
+  background-size: 200% 100%;
+  animation: ig-line-flow 4s ease infinite;
+}
+
+@keyframes ig-line-flow {
+  0% { background-position: 0% 0; }
+  100% { background-position: 200% 0; }
 }
