@@ -3,15 +3,19 @@
 import { useState, useEffect } from "react";
 import { motion, useScroll, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "./ThemeToggle";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import { IGGradientLine } from "./IGGradientLine";
-
-const navLinks = [
-  { href: "#portfolio", label: "Portfolio" },
-  { href: "#services", label: "Services" },
-  { href: "/collaborate", label: "Collaborate" },
-];
+import { MagneticElement } from "@/components/effects/MagneticElement";
+import { useTranslation } from "@/lib/i18n";
 
 export function Navbar() {
+  const { t } = useTranslation();
+
+  const navLinks = [
+    { href: "/portfolio", label: t("nav.portfolio") },
+    { href: "/portfolio#work", label: t("nav.ourWork") },
+    { href: "/portfolio#contact", label: t("nav.collaborate") },
+  ];
   const [isOpen, setIsOpen] = useState(false);
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
@@ -52,24 +56,26 @@ export function Navbar() {
 
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-sm font-[family-name:var(--font-inter)] text-[var(--muted)] hover:text-[var(--foreground)] transition-colors relative group"
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-[2px] ig-gradient-line group-hover:w-full transition-all duration-300" />
-              </a>
+              <MagneticElement key={link.href} strength={0.2} radius={80}>
+                <a
+                  href={link.href}
+                  className="text-sm font-[family-name:var(--font-inter)] text-[var(--muted)] hover:text-[var(--foreground)] transition-colors relative group"
+                >
+                  {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[2px] ig-gradient-line group-hover:w-full transition-all duration-300" />
+                </a>
+              </MagneticElement>
             ))}
           </div>
 
           <div className="flex items-center gap-2 relative z-50">
+            <LanguageSwitcher />
             <ThemeToggle />
 
             <button
               className="md:hidden flex flex-col gap-1.5 p-2 cursor-pointer"
               onClick={() => setIsOpen(!isOpen)}
-              aria-label="Open menu"
+              aria-label={t("nav.menuLabel")}
             >
               <motion.span
                 animate={isOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}

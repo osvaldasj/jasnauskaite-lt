@@ -1,8 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { MagneticElement } from "@/components/effects/MagneticElement";
+import { useTranslation } from "@/lib/i18n";
 
 export function Hero() {
+  const { t } = useTranslation();
   return (
     <section className="relative h-screen w-full overflow-hidden flex items-center justify-center">
       {/* Background gradient */}
@@ -28,7 +31,7 @@ export function Hero() {
           transition={{ delay: 0.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="text-sm md:text-base text-[var(--muted)] font-[family-name:var(--font-inter)] mb-4 tracking-widest uppercase"
         >
-          Content Creator
+          {t("hero.subtitle")}
         </motion.p>
 
         {/* Text reveal — words appear with stagger and skew */}
@@ -39,7 +42,7 @@ export function Hero() {
             transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="inline-block"
           >
-            Inide{" "}
+            {t("hero.firstName")}{" "}
           </motion.span>
           <motion.span
             initial={{ opacity: 0, y: 80, skewY: 3 }}
@@ -47,7 +50,7 @@ export function Hero() {
             transition={{ delay: 0.45, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="inline-block ig-gradient-text"
           >
-            Jasnauskaite
+            {t("hero.lastName")}
           </motion.span>
         </h1>
 
@@ -57,8 +60,7 @@ export function Hero() {
           transition={{ delay: 0.6, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="text-lg md:text-xl text-[var(--muted)] font-[family-name:var(--font-inter)] mt-6 max-w-2xl mx-auto leading-relaxed"
         >
-          Fashion, beauty &amp; lifestyle content creator with 354K+ Instagram followers.
-          Creating content that doesn&apos;t just look good — it delivers results.
+          {t("hero.description")}
         </motion.p>
 
         <motion.div
@@ -67,18 +69,22 @@ export function Hero() {
           transition={{ delay: 0.8, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <a
-            href="/collaborate"
-            className="shimmer-button text-white font-[family-name:var(--font-inter)] font-medium px-8 py-3.5 rounded-full text-sm transition-transform hover:scale-105 inline-block"
-          >
-            Collaborate
-          </a>
-          <a
-            href="#portfolio"
-            className="border border-[var(--border-color)] text-[var(--foreground)] font-[family-name:var(--font-inter)] font-medium px-8 py-3.5 rounded-full text-sm hover:bg-[var(--surface)] transition-colors inline-block"
-          >
-            Portfolio
-          </a>
+          <MagneticElement as="div" strength={0.25} radius={120} className="inline-block">
+            <a
+              href="#contact"
+              className="shimmer-button text-white font-[family-name:var(--font-inter)] font-medium px-8 py-3.5 rounded-full text-sm transition-transform hover:scale-105 inline-block"
+            >
+              {t("hero.cta")}
+            </a>
+          </MagneticElement>
+          <MagneticElement as="div" strength={0.25} radius={120} className="inline-block">
+            <a
+              href="#portfolio"
+              className="border border-[var(--border-color)] text-[var(--foreground)] font-[family-name:var(--font-inter)] font-medium px-8 py-3.5 rounded-full text-sm hover:bg-[var(--surface)] transition-colors inline-block"
+            >
+              {t("hero.portfolio")}
+            </a>
+          </MagneticElement>
         </motion.div>
       </div>
 

@@ -1,4 +1,7 @@
+"use client";
+
 import { IGGradientLine } from "./IGGradientLine";
+import { useTranslation } from "@/lib/i18n";
 
 const socialLinks = [
   { href: "https://instagram.com/jasnauskaite", label: "Instagram" },
@@ -6,6 +9,7 @@ const socialLinks = [
 ];
 
 export function Footer() {
+  const { t } = useTranslation();
   return (
     <footer className="py-12 px-6">
       <div className="max-w-[1200px] mx-auto">
@@ -33,7 +37,7 @@ export function Footer() {
           </div>
 
           <p className="text-xs text-[var(--muted)] font-[family-name:var(--font-inter)]">
-            &copy; {new Date().getFullYear()} @jasnauskaite
+            &copy; {new Date().getFullYear()} {t("footer.copyright")}
           </p>
         </div>
       </div>

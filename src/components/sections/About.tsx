@@ -2,16 +2,19 @@
 
 import { motion } from "framer-motion";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
+import { TextReveal } from "@/components/effects/TextReveal";
+import { useTranslation } from "@/lib/i18n";
 
 export function About() {
+  const { t } = useTranslation();
   return (
-    <section id="about" className="py-12 md:py-16 px-6">
+    <section id="about" className="py-8 md:py-12 px-6">
       <motion.div
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
-        className="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-12 items-center"
+        className="max-w-[800px] mx-auto grid md:grid-cols-2 gap-12 items-center"
       >
         {/* Image placeholder */}
         <motion.div
@@ -22,7 +25,7 @@ export function About() {
             <div className="text-center">
               <div className="w-24 h-24 rounded-full mx-auto mb-4" style={{ background: 'linear-gradient(135deg, #833AB4, #C13584, #F77737)' }} />
               <span className="text-[var(--muted)] font-[family-name:var(--font-inter)] text-sm">
-                @jasnauskaite
+                {t("about.handle")}
               </span>
             </div>
           </div>
@@ -31,30 +34,27 @@ export function About() {
         {/* Text content */}
         <motion.div variants={fadeInUp}>
           <p className="text-sm text-[var(--muted)] font-[family-name:var(--font-inter)] mb-4 tracking-widest uppercase">
-            About me
+            {t("about.label")}
           </p>
-          <h2 className="font-[family-name:var(--font-outfit)] font-semibold text-3xl md:text-4xl tracking-[0.02em] mb-6">
-            Creating content that{" "}
-            <span className="ig-gradient-text">delivers</span>
-          </h2>
+          <TextReveal
+            text={`${t("about.title")} ${t("about.titleHighlight")}`}
+            as="h2"
+            gradientWords={[3]}
+            className="font-[family-name:var(--font-outfit)] font-semibold text-3xl md:text-4xl tracking-[0.02em] mb-6"
+          />
           <div className="space-y-4 text-[var(--muted)] font-[family-name:var(--font-inter)] leading-relaxed">
             <p>
-              I&apos;m Inide Jasnauskaite — a content creator working with the biggest
-              Lithuanian and international brands. Over 5+ years, I&apos;ve created hundreds
-              of reels, story series and campaigns that reached millions of people.
+              {t("about.paragraph1")}
             </p>
             <p>
-              My goal isn&apos;t just beautiful content — it&apos;s real results. Every
-              project is measured by numbers: engagement rate, reach, conversions.
-              Brands come back because the content works.
+              {t("about.paragraph2")}
             </p>
             <p>
-              I work through{" "}
+              {t("about.paragraph3Pre")}{" "}
               <span className="text-[var(--foreground)] font-medium">
-                Reelize
+                {t("about.paragraph3Company")}
               </span>{" "}
-              — my company that ensures a professional process from the first
-              idea to the final result and report.
+              {t("about.paragraph3Post")}
             </p>
           </div>
         </motion.div>

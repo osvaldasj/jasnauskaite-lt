@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Outfit, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { LanguageProvider } from "@/lib/i18n";
+import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import { PageTransition } from "@/components/providers/PageTransition";
+import { GoogleAnalytics } from "@/components/providers/GoogleAnalytics";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -108,13 +112,20 @@ export default function RootLayout({
         />
       </head>
       <body className={`${outfit.variable} ${inter.variable}`}>
+        <GoogleAnalytics />
         <a
           href="#main-content"
           className="fixed -top-full left-1/2 -translate-x-1/2 z-[100] px-6 py-3 bg-[var(--foreground)] text-[var(--background)] font-[family-name:var(--font-inter)] text-sm font-medium rounded-b-xl focus:top-0 transition-[top] duration-200"
         >
           Skip to content
         </a>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <LanguageProvider>
+            <SmoothScroll>
+              <PageTransition>{children}</PageTransition>
+            </SmoothScroll>
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

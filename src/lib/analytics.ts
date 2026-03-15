@@ -29,6 +29,8 @@ interface TrackingPayload {
 const ENDPOINT = '/api/track.php';
 const FLUSH_INTERVAL = 5000;
 const DNT_KEY = 'navigator';
+// Disable analytics until server-side endpoint is implemented
+const ANALYTICS_ENABLED = false;
 
 // State
 let queue: AnalyticsEvent[] = [];
@@ -125,6 +127,7 @@ function flush(): void {
  * Add an event to the queue.
  */
 function enqueue(event: AnalyticsEvent): void {
+  if (!ANALYTICS_ENABLED) return;
   if (isDNT()) return;
   if (!initialized) init();
 

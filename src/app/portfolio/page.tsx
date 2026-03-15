@@ -8,7 +8,6 @@ import { PortfolioHighlight } from "@/components/sections/PortfolioHighlight";
 import { Stats } from "@/components/sections/Stats";
 import { Services } from "@/components/sections/Services";
 import { SocialFeed } from "@/components/sections/SocialFeed";
-import { Testimonials } from "@/components/sections/Testimonials";
 import { FAQ } from "@/components/sections/FAQ";
 import { CTA } from "@/components/sections/CTA";
 import { FloatingCTA } from "@/components/layout/FloatingCTA";
@@ -26,7 +25,6 @@ export default function PortfolioPage() {
         <Stats />
         <Services />
         <SocialFeed />
-        <Testimonials />
         <FAQ />
         <CTA />
       </main>

@@ -5,67 +5,77 @@ import { IGGradientLine } from "@/components/layout/IGGradientLine";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { CursorGlow } from "@/components/effects/CursorGlow";
 import { GrainTexture } from "@/components/effects/GrainTexture";
+import { useTranslation } from "@/lib/i18n";
 
-const links = [
-  {
-    title: "Instagram",
-    subtitle: "@jasnauskaite",
-    href: "https://instagram.com/jasnauskaite",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-      </svg>
-    ),
-  },
-  {
-    title: "TikTok",
-    subtitle: "@jasnauskaite",
-    href: "https://tiktok.com/@jasnauskaite",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-      </svg>
-    ),
-  },
-  {
-    title: "Inide's Closet",
-    subtitle: "Rent my wardrobe",
-    href: "https://www.rentboutique.com/lt/katalogas/inides-spinta/",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20.38 3.46L16 2 12 5.5 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Portfolio",
-    subtitle: "My best work",
-    href: "/portfolio",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="7" height="7" />
-        <rect x="14" y="3" width="7" height="7" />
-        <rect x="3" y="14" width="7" height="7" />
-        <rect x="14" y="14" width="7" height="7" />
-      </svg>
-    ),
-  },
-  {
-    title: "Collaborate",
-    subtitle: "Let's work together",
-    href: "mailto:osvaldas@reelize.lt",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-        <polyline points="22,6 12,13 2,6" />
-      </svg>
-    ),
-  },
-];
+const linkIcons = {
+  instagram: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
+  ),
+  tiktok: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+    </svg>
+  ),
+  closet: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20.38 3.46L16 2 12 5.5 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
+    </svg>
+  ),
+  portfolio: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="7" height="7" />
+      <rect x="14" y="3" width="7" height="7" />
+      <rect x="3" y="14" width="7" height="7" />
+      <rect x="14" y="14" width="7" height="7" />
+    </svg>
+  ),
+  collaborate: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+      <polyline points="22,6 12,13 2,6" />
+    </svg>
+  ),
+};
 
 export default function LinksPage() {
+  const { t } = useTranslation();
+
+  const links = [
+    {
+      title: "Instagram",
+      subtitle: "@jasnauskaite",
+      href: "https://instagram.com/jasnauskaite",
+      icon: linkIcons.instagram,
+    },
+    {
+      title: "TikTok",
+      subtitle: "@jasnauskaite",
+      href: "https://tiktok.com/@jasnauskaite",
+      icon: linkIcons.tiktok,
+    },
+    {
+      title: t("links.inCloset"),
+      subtitle: t("links.inClosetSub"),
+      href: "https://www.rentboutique.com/lt/katalogas/inides-spinta/",
+      icon: linkIcons.closet,
+    },
+    {
+      title: t("links.portfolio"),
+      subtitle: t("links.portfolioSub"),
+      href: "/portfolio",
+      icon: linkIcons.portfolio,
+    },
+    {
+      title: t("links.collaborate"),
+      subtitle: "osvaldas@reelize.lt",
+      href: "mailto:osvaldas@reelize.lt",
+      icon: linkIcons.collaborate,
+    },
+  ];
   return (
     <>
       <CursorGlow />
@@ -87,10 +97,10 @@ export default function LinksPage() {
             {/* Will be replaced with photo */}
           </div>
           <h1 className="font-[family-name:var(--font-outfit)] font-semibold text-2xl tracking-[0.02em]">
-            Inide Jasnauskaite
+            {t("links.title")}
           </h1>
           <p className="text-sm text-[var(--muted)] font-[family-name:var(--font-inter)] mt-1">
-            Content Creator
+            {t("links.subtitle")}
           </p>
         </motion.div>
 

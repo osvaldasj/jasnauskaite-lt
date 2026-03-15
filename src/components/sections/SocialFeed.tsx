@@ -1,149 +1,142 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import type { Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
+import { useTranslation } from "@/lib/i18n";
 
-const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
-
-const tabContent: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease } },
-  exit: { opacity: 0, y: -20, transition: { duration: 0.3, ease } },
+const platformIcons = {
+  instagram: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
+  ),
+  tiktok: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+    </svg>
+  ),
 };
-
-const gridItem: Variants = {
-  hidden: { opacity: 0, scale: 0.9 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.4, ease } },
-};
-
-const instagramPosts = Array.from({ length: 6 }, (_, i) => ({
-  id: `ig-${i + 1}`,
-  caption: `Instagram post #${i + 1}`,
-  postUrl: "https://instagram.com/jasnauskaite",
-}));
-
-const tiktokPosts = Array.from({ length: 6 }, (_, i) => ({
-  id: `tt-${i + 1}`,
-  caption: `TikTok video #${i + 1}`,
-  postUrl: "https://tiktok.com/@jasnauskaite",
-}));
-
-const gradients = [
-  "linear-gradient(135deg, #833AB4, #C13584)",
-  "linear-gradient(135deg, #C13584, #E1306C)",
-  "linear-gradient(135deg, #E1306C, #F77737)",
-  "linear-gradient(135deg, #F77737, #FCAF45)",
-  "linear-gradient(135deg, #833AB4, #F77737)",
-  "linear-gradient(135deg, #C13584, #FCAF45)",
-];
-
-type Platform = "instagram" | "tiktok";
 
 export function SocialFeed() {
-  const [activeTab, setActiveTab] = useState<Platform>("instagram");
-  const posts = activeTab === "instagram" ? instagramPosts : tiktokPosts;
-  const profileUrl =
-    activeTab === "instagram"
-      ? "https://instagram.com/jasnauskaite"
-      : "https://tiktok.com/@jasnauskaite";
+  const { t } = useTranslation();
+
+  const platforms = [
+    {
+      name: "Instagram",
+      handle: "@jasnauskaite",
+      url: "https://instagram.com/jasnauskaite",
+      description: t("social.instagram.description"),
+      followers: "354K+",
+      cta: t("social.instagram.cta"),
+      gradient: "linear-gradient(135deg, #833AB4, #C13584, #E1306C, #F77737)",
+      icon: platformIcons.instagram,
+    },
+    {
+      name: "TikTok",
+      handle: "@jasnauskaite",
+      url: "https://tiktok.com/@jasnauskaite",
+      description: t("social.tiktok.description"),
+      followers: "125K+",
+      cta: t("social.tiktok.cta"),
+      gradient: "linear-gradient(135deg, #010101, #25F4EE, #FE2C55)",
+      icon: platformIcons.tiktok,
+    },
+  ];
+
+  if (platforms.length === 0) return null;
 
   return (
-    <section id="social" className="py-12 md:py-16 px-6">
+    <section id="social" className="py-8 md:py-12 px-6">
       <motion.div
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
-        className="max-w-[1200px] mx-auto"
+        className="max-w-[800px] mx-auto"
       >
         <motion.div variants={fadeInUp} className="text-center mb-10">
           <h2 className="font-[family-name:var(--font-outfit)] font-semibold text-3xl md:text-4xl tracking-[0.02em]">
-            Social{" "}
-            <span className="ig-gradient-text">feed</span>
+            {t("social.title")}{" "}
+            <span className="ig-gradient-text">{t("social.titleHighlight")}</span>
           </h2>
+          <p className="text-[var(--muted)] font-[family-name:var(--font-inter)] text-sm mt-3 max-w-md mx-auto">
+            {t("social.subtitle")}
+          </p>
         </motion.div>
 
-        <motion.div variants={fadeInUp} className="flex justify-center gap-2 mb-10">
-          <button
-            onClick={() => setActiveTab("instagram")}
-            className={`px-6 py-2.5 rounded-full text-sm font-[family-name:var(--font-inter)] font-medium transition-all duration-300 ${
-              activeTab === "instagram"
-                ? "shimmer-button text-white"
-                : "bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--foreground)]"
-            }`}
-          >
-            Instagram
-          </button>
-          <button
-            onClick={() => setActiveTab("tiktok")}
-            className={`px-6 py-2.5 rounded-full text-sm font-[family-name:var(--font-inter)] font-medium transition-all duration-300 ${
-              activeTab === "tiktok"
-                ? "shimmer-button text-white"
-                : "bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--foreground)]"
-            }`}
-          >
-            TikTok
-          </button>
-        </motion.div>
+        <motion.div
+          variants={fadeInUp}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto"
+        >
+          {platforms.map((platform, i) => (
+            <motion.a
+              key={platform.name}
+              href={platform.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="group relative rounded-2xl overflow-hidden border border-[var(--border-color)] hover:border-transparent transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
+            >
+              {/* Gradient background on hover */}
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
+                style={{ background: platform.gradient }}
+              />
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            variants={tabContent}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="grid grid-cols-2 md:grid-cols-3 gap-4"
-          >
-            {posts.map((post, index) => (
-              <motion.a
-                key={post.id}
-                href={post.postUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                variants={gridItem}
-                initial="hidden"
-                animate="visible"
-                transition={{ delay: index * 0.05 }}
-                className="group relative aspect-square rounded-xl overflow-hidden cursor-pointer"
-              >
-                <div className="absolute inset-0" style={{ background: gradients[index % gradients.length] }} />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-white/40 font-[family-name:var(--font-outfit)] text-5xl font-bold">{index + 1}</span>
+              <div className="relative p-8 flex flex-col items-center text-center gap-5">
+                {/* Icon with gradient circle */}
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center text-white"
+                  style={{ background: platform.gradient }}
+                >
+                  {platform.icon}
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {activeTab === "tiktok" ? (
-                    <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                  ) : (
-                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  )}
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <p className="text-white text-sm font-[family-name:var(--font-inter)]">{post.caption}</p>
-                </div>
-              </motion.a>
-            ))}
-          </motion.div>
-        </AnimatePresence>
 
-        <motion.div variants={fadeInUp} className="text-center mt-10">
-          <a
-            href={profileUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shimmer-button inline-flex items-center gap-2 px-8 py-3 rounded-full text-white font-[family-name:var(--font-inter)] font-medium text-sm transition-all"
-          >
-            Follow @jasnauskaite
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-            </svg>
-          </a>
+                {/* Platform info */}
+                <div>
+                  <h3 className="font-[family-name:var(--font-outfit)] font-semibold text-xl mb-1">
+                    {platform.name}
+                  </h3>
+                  <p className="text-[var(--muted)] font-[family-name:var(--font-inter)] text-sm">
+                    {platform.handle}
+                  </p>
+                </div>
+
+                {/* Followers */}
+                {platform.followers && (
+                  <div className="text-2xl font-[family-name:var(--font-outfit)] font-bold ig-gradient-text">
+                    {platform.followers}
+                  </div>
+                )}
+
+                {/* Description */}
+                <p className="text-[var(--muted)] font-[family-name:var(--font-inter)] text-sm leading-relaxed max-w-[280px]">
+                  {platform.description}
+                </p>
+
+                {/* CTA button */}
+                <div className="shimmer-button px-6 py-2.5 rounded-full text-white font-[family-name:var(--font-inter)] font-medium text-sm inline-flex items-center gap-2 group-hover:shadow-lg transition-shadow">
+                  {platform.cta}
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="group-hover:translate-x-0.5 transition-transform"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+            </motion.a>
+          ))}
         </motion.div>
       </motion.div>
     </section>

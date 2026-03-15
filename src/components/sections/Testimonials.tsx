@@ -3,29 +3,19 @@
 import { motion } from "framer-motion";
 import { fadeInUp } from "@/lib/animations";
 import { TiltCard } from "@/components/effects/TiltCard";
-
-const testimonials = [
-  {
-    quote: "Inide always delivers the highest quality content that exceeds our expectations. The engagement results speak for themselves.",
-    author: "Marketing Manager",
-    company: "Aruelle",
-  },
-  {
-    quote: "A professional process from start to finish. One of the few creators you can work with as a serious partner.",
-    author: "Brand Manager",
-    company: "Stiliaus kodas",
-  },
-  {
-    quote: "Content that doesn't just look great but brings real results. We recommend without reservations.",
-    author: "Marketing Department",
-    company: "Eurovaistine",
-  },
-];
+import { useTranslation } from "@/lib/i18n";
+import { useTestimonials } from "@/hooks/useSanity";
 
 export function Testimonials() {
+  const { t } = useTranslation();
+
+  const { data: items } = useTestimonials([]);
+
+  if (!items || items.length === 0) return null;
+
   return (
-    <section className="py-12 md:py-16 px-6 bg-[var(--surface)]">
-      <div className="max-w-[1200px] mx-auto">
+    <section className="py-8 md:py-12 px-6 bg-[var(--surface)]">
+      <div className="max-w-[800px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -34,16 +24,16 @@ export function Testimonials() {
           className="mb-10 text-center"
         >
           <p className="text-sm text-[var(--muted)] font-[family-name:var(--font-inter)] mb-4 tracking-widest uppercase">
-            Testimonials
+            {t("testimonials.label")}
           </p>
           <h2 className="font-[family-name:var(--font-outfit)] font-semibold text-3xl md:text-4xl tracking-[0.02em]">
-            What clients{" "}
-            <span className="ig-gradient-text">say</span>
+            {t("testimonials.title")}{" "}
+            <span className="ig-gradient-text">{t("testimonials.titleHighlight")}</span>
           </h2>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-5">
-          {testimonials.map((t, i) => (
+          {items.map((item, i) => (
             <motion.div
               key={i}
               variants={fadeInUp}
@@ -58,11 +48,11 @@ export function Testimonials() {
                     &ldquo;
                   </div>
                   <p className="font-[family-name:var(--font-inter)] text-[var(--foreground)] leading-relaxed mb-6">
-                    {t.quote}
+                    {item.quote}
                   </p>
                   <div className="pt-4 border-t border-[var(--border-color)]">
-                    <p className="font-[family-name:var(--font-inter)] font-medium text-sm">{t.author}</p>
-                    <p className="font-[family-name:var(--font-inter)] text-xs text-[var(--muted)] mt-0.5">{t.company}</p>
+                    <p className="font-[family-name:var(--font-inter)] font-medium text-sm">{item.author}</p>
+                    <p className="font-[family-name:var(--font-inter)] text-xs text-[var(--muted)] mt-0.5">{item.company}</p>
                   </div>
                 </div>
               </TiltCard>

@@ -3,6 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
+import { useTranslation } from "@/lib/i18n";
 
 function AnimatedNumber({
   target,
@@ -43,22 +44,26 @@ function AnimatedNumber({
   );
 }
 
-const stats = [
-  { value: 354, suffix: "K+", decimals: 0, label: "Instagram followers" },
-  { value: 4.2, suffix: "%", decimals: 1, label: "Engagement rate" },
-  { value: 50, suffix: "+", decimals: 0, label: "Brands" },
-  { value: 8, suffix: "+", decimals: 0, label: "Years experience" },
-];
-
 export function Stats() {
+  const { t } = useTranslation();
+
+  const stats = [
+    { value: 354, suffix: "K+", decimals: 0, label: t("stats.followers") },
+    { value: 4.2, suffix: "%", decimals: 1, label: t("stats.engagement") },
+    { value: 50, suffix: "+", decimals: 0, label: t("stats.brands") },
+    { value: 8, suffix: "+", decimals: 0, label: t("stats.experience") },
+  ];
+
+  if (stats.length === 0) return null;
+
   return (
-    <section className="py-12 md:py-16 px-6 bg-[var(--surface)]">
+    <section className="py-8 md:py-12 px-6 bg-[var(--surface)]">
       <motion.div
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="max-w-[1200px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-8"
+        className="max-w-[800px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-8"
       >
         {stats.map((stat) => (
           <motion.div key={stat.label} variants={fadeInUp} className="text-center">
