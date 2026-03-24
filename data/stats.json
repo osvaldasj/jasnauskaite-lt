@@ -1,0 +1,112 @@
+{
+  "instagram": {
+    "followers": "354K",
+    "posts": "2.5K",
+    "er": "X%",
+    "avg_reach": "XK",
+    "avg_reel_views": "XK",
+    "story_view_rate": "X%",
+    "avg_impressions": "XK"
+  },
+  "tiktok": {
+    "followers": "XXK",
+    "avg_views": "XK"
+  },
+  "youtube": {
+    "subscribers": "XXK"
+  },
+  "audience": {
+    "age": [
+      {"label": "18–24", "pct": 35},
+      {"label": "25–34", "pct": 42},
+      {"label": "35–44", "pct": 16},
+      {"label": "45+",   "pct": 7}
+    ],
+    "locations": [
+      {"label": "Lithuania", "pct": 45},
+      {"label": "Latvia",    "pct": 12},
+      {"label": "Estonia",   "pct": 8},
+      {"label": "UK",        "pct": 7},
+      {"label": "Other",     "pct": 28}
+    ],
+    "gender_female": 75,
+    "gender_male": 25
+  },
+  "packages": [
+    {
+      "id": 1,
+      "tag": "Entry",
+      "name": "Story Package",
+      "price": "€1,500",
+      "vat": "+ VAT",
+      "period": "per campaign",
+      "items": [
+        "3 story slides (Instagram)",
+        "Content production: ~2 weeks",
+        "Optional: +€300 for 3 extra story slides",
+        "Optional: +€1,200 for TikTok repost"
+      ],
+      "note": "Best for driving direct sales — highly recommended as starting point",
+      "featured": false
+    },
+    {
+      "id": 2,
+      "tag": "Popular",
+      "name": "Stories + Post",
+      "price": "€3,000",
+      "vat": "+ VAT",
+      "period": "per campaign",
+      "items": [
+        "3 story slides (Instagram)",
+        "1 feed post (carousel or single)",
+        "Long-term visibility on feed",
+        "Optional: +€200 for 3 extra story slides",
+        "Optional: +€500 for Post collab",
+        "Optional: +€1,200 for TikTok"
+      ],
+      "note": "Carousel posts — timeless choice combining photos & video for any campaign",
+      "featured": false
+    },
+    {
+      "id": 3,
+      "tag": "Most Popular",
+      "name": "Stories + Reel",
+      "price": "€5,000",
+      "vat": "+ VAT",
+      "period": "per campaign",
+      "items": [
+        "3 story slides (Instagram)",
+        "1 full Reel (concept to execution)",
+        "Production time: 1–2 months",
+        "Optional: +€300 for 3 extra story slides",
+        "Optional: +€500 for Reel collab",
+        "Optional: +€400 for 1 month Sponsoring",
+        "Optional: +€300 for TikTok repost",
+        "Optional: +€1,200 for TikTok original"
+      ],
+      "note": "Reels are an art form — crafted to balance advertising with entertainment",
+      "featured": true
+    },
+    {
+      "id": 4,
+      "tag": "Full Campaign",
+      "name": "Stories + Reel + Post",
+      "price": "€6,000",
+      "vat": "+ VAT",
+      "period": "per campaign",
+      "items": [
+        "3 story slides (Instagram)",
+        "1 full Reel",
+        "1 feed post (carousel or single)",
+        "Best value per content piece",
+        "Optional: +€300 for 3 extra story slides",
+        "Optional: +€500 for Reel & Post collab",
+        "Optional: +€400 for 1 month Sponsoring",
+        "Optional: +€300 for TikTok repost",
+        "Optional: +€1,200 for TikTok original"
+      ],
+      "note": "Maximum impact — exceptional content with extensive creative input",
+      "featured": false
+    }
+  ]
+}

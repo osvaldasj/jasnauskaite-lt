@@ -1,54 +1,69 @@
+<?php
+// Load content from JSON data files
+$data_dir = __DIR__ . '/data/';
+function load(string $file, string $dir): array {
+    $path = $dir . $file . '.json';
+    if (!file_exists($path)) return [];
+    return json_decode(file_get_contents($path), true) ?? [];
+}
+$links    = load('links',    $data_dir)['buttons']  ?? [];
+$texts    = load('texts',    $data_dir);
+$projects = load('projects', $data_dir)['projects'] ?? [];
+$hero     = $texts['hero']  ?? [];
+$about    = $texts['about'] ?? [];
+$collab   = $texts['collab'] ?? [];
+
+// Gradient classes for project cards
+$grads = ['p-grad-1','p-grad-2','p-grad-3','p-grad-4','p-grad-5','p-grad-6'];
+$gi = 0;
+
+function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Inidė Jasnauskaitė — Fashion, Beauty & Travel Content Creator with 354K+ followers on Instagram. Available for brand collaborations.">
-  <title>Inidė Jasnauskaitė — Content Creator</title>
+  <meta name="description" content="<?= e($hero['name'] ?? 'Inidė Jasnauskaitė') ?> — Fashion, Beauty &amp; Travel Content Creator. Available for brand collaborations.">
+  <title><?= e($hero['name'] ?? 'Inidė Jasnauskaitė') ?> — Content Creator</title>
 
-  <!-- Open Graph (Facebook, LinkedIn, WhatsApp, Telegram previews) -->
+  <!-- Open Graph -->
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://jasnauskaite.lt/">
-  <meta property="og:title"       content="INIDĖ JASNAUSKAITĖ — Fashion · Beauty · Travel">
-  <meta property="og:description" content="Content creator with 354K+ Instagram followers. Fashion, beauty & travel. Based in Lithuania. Available for brand collaborations.">
+  <meta property="og:title"       content="<?= e($hero['name'] ?? 'INIDĖ JASNAUSKAITĖ') ?> — Fashion · Beauty · Travel">
+  <meta property="og:description" content="Content creator with <?= e($hero['followers'] ?? '354K+') ?> Instagram followers. <?= e($hero['niche'] ?? 'Fashion, Beauty & Travel') ?>. Available for brand collaborations.">
   <meta property="og:image"       content="https://jasnauskaite.lt/images/og-image.jpg">
   <meta property="og:image:width"  content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale"      content="lt_LT">
-  <meta property="og:site_name"   content="Inidė Jasnauskaitė">
-
+  <meta property="og:site_name"   content="<?= e($hero['name'] ?? 'Inidė Jasnauskaitė') ?>">
   <!-- Twitter / X Card -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:site"        content="@jasnauskaite">
-  <meta name="twitter:title"       content="INIDĖ JASNAUSKAITĖ — Fashion · Beauty · Travel">
-  <meta name="twitter:description" content="Content creator with 354K+ Instagram followers. Available for brand collaborations.">
+  <meta name="twitter:site"        content="<?= e($hero['handle'] ?? '@jasnauskaite') ?>">
+  <meta name="twitter:title"       content="<?= e($hero['name'] ?? 'INIDĖ JASNAUSKAITĖ') ?> — Fashion · Beauty · Travel">
+  <meta name="twitter:description" content="Content creator with <?= e($hero['followers'] ?? '354K+') ?> Instagram followers. Available for brand collaborations.">
   <meta name="twitter:image"       content="https://jasnauskaite.lt/images/og-image.jpg">
-
-  <!-- Canonical URL -->
+  <!-- Canonical -->
   <link rel="canonical" href="https://jasnauskaite.lt/">
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
-
-  <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- ======= NAVIGATION ======= -->
+  <!-- NAV -->
   <nav class="nav" id="nav">
     <div class="nav__container">
-      <a href="#hero" class="nav__logo">INIDĖ</a>
+      <a href="#hero" class="nav__logo"><?= e(explode(' ', $hero['name'] ?? 'INIDĖ')[0]) ?></a>
       <ul class="nav__links" id="navLinks">
-        <li><a href="#about" class="nav__link">About</a></li>
-        <li><a href="#portfolio" class="nav__link">Portfolio</a></li>
-        <li><a href="#feed" class="nav__link">Feed</a></li>
+        <li><a href="#about"      class="nav__link">About</a></li>
+        <li><a href="#portfolio"  class="nav__link">Portfolio</a></li>
+        <li><a href="#feed"       class="nav__link">Feed</a></li>
         <li><a href="#collaborate" class="nav__link">Collaborate</a></li>
-        <li><a href="media-kit/index.php" class="nav__link nav__link--kit"><i class="fas fa-lock"></i> Media Kit</a></li>
+        <li><a href="media-kit/index.php"  class="nav__link nav__link--kit"><i class="fas fa-lock"></i> Media Kit</a></li>
       </ul>
       <button class="nav__burger" id="navBurger" aria-label="Open menu">
         <span></span><span></span><span></span>
@@ -56,7 +71,7 @@
     </div>
   </nav>
 
-  <!-- ======= HERO / LINKTREE ======= -->
+  <!-- HERO -->
   <section class="hero" id="hero">
     <div class="hero__bg-orb hero__bg-orb--1"></div>
     <div class="hero__bg-orb hero__bg-orb--2"></div>
@@ -65,62 +80,50 @@
       <div class="hero__profile animate">
         <div class="hero__avatar-ring">
           <div class="hero__avatar">
-            <!-- REPLACE with your real photo: <img src="images/profile.jpg" alt="Inidė Jasnauskaitė"> -->
-            <div class="hero__avatar-initials">IJ</div>
+            <?php if (file_exists(__DIR__ . '/images/profile.jpg')): ?>
+              <img src="images/profile.jpg" alt="<?= e($hero['name'] ?? '') ?>">
+            <?php else: ?>
+              <div class="hero__avatar-initials">IJ</div>
+            <?php endif; ?>
           </div>
         </div>
-        <h1 class="hero__name">Inidė Jasnauskaitė</h1>
-        <div class="hero__verified">
-          <i class="fas fa-circle-check"></i>
-          <span>Verified Creator</span>
-        </div>
-        <p class="hero__handle">@jasnauskaite</p>
-        <p class="hero__niche">Fashion &nbsp;·&nbsp; Beauty &nbsp;·&nbsp; Travel</p>
+        <h1 class="hero__name"><?= e($hero['name'] ?? 'Inidė Jasnauskaitė') ?></h1>
+        <div class="hero__verified"><i class="fas fa-circle-check"></i><span>Verified Creator</span></div>
+        <p class="hero__handle"><?= e($hero['handle'] ?? '@jasnauskaite') ?></p>
+        <p class="hero__niche"><?= e($hero['niche'] ?? 'Fashion · Beauty · Travel') ?></p>
         <div class="hero__stats">
           <div class="hero__stat">
-            <span class="hero__stat-num">354K</span>
+            <span class="hero__stat-num"><?= e($hero['followers'] ?? '354K') ?></span>
             <span class="hero__stat-label">Followers</span>
           </div>
           <div class="hero__stat-div"></div>
           <div class="hero__stat">
-            <span class="hero__stat-num">2.5K</span>
+            <span class="hero__stat-num"><?= e($hero['posts'] ?? '2.5K') ?></span>
             <span class="hero__stat-label">Posts</span>
           </div>
           <div class="hero__stat-div"></div>
           <div class="hero__stat">
-            <span class="hero__stat-num">5%+</span>
+            <span class="hero__stat-num"><?= e($hero['er'] ?? '5%+') ?></span>
             <span class="hero__stat-label">Avg. ER</span>
           </div>
         </div>
       </div>
 
-      <!-- Link tree buttons -->
+      <!-- Dynamic link buttons -->
       <div class="links animate animate-delay-1">
-        <a href="https://www.instagram.com/jasnauskaite/" target="_blank" rel="noopener" class="link-btn link-btn--ig">
-          <i class="fab fa-instagram"></i>
-          <span>Follow on Instagram</span>
-          <i class="fas fa-arrow-right link-btn__arr"></i>
-        </a>
-        <a href="https://www.tiktok.com/@jasnauskaite" target="_blank" rel="noopener" class="link-btn link-btn--tt">
-          <i class="fab fa-tiktok"></i>
-          <span>Follow on TikTok</span>
-          <i class="fas fa-arrow-right link-btn__arr"></i>
-        </a>
-        <a href="https://www.youtube.com/@jasnauskaite" target="_blank" rel="noopener" class="link-btn link-btn--yt">
-          <i class="fab fa-youtube"></i>
-          <span>Subscribe on YouTube</span>
-          <i class="fas fa-arrow-right link-btn__arr"></i>
-        </a>
-        <a href="mailto:team@reelize.lt" class="link-btn link-btn--mail">
-          <i class="fas fa-envelope"></i>
-          <span>Business Enquiries</span>
-          <i class="fas fa-arrow-right link-btn__arr"></i>
-        </a>
-        <a href="#collaborate" class="link-btn link-btn--collab">
-          <i class="fas fa-handshake"></i>
-          <span>Work With Me</span>
-          <i class="fas fa-arrow-right link-btn__arr"></i>
-        </a>
+        <?php foreach ($links as $btn): if (!($btn['active'] ?? true)) continue; ?>
+          <?php
+            $isInternal = str_starts_with($btn['url'] ?? '', '#');
+            $isMail     = str_starts_with($btn['url'] ?? '', 'mailto:');
+            $target     = ($isInternal || $isMail) ? '' : ' target="_blank" rel="noopener"';
+            $style      = e($btn['style'] ?? 'collab');
+          ?>
+          <a href="<?= e($btn['url'] ?? '#') ?>"<?= $target ?> class="link-btn link-btn--<?= $style ?>">
+            <i class="<?= e($btn['icon'] ?? 'fas fa-link') ?>"></i>
+            <span><?= e($btn['label'] ?? '') ?></span>
+            <i class="fas fa-arrow-right link-btn__arr"></i>
+          </a>
+        <?php endforeach; ?>
       </div>
 
       <a href="#about" class="hero__scroll animate animate-delay-2">
@@ -129,37 +132,29 @@
     </div>
   </section>
 
-  <!-- ======= ABOUT ======= -->
+  <!-- ABOUT -->
   <section class="about section" id="about">
     <div class="container">
       <div class="about__grid">
         <div class="about__img animate">
           <div class="about__img-frame">
-            <!-- REPLACE with your real photo: <img src="images/about.jpg" alt="Inidė"> -->
-            <div class="about__img-placeholder"></div>
+            <?php if (file_exists(__DIR__ . '/images/about.jpg')): ?>
+              <img src="images/about.jpg" alt="<?= e($hero['name'] ?? '') ?>">
+            <?php else: ?>
+              <div class="about__img-placeholder"></div>
+            <?php endif; ?>
           </div>
           <div class="about__img-tag"><i class="fas fa-camera"></i> Content Creator</div>
         </div>
         <div class="about__content animate animate-delay-1">
           <span class="badge">About Me</span>
-          <h2 class="section-title">Fashion lover,<br>storyteller & dreamer</h2>
-          <p class="about__text">
-            Hi, I'm Inidė — a Lithuanian fashion, beauty and travel content creator based in Vilnius.
-            With over 354K followers on Instagram, I build content that connects brands with real audiences through
-            authentic storytelling.
-          </p>
-          <p class="about__text">
-            <!-- ✏️ EDIT: Replace with your own description -->
-            Behind every beautiful frame, there's a whole different scale of work that most people don't see.
-            I believe in honest, aesthetically-driven content — whether it's a carefully curated fashion lookbook,
-            an honest beauty review or a cinematic travel diary.
-          </p>
+          <h2 class="section-title"><?= nl2br(e($about['title'] ?? 'Fashion lover,\nstoryteller & dreamer')) ?></h2>
+          <p class="about__text"><?= e($about['text1'] ?? '') ?></p>
+          <p class="about__text"><?= e($about['text2'] ?? '') ?></p>
           <div class="tags">
-            <span class="tag">Fashion</span>
-            <span class="tag">Beauty</span>
-            <span class="tag">Travel</span>
-            <span class="tag">Lifestyle</span>
-            <span class="tag">Content Creation</span>
+            <?php foreach (($about['tags'] ?? []) as $tag): ?>
+              <span class="tag"><?= e($tag) ?></span>
+            <?php endforeach; ?>
           </div>
           <a href="#collaborate" class="btn btn--grad">Work With Me</a>
         </div>
@@ -167,7 +162,7 @@
     </div>
   </section>
 
-  <!-- ======= PORTFOLIO ======= -->
+  <!-- PORTFOLIO -->
   <section class="portfolio section" id="portfolio">
     <div class="container">
       <div class="section-header animate">
@@ -175,7 +170,6 @@
         <h2 class="section-title">Featured Collaborations</h2>
         <p class="section-sub">A selection of my favourite brand partnerships and campaigns</p>
       </div>
-
       <div class="portfolio__filters animate">
         <button class="filter active" data-filter="all">All</button>
         <button class="filter" data-filter="fashion">Fashion</button>
@@ -183,120 +177,49 @@
         <button class="filter" data-filter="travel">Travel</button>
         <button class="filter" data-filter="lifestyle">Lifestyle</button>
       </div>
-
       <div class="portfolio__grid" id="portfolioGrid">
-
-        <!-- ✏️ PROJECT 1 — Replace with real data -->
-        <article class="project-card animate" data-cat="fashion">
-          <div class="project-card__img p-grad-1">
-            <!-- <img src="images/projects/project-1.jpg" alt="Project"> -->
-            <span class="project-card__cat">Fashion</span>
+        <?php foreach ($projects as $p): if (!($p['active'] ?? true)) continue;
+          $grad = $grads[$gi % count($grads)]; $gi++;
+          $hasImg = !empty($p['image']) && file_exists(__DIR__ . '/images/projects/' . $p['image']);
+          $hasBrandImg = !empty($p['brand_logo']) && file_exists(__DIR__ . '/images/brands/' . $p['brand_logo']);
+        ?>
+        <article class="project-card animate" data-cat="<?= e($p['category'] ?? 'lifestyle') ?>">
+          <div class="project-card__img <?= $hasImg ? '' : $grad ?>">
+            <?php if ($hasImg): ?>
+              <img src="images/projects/<?= e($p['image']) ?>" alt="<?= e($p['title']) ?>">
+            <?php endif; ?>
+            <span class="project-card__cat"><?= e(ucfirst($p['category'] ?? '')) ?></span>
           </div>
           <div class="project-card__body">
-            <div class="project-card__brand">BRAND NAME</div>
-            <!-- ✏️ <img src="images/brands/brand1.png" alt="Brand"> -->
-            <h3 class="project-card__title">Brand Name — Campaign Title</h3>
-            <p class="project-card__desc">A curated fashion campaign featuring the seasonal collection. Delivered authentic lifestyle content across Instagram feed and Stories.</p>
+            <div class="project-card__brand">
+              <?php if ($hasBrandImg): ?>
+                <img src="images/brands/<?= e($p['brand_logo']) ?>" alt="<?= e($p['brand']) ?>">
+              <?php else: ?>
+                <?= e($p['brand'] ?? 'BRAND') ?>
+              <?php endif; ?>
+            </div>
+            <h3 class="project-card__title"><?= e($p['title'] ?? '') ?></h3>
+            <p class="project-card__desc"><?= e($p['description'] ?? '') ?></p>
             <div class="project-card__metrics">
-              <span><i class="fas fa-eye"></i> 280K+ reach</span>
-              <span><i class="fas fa-heart"></i> 12K+ engagements</span>
+              <span><i class="<?= e($p['metric1_icon'] ?? 'fas fa-eye') ?>"></i> <?= e($p['metric1_value'] ?? '') ?></span>
+              <span><i class="<?= e($p['metric2_icon'] ?? 'fas fa-heart') ?>"></i> <?= e($p['metric2_value'] ?? '') ?></span>
             </div>
           </div>
         </article>
-
-        <!-- ✏️ PROJECT 2 -->
-        <article class="project-card animate animate-delay-1" data-cat="beauty">
-          <div class="project-card__img p-grad-2">
-            <span class="project-card__cat">Beauty</span>
-          </div>
-          <div class="project-card__body">
-            <div class="project-card__brand">BRAND NAME</div>
-            <h3 class="project-card__title">Brand Name — Product Launch</h3>
-            <p class="project-card__desc">Product launch campaign including unboxing Reel and a detailed review story series that generated exceptional engagement.</p>
-            <div class="project-card__metrics">
-              <span><i class="fas fa-eye"></i> 320K+ reach</span>
-              <span><i class="fas fa-heart"></i> 18K+ engagements</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- ✏️ PROJECT 3 -->
-        <article class="project-card animate animate-delay-2" data-cat="travel">
-          <div class="project-card__img p-grad-3">
-            <span class="project-card__cat">Travel</span>
-          </div>
-          <div class="project-card__body">
-            <div class="project-card__brand">BRAND NAME</div>
-            <h3 class="project-card__title">Brand Name — Travel Series</h3>
-            <p class="project-card__desc">A travel content series across 3 destinations, featuring hotel stays, fashion looks and local culture — full trip coverage.</p>
-            <div class="project-card__metrics">
-              <span><i class="fas fa-eye"></i> 410K+ reach</span>
-              <span><i class="fas fa-play"></i> 95K+ video views</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- ✏️ PROJECT 4 -->
-        <article class="project-card animate" data-cat="lifestyle">
-          <div class="project-card__img p-grad-4">
-            <span class="project-card__cat">Lifestyle</span>
-          </div>
-          <div class="project-card__body">
-            <div class="project-card__brand">BRAND NAME</div>
-            <h3 class="project-card__title">Brand Name — Lifestyle Series</h3>
-            <p class="project-card__desc">A long-term brand ambassador partnership spanning 6 months, creating consistent lifestyle content across all platforms.</p>
-            <div class="project-card__metrics">
-              <span><i class="fas fa-eye"></i> 1.2M+ total reach</span>
-              <span><i class="fas fa-heart"></i> 45K+ engagements</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- ✏️ PROJECT 5 -->
-        <article class="project-card animate animate-delay-1" data-cat="fashion">
-          <div class="project-card__img p-grad-5">
-            <span class="project-card__cat">Fashion</span>
-          </div>
-          <div class="project-card__body">
-            <div class="project-card__brand">BRAND NAME</div>
-            <h3 class="project-card__title">Brand Name — Lookbook</h3>
-            <p class="project-card__desc">Seasonal lookbook featuring 8 outfits, styled and shot in Vilnius. Delivered 15 assets across feed, Reels and Stories.</p>
-            <div class="project-card__metrics">
-              <span><i class="fas fa-eye"></i> 195K+ reach</span>
-              <span><i class="fas fa-heart"></i> 9K+ engagements</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- ✏️ PROJECT 6 -->
-        <article class="project-card animate animate-delay-2" data-cat="beauty">
-          <div class="project-card__img p-grad-6">
-            <span class="project-card__cat">Beauty</span>
-          </div>
-          <div class="project-card__body">
-            <div class="project-card__brand">BRAND NAME</div>
-            <h3 class="project-card__title">Brand Name — Beauty Review</h3>
-            <p class="project-card__desc">In-depth beauty product review with a dedicated tutorial Reel — one of the highest-performing posts of the year.</p>
-            <div class="project-card__metrics">
-              <span><i class="fas fa-play"></i> 220K+ video views</span>
-              <span><i class="fas fa-heart"></i> 22K+ engagements</span>
-            </div>
-          </div>
-        </article>
-
+        <?php endforeach; ?>
       </div>
     </div>
   </section>
 
-  <!-- ======= BRAND LOGOS ======= -->
+  <!-- BRANDS -->
   <section class="brands section" id="brands">
     <div class="container">
       <div class="section-header animate">
         <span class="badge">Trusted By</span>
         <h2 class="section-title">Brands I've Worked With</h2>
       </div>
-      <!-- ✏️ Replace text with <img src="images/brands/X.png"> for each brand -->
       <div class="brands__grid animate">
+        <!-- Add brand logos in admin panel or edit data/brands.json -->
         <div class="brand-logo">BRAND 1</div>
         <div class="brand-logo">BRAND 2</div>
         <div class="brand-logo">BRAND 3</div>
@@ -309,7 +232,7 @@
     </div>
   </section>
 
-  <!-- ======= INSTAGRAM FEED ======= -->
+  <!-- FEED -->
   <section class="feed section" id="feed">
     <div class="container">
       <div class="section-header animate">
@@ -317,33 +240,20 @@
         <h2 class="section-title">Instagram Feed</h2>
         <p class="section-sub">Follow along for daily fashion, beauty and travel inspiration</p>
       </div>
-
-      <!--
-        ✏️ INSTAGRAM FEED SETUP:
-        1. Sign up at https://behold.so (free tier available)
-        2. Connect your Instagram account
-        3. Create a feed widget
-        4. Replace the placeholder div below with your widget code
-      -->
       <div class="feed__placeholder animate">
         <i class="fab fa-instagram feed__icon"></i>
         <p>Instagram feed will appear here</p>
-        <p class="feed__note">Sign up at <strong>behold.so</strong> and paste your widget code here</p>
+        <p class="feed__note">Sign up at <strong>behold.so</strong> → connect IG → paste widget code here</p>
       </div>
-      <!-- PASTE BEHOLD WIDGET HERE:
-      <div id="behold-widget-XXXXX"></div>
-      <script src="https://w.behold.so/widget.js" type="module"></script>
-      -->
-
       <div class="feed__cta animate">
-        <a href="https://www.instagram.com/jasnauskaite/" target="_blank" rel="noopener" class="btn btn--outline">
-          <i class="fab fa-instagram"></i> Follow @jasnauskaite
+        <a href="https://www.instagram.com/<?= e(ltrim($hero['handle'] ?? '@jasnauskaite', '@')) ?>/" target="_blank" rel="noopener" class="btn btn--outline">
+          <i class="fab fa-instagram"></i> Follow <?= e($hero['handle'] ?? '@jasnauskaite') ?>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ======= PRICING ESTIMATOR ======= -->
+  <!-- PRICING ESTIMATOR -->
   <section class="estimator section" id="estimator">
     <div class="container">
       <div class="estimator__head animate">
@@ -394,18 +304,14 @@
     </div>
   </section>
 
-  <!-- ======= COLLABORATE FORM ======= -->
+  <!-- COLLABORATE -->
   <section class="collab section" id="collaborate">
     <div class="container">
       <div class="collab__grid">
-
         <div class="collab__info animate">
           <span class="badge">Let's Work Together</span>
-          <h2 class="section-title">Start a Collaboration</h2>
-          <p class="collab__text">
-            Looking to partner with an authentic voice in fashion, beauty and travel?
-            Let's create something meaningful together. Fill in the form and I'll be in touch within 48 hours.
-          </p>
+          <h2 class="section-title"><?= e($collab['title'] ?? 'Start a Collaboration') ?></h2>
+          <p class="collab__text"><?= e($collab['text'] ?? '') ?></p>
           <div class="collab__formats">
             <div class="collab__format"><div class="collab__format-icon"><i class="fas fa-film"></i></div><div><strong>Reels & Video</strong><p>Engaging short-form content</p></div></div>
             <div class="collab__format"><div class="collab__format-icon"><i class="fas fa-image"></i></div><div><strong>Feed Posts</strong><p>Curated photo & carousel posts</p></div></div>
@@ -414,62 +320,34 @@
           </div>
           <a href="mailto:team@reelize.lt" class="collab__email"><i class="fas fa-envelope"></i> team@reelize.lt</a>
         </div>
-
         <div class="collab__form-wrap animate animate-delay-1">
           <form class="collab__form" id="collabForm" action="contact.php" method="POST">
             <input type="hidden" name="form_type" value="collaboration">
             <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
             <input type="hidden" name="budget_estimate" id="formBudgetNote" value="">
-
             <div class="form-row">
-              <div class="form-group">
-                <label for="brand_name">Brand / Company *</label>
-                <input type="text" id="brand_name" name="brand_name" required placeholder="e.g. Zara, L'Oréal…">
-              </div>
-              <div class="form-group">
-                <label for="contact_person">Contact Person *</label>
-                <input type="text" id="contact_person" name="contact_person" required placeholder="Your full name">
-              </div>
+              <div class="form-group"><label for="brand_name">Brand / Company *</label><input type="text" id="brand_name" name="brand_name" required placeholder="e.g. Zara, L'Oréal…"></div>
+              <div class="form-group"><label for="contact_person">Contact Person *</label><input type="text" id="contact_person" name="contact_person" required placeholder="Your full name"></div>
             </div>
-
-            <div class="form-group">
-              <label for="email">Business Email *</label>
-              <input type="email" id="email" name="email" required placeholder="marketing@brand.com">
-            </div>
-
-            <div class="form-group">
-              <label for="message">Tell Me About Your Campaign *</label>
-              <textarea id="message" name="message" required rows="6" placeholder="Describe your brand, goals, preferred content formats and approximate budget…"></textarea>
-            </div>
-
-            <button type="submit" class="btn btn--grad btn--full" id="collabSubmit">
-              <i class="fas fa-paper-plane"></i> Send Enquiry
-            </button>
+            <div class="form-group"><label for="email">Business Email *</label><input type="email" id="email" name="email" required placeholder="marketing@brand.com"></div>
+            <div class="form-group"><label for="message">Tell Me About Your Campaign *</label><textarea id="message" name="message" required rows="5" placeholder="Describe your brand, goals, preferred content formats and approximate budget…"></textarea></div>
+            <button type="submit" class="btn btn--grad btn--full" id="collabSubmit"><i class="fas fa-paper-plane"></i> Send Enquiry</button>
             <p class="form-note">I respond within 48 hours on business days.</p>
           </form>
-
-          <div class="form-success" id="collabSuccess">
-            <i class="fas fa-circle-check"></i>
-            <h3>Thank you!</h3>
-            <p>Your enquiry has been received. I'll be in touch within 48 hours.</p>
-          </div>
+          <div class="form-success" id="collabSuccess"><i class="fas fa-circle-check"></i><h3>Thank you!</h3><p>Your enquiry has been received. I'll be in touch within 48 hours.</p></div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ======= MEDIA KIT ======= -->
+  <!-- MEDIA KIT TEASER -->
   <section class="mediakit section" id="media-kit">
     <div class="container">
       <div class="mediakit__wrap animate">
         <div class="mediakit__lock-icon"><i class="fas fa-lock"></i></div>
         <span class="badge badge--light">Exclusive Access</span>
         <h2 class="section-title section-title--light">Media Kit & Rate Card</h2>
-        <p class="mediakit__text">
-          Get access to my full media kit including detailed audience demographics,
-          engagement analytics, content performance data and collaboration packages.
-        </p>
+        <p class="mediakit__text">Get access to my full media kit including detailed audience demographics, engagement analytics, content performance data and collaboration packages.</p>
         <div class="mediakit__pills">
           <span><i class="fas fa-users"></i> Audience Demographics</span>
           <span><i class="fas fa-chart-line"></i> Engagement Analytics</span>
@@ -484,7 +362,7 @@
     </div>
   </section>
 
-  <!-- ======= MODAL: Request Access ======= -->
+  <!-- MODAL -->
   <div class="modal" id="modal">
     <div class="modal__bg" id="modalBg"></div>
     <div class="modal__box">
@@ -494,38 +372,23 @@
       <form class="modal__form" id="accessForm" action="contact.php" method="POST">
         <input type="hidden" name="form_type" value="media_kit_request">
         <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
-        <div class="form-group">
-          <label for="req_name">Your Name *</label>
-          <input type="text" id="req_name" name="req_name" required placeholder="Full name">
-        </div>
-        <div class="form-group">
-          <label for="req_company">Company / Brand *</label>
-          <input type="text" id="req_company" name="req_company" required placeholder="Company name">
-        </div>
-        <div class="form-group">
-          <label for="req_email">Business Email *</label>
-          <input type="email" id="req_email" name="req_email" required placeholder="you@company.com">
-        </div>
-        <div class="form-group">
-          <label for="req_msg">Brief Introduction</label>
-          <textarea id="req_msg" name="req_msg" rows="3" placeholder="Tell me briefly about your brand…"></textarea>
-        </div>
+        <div class="form-group"><label for="req_name">Your Name *</label><input type="text" id="req_name" name="req_name" required placeholder="Full name"></div>
+        <div class="form-group"><label for="req_company">Company / Brand *</label><input type="text" id="req_company" name="req_company" required placeholder="Company name"></div>
+        <div class="form-group"><label for="req_email">Business Email *</label><input type="email" id="req_email" name="req_email" required placeholder="you@company.com"></div>
+        <div class="form-group"><label for="req_msg">Brief Introduction</label><textarea id="req_msg" name="req_msg" rows="3" placeholder="Tell me briefly about your brand…"></textarea></div>
         <button type="submit" class="btn btn--grad btn--full" id="accessSubmit">Submit Request</button>
       </form>
-      <div class="modal-success" id="modalSuccess">
-        <i class="fas fa-circle-check"></i>
-        <p>Request sent! I'll review and get back to you within 24 hours.</p>
-      </div>
+      <div class="modal-success" id="modalSuccess"><i class="fas fa-circle-check"></i><p>Request sent! I'll review and get back to you within 24 hours.</p></div>
     </div>
   </div>
 
-  <!-- ======= FOOTER ======= -->
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="footer__grid">
         <div class="footer__brand">
-          <p class="footer__name">INIDĖ JASNAUSKAITĖ</p>
-          <p class="footer__tagline">Fashion · Beauty · Travel Creator</p>
+          <p class="footer__name"><?= e(strtoupper($hero['name'] ?? 'INIDĖ JASNAUSKAITĖ')) ?></p>
+          <p class="footer__tagline"><?= e($hero['niche'] ?? 'Fashion · Beauty · Travel Creator') ?></p>
           <div class="footer__socials">
             <a href="https://www.instagram.com/jasnauskaite/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             <a href="https://www.tiktok.com/@jasnauskaite" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
@@ -550,7 +413,7 @@
         </div>
       </div>
       <div class="footer__bottom">
-        <p>&copy; 2025 Inidė Jasnauskaitė. All rights reserved.</p>
+        <p>&copy; <?= date('Y') ?> <?= e($hero['name'] ?? 'Inidė Jasnauskaitė') ?>. All rights reserved.</p>
       </div>
     </div>
   </footer>

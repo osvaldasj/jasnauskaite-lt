@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "name": "Inidė Jasnauskaitė",
+    "handle": "@jasnauskaite",
+    "niche": "Fashion · Beauty · Travel",
+    "followers": "354K",
+    "posts": "2.5K",
+    "er": "5%+"
+  },
+  "about": {
+    "title": "Fashion lover,\nstoryteller & dreamer",
+    "text1": "Hi, I'm Inidė — a Lithuanian fashion, beauty and travel content creator based in Vilnius. With over 354K followers on Instagram, I build content that connects brands with real audiences through authentic storytelling.",
+    "text2": "Behind every beautiful frame, there's a whole different scale of work that most people don't see. I believe in honest, aesthetically-driven content — whether it's a carefully curated fashion lookbook, an honest beauty review or a cinematic travel diary.",
+    "tags": ["Fashion", "Beauty", "Travel", "Lifestyle", "Content Creation"]
+  },
+  "collab": {
+    "title": "Start a Collaboration",
+    "text": "Looking to partner with an authentic voice in fashion, beauty and travel? Let's create something meaningful together. Fill in the form and I'll be in touch within 48 hours."
+  }
+}

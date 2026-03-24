@@ -1,0 +1,88 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Brand Name — Campaign Title",
+      "category": "fashion",
+      "brand": "BRAND NAME",
+      "brand_logo": "",
+      "image": "",
+      "description": "A curated fashion campaign featuring the seasonal collection. Delivered authentic lifestyle content across Instagram feed and Stories.",
+      "metric1_icon": "fas fa-eye",
+      "metric1_value": "280K+ reach",
+      "metric2_icon": "fas fa-heart",
+      "metric2_value": "12K+ engagements",
+      "active": true
+    },
+    {
+      "id": 2,
+      "title": "Brand Name — Product Launch",
+      "category": "beauty",
+      "brand": "BRAND NAME",
+      "brand_logo": "",
+      "image": "",
+      "description": "Product launch campaign including unboxing Reel and a detailed review story series that generated exceptional engagement.",
+      "metric1_icon": "fas fa-eye",
+      "metric1_value": "320K+ reach",
+      "metric2_icon": "fas fa-heart",
+      "metric2_value": "18K+ engagements",
+      "active": true
+    },
+    {
+      "id": 3,
+      "title": "Brand Name — Travel Series",
+      "category": "travel",
+      "brand": "BRAND NAME",
+      "brand_logo": "",
+      "image": "",
+      "description": "A travel content series across 3 destinations, featuring hotel stays, fashion looks and local culture — full trip coverage.",
+      "metric1_icon": "fas fa-eye",
+      "metric1_value": "410K+ reach",
+      "metric2_icon": "fas fa-play",
+      "metric2_value": "95K+ video views",
+      "active": true
+    },
+    {
+      "id": 4,
+      "title": "Brand Name — Lifestyle Series",
+      "category": "lifestyle",
+      "brand": "BRAND NAME",
+      "brand_logo": "",
+      "image": "",
+      "description": "A long-term brand ambassador partnership spanning 6 months, creating consistent lifestyle content across all platforms.",
+      "metric1_icon": "fas fa-eye",
+      "metric1_value": "1.2M+ total reach",
+      "metric2_icon": "fas fa-heart",
+      "metric2_value": "45K+ engagements",
+      "active": true
+    },
+    {
+      "id": 5,
+      "title": "Brand Name — Lookbook",
+      "category": "fashion",
+      "brand": "BRAND NAME",
+      "brand_logo": "",
+      "image": "",
+      "description": "Seasonal lookbook featuring 8 outfits, styled and shot in Vilnius. Delivered 15 assets across feed, Reels and Stories.",
+      "metric1_icon": "fas fa-eye",
+      "metric1_value": "195K+ reach",
+      "metric2_icon": "fas fa-heart",
+      "metric2_value": "9K+ engagements",
+      "active": true
+    },
+    {
+      "id": 6,
+      "title": "Brand Name — Beauty Review",
+      "category": "beauty",
+      "brand": "BRAND NAME",
+      "brand_logo": "",
+      "image": "",
+      "description": "In-depth beauty product review with a dedicated tutorial Reel — one of the highest-performing posts of the year.",
+      "metric1_icon": "fas fa-play",
+      "metric1_value": "220K+ video views",
+      "metric2_icon": "fas fa-heart",
+      "metric2_value": "22K+ engagements",
+      "active": true
+    }
+  ]
+}

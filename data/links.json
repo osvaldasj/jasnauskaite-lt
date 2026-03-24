@@ -1,0 +1,44 @@
+{
+  "buttons": [
+    {
+      "id": 1,
+      "label": "Follow on Instagram",
+      "url": "https://www.instagram.com/jasnauskaite/",
+      "icon": "fab fa-instagram",
+      "style": "ig",
+      "active": true
+    },
+    {
+      "id": 2,
+      "label": "Follow on TikTok",
+      "url": "https://www.tiktok.com/@jasnauskaite",
+      "icon": "fab fa-tiktok",
+      "style": "tt",
+      "active": true
+    },
+    {
+      "id": 3,
+      "label": "Subscribe on YouTube",
+      "url": "https://www.youtube.com/@jasnauskaite",
+      "icon": "fab fa-youtube",
+      "style": "yt",
+      "active": true
+    },
+    {
+      "id": 4,
+      "label": "Business Enquiries",
+      "url": "mailto:team@reelize.lt",
+      "icon": "fas fa-envelope",
+      "style": "mail",
+      "active": true
+    },
+    {
+      "id": 5,
+      "label": "Work With Me",
+      "url": "#collaborate",
+      "icon": "fas fa-handshake",
+      "style": "collab",
+      "active": true
+    }
+  ]
+}

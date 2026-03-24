@@ -1,0 +1,5 @@
+# Protect config file from direct browser access
+<Files "config.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
