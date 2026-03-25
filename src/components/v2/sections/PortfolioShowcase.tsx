@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useTranslation } from "@/lib/i18n";
 
 /* ------------------------------------------------------------------ */
 /*  Brand portfolio data — from Apify scrape                           */
@@ -43,6 +44,7 @@ const PORTFOLIO = [
 /* ------------------------------------------------------------------ */
 
 export default function PortfolioShowcase() {
+  const { t } = useTranslation();
   return (
     <section className="py-14 md:py-20 px-6">
       <div className="mx-auto max-w-5xl">
@@ -55,11 +57,11 @@ export default function PortfolioShowcase() {
           transition={{ duration: 0.6 }}
         >
           <p className="mb-3 text-xs uppercase tracking-[0.2em] text-[var(--v2-ig-purple)] font-[family-name:var(--font-mono)]">
-            Portfolio
+            {t("portfolio.label")}
           </p>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-[var(--v2-text)] font-[family-name:var(--font-heading)]">
-            Selected{" "}
-            <span className="v2-gradient-text">work</span>
+            {t("portfolio.title")}{" "}
+            <span className="v2-gradient-text">{t("portfolio.titleHighlight")}</span>
           </h2>
         </motion.div>
 
@@ -108,7 +110,7 @@ export default function PortfolioShowcase() {
                       {item.metrics.views}
                     </span>
                     <span className="block text-[8px] uppercase tracking-[0.1em] text-[var(--v2-text-dim)] font-[family-name:var(--font-mono)]">
-                      Views
+                      {t("metrics.views")}
                     </span>
                   </div>
                   <div>
@@ -116,7 +118,7 @@ export default function PortfolioShowcase() {
                       {item.metrics.likes}
                     </span>
                     <span className="block text-[8px] uppercase tracking-[0.1em] text-[var(--v2-text-dim)] font-[family-name:var(--font-mono)]">
-                      Likes
+                      {t("metrics.likes")}
                     </span>
                   </div>
                   <div>
@@ -124,7 +126,7 @@ export default function PortfolioShowcase() {
                       {item.metrics.posts}
                     </span>
                     <span className="block text-[8px] uppercase tracking-[0.1em] text-[var(--v2-text-dim)] font-[family-name:var(--font-mono)]">
-                      Posts
+                      {t("metrics.posts")}
                     </span>
                   </div>
                   <div>
@@ -132,7 +134,7 @@ export default function PortfolioShowcase() {
                       {item.metrics.engagement}
                     </span>
                     <span className="block text-[8px] uppercase tracking-[0.1em] text-[var(--v2-text-dim)] font-[family-name:var(--font-mono)]">
-                      Eng. rate
+                      {t("metrics.engRate")}
                     </span>
                   </div>
                 </div>

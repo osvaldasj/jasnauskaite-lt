@@ -140,6 +140,7 @@ export const lt: TranslationKeys = {
 
   // CTA
   cta: {
+    label: "Susisiekite",
     title: "Kurkime",
     titleHighlight: "kartu",
     description:
@@ -379,6 +380,40 @@ export const lt: TranslationKeys = {
     portfolioSub: "Geriausi darbai",
     mediaKitSub: "Statistika ir paslaugos",
     collaborate: "Bendradarbiauti",
+  },
+
+  // Hero Stats
+  heroStats: {
+    followers: "Sekėjai",
+    engagement: "Įsitraukimas",
+    engagementSub: "per 12 mėnesių",
+    totalViews: "Peržiūros",
+    years: "Metai",
+    scroll: "Slinkti",
+  },
+
+  // Brand Wall
+  brandWall: {
+    label: "Partneriai",
+    title: "Brendai, su kuriais",
+    titleHighlight: "dirbau",
+  },
+
+  // Portfolio Metrics
+  metrics: {
+    views: "Peržiūros",
+    likes: "Patikimai",
+    posts: "Įrašai",
+    engRate: "Įsitr. rod.",
+  },
+
+  // Organic Content
+  organic: {
+    label: "Asmeninis turinys",
+    title: "Daugiau nei",
+    titleHighlight: "reklama",
+    description: "Ne viskas yra bendradarbiavimas. Mada, kelionės, grožis ir kasdienės akimirkos, kurios išlaiko autentišką feed'ą.",
+    viewMore: "Daugiau Instagram",
   },
 
   // Insights

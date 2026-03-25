@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslation } from "@/lib/i18n";
 
 /* ------------------------------------------------------------------ */
 /*  Inline SVG icons                                                   */
@@ -46,6 +47,7 @@ function InstagramIcon({ className }: { className?: string }) {
 /* ------------------------------------------------------------------ */
 
 export default function KineticCTA() {
+  const { t } = useTranslation();
   return (
     <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-[var(--v2-bg)] px-6">
       {/* Ambient gradient glow */}
@@ -98,7 +100,7 @@ export default function KineticCTA() {
       >
         {/* Label */}
         <p className="font-[family-name:var(--font-mono)] text-xs md:text-sm uppercase tracking-[0.3em] text-[var(--v2-ig-purple)] mb-6">
-          Get in touch
+          {t("cta.label")}
         </p>
 
         {/* Main heading */}
@@ -108,15 +110,14 @@ export default function KineticCTA() {
             fontSize: "clamp(40px, 8vw, 100px)",
           }}
         >
-          Let&apos;s create
+          {t("cta.title")}
           <br />
-          <span className="v2-gradient-text">together</span>
+          <span className="v2-gradient-text">{t("cta.titleHighlight")}</span>
         </h2>
 
         {/* Description */}
         <p className="text-[var(--v2-text-muted)] text-base md:text-lg max-w-lg mx-auto mb-10 leading-relaxed font-[family-name:var(--font-body)]">
-          Ready to bring your brand to life through authentic, engaging
-          content? Let&apos;s talk about your next campaign.
+          {t("cta.description")}
         </p>
 
         {/* Buttons */}

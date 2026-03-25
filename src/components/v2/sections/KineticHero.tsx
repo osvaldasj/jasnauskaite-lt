@@ -66,12 +66,15 @@ function ParallaxLetter({
 /*  Stats data                                                         */
 /* ------------------------------------------------------------------ */
 
-const stats = [
-  { value: "358K", label: "Followers" },
-  { value: "5.2%", label: "Engagement", sublabel: "rolling 12 months" },
-  { value: "315M+", label: "Total views" },
-  { value: "8+", label: "Years" },
-];
+function useStats() {
+  const { t } = useTranslation();
+  return [
+    { value: "358K", label: t("heroStats.followers") },
+    { value: "5.2%", label: t("heroStats.engagement"), sublabel: t("heroStats.engagementSub") },
+    { value: "315M+", label: t("heroStats.totalViews") },
+    { value: "8+", label: t("heroStats.years") },
+  ];
+}
 
 /* ------------------------------------------------------------------ */
 /*  Shimmer button                                                     */
@@ -125,12 +128,13 @@ function ShimmerButton({
 /* ------------------------------------------------------------------ */
 
 function ScrollIndicator() {
+  const { t } = useTranslation();
   return (
     <div
       className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-[v2-fade-in_0.8s_1s_ease_both]"
     >
       <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--v2-text-muted)] font-[family-name:var(--font-mono)]">
-        Scroll
+        {t("heroStats.scroll")}
       </span>
       <motion.svg
         width="16"
@@ -260,11 +264,16 @@ export function KineticHero() {
         className="relative z-10 mt-12 md:mt-16 w-full px-6 animate-[v2-fade-in_0.6s_0.8s_ease_both]"
       >
         <div className="mx-auto max-w-3xl grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0">
-          {stats.map((stat: { value: string; label: string; sublabel?: string }, i) => (
+          {[
+            { value: "358K", label: t("heroStats.followers") },
+            { value: "5.2%", label: t("heroStats.engagement"), sublabel: t("heroStats.engagementSub") },
+            { value: "315M+", label: t("heroStats.totalViews") },
+            { value: "8+", label: t("heroStats.years") },
+          ].map((stat: { value: string; label: string; sublabel?: string }, i) => (
             <div
               key={stat.label}
               className={`flex flex-col items-center gap-1 ${
-                i < stats.length - 1
+                i < 3
                   ? "md:border-r md:border-[var(--v2-border)]"
                   : ""
               }`}

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useTranslation } from "@/lib/i18n";
 
 /* ------------------------------------------------------------------ */
 /*  Organic / personal content grid                                    */
@@ -47,6 +48,7 @@ const ORGANIC_POSTS = [
 ];
 
 export default function OrganicContent() {
+  const { t } = useTranslation();
   return (
     <section className="py-14 md:py-20 px-6">
       <div className="mx-auto max-w-5xl">
@@ -59,15 +61,14 @@ export default function OrganicContent() {
           transition={{ duration: 0.6 }}
         >
           <p className="mb-3 text-xs uppercase tracking-[0.2em] text-[var(--v2-ig-purple)] font-[family-name:var(--font-mono)]">
-            Personal feed
+            {t("organic.label")}
           </p>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-[var(--v2-text)] font-[family-name:var(--font-heading)]">
-            Beyond{" "}
-            <span className="v2-gradient-text">brands</span>
+            {t("organic.title")}{" "}
+            <span className="v2-gradient-text">{t("organic.titleHighlight")}</span>
           </h2>
           <p className="mt-4 text-sm md:text-base text-[var(--v2-text-muted)] font-[family-name:var(--font-body)] max-w-xl">
-            Not everything is a collaboration. Fashion, travel, beauty and
-            everyday moments that keep the feed authentic.
+            {t("organic.description")}
           </p>
         </motion.div>
 
@@ -121,7 +122,7 @@ export default function OrganicContent() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-sm text-[var(--v2-text-muted)] hover:text-[var(--v2-ig-magenta)] transition-colors font-[family-name:var(--font-mono)]"
           >
-            <span>View more on Instagram</span>
+            <span>{t("organic.viewMore")}</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M7 17L17 7M17 7H7M17 7V17" />
             </svg>

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslation } from "@/lib/i18n";
 
 /* ------------------------------------------------------------------ */
 /*  Brand data split into 3 rows                                       */
@@ -87,6 +88,7 @@ function MarqueeRow({
 /* ------------------------------------------------------------------ */
 
 export default function BrandWall() {
+  const { t } = useTranslation();
   return (
     <section className="relative py-14 md:py-20 overflow-hidden bg-[var(--v2-bg)]">
       {/* Header */}
@@ -98,11 +100,11 @@ export default function BrandWall() {
         transition={{ duration: 0.8 }}
       >
         <p className="font-[family-name:var(--font-mono)] text-xs md:text-sm uppercase tracking-[0.3em] text-[var(--v2-ig-purple)] mb-4">
-          Partners
+          {t("brandWall.label")}
         </p>
         <h2 className="text-3xl md:text-5xl lg:text-6xl font-[family-name:var(--font-heading)] font-bold text-[var(--v2-text)]">
-          Brands I&apos;ve{" "}
-          <span className="v2-gradient-text">worked with</span>
+          {t("brandWall.title")}{" "}
+          <span className="v2-gradient-text">{t("brandWall.titleHighlight")}</span>
         </h2>
       </motion.div>
 

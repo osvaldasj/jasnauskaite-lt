@@ -131,7 +131,7 @@ export function SplitAbout() {
           </span>
           <div className="h-px flex-1 bg-[var(--v2-border)]" />
           <span className="text-xs uppercase tracking-[0.3em] text-[var(--v2-text-muted)] font-[family-name:var(--font-mono)]">
-            About
+            {t("about.label")}
           </span>
         </div>
 
@@ -148,7 +148,7 @@ export function SplitAbout() {
               01
             </span>
             <div className="mt-6 flex flex-col items-center ml-6">
-              {"ABOUT".split("").map((letter, i) => (
+              {t("about.label").toUpperCase().split("").map((letter, i) => (
                 <span
                   key={i}
                   className="text-xs tracking-[0.3em] text-[var(--v2-text-muted)] font-[family-name:var(--font-mono)] leading-[2.2]"

@@ -138,6 +138,7 @@ export const en = {
 
   // CTA
   cta: {
+    label: "Get in touch",
     title: "Let's create",
     titleHighlight: "together",
     description:
@@ -377,6 +378,40 @@ export const en = {
     portfolioSub: "My best work",
     mediaKitSub: "Stats & pricing",
     collaborate: "Collaborate",
+  },
+
+  // Hero Stats
+  heroStats: {
+    followers: "Followers",
+    engagement: "Engagement",
+    engagementSub: "rolling 12 months",
+    totalViews: "Total views",
+    years: "Years",
+    scroll: "Scroll",
+  },
+
+  // Brand Wall
+  brandWall: {
+    label: "Partners",
+    title: "Brands I've",
+    titleHighlight: "worked with",
+  },
+
+  // Portfolio Metrics
+  metrics: {
+    views: "Views",
+    likes: "Likes",
+    posts: "Posts",
+    engRate: "Eng. rate",
+  },
+
+  // Organic Content
+  organic: {
+    label: "Personal feed",
+    title: "Beyond",
+    titleHighlight: "brands",
+    description: "Not everything is a collaboration. Fashion, travel, beauty and everyday moments that keep the feed authentic.",
+    viewMore: "View more on Instagram",
   },
 
   // Insights
