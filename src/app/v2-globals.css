@@ -1,0 +1,405 @@
+/* ============================================================
+   v2-globals.css — "Instagram Reimagined" design system
+   Premium, cinematic, dark-first aesthetic
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   Color system
+   ---------------------------------------------------------- */
+:root {
+  --v2-bg: #0A0A0A;
+  --v2-surface: #141414;
+  --v2-surface-hover: #1A1A1A;
+  --v2-text: #FAFAFA;
+  --v2-text-muted: #888888;
+  --v2-text-dim: #555555;
+  --v2-border: #222222;
+  --v2-border-hover: #333333;
+
+  /* IG Gradient colors — the SOUL of the site */
+  --v2-ig-purple: #833AB4;
+  --v2-ig-magenta: #C13584;
+  --v2-ig-pink: #E1306C;
+  --v2-ig-orange: #F77737;
+  --v2-ig-yellow: #FCAF45;
+
+  /* Functional */
+  --v2-gradient: linear-gradient(135deg, #833AB4, #C13584, #F77737);
+  --v2-gradient-text: linear-gradient(135deg, #833AB4, #C13584, #E1306C, #F77737);
+  --v2-glow-purple: rgba(131, 58, 180, 0.15);
+  --v2-glow-magenta: rgba(193, 53, 132, 0.12);
+  --v2-glow-orange: rgba(247, 119, 55, 0.1);
+
+  /* Spacing scale */
+  --v2-space-xs: 0.25rem;
+  --v2-space-sm: 0.5rem;
+  --v2-space-md: 1rem;
+  --v2-space-lg: 2rem;
+  --v2-space-xl: 4rem;
+  --v2-space-2xl: 8rem;
+
+  /* Radius */
+  --v2-radius-sm: 6px;
+  --v2-radius-md: 12px;
+  --v2-radius-lg: 20px;
+  --v2-radius-xl: 32px;
+  --v2-radius-full: 9999px;
+
+  /* Transitions */
+  --v2-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --v2-duration-fast: 200ms;
+  --v2-duration-normal: 400ms;
+  --v2-duration-slow: 800ms;
+}
+
+/* ----------------------------------------------------------
+   Light mode (default)
+   ---------------------------------------------------------- */
+:root {
+  --v2-bg: #FAFAFA;
+  --v2-surface: #FFFFFF;
+  --v2-surface-hover: #F0F0F0;
+  --v2-text: #1A1A1A;
+  --v2-text-muted: #666666;
+  --v2-text-dim: #999999;
+  --v2-border: #E5E5E0;
+  --v2-border-hover: #D0D0D0;
+  --v2-glow-purple: rgba(131, 58, 180, 0.06);
+  --v2-glow-magenta: rgba(193, 53, 132, 0.04);
+  --v2-glow-orange: rgba(247, 119, 55, 0.03);
+}
+
+/* Dark mode */
+.dark {
+  --v2-bg: #0A0A0A;
+  --v2-surface: #141414;
+  --v2-surface-hover: #1A1A1A;
+  --v2-text: #FAFAFA;
+  --v2-text-muted: #888888;
+  --v2-text-dim: #555555;
+  --v2-border: #222222;
+  --v2-border-hover: #333333;
+  --v2-glow-purple: rgba(131, 58, 180, 0.15);
+  --v2-glow-magenta: rgba(193, 53, 132, 0.12);
+  --v2-glow-orange: rgba(247, 119, 55, 0.1);
+}
+
+/* ----------------------------------------------------------
+   Base styles
+   ---------------------------------------------------------- */
+.v2-layout {
+  background-color: var(--v2-bg);
+  color: var(--v2-text);
+  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
+}
+
+.v2-layout h1,
+.v2-layout h2,
+.v2-layout h3,
+.v2-layout h4,
+.v2-layout h5,
+.v2-layout h6 {
+  font-family: var(--font-heading), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.v2-layout p,
+.v2-layout span,
+.v2-layout li {
+  line-height: 1.6;
+}
+
+/* ----------------------------------------------------------
+   Selection
+   ---------------------------------------------------------- */
+.v2-layout ::selection {
+  background-color: var(--v2-ig-magenta);
+  color: #ffffff;
+}
+
+.v2-layout ::-moz-selection {
+  background-color: var(--v2-ig-magenta);
+  color: #ffffff;
+}
+
+/* ----------------------------------------------------------
+   Scrollbar
+   ---------------------------------------------------------- */
+.v2-layout ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.v2-layout ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.v2-layout ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--v2-ig-purple), var(--v2-ig-magenta), var(--v2-ig-orange));
+  border-radius: var(--v2-radius-full);
+}
+
+.v2-layout ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--v2-ig-purple), var(--v2-ig-pink), var(--v2-ig-yellow));
+}
+
+/* Firefox scrollbar */
+.v2-layout {
+  scrollbar-width: thin;
+  scrollbar-color: var(--v2-ig-magenta) var(--v2-bg);
+}
+
+/* ----------------------------------------------------------
+   Focus-visible
+   ---------------------------------------------------------- */
+.v2-layout *:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 3px;
+  box-shadow:
+    0 0 0 2px var(--v2-bg),
+    0 0 0 4px var(--v2-ig-magenta);
+  border-radius: var(--v2-radius-sm);
+}
+
+/* ----------------------------------------------------------
+   Utility: gradient text
+   ---------------------------------------------------------- */
+.v2-gradient-text {
+  background: var(--v2-gradient-text);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.v2-gradient-text-animated {
+  background: var(--v2-gradient-text);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: v2-gradient-shift 6s ease infinite;
+}
+
+/* ----------------------------------------------------------
+   Utility: gradient border
+   ---------------------------------------------------------- */
+.v2-gradient-border {
+  position: relative;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.v2-gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--v2-gradient);
+  background-size: 200% 200%;
+  animation: v2-gradient-shift 4s ease infinite;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ----------------------------------------------------------
+   Utility: glow
+   ---------------------------------------------------------- */
+.v2-glow {
+  box-shadow:
+    0 0 20px var(--v2-glow-purple),
+    0 0 40px var(--v2-glow-magenta),
+    0 0 80px var(--v2-glow-orange);
+}
+
+.v2-glow-subtle {
+  box-shadow:
+    0 0 15px var(--v2-glow-purple),
+    0 0 30px var(--v2-glow-magenta);
+}
+
+/* ----------------------------------------------------------
+   Utility: grain (for individual elements)
+   ---------------------------------------------------------- */
+.v2-grain {
+  position: relative;
+}
+
+.v2-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+/* ----------------------------------------------------------
+   Keyframes
+   ---------------------------------------------------------- */
+@keyframes v2-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes v2-marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes v2-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes v2-pulse-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 20px var(--v2-glow-purple),
+      0 0 40px var(--v2-glow-magenta);
+  }
+  50% {
+    box-shadow:
+      0 0 30px var(--v2-glow-purple),
+      0 0 60px var(--v2-glow-magenta),
+      0 0 100px var(--v2-glow-orange);
+  }
+}
+
+@keyframes v2-grain {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-1%, -1%);
+  }
+  20% {
+    transform: translate(1%, 0.5%);
+  }
+  30% {
+    transform: translate(-0.5%, 1%);
+  }
+  40% {
+    transform: translate(0.5%, -0.5%);
+  }
+  50% {
+    transform: translate(-1%, 0.5%);
+  }
+  60% {
+    transform: translate(1%, -1%);
+  }
+  70% {
+    transform: translate(-0.5%, -0.5%);
+  }
+  80% {
+    transform: translate(0.5%, 1%);
+  }
+  90% {
+    transform: translate(1%, -0.5%);
+  }
+}
+
+@keyframes v2-gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes v2-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----------------------------------------------------------
+   Shimmer button utility
+   ---------------------------------------------------------- */
+.v2-shimmer-btn {
+  background:
+    linear-gradient(
+      110deg,
+      transparent 25%,
+      rgba(255, 255, 255, 0.08) 37%,
+      transparent 63%
+    )
+    var(--v2-surface);
+  background-size: 200% 100%;
+  animation: v2-shimmer 3s ease-in-out infinite;
+}
+
+/* ----------------------------------------------------------
+   Responsive: reduce motion
+   ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .v2-gradient-text-animated,
+  .v2-gradient-border::before,
+  .v2-shimmer-btn {
+    animation: none;
+  }
+}
+
+/* ----------------------------------------------------------
+   Container
+   ---------------------------------------------------------- */
+.v2-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-left: var(--v2-space-lg);
+  padding-right: var(--v2-space-lg);
+}
+
+@media (max-width: 640px) {
+  .v2-container {
+    padding-left: var(--v2-space-md);
+    padding-right: var(--v2-space-md);
+  }
+}
+
+.v2-container-wide {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: var(--v2-space-lg);
+  padding-right: var(--v2-space-lg);
+}

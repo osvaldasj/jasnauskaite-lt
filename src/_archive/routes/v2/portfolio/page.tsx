@@ -6,50 +6,28 @@ import { CursorGlow } from "@/components/v2/effects/CursorGlow";
 import { KineticHero } from "@/components/v2/sections/KineticHero";
 import { SplitAbout } from "@/components/v2/sections/SplitAbout";
 import BrandWall from "@/components/v2/sections/BrandWall";
-import PortfolioShowcase from "@/components/v2/sections/PortfolioShowcase";
-import OrganicContent from "@/components/v2/sections/OrganicContent";
 import StackedServices from "@/components/v2/sections/StackedServices";
-import LatestInsights from "@/components/v2/sections/LatestInsights";
+import EditorialCaseStudies from "@/components/v2/sections/EditorialCaseStudies";
+import StatsTicker from "@/components/v2/sections/StatsTicker";
 import MinimalFAQ from "@/components/v2/sections/MinimalFAQ";
 import KineticCTA from "@/components/v2/sections/KineticCTA";
 
-/* Animated gradient divider between sections */
-function GradientDivider() {
-  return (
-    <div className="relative mx-auto max-w-5xl px-6">
-      <div
-        className="h-[1px] w-full rounded-full opacity-30"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent, #833AB4, #C13584, #E1306C, #F77737, transparent)",
-        }}
-      />
-    </div>
-  );
-}
-
-export default function HomePage() {
+export default function V2PortfolioPage() {
   return (
     <>
       <CursorGlow />
       <Navbar />
       <main id="main-content">
         <KineticHero />
+        <StatsTicker />
         <SplitAbout />
-        <GradientDivider />
         <div id="work">
           <BrandWall />
-          <PortfolioShowcase />
+          <EditorialCaseStudies />
         </div>
-        <GradientDivider />
-        <OrganicContent />
-        <GradientDivider />
         <div id="services">
           <StackedServices />
         </div>
-        <GradientDivider />
-        <LatestInsights />
-        <GradientDivider />
         <MinimalFAQ />
         <div id="contact">
           <KineticCTA />

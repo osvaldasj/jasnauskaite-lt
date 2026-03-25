@@ -8,8 +8,8 @@
 :root {
   --background: #FFFFFF;
   --foreground: #1A1A1A;
-  --surface: #F5F5F3;
-  --muted: #4A4A4A;
+  --surface: #FAFAFA;
+  --muted: #6B6B6B;
   --border-color: #E5E5E0;
 }
 
@@ -18,7 +18,7 @@
   --background: #0A0A0A;
   --foreground: #E5E5E0;
   --surface: #1A1A1A;
-  --muted: #888888;
+  --muted: #A0A0A0;
   --border-color: #2A2A2A;
 }
 
@@ -30,7 +30,7 @@
   --color-border: var(--border-color);
   --color-graphite: #1A1A1A;
   --color-mid-graphite: #4A4A4A;
-  --color-light-bg: #F5F5F3;
+  --color-light-bg: #FAFAFA;
   --color-line-color: #E5E5E0;
   --color-ig-purple: #833AB4;
   --color-ig-magenta: #C13584;

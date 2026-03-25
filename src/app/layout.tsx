@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Outfit, Inter } from "next/font/google";
+import { Outfit, Inter, Syne, DM_Sans, Space_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { LanguageProvider } from "@/lib/i18n";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
-import { PageTransition } from "@/components/providers/PageTransition";
 import { GoogleAnalytics } from "@/components/providers/GoogleAnalytics";
+import { GrainOverlay } from "@/components/v2/effects/GrainOverlay";
 import "./globals.css";
+import "./v2-globals.css";
 
 const outfit = Outfit({
   subsets: ["latin", "latin-ext"],
@@ -21,10 +22,31 @@ const inter = Inter({
   weight: ["400", "500", "600"],
 });
 
+const syne = Syne({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-heading",
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-body",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
+const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+  weight: ["400", "700"],
+});
+
 export const metadata: Metadata = {
-  title: "Inide Jasnauskaite — Content Creator",
+  title: "Inidė Jasnauskaitė-Jonaitė — Content Creator",
   description:
-    "Fashion, Beauty & Lifestyle Content Creator. 354K+ Instagram followers. Working with the biggest Lithuanian and international brands.",
+    "Fashion, Beauty & Lifestyle Content Creator. 358K+ Instagram followers. Working with the biggest Lithuanian and international brands.",
   keywords: [
     "content creator",
     "influencer",
@@ -37,8 +59,8 @@ export const metadata: Metadata = {
     "jasnauskaite",
     "inide",
   ],
-  authors: [{ name: "Inide Jasnauskaite" }],
-  creator: "Inide Jasnauskaite",
+  authors: [{ name: "Inidė Jasnauskaitė-Jonaitė" }],
+  creator: "Inidė Jasnauskaitė-Jonaitė",
   publisher: "Reelize",
   metadataBase: new URL("https://jasnauskaite.lt"),
   icons: {
@@ -50,18 +72,18 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "https://jasnauskaite.lt",
-    title: "Inide Jasnauskaite — Content Creator",
+    title: "Inidė Jasnauskaitė-Jonaitė — Content Creator",
     description:
-      "Fashion, Beauty & Lifestyle Content Creator. 354K+ Instagram followers. Creating content that delivers results.",
+      "Fashion, Beauty & Lifestyle Content Creator. 358K+ Instagram followers. Creating content that delivers results.",
     locale: "lt_LT",
     alternateLocale: "en_US",
-    siteName: "Inide Jasnauskaite",
+    siteName: "Inidė Jasnauskaitė-Jonaitė",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Inide Jasnauskaite — Content Creator",
+    title: "Inidė Jasnauskaitė-Jonaitė — Content Creator",
     description:
-      "Fashion, Beauty & Lifestyle Content Creator. 354K+ Instagram followers.",
+      "Fashion, Beauty & Lifestyle Content Creator. 358K+ Instagram followers.",
   },
   robots: {
     index: true,
@@ -79,7 +101,7 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "Inide Jasnauskaite",
+  name: "Inidė Jasnauskaitė-Jonaitė",
   alternateName: "@jasnauskaite",
   url: "https://jasnauskaite.lt",
   jobTitle: "Content Creator",
@@ -99,7 +121,7 @@ const jsonLd = {
     "Social Media Marketing",
   ],
   description:
-    "Fashion, Beauty & Lifestyle Content Creator with 354K+ Instagram followers.",
+    "Fashion, Beauty & Lifestyle Content Creator with 358K+ Instagram followers.",
 };
 
 export default function RootLayout({
@@ -115,7 +137,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${outfit.variable} ${inter.variable}`}>
+      <body className={`${outfit.variable} ${inter.variable} ${syne.variable} ${dmSans.variable} ${spaceMono.variable} v2-layout`}>
         <GoogleAnalytics />
         <a
           href="#main-content"
@@ -126,7 +148,8 @@ export default function RootLayout({
         <ThemeProvider>
           <LanguageProvider>
             <SmoothScroll>
-              <PageTransition>{children}</PageTransition>
+              {children}
+              <GrainOverlay />
             </SmoothScroll>
           </LanguageProvider>
         </ThemeProvider>

@@ -2,18 +2,20 @@ export const en = {
   // Navbar
   nav: {
     portfolio: "Portfolio",
-    ourWork: "Our Work",
+    ourWork: "Services",
     collaborate: "Collaborate",
+    insights: "Insights",
+    links: "Links",
     menuLabel: "Open menu",
   },
 
   // Hero
   hero: {
     subtitle: "Content Creator",
-    firstName: "Inide",
-    lastName: "Jasnauskaite",
+    firstName: "Inid\u0117",
+    lastName: "Jasnauskait\u0117-Jonait\u0117",
     description:
-      "Fashion, beauty & lifestyle content creator with 354K+ Instagram followers. Creating content that doesn't just look good — it delivers results.",
+      "Fashion, beauty & lifestyle content creator with 358K+ Instagram followers. Creating content that doesn't just look good — it delivers results.",
     cta: "Collaborate",
     portfolio: "Portfolio",
   },
@@ -24,19 +26,19 @@ export const en = {
     title: "Creating content that",
     titleHighlight: "delivers",
     paragraph1:
-      "I'm Inide Jasnauskaite — a content creator working with the biggest Lithuanian and international brands. Over 5+ years, I've created hundreds of reels, story series and campaigns that reached millions of people.",
+      "I'm Inid\u0117 Jasnauskait\u0117-Jonait\u0117 — a content creator working with the biggest Lithuanian and international brands. Over 8+ years, I've created hundreds of reels, story series and campaigns that reached millions of people.",
     paragraph2:
       "My goal isn't just beautiful content — it's real results. Every project is measured by numbers: engagement rate, reach, conversions. Brands come back because the content works.",
-    paragraph3Pre: "I work through",
-    paragraph3Company: "Reelize",
+    paragraph3Pre: "Every collaboration follows a structured process",
+    paragraph3Company: "",
     paragraph3Post:
-      "— my company that ensures a professional process from the first idea to the final result and report.",
+      "— from the first idea to the final result and detailed performance report.",
     handle: "@jasnauskaite",
   },
 
   // Services
   services: {
-    label: "Our work",
+    label: "Services",
     title: "What I",
     titleHighlight: "create",
     reels: {
@@ -183,7 +185,7 @@ export const en = {
     title1: "Content that",
     title2: "delivers",
     description:
-      "Fashion, beauty & lifestyle creator with 354K+ followers. Scroll-stopping reels, authentic stories, and campaigns that drive real results for brands.",
+      "Fashion, beauty & lifestyle creator with 358K+ followers. Scroll-stopping reels, authentic stories, and campaigns that drive real results for brands.",
     cta: "Collaborate",
     viewWork: "View work",
     phone1Label: "Reels",
@@ -295,7 +297,7 @@ export const en = {
   mediaKit: {
     header: {
       label: "Media Kit",
-      name: "Inide Jasnauskaite",
+      name: "Inidė Jasnauskaitė-Jonaitė",
       positioning: "Fashion, beauty and lifestyle content creator based in Lithuania. Creating scroll-stopping content that delivers measurable results for brands.",
     },
     metrics: {
@@ -367,13 +369,32 @@ export const en = {
 
   // Links page (page.tsx)
   links: {
-    title: "Inide Jasnauskaite",
+    title: "Inidė Jasnauskaitė-Jonaitė",
     subtitle: "Content Creator",
     inCloset: "Inide's Closet",
     inClosetSub: "Rent my wardrobe",
     portfolio: "Portfolio",
     portfolioSub: "My best work",
+    mediaKitSub: "Stats & pricing",
     collaborate: "Collaborate",
+  },
+
+  // Insights
+  insights: {
+    sectionLabel: "Insights",
+    sectionTitle: "Notes on",
+    sectionTitleAccent: "creator partnerships",
+    sectionSubtitle: "Honest thoughts on what makes brand collaborations work — from someone who's done 190+ of them.",
+    viewAll: "View all",
+    viewAllInsights: "View all insights",
+    readArticle: "Read article",
+    allInsights: "All insights",
+    readNext: "Read next",
+    ctaTitle: "Want to create something together?",
+    ctaSubtitle: "Let's discuss how we can build a partnership that delivers real results.",
+    ctaButton: "Get in touch",
+    notFound: "Article not found",
+    backToInsights: "Back to insights",
   },
 };
 

@@ -6,16 +6,18 @@ export const lt: TranslationKeys = {
     portfolio: "Portfolio",
     ourWork: "Darbai",
     collaborate: "Bendradarbiauti",
+    insights: "Insights",
+    links: "Nuorodos",
     menuLabel: "Atidaryti meniu",
   },
 
   // Hero
   hero: {
     subtitle: "Turinio kurėja",
-    firstName: "Inide",
-    lastName: "Jasnauskaite",
+    firstName: "Inid\u0117",
+    lastName: "Jasnauskait\u0117-Jonait\u0117",
     description:
-      "Mados, grožio ir gyvenimo būdo turinio kūrėja su 354K+ Instagram sekėjų. Kuriu turinį, kuris ne tik gerai atrodo — jis duoda rezultatų.",
+      "Mados, grožio ir gyvenimo būdo turinio kūrėja su 358K+ Instagram sekėjų. Kuriu turinį, kuris ne tik gerai atrodo — jis duoda rezultatų.",
     cta: "Bendradarbiauti",
     portfolio: "Portfolio",
   },
@@ -26,13 +28,13 @@ export const lt: TranslationKeys = {
     title: "Turinys, kuris",
     titleHighlight: "veikia",
     paragraph1:
-      "Esu Inidė Jasnauskaitė — turinio kūrėja, dirbanti su didžiausiais Lietuvos ir tarptautiniais prekės ženklais. Per 5+ metus sukūriau šimtus reels, stories serijų ir kampanijų, kurios pasiekė milijonus žmonių.",
+      "Esu Inidė Jasnauskaitė-Jonaitė — turinio kūrėja, dirbanti su didžiausiais Lietuvos ir tarptautiniais prekės ženklais. Per 8+ metus sukūriau šimtus reels, stories serijų ir kampanijų, kurios pasiekė milijonus žmonių.",
     paragraph2:
       "Mano tikslas — ne tik gražus turinys, o realūs rezultatai. Kiekvienas projektas matuojamas skaičiais: įsitraukimo rodikliu, pasiekiamumu, konversijomis. Prekės ženklai grįžta, nes turinys veikia.",
-    paragraph3Pre: "Dirbu per",
-    paragraph3Company: "Reelize",
+    paragraph3Pre: "Kiekvienas bendradarbiavimas vyksta struktūruotai",
+    paragraph3Company: "",
     paragraph3Post:
-      "— savo įmonę, kuri užtikrina profesionalų procesą nuo pirmos idėjos iki galutinio rezultato ir ataskaitos.",
+      "— nuo pirmos idėjos iki galutinio rezultato ir detalios veiklos ataskaitos.",
     handle: "@jasnauskaite",
   },
 
@@ -185,7 +187,7 @@ export const lt: TranslationKeys = {
     title1: "Turinys, kuris",
     title2: "veikia",
     description:
-      "Mados, grožio ir gyvenimo būdo kūrėja su 354K+ sekėjų. Dėmesį patraukiantys reels, autentiški storiai ir kampanijos, duodančios realių rezultatų.",
+      "Mados, grožio ir gyvenimo būdo kūrėja su 358K+ sekėjų. Dėmesį patraukiantys reels, autentiški storiai ir kampanijos, duodančios realių rezultatų.",
     cta: "Bendradarbiauti",
     viewWork: "Žiūrėti darbus",
     phone1Label: "Reels",
@@ -369,12 +371,31 @@ export const lt: TranslationKeys = {
 
   // Links page (page.tsx)
   links: {
-    title: "Inidė Jasnauskaitė",
+    title: "Inidė Jasnauskaitė-Jonaitė",
     subtitle: "Turinio kūrėja",
     inCloset: "Inidės spinta",
     inClosetSub: "Nuomokite mano drabužius",
     portfolio: "Portfolio",
     portfolioSub: "Geriausi darbai",
+    mediaKitSub: "Statistika ir paslaugos",
     collaborate: "Bendradarbiauti",
+  },
+
+  // Insights
+  insights: {
+    sectionLabel: "Insights",
+    sectionTitle: "Pastabos apie",
+    sectionTitleAccent: "kūrėjų partnerystes",
+    sectionSubtitle: "Atviros mintys apie tai, kas lemia sėkmingą bendradarbiavimą su brendais — iš žmogaus, kuris jų padarė 190+.",
+    viewAll: "Žiūrėti visus",
+    viewAllInsights: "Visi straipsniai",
+    readArticle: "Skaityti",
+    allInsights: "Visi straipsniai",
+    readNext: "Skaityti toliau",
+    ctaTitle: "Norite kurti kartu?",
+    ctaSubtitle: "Aptarkime, kaip galime sukurti partnerystę, kuri duoda tikrų rezultatų.",
+    ctaButton: "Susisiekti",
+    notFound: "Straipsnis nerastas",
+    backToInsights: "Grįžti į straipsnius",
   },
 };
