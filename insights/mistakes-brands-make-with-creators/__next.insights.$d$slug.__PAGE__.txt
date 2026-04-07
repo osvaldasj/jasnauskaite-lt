@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
-2:I[89849,["/_next/static/chunks/6dc6af33268e9725.js","/_next/static/chunks/bf74be8809ebdd9a.js","/_next/static/chunks/f4a4a7be363c8e47.js","/_next/static/chunks/969168a4962708f8.js"],"default"]
+2:I[89849,["/_next/static/chunks/1721c36f71556c26.js","/_next/static/chunks/bf74be8809ebdd9a.js","/_next/static/chunks/f4a4a7be363c8e47.js","/_next/static/chunks/969168a4962708f8.js"],"default"]
 3:I[39518,["/_next/static/chunks/1189ffce36dac0f9.js","/_next/static/chunks/544227823222018a.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
-0:{"buildId":"ZFw6lQ7nBxsmgh8siGaFY","rsc":["$","$1","c",{"children":[["$","$L2",null,{"slug":"mistakes-brands-make-with-creators"}],[["$","script","script-0",{"src":"/_next/static/chunks/bf74be8809ebdd9a.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/f4a4a7be363c8e47.js","async":true}],["$","script","script-2",{"src":"/_next/static/chunks/969168a4962708f8.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"tGyW7d_VOZoKwYKlnGXk5","rsc":["$","$1","c",{"children":[["$","$L2",null,{"slug":"mistakes-brands-make-with-creators"}],[["$","script","script-0",{"src":"/_next/static/chunks/bf74be8809ebdd9a.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/f4a4a7be363c8e47.js","async":true}],["$","script","script-2",{"src":"/_next/static/chunks/969168a4962708f8.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null
