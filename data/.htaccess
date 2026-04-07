@@ -1,4 +1,0 @@
-# Block all direct web access to the /data/ directory
-# PHP reads these files internally — they must not be accessible via URL
-Order Allow,Deny
-Deny from all
