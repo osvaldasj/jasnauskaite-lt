@@ -15,7 +15,7 @@ export const en = {
     firstName: "Inid\u0117",
     lastName: "Jasnauskait\u0117-Jonait\u0117",
     description:
-      "Fashion, beauty & lifestyle content creator with 358K+ Instagram followers. Creating content that doesn't just look good — it delivers results.",
+      "Fashion, beauty & lifestyle content creator with 359K+ Instagram followers. Creating content that doesn't just look good — it delivers results.",
     cta: "Collaborate",
     portfolio: "Portfolio",
   },
@@ -26,7 +26,7 @@ export const en = {
     title: "Creating content that",
     titleHighlight: "delivers",
     paragraph1:
-      "I'm Inid\u0117 Jasnauskait\u0117-Jonait\u0117 — a content creator working with the biggest Lithuanian and international brands. Over 8+ years, I've created hundreds of reels, story series and campaigns that reached millions of people.",
+      "I'm Inid\u0117 Jasnauskait\u0117-Jonait\u0117 — a content creator working with the biggest Lithuanian and international brands. Over 8+ years, I've created 785+ branded posts across 69 brands — reels, story series and campaigns that reached millions of people.",
     paragraph2:
       "My goal isn't just beautiful content — it's real results. Every project is measured by numbers: engagement rate, reach, conversions. Brands come back because the content works.",
     paragraph3Pre: "Every collaboration follows a structured process",
@@ -186,7 +186,7 @@ export const en = {
     title1: "Content that",
     title2: "delivers",
     description:
-      "Fashion, beauty & lifestyle creator with 358K+ followers. Scroll-stopping reels, authentic stories, and campaigns that drive real results for brands.",
+      "Fashion, beauty & lifestyle creator with 359K+ followers. Scroll-stopping reels, authentic stories, and campaigns that drive real results for brands.",
     cta: "Collaborate",
     viewWork: "View work",
     phone1Label: "Reels",
@@ -412,6 +412,13 @@ export const en = {
     titleHighlight: "brands",
     description: "Not everything is a collaboration. Fashion, travel, beauty and everyday moments that keep the feed authentic.",
     viewMore: "View more on Instagram",
+  },
+
+  // Branded results
+  brandedResults: {
+    brands: "Brand partners",
+    posts: "Branded posts",
+    avgViews: "Avg views per branded post",
   },
 
   // Insights

@@ -12,6 +12,7 @@ import StackedServices from "@/components/v2/sections/StackedServices";
 import LatestInsights from "@/components/v2/sections/LatestInsights";
 import MinimalFAQ from "@/components/v2/sections/MinimalFAQ";
 import KineticCTA from "@/components/v2/sections/KineticCTA";
+import BrandedResults from "@/components/v2/sections/BrandedResults";
 
 /* Animated gradient divider between sections */
 function GradientDivider() {
@@ -40,6 +41,7 @@ export default function HomePage() {
         <div id="work">
           <BrandWall />
           <PortfolioShowcase />
+          <BrandedResults />
         </div>
         <GradientDivider />
         <OrganicContent />

@@ -46,7 +46,7 @@ const spaceMono = Space_Mono({
 export const metadata: Metadata = {
   title: "Inidė Jasnauskaitė-Jonaitė — Content Creator",
   description:
-    "Fashion, Beauty & Lifestyle Content Creator. 358K+ Instagram followers. Working with the biggest Lithuanian and international brands.",
+    "Fashion, Beauty & Lifestyle Content Creator. 359K+ Instagram followers. Working with the biggest Lithuanian and international brands.",
   keywords: [
     "content creator",
     "influencer",
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     url: "https://jasnauskaite.lt",
     title: "Inidė Jasnauskaitė-Jonaitė — Content Creator",
     description:
-      "Fashion, Beauty & Lifestyle Content Creator. 358K+ Instagram followers. Creating content that delivers results.",
+      "Fashion, Beauty & Lifestyle Content Creator. 359K+ Instagram followers. Creating content that delivers results.",
     locale: "lt_LT",
     alternateLocale: "en_US",
     siteName: "Inidė Jasnauskaitė-Jonaitė",
@@ -83,7 +83,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Inidė Jasnauskaitė-Jonaitė — Content Creator",
     description:
-      "Fashion, Beauty & Lifestyle Content Creator. 358K+ Instagram followers.",
+      "Fashion, Beauty & Lifestyle Content Creator. 359K+ Instagram followers.",
   },
   robots: {
     index: true,
@@ -121,7 +121,7 @@ const jsonLd = {
     "Social Media Marketing",
   ],
   description:
-    "Fashion, Beauty & Lifestyle Content Creator with 358K+ Instagram followers.",
+    "Fashion, Beauty & Lifestyle Content Creator with 359K+ Instagram followers.",
 };
 
 export default function RootLayout({
@@ -132,6 +132,7 @@ export default function RootLayout({
   return (
     <html lang="lt" suppressHydrationWarning>
       <head>
+        <meta name="p:domain_verify" content="652749428d753b1a5a2e474dd1f8be8d" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -69,9 +69,9 @@ function ParallaxLetter({
 function useStats() {
   const { t } = useTranslation();
   return [
-    { value: "358K", label: t("heroStats.followers") },
-    { value: "5.2%", label: t("heroStats.engagement"), sublabel: t("heroStats.engagementSub") },
-    { value: "315M+", label: t("heroStats.totalViews") },
+    { value: "359K", label: t("heroStats.followers") },
+    { value: "5.0%", label: t("heroStats.engagement"), sublabel: t("heroStats.engagementSub") },
+    { value: "590M+", label: t("heroStats.totalViews") },
     { value: "8+", label: t("heroStats.years") },
   ];
 }
@@ -265,9 +265,9 @@ export function KineticHero() {
       >
         <div className="mx-auto max-w-3xl grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0">
           {[
-            { value: "358K", label: t("heroStats.followers") },
-            { value: "5.2%", label: t("heroStats.engagement"), sublabel: t("heroStats.engagementSub") },
-            { value: "315M+", label: t("heroStats.totalViews") },
+            { value: "359K", label: t("heroStats.followers") },
+            { value: "5.0%", label: t("heroStats.engagement"), sublabel: t("heroStats.engagementSub") },
+            { value: "590M+", label: t("heroStats.totalViews") },
             { value: "8+", label: t("heroStats.years") },
           ].map((stat: { value: string; label: string; sublabel?: string }, i) => (
             <div

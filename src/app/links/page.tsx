@@ -57,7 +57,7 @@ function ArrowIcon() {
 const links = [
   {
     title: "Instagram",
-    subtitle: "358K followers",
+    subtitle: "359K followers",
     href: "https://instagram.com/jasnauskaite",
     icon: <InstagramIcon />,
     color: "#C13584",

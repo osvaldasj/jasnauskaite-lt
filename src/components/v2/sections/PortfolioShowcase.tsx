@@ -14,28 +14,35 @@ const PORTFOLIO = [
     tag: "Lifestyle",
     image: "/images/branded/mionetto-DNXetzOMT__.jpg",
     url: "https://www.instagram.com/reel/DNXetzOMT__/",
-    metrics: { posts: 18, views: "6.5M", likes: "1.1M", topPost: "3.2M", engagement: "16.9%" },
+    metrics: { posts: 22, views: "16.7M", likes: "1.1M", topPost: "6.9M", engagement: "6.8%" },
   },
   {
     brand: "Akropolis",
     tag: "Fashion",
     image: "/images/branded/akropolis-DPDlAeZiEuJ.jpg",
     url: "https://www.instagram.com/reel/DPDlAeZiEuJ/",
-    metrics: { posts: 31, views: "3.7M", likes: "163K", topPost: "563K", engagement: "4.4%" },
+    metrics: { posts: 35, views: "13.2M", likes: "174K", topPost: "1.7M", engagement: "1.3%" },
   },
   {
     brand: "Maxima",
     tag: "FMCG",
     image: "/images/branded/maxima-DMK9spgtfv-.jpg",
     url: "https://www.instagram.com/reel/DMK9spgtfv-/",
-    metrics: { posts: 9, views: "1.1M", likes: "59K", topPost: "542K", engagement: "5.5%" },
+    metrics: { posts: 9, views: "3.2M", likes: "59K", topPost: "1.2M", engagement: "1.8%" },
   },
   {
     brand: "Nissan",
     tag: "Automotive",
     image: "/images/branded/nissan.jpg",
-    url: "https://www.instagram.com/jasnauskaite/reels/",
-    metrics: { posts: 24, views: "4.3M", likes: "188K", topPost: "1.2M", engagement: "4.4%" },
+    url: "https://www.instagram.com/reel/DUBIIXDj5AJ/",
+    metrics: { posts: 38, views: "6.5M", likes: "79K", topPost: "3.5M", engagement: "1.2%" },
+  },
+  {
+    brand: "Hellmann's",
+    tag: "FMCG",
+    image: "/images/branded/hellmanns.jpg",
+    url: "https://www.instagram.com/reel/DD46xnfNBmJ/",
+    metrics: { posts: 5, views: "15M", likes: "900K", topPost: "14M", engagement: "6.0%" },
   },
 ];
 
@@ -65,8 +72,8 @@ export default function PortfolioShowcase() {
           </h2>
         </motion.div>
 
-        {/* 4-column vertical cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        {/* 5-column vertical cards */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
           {PORTFOLIO.map((item, i) => (
             <motion.a
               key={item.brand}
@@ -87,7 +94,7 @@ export default function PortfolioShowcase() {
                   alt={`${item.brand} branded content`}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 768px) 50vw, 25vw"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 

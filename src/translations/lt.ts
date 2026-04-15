@@ -17,7 +17,7 @@ export const lt: TranslationKeys = {
     firstName: "Inid\u0117",
     lastName: "Jasnauskait\u0117-Jonait\u0117",
     description:
-      "Mados, grožio ir gyvenimo būdo turinio kūrėja su 358K+ Instagram sekėjų. Kuriu turinį, kuris ne tik gerai atrodo — jis duoda rezultatų.",
+      "Mados, grožio ir gyvenimo būdo turinio kūrėja su 359K+ Instagram sekėjų. Kuriu turinį, kuris ne tik gerai atrodo — jis duoda rezultatų.",
     cta: "Bendradarbiauti",
     portfolio: "Portfolio",
   },
@@ -28,7 +28,7 @@ export const lt: TranslationKeys = {
     title: "Turinys, kuris",
     titleHighlight: "veikia",
     paragraph1:
-      "Esu Inidė Jasnauskaitė-Jonaitė — turinio kūrėja, dirbanti su didžiausiais Lietuvos ir tarptautiniais prekės ženklais. Per 8+ metus sukūriau šimtus reels, stories serijų ir kampanijų, kurios pasiekė milijonus žmonių.",
+      "Esu Inidė Jasnauskaitė-Jonaitė — turinio kūrėja, dirbanti su didžiausiais Lietuvos ir tarptautiniais prekės ženklais. Per 8+ metus sukūriau 785+ reklaminių publikacijų 69 brendams — reels, stories serijas ir kampanijas, pasiekusias milijonus žmonių.",
     paragraph2:
       "Mano tikslas — ne tik gražus turinys, o realūs rezultatai. Kiekvienas projektas matuojamas skaičiais: įsitraukimo rodikliu, pasiekiamumu, konversijomis. Prekės ženklai grįžta, nes turinys veikia.",
     paragraph3Pre: "Kiekvienas bendradarbiavimas vyksta struktūruotai",
@@ -188,7 +188,7 @@ export const lt: TranslationKeys = {
     title1: "Turinys, kuris",
     title2: "veikia",
     description:
-      "Mados, grožio ir gyvenimo būdo kūrėja su 358K+ sekėjų. Dėmesį patraukiantys reels, autentiški storiai ir kampanijos, duodančios realių rezultatų.",
+      "Mados, grožio ir gyvenimo būdo kūrėja su 359K+ sekėjų. Dėmesį patraukiantys reels, autentiški storiai ir kampanijos, duodančios realių rezultatų.",
     cta: "Bendradarbiauti",
     viewWork: "Žiūrėti darbus",
     phone1Label: "Reels",
@@ -414,6 +414,13 @@ export const lt: TranslationKeys = {
     titleHighlight: "reklama",
     description: "Ne viskas yra bendradarbiavimas. Mada, kelionės, grožis ir kasdienės akimirkos, kurios išlaiko autentišką feed'ą.",
     viewMore: "Daugiau Instagram",
+  },
+
+  // Branded results
+  brandedResults: {
+    brands: "Brendai partneriai",
+    posts: "Reklaminės publikacijos",
+    avgViews: "Vid. peržiūros per publikaciją",
   },
 
   // Insights
