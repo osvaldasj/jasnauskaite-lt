@@ -27,13 +27,25 @@ function detectPlatform(): Platform {
   return "other";
 }
 
+function buildAndroidIntent(target: string): string {
+  const noProtocol = target.replace(/^https?:\/\//, "");
+  return `intent://${noProtocol}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(
+    target
+  )};end`;
+}
+
+function buildChromeIosUrl(target: string): string {
+  return `googlechrome-x-callback://x-callback-url/open/?url=${encodeURIComponent(target)}`;
+}
+
 export default function NuomaPage() {
   const [state, setState] = useState<{
     checked: boolean;
     inApp: boolean;
     app: string | null;
     platform: Platform;
-  }>({ checked: false, inApp: false, app: null, platform: "other" });
+    autoAttempted: boolean;
+  }>({ checked: false, inApp: false, app: null, platform: "other", autoAttempted: false });
 
   useEffect(() => {
     const { inApp, app } = detectInAppBrowser();
@@ -44,14 +56,38 @@ export default function NuomaPage() {
       return;
     }
 
-    setState({ checked: true, inApp, app, platform });
+    if (platform === "android") {
+      try {
+        window.location.href = buildAndroidIntent(RENTAL_URL);
+      } catch {}
+      setState({ checked: true, inApp, app, platform, autoAttempted: true });
+      return;
+    }
+
+    if (platform === "ios") {
+      const iframe = document.createElement("iframe");
+      iframe.style.display = "none";
+      iframe.src = buildChromeIosUrl(RENTAL_URL);
+      document.body.appendChild(iframe);
+
+      setTimeout(() => {
+        try {
+          document.body.removeChild(iframe);
+        } catch {}
+        setState({ checked: true, inApp, app, platform, autoAttempted: true });
+      }, 600);
+      return;
+    }
+
+    setState({ checked: true, inApp, app, platform, autoAttempted: false });
   }, []);
 
   const openAndroidChrome = () => {
-    const url = RENTAL_URL.replace(/^https?:\/\//, "");
-    window.location.href = `intent://${url}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(
-      RENTAL_URL
-    )};end`;
+    window.location.href = buildAndroidIntent(RENTAL_URL);
+  };
+
+  const openIosChrome = () => {
+    window.location.href = buildChromeIosUrl(RENTAL_URL);
   };
 
   const copyLink = async () => {
@@ -93,16 +129,22 @@ export default function NuomaPage() {
           style={{ fontFamily: "var(--font-syne), sans-serif" }}
           className="text-2xl font-bold text-[#1A1A1A] mb-3"
         >
-          Atidaryk naršyklėje
+          {state.platform === "android"
+            ? "Atidaroma Chrome…"
+            : state.platform === "ios"
+            ? "Bandau atidaryti naršyklėje…"
+            : "Atidaryk naršyklėje"}
         </h1>
 
         <p
           className="text-[14px] text-[#666] leading-relaxed mb-6"
           style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
         >
-          {appName} vidinė naršyklė riboja nuomos parduotuvės funkcijas
-          (prisijungimą, mokėjimus). Atidaryk nuorodą išorinėje naršyklėje —
-          patyrimas bus sklandesnis.
+          {state.platform === "android"
+            ? "Jei sistema klausia — patvirtink „Chrome“. Jei nepavyksta automatiškai, paspausk mygtuką žemiau."
+            : state.platform === "ios"
+            ? `${appName} naršyklė riboja nuomos parduotuvės funkcijas. Pabandyk mygtuką žemiau arba atidaryk rankiniu būdu.`
+            : `${appName} naršyklė riboja nuomos parduotuvės funkcijas. Atidaryk nuorodą išorinėje naršyklėje — patyrimas bus sklandesnis.`}
         </p>
 
         {state.platform === "android" && (
@@ -114,7 +156,20 @@ export default function NuomaPage() {
               fontFamily: "var(--font-outfit), sans-serif",
             }}
           >
-            Atidaryti Chrome naršyklėje
+            Atidaryti Chrome
+          </button>
+        )}
+
+        {state.platform === "ios" && (
+          <button
+            onClick={openIosChrome}
+            className="w-full py-3.5 px-5 rounded-2xl text-white font-semibold text-[15px] active:scale-[0.98] transition-transform mb-3"
+            style={{
+              background: "linear-gradient(135deg, #833AB4, #C13584, #E1306C)",
+              fontFamily: "var(--font-outfit), sans-serif",
+            }}
+          >
+            Atidaryti Chrome (jei įdiegta)
           </button>
         )}
 
@@ -123,7 +178,7 @@ export default function NuomaPage() {
             className="text-[12px] font-semibold text-[#1A1A1A] mb-2 tracking-[0.08em] uppercase"
             style={{ fontFamily: "var(--font-outfit), sans-serif" }}
           >
-            Kaip atidaryti {state.app ? state.app : "išorinėje naršyklėje"}
+            Rankiniu būdu — {state.app || "in-app"}
           </p>
           <ol
             className="text-[13px] text-[#555] space-y-1.5 list-decimal list-inside leading-relaxed"
