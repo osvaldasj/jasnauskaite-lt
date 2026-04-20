@@ -72,7 +72,7 @@ const links = [
   {
     title: "Rent my looks",
     subtitle: "Rent Boutique",
-    href: "https://www.rentboutique.com/lt/katalogas/inides-spinta/",
+    href: "/nuoma",
     icon: <ClosetIcon />,
     color: "#E1306C",
   },
