@@ -71,8 +71,8 @@ const links = [
   },
   {
     title: "Rent my looks",
-    subtitle: "Rent Boutique",
-    href: "/nuoma",
+    subtitle: "Fashioneer",
+    href: "https://fashioneer.com/users/fshnr-jasnauskaite",
     icon: <ClosetIcon />,
     color: "#E1306C",
   },
