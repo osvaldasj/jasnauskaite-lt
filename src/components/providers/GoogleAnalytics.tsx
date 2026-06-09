@@ -43,7 +43,7 @@ export function GoogleAnalytics() {
             var href = el.getAttribute('href') || '';
             if (href.includes('instagram.com')) gtag('event', 'click', {event_category: 'outbound', event_label: 'instagram'});
             else if (href.includes('tiktok.com')) gtag('event', 'click', {event_category: 'outbound', event_label: 'tiktok'});
-            else if (href.includes('rentboutique')) gtag('event', 'click', {event_category: 'outbound', event_label: 'rentboutique'});
+            else if (href.includes('fashioneer') || href.includes('/nuoma') || href.includes('rentboutique')) gtag('event', 'click', {event_category: 'outbound', event_label: 'fashioneer'});
             else if (href.includes('mailto:')) gtag('event', 'click', {event_category: 'contact', event_label: 'email'});
             else if (href.includes('#contact') || el.textContent.includes('Collaborate') || el.textContent.includes('Bendradarbiauti')) gtag('event', 'click', {event_category: 'cta', event_label: 'collaborate'});
             else if (href.includes('/insights/')) gtag('event', 'click', {event_category: 'content', event_label: href});

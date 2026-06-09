@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const RENTAL_URL = "https://www.rentboutique.com/lt/katalogas/inides-spinta/";
+const RENTAL_URL = "https://fashioneer.com/users/fshnr-jasnauskaite";
 
 type Platform = "ios" | "android" | "other";
 
