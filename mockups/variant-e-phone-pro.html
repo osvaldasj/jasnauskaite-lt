@@ -166,6 +166,8 @@ button{font-family:var(--sans);cursor:pointer}
 .case-media .cm-bg{position:absolute;inset:-12%;background-size:cover;background-position:center;
   filter:blur(26px) brightness(.46) saturate(1.15);transform:scale(1.06);animation:cmZoom 6s ease-out forwards}
 @keyframes cmZoom{from{transform:scale(1.16)}to{transform:scale(1)}}
+/* intro story — aštri pilno ekrano nuotrauka (be blur), subtilus ken-burns zoom */
+.case-media .cm-photo{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(1.05);transform:scale(1.02);animation:kenburns 8s ease-out forwards}
 /* aštri „reel kortelė" — rodoma mažesniu dydžiu, kur thumbnail'as atrodo ryškiai */
 .case-media .cm-card{position:absolute;top:15%;left:50%;transform:translateX(-50%);width:54%;aspect-ratio:9/16;
   object-fit:cover;border-radius:16px;box-shadow:0 20px 55px rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.14);
@@ -851,7 +853,11 @@ function renderSlide(){
   const sl = activeSlides()[slideIdx];
   /* slide 1 (showcase) — aštri reel kortelė + blur fonas; kiti slide'ai — tik blur fonas (turinys virš) */
   const card = (slideIdx===0 && !introMode) ? `<img class="cm-card" src="${sl.img}" alt=""${reduced?' style="animation:none"':''}>` : '';
-  caseMedia.innerHTML = `<div class="cm-bg" style="background-image:url('${sl.img}')"></div>${card}`;
+  /* intro story — aštri nuotrauka (cm-photo); brand case'ai — blur'intas fonas (cm-bg) žemos raiškos thumbnail'ui paslėpti */
+  const bg = introMode
+    ? `<div class="cm-photo" style="background-image:url('${sl.img}')"></div>`
+    : `<div class="cm-bg" style="background-image:url('${sl.img}')"></div>`;
+  caseMedia.innerHTML = `${bg}${card}`;
   caseBody.innerHTML = sl.html;
   [...caseBars.children].forEach((b,i)=>{
     b.firstElementChild.style.width = i < slideIdx ? '100%' : '0';
