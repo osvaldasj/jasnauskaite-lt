@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inidė Jasnauskaitė — Portfolio SS26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --gold:#C8A96A;
+  --gold-rule:rgba(200,169,106,0.5);
+  --ivory:#F9F6F1;
+  --white:#FFFFFF;
+  --ink:#0D0D0D;
+  --label-size:10px;
+  --label-track:0.28em;
+}
+
+html{
+  scroll-snap-type:y mandatory;
+  overflow-y:scroll;
+  height:100%;
+}
+
+body{
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  background:#0D0D0D;
+  color:var(--white);
+  height:100%;
+  overflow-x:hidden;
+}
+
+/* ===================== PAGES ===================== */
+.page{
+  position:relative;
+  width:100%;
+  height:100svh;
+  min-height:100svh;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ===================== LOOK PAGE — SPLIT LAYOUT (desktop) ===================== */
+/*
+  Desktop: ivory left panel ~52% with text, gold rule, portrait frame right ~48%.
+  Mobile (<768px): full-bleed photo top 60svh, text panel below — vertical photos work naturally.
+*/
+
+.page--look{
+  background:var(--ivory);
+  flex-direction:row;
+  align-items:stretch;
+}
+
+/* Left text panel */
+.look-panel-text{
+  position:relative;
+  flex:0 0 52%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:80px 56px 80px 64px;
+  background:var(--ivory);
+  z-index:2;
+}
+
+/* Thin vertical gold rule between panels */
+.look-divider{
+  position:absolute;
+  top:10%;
+  right:0;
+  width:1px;
+  height:80%;
+  background:var(--gold-rule);
+  z-index:3;
+  pointer-events:none;
+}
+
+/* Right photo frame */
+.look-panel-photo{
+  flex:0 0 48%;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--ink);
+  overflow:hidden;
+}
+
+.look-portrait-frame{
+  position:relative;
+  width:100%;
+  max-width:min(420px, 90%);
+  aspect-ratio:4/5;
+  max-height:78vh;
+  /* respect aspect-ratio but cap height — recalculate width accordingly */
+  height:min(78vh, calc(min(420px, 90%) * 5/4));
+  overflow:hidden;
+  flex-shrink:0;
+}
+
+/* Ken Burns lives inside the frame, not full-screen */
+.look-portrait-frame img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
+  will-change:transform;
+  transform-origin:center center;
+  display:block;
+}
+
+/* Ken Burns only on portrait frame */
+@keyframes kenburns{
+  from{transform:scale(1.0)}
+  to{transform:scale(1.05)}
+}
+
+.kb-active{
+  animation:kenburns 9s ease-in-out forwards;
+}
+
+@media(prefers-reduced-motion:reduce){
+  .kb-active{animation:none}
+}
+
+/* ===================== LOOK TEXT CONTENT ===================== */
+.look-identity{
+  /* No longer positioned absolute — it's a flex child */
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1);
+}
+
+.look-identity.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* Fallback: after 1s make visible regardless of IntersectionObserver */
+.look-identity.fallback-visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media(prefers-reduced-motion:reduce){
+  .look-identity{opacity:1;transform:none;transition:none}
+}
+
+.look-number{
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:var(--label-size);
+  letter-spacing:var(--label-track);
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:20px;
+}
+
+.look-title{
+  font-family:'Italiana',serif;
+  font-weight:400;
+  font-size:clamp(48px,5.5vw,84px);
+  line-height:0.95;
+  color:var(--ink);
+  margin-bottom:28px;
+  letter-spacing:0.01em;
+}
+
+.look-stats{
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:var(--label-size);
+  letter-spacing:var(--label-track);
+  text-transform:uppercase;
+  color:rgba(13,13,13,0.45);
+  display:flex;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.stat-sep{
+  display:inline-block;
+  width:1px;
+  height:10px;
+  background:var(--gold-rule);
+}
+
+/* Small gold top rule above look number */
+.look-pre-rule{
+  width:32px;
+  height:1px;
+  background:var(--gold);
+  margin-bottom:20px;
+}
+
+/* ===================== PAGE FURNITURE ===================== */
+.furniture{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:10;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  padding:28px 36px 0;
+  pointer-events:none;
+}
+
+.furniture-label{
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:var(--label-size);
+  letter-spacing:var(--label-track);
+  text-transform:uppercase;
+  color:rgba(13,13,13,0.35);
+  pointer-events:none;
+}
+
+/* On look pages the furniture sits in the ivory left panel area — keep ink color */
+.page--look .furniture-label{
+  color:rgba(13,13,13,0.35);
+}
+
+/* ===================== COVER PAGE ===================== */
+.page--cover{
+  background:var(--white);
+  justify-content:center;
+  align-items:center;
+}
+
+.cover-inner{
+  text-align:center;
+  color:var(--ink);
+  padding:0 32px;
+  opacity:0;
+  animation:coverReveal 1.6s 0.3s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+
+@keyframes coverReveal{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .cover-inner{opacity:1;transform:none;animation:none}
+}
+
+.cover-pre{
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:var(--label-size);
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:rgba(13,13,13,0.45);
+  margin-bottom:40px;
+}
+
+.cover-name{
+  font-family:'Italiana',serif;
+  font-weight:400;
+  font-size:clamp(56px,10vw,120px);
+  line-height:0.92;
+  color:var(--ink);
+  letter-spacing:0.01em;
+  margin-bottom:0;
+}
+
+.cover-rule{
+  width:clamp(80px,14vw,160px);
+  height:1px;
+  background:var(--gold);
+  margin:32px auto;
+}
+
+.cover-sub{
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:var(--label-size);
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:rgba(13,13,13,0.45);
+  margin-bottom:0;
+}
+
+.cover-scroll-hint{
+  position:absolute;
+  bottom:36px;
+  left:50%;
+  transform:translateX(-50%);
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:var(--label-size);
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:rgba(13,13,13,0.3);
+  animation:hintPulse 2.8s 2s ease-in-out infinite;
+}
+
+@keyframes hintPulse{
+  0%,100%{opacity:0.3}
+  50%{opacity:0.7}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .cover-scroll-hint{animation:none;opacity:0.4}
+}
+
+/* ===================== NUMBERS PAGE ===================== */
+.page--numbers{
+  background:var(--white);
+  color:var(--ink);
+  justify-content:center;
+  align-items:center;
+  padding:60px 40px;
+}
+
+.numbers-inner{
+  width:100%;
+  max-width:960px;
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1);
+}
+
+.numbers-inner.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media(prefers-reduced-motion:reduce){
+  .numbers-inner{opacity:1;transform:none;transition:none}
+}
+
+.numbers-eyebrow{
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:var(--label-size);
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:rgba(13,13,13,0.35);
+  text-align:center;
+  margin-bottom:56px;
+}
+
+.numbers-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:0;
+}
+
+.number-cell{
+  text-align:center;
+  padding:0 20px;
+  position:relative;
+}
+
+.number-cell:not(:last-child)::after{
+  content:'';
+  position:absolute;
+  right:0;
+  top:50%;
+  transform:translateY(-50%);
+  width:1px;
+  height:60%;
+  background:var(--gold-rule);
+}
+
+.number-value{
+  font-family:'Italiana',serif;
+  font-weight:400;
+  font-size:clamp(40px,6vw,80px);
+  line-height:1.0;
+  color:var(--ink);
+  letter-spacing:0.01em;
+  margin-bottom:12px;
+}
+
+.number-label{
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:var(--label-size);
+  letter-spacing:0.26em;
+  text-transform:uppercase;
+  color:rgba(13,13,13,0.4);
+}
+
+.numbers-rule{
+  width:60px;
+  height:1px;
+  background:var(--gold);
+  margin:56px auto 36px;
+}
+
+.numbers-note{
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:13px;
+  letter-spacing:0.06em;
+  color:rgba(13,13,13,0.45);
+  text-align:center;
+  line-height:1.8;
+}
+
+/* ===================== ORGANIC SPREAD ===================== */
+.page--organic{
+  background:var(--ink);
+  justify-content:center;
+  align-items:center;
+  padding:80px 36px 60px;
+}
+
+.organic-eyebrow{
+  position:absolute;
+  top:28px;
+  left:36px;
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:var(--label-size);
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.35);
+  z-index:10;
+}
+
+.organic-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(2,1fr);
+  gap:4px;
+  width:100%;
+  max-width:900px;
+  height:calc(100svh - 140px);
+  opacity:0;
+  transition:opacity 0.9s 0.15s cubic-bezier(0.22,1,0.36,1);
+}
+
+.organic-grid.visible{
+  opacity:1;
+}
+
+@media(prefers-reduced-motion:reduce){
+  .organic-grid{opacity:1;transition:none}
+}
+
+.organic-cell{
+  position:relative;
+  overflow:hidden;
+}
+
+.organic-cell img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
+
+.organic-caption{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:18px 12px 10px;
+  background:linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%);
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:9px;
+  letter-spacing:0.24em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.6);
+  text-align:center;
+}
+
+.organic-footer{
+  position:absolute;
+  bottom:28px;
+  left:50%;
+  transform:translateX(-50%);
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:var(--label-size);
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.25);
+  white-space:nowrap;
+  z-index:10;
+}
+
+/* ===================== CLOSING PAGE ===================== */
+.page--closing{
+  background:var(--white);
+  color:var(--ink);
+  justify-content:center;
+  align-items:center;
+}
+
+.closing-inner{
+  text-align:center;
+  padding:0 32px;
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1);
+}
+
+.closing-inner.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media(prefers-reduced-motion:reduce){
+  .closing-inner{opacity:1;transform:none;transition:none}
+}
+
+.closing-title{
+  font-family:'Italiana',serif;
+  font-weight:400;
+  font-size:clamp(32px,6vw,72px);
+  line-height:1.05;
+  color:var(--ink);
+  margin-bottom:32px;
+  letter-spacing:0.01em;
+}
+
+.closing-rule{
+  width:48px;
+  height:1px;
+  background:var(--gold);
+  margin:0 auto 32px;
+}
+
+.closing-email{
+  display:block;
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:11px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--ink);
+  text-decoration:none;
+  margin-bottom:32px;
+  transition:color 0.2s;
+  position:relative;
+}
+
+.closing-email::after{
+  content:'';
+  position:absolute;
+  bottom:-3px;
+  left:50%;
+  transform:translateX(-50%);
+  width:0;
+  height:1px;
+  background:var(--gold);
+  transition:width 0.3s cubic-bezier(0.22,1,0.36,1);
+}
+
+.closing-email:hover::after{
+  width:100%;
+}
+
+.closing-links{
+  display:flex;
+  justify-content:center;
+  gap:28px;
+  margin-bottom:40px;
+}
+
+.closing-link{
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:var(--label-size);
+  letter-spacing:0.24em;
+  text-transform:uppercase;
+  color:rgba(13,13,13,0.5);
+  text-decoration:none;
+  transition:color 0.2s;
+}
+
+.closing-link:hover{
+  color:var(--ink);
+}
+
+.closing-copy{
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:9px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:rgba(13,13,13,0.25);
+}
+
+/* ===================== DOT NAVIGATION ===================== */
+.dot-nav{
+  position:fixed;
+  right:28px;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:100;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  list-style:none;
+}
+
+.dot-nav button{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  border:none;
+  background:rgba(13,13,13,0.2);
+  cursor:pointer;
+  padding:0;
+  transition:background 0.3s, transform 0.3s;
+  display:block;
+}
+
+.dot-nav button.active{
+  background:var(--gold);
+  transform:scale(1.4);
+}
+
+.dot-nav button:hover:not(.active){
+  background:rgba(13,13,13,0.45);
+}
+
+/* Dark pages: flip dot colors */
+body.on-dark .dot-nav button{
+  background:rgba(255,255,255,0.28);
+}
+body.on-dark .dot-nav button.active{
+  background:var(--gold);
+}
+body.on-dark .dot-nav button:hover:not(.active){
+  background:rgba(255,255,255,0.6);
+}
+
+/* ===================== RESPONSIVE — MOBILE ===================== */
+@media(max-width:768px){
+  /* On mobile: look page goes back to full-bleed photo top, text below */
+  .page--look{
+    flex-direction:column;
+    background:var(--ink);
+  }
+
+  .look-panel-photo{
+    flex:0 0 60svh;
+    width:100%;
+    max-width:none;
+  }
+
+  .look-portrait-frame{
+    width:100%;
+    max-width:none;
+    height:100%;
+    max-height:none;
+    aspect-ratio:unset;
+  }
+
+  .look-panel-text{
+    flex:1;
+    padding:24px 20px 32px;
+    background:var(--ink);
+    justify-content:flex-start;
+  }
+
+  .look-divider{
+    display:none;
+  }
+
+  .look-number{
+    color:var(--gold);
+    margin-bottom:12px;
+  }
+
+  .look-title{
+    font-size:clamp(32px,9vw,56px);
+    color:var(--white);
+  }
+
+  .look-stats{
+    color:rgba(255,255,255,0.5);
+    gap:10px;
+  }
+
+  .look-pre-rule{
+    background:var(--gold);
+  }
+
+  .page--look .furniture-label{
+    color:rgba(255,255,255,0.5);
+  }
+
+  .furniture{
+    padding:20px 20px 0;
+  }
+
+  .dot-nav{
+    right:14px;
+  }
+
+  .numbers-grid{
+    grid-template-columns:repeat(2,1fr);
+    grid-template-rows:repeat(2,auto);
+    gap:32px 0;
+  }
+
+  .number-cell:nth-child(2)::after,
+  .number-cell:nth-child(4)::after{
+    display:none;
+  }
+
+  .number-cell:nth-child(1)::after,
+  .number-cell:nth-child(3)::after{
+    height:60%;
+  }
+
+  .organic-grid{
+    grid-template-columns:repeat(2,1fr);
+    grid-template-rows:repeat(3,1fr);
+  }
+
+  .page--numbers{
+    padding:40px 20px;
+  }
+
+  .page--organic{
+    padding:60px 16px 60px;
+  }
+
+  .cover-pre{
+    font-size:9px;
+    letter-spacing:0.2em;
+    margin-bottom:28px;
+  }
+
+  .numbers-note{
+    font-size:12px;
+    padding:0 12px;
+  }
+}
+
+@media(max-width:480px){
+  .furniture-label{
+    font-size:8px;
+    letter-spacing:0.18em;
+  }
+
+  .look-number{
+    font-size:9px;
+  }
+
+  .look-stats{
+    font-size:9px;
+  }
+
+  .look-title{
+    font-size:clamp(28px,10vw,44px);
+  }
+
+  .dot-nav{
+    gap:8px;
+  }
+
+  .organic-caption{
+    font-size:8px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- DOT NAV — populated by JS -->
+<nav class="dot-nav" aria-label="Page navigation" id="dotNav"></nav>
+
+<!-- ===== PAGE 1: COVER ===== -->
+<section class="page page--cover" data-page="0" data-dark="false" id="page-0">
+  <header class="furniture">
+    <span class="furniture-label" style="opacity:0;" aria-hidden="true">.</span>
+    <span class="furniture-label" style="color:rgba(13,13,13,0.3);">01 / 08</span>
+  </header>
+  <div class="cover-inner">
+    <p class="cover-pre">Portfolio &mdash; Spring / Summer 2026</p>
+    <h1 class="cover-name">Inid&#279;<br>Jasnauskaite&#775;</h1>
+    <div class="cover-rule"></div>
+    <p class="cover-sub">Fashion &nbsp;&middot;&nbsp; Beauty &nbsp;&middot;&nbsp; Lifestyle &nbsp;&mdash;&nbsp; Vilnius</p>
+  </div>
+  <p class="cover-scroll-hint">Scroll &darr;</p>
+</section>
+
+<!-- ===== PAGE 2: LOOK 01 — MIONETTO ===== -->
+<section class="page page--look" data-page="1" data-dark="false" id="page-1">
+  <header class="furniture">
+    <span class="furniture-label">Jasnauskaite&#775; &mdash; SS26 Portfolio</span>
+    <span class="furniture-label">02 / 08</span>
+  </header>
+
+  <!-- LEFT: text panel -->
+  <div class="look-panel-text">
+    <div class="look-divider"></div>
+    <div class="look-identity" id="li-1">
+      <div class="look-pre-rule"></div>
+      <p class="look-number">Look 01</p>
+      <h2 class="look-title">Mionetto</h2>
+      <p class="look-stats">
+        <span>Lifestyle Campaign</span>
+        <span class="stat-sep"></span>
+        <span>22 Posts</span>
+        <span class="stat-sep"></span>
+        <span>16.7M Views</span>
+        <span class="stat-sep"></span>
+        <span>ER 6.8%</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- RIGHT: portrait frame -->
+  <div class="look-panel-photo">
+    <div class="look-portrait-frame">
+      <img src="images/mionetto-DNXetzOMT__.jpg" alt="Mionetto campaign" id="kb-1">
+    </div>
+  </div>
+</section>
+
+<!-- ===== PAGE 3: LOOK 02 — HELLMANN'S ===== -->
+<section class="page page--look" data-page="2" data-dark="false" id="page-2">
+  <header class="furniture">
+    <span class="furniture-label">Jasnauskaite&#775; &mdash; SS26 Portfolio</span>
+    <span class="furniture-label">03 / 08</span>
+  </header>
+
+  <div class="look-panel-text">
+    <div class="look-divider"></div>
+    <div class="look-identity" id="li-2">
+      <div class="look-pre-rule"></div>
+      <p class="look-number">Look 02</p>
+      <h2 class="look-title">Hellmann&rsquo;s</h2>
+      <p class="look-stats">
+        <span>Food &amp; Lifestyle</span>
+        <span class="stat-sep"></span>
+        <span>15M Views</span>
+        <span class="stat-sep"></span>
+        <span>Top Reel 14M</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="look-panel-photo">
+    <div class="look-portrait-frame">
+      <img src="images/hellmanns.jpg" alt="Hellmann's campaign" id="kb-2">
+    </div>
+  </div>
+</section>
+
+<!-- ===== PAGE 4: LOOK 03 — AKROPOLIS ===== -->
+<section class="page page--look" data-page="3" data-dark="false" id="page-3">
+  <header class="furniture">
+    <span class="furniture-label">Jasnauskaite&#775; &mdash; SS26 Portfolio</span>
+    <span class="furniture-label">04 / 08</span>
+  </header>
+
+  <div class="look-panel-text">
+    <div class="look-divider"></div>
+    <div class="look-identity" id="li-3">
+      <div class="look-pre-rule"></div>
+      <p class="look-number">Look 03</p>
+      <h2 class="look-title">Akropolis</h2>
+      <p class="look-stats">
+        <span>Fashion</span>
+        <span class="stat-sep"></span>
+        <span>35 Posts</span>
+        <span class="stat-sep"></span>
+        <span>13.2M Views</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="look-panel-photo">
+    <div class="look-portrait-frame">
+      <img src="images/akropolis-DPDlAeZiEuJ.jpg" alt="Akropolis campaign" id="kb-3">
+    </div>
+  </div>
+</section>
+
+<!-- ===== PAGE 5: LOOK 04 — NISSAN ===== -->
+<section class="page page--look" data-page="4" data-dark="false" id="page-4">
+  <header class="furniture">
+    <span class="furniture-label">Jasnauskaite&#775; &mdash; SS26 Portfolio</span>
+    <span class="furniture-label">05 / 08</span>
+  </header>
+
+  <div class="look-panel-text">
+    <div class="look-divider"></div>
+    <div class="look-identity" id="li-4">
+      <div class="look-pre-rule"></div>
+      <p class="look-number">Look 04</p>
+      <h2 class="look-title">Nissan</h2>
+      <p class="look-stats">
+        <span>Automotive</span>
+        <span class="stat-sep"></span>
+        <span>6.5M Views</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="look-panel-photo">
+    <div class="look-portrait-frame">
+      <img src="images/nissan.jpg" alt="Nissan campaign" id="kb-4">
+    </div>
+  </div>
+</section>
+
+<!-- ===== PAGE 6: NUMBERS ===== -->
+<section class="page page--numbers" data-page="5" data-dark="false" id="page-5">
+  <header class="furniture" style="position:absolute;top:0;left:0;right:0;padding:28px 36px 0;">
+    <span class="furniture-label">Jasnauskaite&#775; &mdash; SS26 Portfolio</span>
+    <span class="furniture-label">06 / 08</span>
+  </header>
+  <div class="numbers-inner" id="li-5">
+    <p class="numbers-eyebrow">By the numbers</p>
+    <div class="numbers-grid">
+      <div class="number-cell">
+        <p class="number-value">359K</p>
+        <p class="number-label">Followers</p>
+      </div>
+      <div class="number-cell">
+        <p class="number-value">5.0%</p>
+        <p class="number-label">Engagement</p>
+      </div>
+      <div class="number-cell">
+        <p class="number-value">590M+</p>
+        <p class="number-label">Total Views</p>
+      </div>
+      <div class="number-cell">
+        <p class="number-value">69+</p>
+        <p class="number-label">Brands</p>
+      </div>
+    </div>
+    <div class="numbers-rule"></div>
+    <p class="numbers-note">Eight years. 787 branded posts.<br>Brands that come back.</p>
+  </div>
+</section>
+
+<!-- ===== PAGE 7: ORGANIC SPREAD ===== -->
+<section class="page page--organic" data-page="6" data-dark="true" id="page-6">
+  <p class="organic-eyebrow">Organic &mdash; No Paid Reach</p>
+  <header class="furniture" style="position:absolute;top:0;left:0;right:0;padding:28px 36px 0;z-index:10;">
+    <span class="furniture-label" style="opacity:0;" aria-hidden="true">.</span>
+    <span class="furniture-label" style="color:rgba(255,255,255,0.4);">07 / 08</span>
+  </header>
+  <div class="organic-grid" id="li-6">
+    <div class="organic-cell">
+      <img src="images/organic-C4SX92Zt6pN.jpg" alt="Organic post 2.2M views">
+      <p class="organic-caption">2.2M Views</p>
+    </div>
+    <div class="organic-cell">
+      <img src="images/organic-DRjZN_fCLXa.jpg" alt="Organic post 511K views">
+      <p class="organic-caption">511K Views</p>
+    </div>
+    <div class="organic-cell">
+      <img src="images/organic-DR6npUDCK23.jpg" alt="Organic post 425K views">
+      <p class="organic-caption">425K Views</p>
+    </div>
+    <div class="organic-cell">
+      <img src="images/organic-DTndqTCiLFF.jpg" alt="Organic post 247K views">
+      <p class="organic-caption">247K Views</p>
+    </div>
+    <div class="organic-cell">
+      <img src="images/organic-DNz2mq70H81.jpg" alt="Organic post 185K views">
+      <p class="organic-caption">185K Views</p>
+    </div>
+    <div class="organic-cell">
+      <img src="images/organic-DEsVR0TtO64.jpg" alt="Organic post 258K views">
+      <p class="organic-caption">258K Views</p>
+    </div>
+  </div>
+  <p class="organic-footer">Organic Content Selection</p>
+</section>
+
+<!-- ===== PAGE 8: CLOSING ===== -->
+<section class="page page--closing" data-page="7" data-dark="false" id="page-7">
+  <header class="furniture" style="position:absolute;top:0;left:0;right:0;padding:28px 36px 0;">
+    <span class="furniture-label">Jasnauskaite&#775; &mdash; SS26 Portfolio</span>
+    <span class="furniture-label">08 / 08</span>
+  </header>
+  <div class="closing-inner" id="li-7">
+    <h2 class="closing-title">Book the<br>next look.</h2>
+    <div class="closing-rule"></div>
+    <a class="closing-email" href="mailto:osvaldas@reelize.lt">osvaldas@reelize.lt</a>
+    <div class="closing-links">
+      <a class="closing-link" href="https://www.instagram.com/jasnauskaite" target="_blank" rel="noopener">Instagram &#8599;</a>
+      <a class="closing-link" href="https://www.tiktok.com/@jasnauskaite" target="_blank" rel="noopener">TikTok &#8599;</a>
+    </div>
+    <p class="closing-copy">&copy; 2026 Jasnauskaite.lt &mdash; Vilnius</p>
+  </div>
+</section>
+
+<script>
+(function(){
+  var pages = Array.from(document.querySelectorAll('.page'));
+  var totalPages = pages.length; // 8
+
+  // ---- DOT NAV ----
+  var dotNav = document.getElementById('dotNav');
+  var dots = [];
+  for(var i = 0; i < totalPages; i++){
+    var btn = document.createElement('button');
+    btn.setAttribute('aria-label', 'Go to page ' + (i + 1));
+    (function(idx){
+      btn.addEventListener('click', function(){
+        goTo(idx);
+      });
+    })(i);
+    dotNav.appendChild(btn);
+    dots.push(btn);
+  }
+
+  // ---- ACTIVE INDEX (single authoritative source) ----
+  var activeIndex = 0;
+
+  function setActive(idx){
+    activeIndex = idx;
+    dots.forEach(function(d, i){
+      d.classList.toggle('active', i === idx);
+    });
+    // dot color: dark pages = on-dark class (white dots), light pages = default (dark dots)
+    var isDark = pages[idx].dataset.dark === 'true';
+    document.body.classList.toggle('on-dark', isDark);
+  }
+
+  function goTo(idx){
+    idx = Math.max(0, Math.min(idx, totalPages - 1));
+    // Immediately update activeIndex so rapid key presses stack correctly
+    setActive(idx);
+    pages[idx].scrollIntoView({behavior:'smooth'});
+  }
+
+  // ---- KEN BURNS (inside portrait frame only) ----
+  var currentKBImg = null;
+
+  function applyKB(page){
+    var img = page.querySelector('.look-portrait-frame img');
+    if(!img) return;
+    if(currentKBImg && currentKBImg !== img){
+      currentKBImg.classList.remove('kb-active');
+      void currentKBImg.offsetWidth; // reflow to reset animation
+    }
+    img.classList.remove('kb-active');
+    void img.offsetWidth;
+    img.classList.add('kb-active');
+    currentKBImg = img;
+  }
+
+  // ---- TEXT REVEAL ----
+  // look-identity elements: reveal via IntersectionObserver, but also set a
+  // 1s fallback timer per element so they never stay hidden if the observer misses.
+  var lookIdentities = document.querySelectorAll('.look-identity');
+  lookIdentities.forEach(function(el){
+    setTimeout(function(){
+      if(!el.classList.contains('visible')){
+        el.classList.add('visible');
+      }
+    }, 1000);
+  });
+
+  // Other reveal elements (numbers, organic grid, closing)
+  var revealEls = document.querySelectorAll(
+    '.look-identity, .numbers-inner, .organic-grid, .closing-inner'
+  );
+  var revealObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.25});
+  revealEls.forEach(function(el){ revealObs.observe(el); });
+
+  // ---- PAGE TRACKING via IntersectionObserver ----
+  // Used to sync dots and dot colors as user scrolls with mouse/touch.
+  var pageObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting && entry.intersectionRatio >= 0.5){
+        var idx = parseInt(entry.target.dataset.page, 10);
+        setActive(idx);
+        applyKB(entry.target);
+      }
+    });
+  }, {threshold: 0.5});
+  pages.forEach(function(p){ pageObs.observe(p); });
+
+  // ---- KEYBOARD NAVIGATION ----
+  // Uses goTo() which updates activeIndex immediately, preventing multi-press lag.
+  document.addEventListener('keydown', function(e){
+    var key = e.key;
+    if(key === 'ArrowDown' || key === 'ArrowRight' || key === ' ' || key === 'PageDown'){
+      e.preventDefault();
+      goTo(activeIndex + 1);
+    } else if(key === 'ArrowUp' || key === 'ArrowLeft' || key === 'PageUp'){
+      e.preventDefault();
+      goTo(activeIndex - 1);
+    } else if(key === 'Home'){
+      e.preventDefault();
+      goTo(0);
+    } else if(key === 'End'){
+      e.preventDefault();
+      goTo(totalPages - 1);
+    }
+  });
+
+  // ---- INIT ----
+  setActive(0);
+  applyKB(pages[0]);
+})();
+</script>
+</body>
+</html>

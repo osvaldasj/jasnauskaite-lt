@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASNAUSKAITĖ™ — The Receipt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --desk: #E9E4DB;
+    --paper: #FDFDF9;
+    --ink: #2A2A28;
+    --ink-light: #4A4A46;
+    --stamp-red: #C13030;
+    --shadow: rgba(60,50,30,0.18);
+  }
+
+  body {
+    background-color: var(--desk);
+    background-image: radial-gradient(ellipse at center, transparent 30%, rgba(40,30,15,0.12) 100%);
+    min-height: 100vh;
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    padding: 60px 20px 80px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  /* ── DESK ITEMS (beside receipt on desktop) ── */
+  .desk-items {
+    position: sticky;
+    top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-end;
+    width: 200px;
+    flex-shrink: 0;
+    padding-top: 120px;
+  }
+
+  .desk-photo {
+    width: 150px;
+    height: 180px;
+    object-fit: cover;
+    background: #ccc;
+    box-shadow: 3px 6px 20px rgba(0,0,0,0.22), 0 0 0 8px #FDFDF9, 0 0 0 9px rgba(0,0,0,0.06);
+    display: block;
+  }
+
+  .desk-photo:first-child  { transform: rotate(-4deg) translateX(8px); }
+  .desk-photo:nth-child(2) { transform: rotate(3.5deg) translateX(-6px); }
+
+  .caption-card {
+    background: var(--paper);
+    border: 1px solid rgba(42,42,40,0.12);
+    padding: 10px 14px;
+    transform: rotate(-1deg);
+    box-shadow: 2px 4px 12px rgba(0,0,0,0.1);
+    max-width: 170px;
+    margin-top: 8px;
+  }
+
+  .caption-card p {
+    font-size: 9.5px;
+    line-height: 1.5;
+    color: var(--ink-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .caption-card strong {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 3px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── RECEIPT WRAPPER ── */
+  .receipt-wrap {
+    position: relative;
+    width: min(420px, 90vw);
+    flex-shrink: 0;
+  }
+
+  /* Torn edge top */
+  .tear-top, .tear-bottom {
+    display: block;
+    width: 100%;
+    height: 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .tear-top svg, .tear-bottom svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Receipt body */
+  .receipt {
+    background: var(--paper);
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(180,170,150,0.025) 28px,
+      rgba(180,170,150,0.025) 30px
+    );
+    box-shadow:
+      0 8px 40px var(--shadow),
+      0 2px 8px rgba(0,0,0,0.08);
+    padding: 28px 28px 24px;
+    position: relative;
+    overflow: hidden;
+    clip-path: none;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .receipt * {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    color: var(--ink);
+  }
+
+  .r-center {
+    text-align: center;
+    display: block;
+  }
+
+  .r-header-name {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-align: center;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .r-header-sub {
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-align: center;
+    display: block;
+    color: var(--ink-light);
+    margin-bottom: 2px;
+  }
+
+  .r-meta {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-align: center;
+    display: block;
+    color: var(--ink-light);
+  }
+
+  .r-divider {
+    display: block;
+    font-size: 10.5px;
+    color: var(--ink-light);
+    letter-spacing: 0.04em;
+    text-align: center;
+    margin: 6px 0;
+    user-select: none;
+  }
+
+  .r-section-label {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-align: center;
+    margin: 2px 0 6px;
+  }
+
+  /* Item rows */
+  .r-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 11px;
+    line-height: 1.7;
+    position: relative;
+    cursor: default;
+  }
+
+  .r-row .r-item-name {
+    flex: 1;
+    padding-right: 8px;
+  }
+
+  .r-row .r-item-val {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.03em;
+  }
+
+  /* Dot leader between item and value */
+  .r-row-dots {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 11px;
+    line-height: 1.8;
+    position: relative;
+  }
+
+  .r-row-dots .r-label {
+    white-space: nowrap;
+    padding-right: 6px;
+    flex-shrink: 0;
+  }
+
+  .r-row-dots .r-dots {
+    flex: 1;
+    overflow: hidden;
+    color: rgba(42,42,40,0.25);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    align-self: flex-end;
+    padding-bottom: 1px;
+  }
+
+  .r-row-dots .r-value {
+    white-space: nowrap;
+    padding-left: 6px;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  .r-sub-line {
+    font-size: 10px;
+    color: var(--ink-light);
+    padding-left: 14px;
+    display: block;
+    line-height: 1.5;
+    margin-bottom: 2px;
+  }
+
+  .r-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 2;
+    letter-spacing: 0.06em;
+  }
+
+  .r-double-div {
+    display: block;
+    font-size: 10.5px;
+    color: var(--ink-light);
+    letter-spacing: 0.04em;
+    text-align: center;
+    margin: 8px 0;
+  }
+
+  /* Brands list */
+  .r-brands {
+    font-size: 10px;
+    text-align: center;
+    line-height: 1.7;
+    color: var(--ink-light);
+    display: block;
+    letter-spacing: 0.06em;
+  }
+
+  /* Loyalty / CTA block */
+  .r-loyalty {
+    background: var(--stamp-red);
+    color: #FDFDF9;
+    text-align: center;
+    padding: 6px 12px 5px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    margin: 8px 0;
+  }
+
+  .r-loyalty * { color: #FDFDF9; }
+
+  .r-cta-line {
+    font-size: 10.5px;
+    text-align: center;
+    display: block;
+    line-height: 1.7;
+    letter-spacing: 0.05em;
+  }
+
+  .r-cta-link {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink-light);
+  }
+
+  .r-cta-link:hover { border-bottom-color: var(--ink); }
+
+  .r-footer {
+    font-size: 10px;
+    text-align: center;
+    display: block;
+    color: var(--ink-light);
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+  }
+
+  /* ── PAID STAMP ── */
+  .paid-stamp {
+    position: absolute;
+    right: 24px;
+    top: 0;
+    transform: rotate(-12deg);
+    transform-origin: center center;
+    border: 3px solid var(--stamp-red);
+    padding: 5px 12px;
+    color: var(--stamp-red);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+    mix-blend-mode: multiply;
+    font-family: 'IBM Plex Mono', monospace;
+    text-transform: uppercase;
+    line-height: 1;
+    /* Distressed via multiple shadows */
+    text-shadow: 1px 0 0 rgba(193,48,48,0.3), -1px 0 0 rgba(193,48,48,0.2);
+    filter: url(#distress);
+  }
+
+  .paid-stamp.slam {
+    animation: stampSlam 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes stampSlam {
+    0%   { opacity: 0; transform: rotate(-12deg) scale(1.6); }
+    60%  { opacity: 0.9; transform: rotate(-12deg) scale(0.95); }
+    100% { opacity: 0.78; transform: rotate(-12deg) scale(1); }
+  }
+
+  /* ── BARCODE ── */
+  .barcode {
+    display: flex;
+    gap: 0;
+    height: 40px;
+    justify-content: center;
+    margin: 6px 0 4px;
+    overflow: hidden;
+  }
+
+  .barcode-inner {
+    display: flex;
+    gap: 0;
+    height: 40px;
+    width: 220px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--ink) 0px, var(--ink) 2px,
+      transparent 2px, transparent 3px,
+      var(--ink) 3px, var(--ink) 4px,
+      transparent 4px, transparent 6px,
+      var(--ink) 6px, var(--ink) 7px,
+      transparent 7px, transparent 9px,
+      var(--ink) 9px, var(--ink) 11px,
+      transparent 11px, transparent 12px,
+      var(--ink) 12px, var(--ink) 13px,
+      transparent 13px, transparent 15px,
+      var(--ink) 15px, var(--ink) 17px,
+      transparent 17px, transparent 19px,
+      var(--ink) 19px, var(--ink) 20px,
+      transparent 20px, transparent 21px,
+      var(--ink) 21px, var(--ink) 24px,
+      transparent 24px, transparent 25px,
+      var(--ink) 25px, var(--ink) 26px,
+      transparent 26px, transparent 28px,
+      var(--ink) 28px, var(--ink) 31px,
+      transparent 31px, transparent 33px,
+      var(--ink) 33px, var(--ink) 34px,
+      transparent 34px, transparent 36px,
+      var(--ink) 36px, var(--ink) 38px,
+      transparent 38px, transparent 39px,
+      var(--ink) 39px, var(--ink) 41px,
+      transparent 41px, transparent 43px,
+      var(--ink) 43px, var(--ink) 44px,
+      transparent 44px, transparent 46px,
+      var(--ink) 46px, var(--ink) 48px,
+      transparent 48px, transparent 50px,
+      var(--ink) 50px, var(--ink) 51px,
+      transparent 51px, transparent 53px,
+      var(--ink) 53px, var(--ink) 55px,
+      transparent 55px, transparent 57px,
+      var(--ink) 57px, var(--ink) 59px,
+      transparent 59px, transparent 61px,
+      var(--ink) 61px, var(--ink) 62px,
+      transparent 62px, transparent 64px,
+      var(--ink) 64px, var(--ink) 66px,
+      transparent 66px, transparent 68px,
+      var(--ink) 68px, var(--ink) 70px,
+      transparent 70px, transparent 71px,
+      var(--ink) 71px, var(--ink) 74px,
+      transparent 74px, transparent 76px,
+      var(--ink) 76px, var(--ink) 77px,
+      transparent 77px, transparent 79px,
+      var(--ink) 79px, var(--ink) 80px,
+      transparent 80px, transparent 82px,
+      var(--ink) 82px, var(--ink) 84px,
+      transparent 84px, transparent 86px,
+      var(--ink) 86px, var(--ink) 88px,
+      transparent 88px, transparent 90px,
+      var(--ink) 90px, var(--ink) 92px,
+      transparent 92px, transparent 93px,
+      var(--ink) 93px, var(--ink) 95px,
+      transparent 95px, transparent 97px,
+      var(--ink) 97px, var(--ink) 99px,
+      transparent 99px, transparent 100px,
+      var(--ink) 100px, var(--ink) 102px,
+      transparent 102px, transparent 104px,
+      var(--ink) 104px, var(--ink) 106px,
+      transparent 106px, transparent 108px,
+      var(--ink) 108px, var(--ink) 109px,
+      transparent 109px, transparent 111px,
+      var(--ink) 111px, var(--ink) 114px,
+      transparent 114px, transparent 116px,
+      var(--ink) 116px, var(--ink) 117px,
+      transparent 117px, transparent 120px,
+      var(--ink) 120px, var(--ink) 122px,
+      transparent 122px, transparent 124px,
+      var(--ink) 124px, var(--ink) 126px,
+      transparent 126px, transparent 127px,
+      var(--ink) 127px, var(--ink) 129px,
+      transparent 129px, transparent 131px,
+      var(--ink) 131px, var(--ink) 133px,
+      transparent 133px, transparent 135px,
+      var(--ink) 135px, var(--ink) 136px,
+      transparent 136px, transparent 138px,
+      var(--ink) 138px, var(--ink) 140px,
+      transparent 140px, transparent 142px,
+      var(--ink) 142px, var(--ink) 144px,
+      transparent 144px, transparent 145px,
+      var(--ink) 145px, var(--ink) 147px,
+      transparent 147px, transparent 149px,
+      var(--ink) 149px, var(--ink) 151px,
+      transparent 151px, transparent 153px,
+      var(--ink) 153px, var(--ink) 155px,
+      transparent 155px, transparent 156px,
+      var(--ink) 156px, var(--ink) 158px,
+      transparent 158px, transparent 160px,
+      var(--ink) 160px, var(--ink) 162px,
+      transparent 162px, transparent 164px,
+      var(--ink) 164px, var(--ink) 165px,
+      transparent 165px, transparent 167px,
+      var(--ink) 167px, var(--ink) 169px,
+      transparent 169px, transparent 171px,
+      var(--ink) 171px, var(--ink) 172px,
+      transparent 172px, transparent 174px,
+      var(--ink) 174px, var(--ink) 176px,
+      transparent 176px, transparent 178px,
+      var(--ink) 178px, var(--ink) 180px,
+      transparent 180px, transparent 182px,
+      var(--ink) 182px, var(--ink) 184px,
+      transparent 184px, transparent 185px,
+      var(--ink) 185px, var(--ink) 187px,
+      transparent 187px, transparent 189px,
+      var(--ink) 189px, var(--ink) 190px,
+      transparent 190px, transparent 192px,
+      var(--ink) 192px, var(--ink) 194px,
+      transparent 194px, transparent 196px,
+      var(--ink) 196px, var(--ink) 198px,
+      transparent 198px, transparent 200px,
+      var(--ink) 200px, var(--ink) 201px,
+      transparent 201px, transparent 203px,
+      var(--ink) 203px, var(--ink) 205px,
+      transparent 205px, transparent 207px,
+      var(--ink) 207px, var(--ink) 209px,
+      transparent 209px, transparent 210px,
+      var(--ink) 210px, var(--ink) 212px,
+      transparent 212px, transparent 214px,
+      var(--ink) 214px, var(--ink) 216px,
+      transparent 216px, transparent 218px,
+      var(--ink) 218px, var(--ink) 220px
+    );
+  }
+
+  .barcode-digits {
+    font-size: 9px;
+    text-align: center;
+    letter-spacing: 0.3em;
+    color: var(--ink-light);
+    display: block;
+    margin-top: 3px;
+  }
+
+  /* ── PRINT ANIMATION ── */
+  .receipt-wrap {
+    position: relative;
+  }
+
+  .receipt-reveal {
+    clip-path: inset(0 0 100% 0);
+    animation: printReveal 2.5s steps(60, end) forwards;
+  }
+
+  @keyframes printReveal {
+    0%   { clip-path: inset(0 0 100% 0); }
+    100% { clip-path: inset(0 0 0% 0); }
+  }
+
+  .receipt-reveal.done {
+    clip-path: inset(0 0 0% 0);
+    animation: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .receipt-reveal { clip-path: inset(0 0 0% 0); animation: none; }
+    .paid-stamp.slam { animation: none; opacity: 0.78; transform: rotate(-12deg) scale(1); }
+  }
+
+  /* ── HOVER THUMBNAILS ── */
+  .r-row-hoverable {
+    position: relative;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.15s;
+  }
+
+  .r-row-hoverable:hover {
+    background: rgba(42,42,40,0.04);
+    border-radius: 2px;
+  }
+
+  .thumb-polaroid {
+    display: none;
+    position: absolute;
+    right: calc(100% + 16px);
+    top: 50%;
+    transform: translateY(-50%) rotate(-3deg);
+    background: #fff;
+    padding: 6px 6px 22px;
+    box-shadow: 3px 6px 20px rgba(0,0,0,0.2);
+    z-index: 100;
+    pointer-events: none;
+    width: 110px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .thumb-polaroid img {
+    width: 98px;
+    height: 98px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .r-row-hoverable:hover .thumb-polaroid {
+    display: flex;
+  }
+
+  /* Mobile thumbnail (inline toggle) */
+  .thumb-inline {
+    display: none;
+    width: 100%;
+    padding: 6px 0 4px;
+  }
+
+  .thumb-inline img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    background: #ccc;
+    box-shadow: 2px 4px 10px rgba(0,0,0,0.15);
+  }
+
+  .thumb-inline.active {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    body {
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 16px 60px;
+      gap: 0;
+    }
+
+    .desk-items {
+      position: static;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: center;
+      padding-top: 0;
+      margin-bottom: 28px;
+      gap: 12px;
+    }
+
+    .desk-photo {
+      width: 100px;
+      height: 120px;
+    }
+
+    .desk-photo:first-child  { transform: rotate(-4deg); }
+    .desk-photo:nth-child(2) { transform: rotate(3.5deg); }
+
+    .caption-card {
+      display: none;
+    }
+
+    .receipt-wrap {
+      width: min(420px, 92vw);
+    }
+
+    .thumb-polaroid { display: none !important; }
+
+    .r-row-hoverable:hover { background: none; }
+  }
+
+  @media (max-width: 420px) {
+    .receipt { padding: 20px 18px 18px; }
+    .r-header-name { font-size: 15px; }
+    .r-row, .r-row-dots { font-size: 10.5px; }
+    .r-total-row { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Desk items: left side on desktop, above on mobile -->
+<aside class="desk-items" aria-hidden="true">
+  <img class="desk-photo" src="images/profile.jpg" alt="Inidė Jasnauskaitė portrait" onerror="this.style.background='#ccc';this.style.display='block'">
+  <img class="desk-photo" src="images/cover-1.jpg" alt="Campaign photo" onerror="this.style.background='#bbb';this.style.display='block'">
+  <div class="caption-card">
+    <strong>INIDĖ JASNAUSKAITĖ</strong>
+    <p>FASHION · BEAUTY<br>LIFESTYLE</p>
+  </div>
+</aside>
+
+<!-- Receipt -->
+<div class="receipt-wrap" id="receiptWrap">
+
+  <!-- SVG distress filter (invisible) -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="distress" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" seed="3" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Torn top edge -->
+  <span class="tear-top" aria-hidden="true">
+    <svg viewBox="0 0 420 20" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,20 L0,8 C8,12 15,4 22,8 C28,11 35,3 42,7 C49,11 56,2 63,6 C69,10 76,3 83,7 C90,11 97,4 104,8 C110,11 117,3 124,7 C130,11 137,2 144,6 C150,10 157,4 164,8 C170,11 177,3 184,7 C191,11 198,4 205,8 C211,11 218,3 225,7 C231,11 238,2 245,6 C252,10 259,4 266,8 C272,11 279,3 286,7 C293,11 300,4 307,8 C313,11 320,3 327,7 C333,11 340,2 347,6 C354,10 361,4 368,8 C374,11 381,3 388,7 C395,11 402,4 409,8 C414,10 418,7 420,8 L420,20 Z" fill="#FDFDF9"/>
+    </svg>
+  </span>
+
+  <div class="receipt receipt-reveal" id="receipt">
+
+    <!-- PAID STAMP (positioned absolutely) -->
+    <div class="paid-stamp" id="paidStamp" aria-hidden="true">PAID</div>
+
+    <!-- HEADER -->
+    <span class="r-header-name">JASNAUSKAITĖ™</span>
+    <span class="r-header-sub">CONTENT &nbsp;·&nbsp; SINCE 2017</span>
+    <span class="r-meta">VILNIUS, LITHUANIA — EU</span>
+    <span class="r-meta">IG @JASNAUSKAITE &nbsp;·&nbsp; 359K</span>
+
+    <span class="r-divider">--------------------------------</span>
+
+    <span class="r-meta">RECEIPT N&#186;&nbsp;787 &nbsp;&nbsp;&nbsp;&nbsp; 12.06.2026 09:41</span>
+    <span class="r-meta">CASHIER: REELIZE &nbsp;&nbsp; TILL: 01</span>
+
+    <span class="r-divider">--------------------------------</span>
+
+    <!-- BRANDED CAMPAIGNS -->
+    <span class="r-section-label">BRANDED CAMPAIGNS</span>
+
+    <!-- Mionetto -->
+    <div class="r-row r-row-hoverable" id="row-mionetto" onclick="toggleThumb('thumb-mionetto')">
+      <span class="r-item-name">MIONETTO LIFESTYLE x22</span>
+      <span class="r-item-val">16.7M</span>
+      <div class="thumb-polaroid" aria-hidden="true">
+        <img src="images/mionetto-DNXetzOMT__.jpg" alt="Mionetto campaign">
+      </div>
+    </div>
+    <div class="thumb-inline" id="thumb-mionetto" aria-hidden="true">
+      <img src="images/mionetto-DNXetzOMT__.jpg" alt="Mionetto campaign">
+    </div>
+    <span class="r-sub-line">&nbsp;&nbsp;ER 6.8% &#9733;&#9733;&#9733;&#9733;&#9733;</span>
+
+    <!-- Hellmann's -->
+    <div class="r-row r-row-hoverable" id="row-hellmanns" onclick="toggleThumb('thumb-hellmanns')">
+      <span class="r-item-name">HELLMANN'S FMCG x5</span>
+      <span class="r-item-val">15M</span>
+      <div class="thumb-polaroid" aria-hidden="true">
+        <img src="images/hellmanns.jpg" alt="Hellmann's campaign">
+      </div>
+    </div>
+    <div class="thumb-inline" id="thumb-hellmanns" aria-hidden="true">
+      <img src="images/hellmanns.jpg" alt="Hellmann's campaign">
+    </div>
+    <span class="r-sub-line">&nbsp;&nbsp;ONE REEL ALONE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;14M</span>
+
+    <!-- Akropolis -->
+    <div class="r-row r-row-hoverable" id="row-akropolis" onclick="toggleThumb('thumb-akropolis')">
+      <span class="r-item-name">AKROPOLIS FASHION x35</span>
+      <span class="r-item-val">13.2M</span>
+      <div class="thumb-polaroid" aria-hidden="true">
+        <img src="images/akropolis-DPDlAeZiEuJ.jpg" alt="Akropolis campaign">
+      </div>
+    </div>
+    <div class="thumb-inline" id="thumb-akropolis" aria-hidden="true">
+      <img src="images/akropolis-DPDlAeZiEuJ.jpg" alt="Akropolis campaign">
+    </div>
+
+    <!-- Nissan -->
+    <div class="r-row r-row-hoverable" id="row-nissan" onclick="toggleThumb('thumb-nissan')">
+      <span class="r-item-name">NISSAN AUTO x38</span>
+      <span class="r-item-val">6.5M</span>
+      <div class="thumb-polaroid" aria-hidden="true">
+        <img src="images/nissan.jpg" alt="Nissan campaign">
+      </div>
+    </div>
+    <div class="thumb-inline" id="thumb-nissan" aria-hidden="true">
+      <img src="images/nissan.jpg" alt="Nissan campaign">
+    </div>
+
+    <!-- Maxima -->
+    <div class="r-row r-row-hoverable" id="row-maxima" onclick="toggleThumb('thumb-maxima')">
+      <span class="r-item-name">MAXIMA FMCG x9</span>
+      <span class="r-item-val">3.2M</span>
+      <div class="thumb-polaroid" aria-hidden="true">
+        <img src="images/maxima-DMK9spgtfv-.jpg" alt="Maxima campaign">
+      </div>
+    </div>
+    <div class="thumb-inline" id="thumb-maxima" aria-hidden="true">
+      <img src="images/maxima-DMK9spgtfv-.jpg" alt="Maxima campaign">
+    </div>
+
+    <span class="r-brands">LANC&#212;ME &nbsp;·&nbsp; McDONALD'S &nbsp;·&nbsp; TELE2</span>
+    <span class="r-brands">MILKA &nbsp;·&nbsp; BARBORA &nbsp;·&nbsp; GOVILNIUS</span>
+    <span class="r-brands">+ 59 MORE PARTNERS</span>
+
+    <span class="r-divider">--------------------------------</span>
+
+    <!-- ORGANIC -->
+    <span class="r-section-label">ORGANIC (NO AD SPEND)</span>
+
+    <div class="r-row r-row-hoverable" id="row-travel" onclick="toggleThumb('thumb-travel')">
+      <span class="r-item-name">TRAVEL REEL</span>
+      <span class="r-item-val">2.2M</span>
+      <div class="thumb-polaroid" aria-hidden="true">
+        <img src="images/organic-C4SX92Zt6pN.jpg" alt="Travel reel">
+      </div>
+    </div>
+    <div class="thumb-inline" id="thumb-travel" aria-hidden="true">
+      <img src="images/organic-C4SX92Zt6pN.jpg" alt="Travel reel">
+    </div>
+
+    <div class="r-row">
+      <span class="r-item-name">FASHION REEL</span>
+      <span class="r-item-val">511K</span>
+    </div>
+
+    <div class="r-row">
+      <span class="r-item-name">STYLE REEL</span>
+      <span class="r-item-val">425K</span>
+    </div>
+
+    <div class="r-row">
+      <span class="r-item-name">EVERYDAY REEL</span>
+      <span class="r-item-val">258K</span>
+    </div>
+
+    <span class="r-divider">--------------------------------</span>
+
+    <!-- TOTALS BLOCK — stamp overlaps here -->
+    <div style="position:relative" id="totalsBlock">
+
+      <div class="r-row-dots">
+        <span class="r-label">SUBTOTAL (8 YRS)</span>
+        <span class="r-dots">.................................</span>
+        <span class="r-value">787 POSTS</span>
+      </div>
+
+      <div class="r-double-div">================================</div>
+
+      <div class="r-total-row">
+        <span>TOTAL VIEWS</span>
+        <span>590,000,000+</span>
+      </div>
+
+      <div class="r-row-dots" style="margin-top:4px">
+        <span class="r-label">ENGAGEMENT RATE</span>
+        <span class="r-dots">.................</span>
+        <span class="r-value">5.0%</span>
+      </div>
+
+      <div class="r-row-dots">
+        <span class="r-label">LOYALTY POINTS</span>
+        <span class="r-dots">..................</span>
+        <span class="r-value">69+ BRANDS</span>
+      </div>
+
+      <div class="r-row-dots" style="margin-top:4px">
+        <span class="r-label" style="font-weight:700">CHANGE DUE</span>
+        <span class="r-dots">.....................</span>
+        <span class="r-value" style="font-weight:700">YOUR MOVE :)</span>
+      </div>
+
+    </div><!-- end totalsBlock -->
+
+    <span class="r-divider">--------------------------------</span>
+
+    <!-- LOYALTY BANNER -->
+    <div class="r-loyalty">
+      *** REPEAT CUSTOMERS: ***<br>
+      MOST BRANDS COME BACK
+    </div>
+
+    <span class="r-divider">--------------------------------</span>
+
+    <!-- CTA -->
+    <span class="r-cta-line">BOOK A CAMPAIGN:</span>
+    <span class="r-cta-line"><a href="mailto:osvaldas@reelize.lt" class="r-cta-link">OSVALDAS@REELIZE.LT</a></span>
+    <span class="r-cta-line"><a href="https://instagram.com/jasnauskaite" class="r-cta-link" target="_blank">IG @JASNAUSKAITE &#8599;</a></span>
+
+    <span class="r-divider">--------------------------------</span>
+
+    <span class="r-center r-meta" style="margin-bottom:4px">THANK YOU FOR SCROLLING</span>
+    <span class="r-center r-meta" style="font-weight:700;margin-bottom:12px">COME AGAIN</span>
+
+    <!-- BARCODE -->
+    <div class="barcode" aria-hidden="true">
+      <div class="barcode-inner"></div>
+    </div>
+    <span class="barcode-digits">5 9 0 0 0 0 0 0 0</span>
+
+    <span class="r-divider" style="margin-top:8px">- - - - - - - - - - - - - - - -</span>
+    <span class="r-footer">JASNAUSKAITE.LT &nbsp;·&nbsp; EST. 2017</span>
+
+  </div><!-- end .receipt -->
+
+  <!-- Torn bottom edge -->
+  <span class="tear-bottom" aria-hidden="true">
+    <svg viewBox="0 0 420 20" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 L0,12 C8,8 15,16 22,12 C28,9 35,17 42,13 C49,9 56,18 63,14 C69,10 76,17 83,13 C90,9 97,16 104,12 C110,9 117,17 124,13 C130,9 137,18 144,14 C150,10 157,16 164,12 C170,9 177,17 184,13 C191,9 198,16 205,12 C211,9 218,17 225,13 C231,9 238,18 245,14 C252,10 259,16 266,12 C272,9 279,17 286,13 C293,9 300,16 307,12 C313,9 320,17 327,13 C333,9 340,18 347,14 C354,10 361,16 368,12 C374,9 381,17 388,13 C395,9 402,16 409,12 C414,10 418,13 420,12 L420,0 Z" fill="#FDFDF9"/>
+    </svg>
+  </span>
+
+</div><!-- end receipt-wrap -->
+
+<script>
+  /* ── Skip animation on click/scroll ── */
+  var receipt = document.getElementById('receipt');
+  var paidStamp = document.getElementById('paidStamp');
+  var animDone = false;
+  var stampFired = false;
+
+  function completePrint() {
+    if (animDone) return;
+    animDone = true;
+    receipt.classList.add('done');
+    receipt.classList.remove('receipt-reveal');
+    if (!stampFired) fireStamp();
+  }
+
+  function fireStamp() {
+    if (stampFired) return;
+    stampFired = true;
+    paidStamp.classList.add('slam');
+  }
+
+  document.addEventListener('click', completePrint, { once: true });
+  document.addEventListener('wheel', completePrint, { once: true, passive: true });
+  document.addEventListener('touchstart', completePrint, { once: true, passive: true });
+  document.addEventListener('keydown', completePrint, { once: true });
+
+  /* After animation ends, fire stamp */
+  receipt.addEventListener('animationend', function() {
+    animDone = true;
+    setTimeout(function() {
+      if (!stampFired) fireStamp();
+    }, 300);
+  });
+
+  /* ── Mobile thumbnail toggles ── */
+  function toggleThumb(id) {
+    if (window.innerWidth > 700) return;
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.toggle('active');
+  }
+
+  /* Reduced motion: show everything immediately */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    receipt.classList.add('done');
+    receipt.classList.remove('receipt-reveal');
+    paidStamp.style.opacity = '0.78';
+    paidStamp.style.transform = 'rotate(-12deg) scale(1)';
+    stampFired = true;
+    animDone = true;
+  }
+</script>
+</body>
+</html>

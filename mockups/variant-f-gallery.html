@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inidė Jasnauskaitė — A Retrospective of Viral Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Hanken+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --ink:#161616;
+  --wall:#FCFCFA;
+  --floor:#EFEDE8;
+  --horizon:#DDDBD5;
+  --label-bg:#F8F7F4;
+  --red:#8E2D22;
+  --frame:#0F0F0F;
+  --mat:#FAFAF8;
+  --shadow:rgba(22,22,22,0.18);
+  --room-gap:140px;
+}
+
+html,body{
+  height:100%;
+  overflow:hidden;
+  background:var(--wall);
+  color:var(--ink);
+  font-family:'Hanken Grotesk',sans-serif;
+  cursor:default;
+}
+
+/* ── PERSISTENT CHROME ── */
+#top-bar{
+  position:fixed;top:0;left:0;right:0;
+  height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 36px;
+  z-index:100;
+  background:rgba(252,252,250,0.92);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--horizon);
+}
+#top-wordmark{
+  font-family:'Hanken Grotesk',sans-serif;
+  font-size:11px;font-weight:500;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+#top-right{
+  font-size:11px;font-weight:400;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--ink);
+  opacity:0.6;
+  text-decoration:none;
+  cursor:pointer;
+  transition:opacity 0.2s;
+}
+#top-right:hover{opacity:1}
+
+#bottom-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  height:36px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 36px;
+  z-index:100;
+  font-size:10px;font-weight:500;
+  letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--ink);opacity:0.45;
+  border-top:1px solid var(--horizon);
+  background:rgba(239,237,232,0.92);
+}
+#room-indicator{transition:opacity 0.4s}
+#scroll-progress{
+  width:120px;height:2px;
+  background:var(--horizon);
+  position:relative;
+}
+#scroll-progress-bar{
+  height:100%;
+  background:var(--ink);
+  width:0%;
+  transition:width 0.15s ease;
+}
+
+/* ── HALL ── */
+#hall{
+  position:fixed;
+  top:52px;bottom:36px;
+  left:0;right:0;
+  overflow-x:scroll;
+  overflow-y:hidden;
+  cursor:grab;
+  -ms-overflow-style:none;
+  scrollbar-width:none;
+}
+#hall::-webkit-scrollbar{display:none}
+#hall.dragging{cursor:grabbing;scroll-behavior:auto}
+
+#hall-inner{
+  display:flex;
+  align-items:flex-end;
+  height:100%;
+  padding:0;
+  white-space:nowrap;
+  position:relative;
+}
+
+/* Floor band */
+#hall-inner::after{
+  content:'';
+  position:fixed;
+  bottom:36px;left:0;right:0;
+  height:18%;
+  background:var(--floor);
+  border-top:1px solid var(--horizon);
+  pointer-events:none;
+  z-index:1;
+}
+
+/* ── SECTIONS ── */
+.section{
+  display:inline-flex;
+  align-items:center;
+  height:100%;
+  position:relative;
+  vertical-align:top;
+  white-space:nowrap;
+}
+
+/* ── ROOM MARKER ── */
+.room-marker{
+  display:inline-flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding-bottom:calc(18% + 48px);
+  padding-left:72px;
+  padding-right:56px;
+  height:100%;
+  vertical-align:top;
+  position:relative;
+  z-index:2;
+}
+.room-number{
+  font-family:'Hanken Grotesk',sans-serif;
+  font-size:10px;font-weight:500;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:8px;
+}
+.room-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:300;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--ink);
+  opacity:0.55;
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+  line-height:1;
+}
+
+/* ── ARTWORK ── */
+.artwork-wrap{
+  display:inline-flex;
+  flex-direction:row;
+  align-items:flex-end;
+  height:100%;
+  vertical-align:top;
+  padding-bottom:calc(18% + 20px);
+  position:relative;
+  z-index:2;
+}
+.artwork-unit{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:22px;
+  padding:0 var(--room-gap);
+  /* use explicit height matching frame-col so centering has a real axis */
+  height:calc(100vh - 52px - 36px);
+  position:relative;
+}
+.artwork-unit.label-left{flex-direction:row-reverse}
+
+/* Eye-level alignment: frame positioned at ~42% from top of usable hall height */
+.frame-col{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  /* explicit height so child position:absolute has a real reference */
+  height:calc(100vh - 52px - 36px);
+  position:relative;
+  flex-shrink:0;
+}
+/* optical eye-level: shift center slightly above midpoint */
+.eye-level{
+  position:absolute;
+  top:42%;
+  transform:translateY(-50%);
+  left:0;right:0;
+  display:flex;justify-content:center;
+}
+
+/* THE FRAME */
+.frame{
+  border:9px solid var(--frame);
+  padding:16px;
+  background:var(--mat);
+  box-shadow:
+    6px 8px 28px var(--shadow),
+    2px 3px 8px rgba(22,22,22,0.10);
+  display:inline-block;
+  position:relative;
+  cursor:pointer;
+  transition:box-shadow 0.3s ease;
+}
+.frame::before{
+  /* subtle inset mat border */
+  content:'';
+  position:absolute;
+  inset:6px;
+  border:0.5px solid rgba(22,22,22,0.08);
+  pointer-events:none;
+}
+.frame:hover{
+  box-shadow:
+    8px 12px 48px rgba(22,22,22,0.28),
+    3px 5px 14px rgba(22,22,22,0.14);
+}
+.frame img{
+  max-height:46vh;
+  width:auto;
+  display:block;
+  object-fit:cover;
+}
+/* spotlight on hover */
+.frame::after{
+  content:'';
+  position:absolute;
+  inset:-60px;
+  background:radial-gradient(ellipse 60% 60% at 50% 50%, rgba(255,252,240,0.35) 0%, transparent 70%);
+  pointer-events:none;
+  opacity:0;
+  transition:opacity 0.4s;
+  z-index:-1;
+}
+.frame:hover::after{opacity:1}
+
+/* ── WALL LABEL ── */
+.wall-label{
+  display:inline-flex;
+  flex-direction:column;
+  gap:4px;
+  max-width:180px;
+  min-width:140px;
+  /* constrain height so label never bleeds above header or below floor */
+  max-height:calc(100vh - 52px - 36px - 18vh - 40px);
+  overflow-y:auto;
+  background:var(--label-bg);
+  border-left:1px solid var(--horizon);
+  padding:14px 16px 14px 14px;
+  position:relative;
+  align-self:center;
+}
+.label-title{
+  font-family:'Hanken Grotesk',sans-serif;
+  font-size:11px;font-weight:500;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--ink);
+  font-variant:small-caps;
+  line-height:1.3;
+}
+.label-year{
+  font-family:'Hanken Grotesk',sans-serif;
+  font-size:10px;font-weight:400;
+  color:var(--ink);opacity:0.55;
+  margin-top:1px;
+}
+.label-medium{
+  font-size:10px;font-weight:300;
+  font-style:italic;
+  color:var(--ink);opacity:0.65;
+  line-height:1.4;
+  margin-top:3px;
+}
+.label-metrics{
+  font-size:10px;font-weight:400;
+  color:var(--ink);opacity:0.75;
+  margin-top:2px;
+  line-height:1.5;
+}
+.label-provenance{
+  font-size:10px;font-weight:300;
+  color:var(--ink);opacity:0.55;
+  margin-top:2px;
+  line-height:1.4;
+}
+.label-stamp{
+  display:inline-block;
+  margin-top:8px;
+  font-size:8px;font-weight:500;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--red);
+  border:1px solid var(--red);
+  padding:2px 5px;
+  line-height:1.4;
+  align-self:flex-start;
+}
+.label-divider{
+  width:24px;height:1px;
+  background:var(--horizon);
+  margin:4px 0;
+}
+
+/* Frame hover → label underline title */
+.artwork-unit:hover .label-title{
+  text-decoration:underline;
+  text-decoration-color:var(--horizon);
+}
+
+/* ── ENTRANCE WALL ── */
+#entrance{
+  display:inline-flex;
+  flex-direction:column;
+  justify-content:center;
+  height:100%;
+  padding:0 100px 0 80px;
+  vertical-align:top;
+  position:relative;
+  z-index:2;
+  min-width:520px;
+}
+.entrance-sub{
+  font-family:'Hanken Grotesk',sans-serif;
+  font-size:10px;font-weight:500;
+  letter-spacing:0.24em;text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:20px;
+}
+.entrance-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(52px,5.5vw,88px);
+  font-weight:300;
+  line-height:0.95;
+  letter-spacing:0.02em;
+  color:var(--ink);
+  hyphens:none;
+  overflow-wrap:normal;
+  word-break:keep-all;
+}
+.entrance-subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(14px,1.4vw,18px);
+  font-weight:300;
+  font-style:italic;
+  color:var(--ink);opacity:0.55;
+  margin-top:14px;
+  letter-spacing:0.04em;
+}
+.entrance-curated{
+  font-family:'Hanken Grotesk',sans-serif;
+  font-size:10px;font-weight:400;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--ink);opacity:0.4;
+  margin-top:10px;
+}
+.entrance-rule{
+  width:1px;height:80px;
+  background:var(--horizon);
+  margin:28px 0;
+}
+.entrance-statement{
+  font-family:'Cormorant Garamond',serif;
+  font-size:15px;font-weight:400;
+  font-style:italic;
+  line-height:1.7;
+  color:var(--ink);
+  opacity:0.72;
+  max-width:340px;
+}
+
+/* ── STATS WALL ── */
+#stats-wall{
+  display:inline-flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  height:100%;
+  padding:0 100px 0 80px;
+  vertical-align:top;
+  position:relative;
+  z-index:2;
+  min-width:560px;
+  background:linear-gradient(180deg, transparent 0%, transparent 82%, var(--floor) 82%);
+  border-left:1px solid var(--horizon);
+}
+.stats-header{
+  font-family:'Hanken Grotesk',sans-serif;
+  font-size:10px;font-weight:500;
+  letter-spacing:0.24em;text-transform:uppercase;
+  color:var(--ink);opacity:0.35;
+  margin-bottom:48px;
+}
+.stats-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px 60px;
+}
+.stat-item{}
+.stat-number{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(44px,5vw,64px);
+  font-weight:300;
+  letter-spacing:-0.01em;
+  line-height:1;
+  color:var(--ink);
+}
+.stat-number span{
+  font-size:0.45em;
+  font-weight:300;
+  vertical-align:super;
+  opacity:0.6;
+}
+.stat-label{
+  font-family:'Hanken Grotesk',sans-serif;
+  font-size:10px;font-weight:400;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--ink);opacity:0.45;
+  margin-top:6px;
+  line-height:1.4;
+}
+.stat-rule{
+  width:100%;height:1px;
+  background:var(--horizon);
+  margin-bottom:4px;
+}
+
+/* ── SALON WALL (Room II) ── */
+.salon-wall{
+  display:inline-flex;
+  flex-direction:column;
+  justify-content:center;
+  height:100%;
+  vertical-align:top;
+  position:relative;
+  z-index:2;
+  padding:0 60px;
+  gap:0;
+}
+.salon-row{
+  display:flex;
+  flex-direction:row;
+  align-items:flex-end;
+  gap:32px;
+}
+.salon-row.top-row{
+  margin-bottom:32px;
+  align-items:flex-end;
+}
+.salon-row.bot-row{
+  align-items:flex-start;
+}
+
+.salon-piece{
+  display:inline-flex;
+  flex-direction:column;
+  gap:0;
+  cursor:pointer;
+}
+.salon-frame{
+  border:7px solid var(--frame);
+  padding:10px;
+  background:var(--mat);
+  box-shadow:
+    4px 5px 18px var(--shadow),
+    1px 2px 5px rgba(22,22,22,0.09);
+  transition:box-shadow 0.3s;
+}
+.salon-frame:hover{
+  box-shadow:
+    6px 8px 28px rgba(22,22,22,0.28),
+    2px 3px 9px rgba(22,22,22,0.13);
+}
+.salon-frame img{
+  display:block;object-fit:cover;
+}
+.salon-label{
+  margin-top:8px;
+  padding:0 2px;
+}
+.salon-label-title{
+  font-size:10px;font-weight:500;
+  letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--ink);opacity:0.7;
+  font-variant:small-caps;
+}
+.salon-label-views{
+  font-size:9px;font-weight:400;
+  color:var(--ink);opacity:0.45;
+  margin-top:2px;
+}
+.salon-note{
+  font-family:'Cormorant Garamond',serif;
+  font-size:11px;font-style:italic;
+  color:var(--ink);opacity:0.4;
+  margin-top:6px;
+  white-space:normal;
+  max-width:260px;
+  line-height:1.5;
+}
+
+/* ── ROOM III — ARTIST ── */
+#artist-room{
+  display:inline-flex;
+  flex-direction:row;
+  align-items:flex-end;
+  height:100%;
+  padding-bottom:calc(18% + 20px);
+  padding-left:var(--room-gap);
+  padding-right:var(--room-gap);
+  gap:60px;
+  vertical-align:top;
+  position:relative;
+  z-index:2;
+}
+.artist-portrait-col{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  height:100%;
+  position:relative;
+}
+.artist-eye-level{
+  position:absolute;
+  top:46%;
+  transform:translateY(-50%);
+}
+.artist-bio-col{
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding-bottom:12px;
+  max-width:280px;
+  gap:0;
+}
+.artist-label{
+  background:var(--label-bg);
+  border-left:1px solid var(--horizon);
+  padding:18px 20px;
+}
+.artist-label-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;font-weight:400;
+  letter-spacing:0.02em;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+.artist-label-bio{
+  font-size:10px;font-weight:300;
+  font-style:italic;
+  line-height:1.7;
+  color:var(--ink);opacity:0.65;
+  white-space:normal;
+}
+
+/* ── CTA WALL ── */
+#cta-wall{
+  display:inline-flex;
+  flex-direction:column;
+  justify-content:center;
+  height:100%;
+  padding:0 100px 0 80px;
+  vertical-align:top;
+  position:relative;
+  z-index:2;
+  min-width:480px;
+  border-left:1px solid var(--horizon);
+}
+.cta-eyebrow{
+  font-family:'Hanken Grotesk',sans-serif;
+  font-size:10px;font-weight:500;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--ink);opacity:0.35;
+  margin-bottom:20px;
+}
+.cta-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(38px,4vw,52px);
+  font-weight:300;
+  font-style:italic;
+  line-height:1.1;
+  color:var(--ink);
+  margin-bottom:28px;
+}
+.cta-email{
+  font-family:'Hanken Grotesk',sans-serif;
+  font-size:12px;font-weight:500;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--ink);
+  text-decoration:none;
+  border-bottom:1px solid var(--ink);
+  padding-bottom:3px;
+  display:inline-block;
+  transition:opacity 0.2s;
+}
+.cta-email:hover{opacity:0.5}
+.cta-links{
+  display:flex;gap:24px;
+  margin-top:20px;
+}
+.cta-link{
+  font-family:'Hanken Grotesk',sans-serif;
+  font-size:10px;font-weight:500;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--ink);opacity:0.5;
+  text-decoration:none;
+  transition:opacity 0.2s;
+}
+.cta-link:hover{opacity:1}
+
+/* end padding */
+.end-pad{
+  display:inline-block;
+  width:100px;
+  height:100%;
+  vertical-align:top;
+}
+
+/* ── LIGHTBOX ── */
+#lightbox{
+  position:fixed;inset:0;
+  z-index:200;
+  background:rgba(22,22,22,0.88);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.3s;
+}
+#lightbox.open{opacity:1;pointer-events:all}
+#lb-inner{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:40px;
+  max-width:90vw;
+  max-height:85vh;
+}
+#lb-frame{
+  border:10px solid var(--frame);
+  padding:18px;
+  background:var(--mat);
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  flex-shrink:0;
+}
+#lb-img{
+  display:block;
+  max-width:55vw;
+  max-height:72vh;
+  object-fit:contain;
+}
+#lb-label{
+  max-width:240px;
+  flex-shrink:0;
+}
+#lb-label .label-title{font-size:13px}
+#lb-label .label-medium{font-size:11px}
+#lb-label .label-metrics{font-size:11px}
+#lb-label .label-provenance{font-size:11px}
+#lb-label .label-year{font-size:12px}
+#lb-close{
+  position:fixed;top:20px;right:28px;
+  font-size:10px;font-weight:500;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:#FCFCFA;opacity:0.6;
+  cursor:pointer;
+  border:1px solid rgba(252,252,250,0.3);
+  padding:6px 12px;
+  transition:opacity 0.2s;
+  background:none;
+}
+#lb-close:hover{opacity:1}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  html,body{overflow:hidden auto}
+  #hall{
+    position:static;
+    overflow-x:visible;overflow-y:visible;
+    height:auto;
+  }
+  #hall-inner{
+    display:block;
+    height:auto;
+    white-space:normal;
+    padding-bottom:80px;
+  }
+  #hall-inner::after{display:none}
+  #top-bar{position:fixed}
+  #bottom-bar{display:none}
+
+  #entrance{
+    display:block;
+    padding:100px 32px 60px;
+    min-width:unset;
+    border-bottom:1px solid var(--horizon);
+    background:linear-gradient(180deg, transparent 0%, transparent 82%, var(--floor) 82%);
+  }
+  .entrance-rule{margin:20px 0}
+
+  .section{display:block;height:auto;white-space:normal}
+  .room-marker{
+    display:block;
+    padding:40px 32px 16px;
+    height:auto;
+    writing-mode:horizontal-tb;
+  }
+  .room-title{writing-mode:horizontal-tb;transform:none;font-size:18px}
+
+  .artwork-wrap{
+    display:block;
+    height:auto;
+    padding-bottom:0;
+  }
+  .artwork-unit{
+    flex-direction:column!important;
+    align-items:center;
+    padding:40px 24px;
+    gap:20px;
+    height:auto;
+  }
+  .eye-level{
+    position:static;
+    transform:none;
+    justify-content:center;
+  }
+  .frame-col{
+    height:auto;
+    width:100%;
+    display:flex;justify-content:center;
+  }
+  .wall-label{
+    max-width:300px;
+    max-height:none;
+    overflow-y:visible;
+    border-left:none;
+    border-top:1px solid var(--horizon);
+  }
+
+  #stats-wall{
+    display:block;
+    padding:50px 32px;
+    min-width:unset;
+    height:auto;
+    background:var(--floor);
+    border-left:none;
+    border-top:1px solid var(--horizon);
+  }
+  .stats-header{margin-bottom:28px}
+  .stats-grid{gap:24px 32px}
+
+  .salon-wall{
+    display:block;
+    padding:32px 20px;
+    height:auto;
+  }
+  .salon-row{
+    flex-wrap:wrap;
+    gap:20px;
+    margin-bottom:20px!important;
+    align-items:flex-start!important;
+    justify-content:center;
+  }
+
+  #artist-room{
+    flex-direction:column;
+    align-items:center;
+    padding:40px 24px;
+    gap:24px;
+    height:auto;
+  }
+  .artist-portrait-col{height:auto;position:static}
+  .artist-eye-level{position:static;transform:none}
+  .artist-bio-col{max-width:100%;width:100%;padding:0}
+
+  #cta-wall{
+    display:block;
+    min-width:unset;
+    padding:60px 32px 100px;
+    border-left:none;
+    border-top:1px solid var(--horizon);
+    background:linear-gradient(180deg,transparent 0%,transparent 82%,var(--floor) 82%);
+  }
+
+  #lb-inner{flex-direction:column;gap:20px;max-width:95vw}
+  #lb-img{max-width:85vw;max-height:55vh}
+  #lb-label{max-width:85vw}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header id="top-bar" role="banner">
+  <div id="top-wordmark">Inidė Jasnauskaitė &#8202; / &#8202; Exhibition</div>
+  <a id="top-right" href="mailto:osvaldas@reelize.lt">Visitor Information &#8212; Contact</a>
+</header>
+
+<!-- BOTTOM BAR -->
+<footer id="bottom-bar" role="contentinfo" aria-live="polite">
+  <span id="room-indicator">ENTRANCE</span>
+  <div id="scroll-progress" role="progressbar" aria-label="Gallery progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+    <div id="scroll-progress-bar"></div>
+  </div>
+  <span>Gallery &#8212; Vilnius</span>
+</footer>
+
+<!-- HALL -->
+<main id="hall" role="main" tabindex="0" aria-label="Gallery hall — horizontal scroll">
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Inidė Jasnauskaitė — A Retrospective of Viral Work, a portfolio gallery for brand marketers</h2>
+<div id="hall-inner">
+
+  <!-- ═══════════════════════════════════════
+       ENTRANCE WALL
+  ══════════════════════════════════════════ -->
+  <section id="entrance" data-room="ENTRANCE" aria-label="Exhibition entrance">
+    <p class="entrance-sub">2025 &#8202;&#8202; Reelize Gallery &#8202;&#8202; Vilnius</p>
+    <h1 class="entrance-title">INIDĖ<br>JASNAUSKAITĖ</h1>
+    <p class="entrance-subtitle">A Retrospective of Viral Work<br>2017&#8202;–&#8202;2026</p>
+    <p class="entrance-curated">Curated by Reelize, Vilnius</p>
+    <div class="entrance-rule" aria-hidden="true"></div>
+    <p class="entrance-statement">
+      Six hundred million views.<br>
+      Sixty-nine brands.<br>
+      One artist working in the medium of attention.
+    </p>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       ROOM I — COMMISSIONS
+  ══════════════════════════════════════════ -->
+  <section class="section" data-room="ROOM I" aria-label="Room I — Commissions">
+
+    <div class="room-marker">
+      <span class="room-number">I</span>
+      <span class="room-title">Commissions</span>
+    </div>
+
+    <!-- Mionetto — FEATURE (large) -->
+    <div class="artwork-wrap">
+      <div class="artwork-unit">
+        <div class="frame-col" style="width:360px;">
+          <div class="eye-level">
+            <div class="frame" data-lb-src="images/mionetto-DNXetzOMT__.jpg" data-lb-title="Aperitivo with Grandmother" data-lb-year="2025" data-lb-medium="Branded video · Instagram Reel" data-lb-metrics="16,700,000 views · ER 6.8%" data-lb-prov="Commissioned by Mionetto" data-lb-stamp="PERMANENT COLLECTION" role="button" tabindex="0" aria-label="Open artwork: Aperitivo with Grandmother, 2025">
+              <img src="images/mionetto-DNXetzOMT__.jpg" width="320" height="420" alt="Mionetto campaign: Aperitivo with Grandmother, 2025" loading="eager">
+            </div>
+          </div>
+        </div>
+        <div class="wall-label" aria-label="Wall label">
+          <span class="label-title">Aperitivo with Grandmother</span>
+          <span class="label-year">2025</span>
+          <div class="label-divider"></div>
+          <span class="label-medium">Branded video · Instagram Reel</span>
+          <span class="label-metrics">16,700,000 views<br>ER 6.8%</span>
+          <span class="label-provenance">Commissioned by Mionetto</span>
+          <span class="label-stamp">Permanent Collection</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hellmann's -->
+    <div class="artwork-wrap">
+      <div class="artwork-unit label-left">
+        <div class="frame-col" style="width:300px;">
+          <div class="eye-level">
+            <div class="frame" data-lb-src="images/hellmanns.jpg" data-lb-title="Easter Table" data-lb-year="2024" data-lb-medium="Branded video · Instagram Reel" data-lb-metrics="15,000,000 views" data-lb-prov="Commissioned by Hellmann's" data-lb-stamp="PERMANENT COLLECTION" role="button" tabindex="0" aria-label="Open artwork: Easter Table, 2024">
+              <img src="images/hellmanns.jpg" width="260" height="340" alt="Hellmann's campaign: Easter Table, 2024" loading="eager">
+            </div>
+          </div>
+        </div>
+        <div class="wall-label">
+          <span class="label-title">Easter Table</span>
+          <span class="label-year">2024</span>
+          <div class="label-divider"></div>
+          <span class="label-medium">Branded video · Instagram Reel</span>
+          <span class="label-metrics">15,000,000 views</span>
+          <span class="label-provenance">Commissioned by Hellmann's</span>
+          <span class="label-stamp">Permanent Collection</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Akropolis — FEATURE (tall) -->
+    <div class="artwork-wrap">
+      <div class="artwork-unit">
+        <div class="frame-col" style="width:340px;">
+          <div class="eye-level">
+            <div class="frame" data-lb-src="images/akropolis-DPDlAeZiEuJ.jpg" data-lb-title="Autumn Wardrobe" data-lb-year="2025" data-lb-medium="Branded video series · Instagram" data-lb-metrics="13,200,000 views · 35 works in series" data-lb-prov="Commissioned by Akropolis Shopping Centre" data-lb-stamp="ON LOAN" role="button" tabindex="0" aria-label="Open artwork: Autumn Wardrobe, 2025">
+              <img src="images/akropolis-DPDlAeZiEuJ.jpg" width="290" height="400" alt="Akropolis campaign: Autumn Wardrobe, 2025" loading="eager">
+            </div>
+          </div>
+        </div>
+        <div class="wall-label">
+          <span class="label-title">Autumn Wardrobe</span>
+          <span class="label-year">2025</span>
+          <div class="label-divider"></div>
+          <span class="label-medium">Branded video series<br>Instagram · 35 works</span>
+          <span class="label-metrics">13,200,000 views</span>
+          <span class="label-provenance">Commissioned by Akropolis</span>
+          <span class="label-stamp">On Loan</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nissan -->
+    <div class="artwork-wrap">
+      <div class="artwork-unit label-left">
+        <div class="frame-col" style="width:280px;">
+          <div class="eye-level">
+            <div class="frame" data-lb-src="images/nissan.jpg" data-lb-title="The Drive" data-lb-year="2025" data-lb-medium="Branded video · Instagram Reel" data-lb-metrics="6,500,000 views" data-lb-prov="Commissioned by Nissan" data-lb-stamp="ACQUIRED" role="button" tabindex="0" aria-label="Open artwork: The Drive, 2025">
+              <img src="images/nissan.jpg" width="240" height="310" alt="Nissan campaign: The Drive, 2025" loading="eager">
+            </div>
+          </div>
+        </div>
+        <div class="wall-label">
+          <span class="label-title">The Drive</span>
+          <span class="label-year">2025</span>
+          <div class="label-divider"></div>
+          <span class="label-medium">Branded video · Instagram Reel</span>
+          <span class="label-metrics">6,500,000 views</span>
+          <span class="label-provenance">Commissioned by Nissan</span>
+          <span class="label-stamp">Acquired</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Maxima -->
+    <div class="artwork-wrap">
+      <div class="artwork-unit">
+        <div class="frame-col" style="width:290px;">
+          <div class="eye-level">
+            <div class="frame" data-lb-src="images/maxima-DMK9spgtfv-.jpg" data-lb-title="Everyday Still Life" data-lb-year="2025" data-lb-medium="Branded video · Instagram Reel" data-lb-metrics="3,200,000 views" data-lb-prov="Commissioned by Maxima" data-lb-stamp="ACQUIRED" role="button" tabindex="0" aria-label="Open artwork: Everyday Still Life, 2025">
+              <img src="images/maxima-DMK9spgtfv-.jpg" width="250" height="330" alt="Maxima campaign: Everyday Still Life, 2025" loading="eager">
+            </div>
+          </div>
+        </div>
+        <div class="wall-label">
+          <span class="label-title">Everyday Still Life</span>
+          <span class="label-year">2025</span>
+          <div class="label-divider"></div>
+          <span class="label-medium">Branded video · Instagram Reel</span>
+          <span class="label-metrics">3,200,000 views</span>
+          <span class="label-provenance">Commissioned by Maxima</span>
+          <span class="label-stamp">Acquired</span>
+        </div>
+      </div>
+    </div>
+
+  </section><!-- /ROOM I -->
+
+  <!-- ═══════════════════════════════════════
+       STATS WALL
+  ══════════════════════════════════════════ -->
+  <section id="stats-wall" data-room="COLLECTION STATS" aria-label="Collection statistics">
+    <p class="stats-header">Collection at a Glance</p>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-rule"></div>
+        <div class="stat-number">359K</div>
+        <div class="stat-label">Collectors<br>Daily Reach</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-rule"></div>
+        <div class="stat-number">5.0<span>%</span></div>
+        <div class="stat-label">Engagement<br>Rate Average</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-rule"></div>
+        <div class="stat-number">590M<span>+</span></div>
+        <div class="stat-label">Total<br>Views</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-rule"></div>
+        <div class="stat-number">69<span>+</span></div>
+        <div class="stat-label">Brand<br>Commissions</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       ROOM II — ORGANIC WORKS
+  ══════════════════════════════════════════ -->
+  <section class="section" data-room="ROOM II" aria-label="Room II — Organic Works">
+
+    <div class="room-marker">
+      <span class="room-number">II</span>
+      <span class="room-title">Organic Works</span>
+    </div>
+
+    <div class="salon-wall">
+      <!-- top row: 3 pieces -->
+      <div class="salon-row top-row">
+        <div class="salon-piece" data-lb-src="images/organic-C4SX92Zt6pN.jpg" data-lb-title="Untitled (Travel)" data-lb-year="2024" data-lb-medium="Personal practice · Instagram Reel" data-lb-metrics="2,200,000 views" data-lb-prov="From the artist's private collection" role="button" tabindex="0" aria-label="Open artwork: Untitled (Travel)">
+          <div class="salon-frame">
+            <img src="images/organic-C4SX92Zt6pN.jpg" width="148" height="200" alt="Organic work: Untitled (Travel), 2024">
+          </div>
+          <div class="salon-label">
+            <div class="salon-label-title">Untitled (Travel)</div>
+            <div class="salon-label-views">2,200,000 views</div>
+          </div>
+        </div>
+
+        <div class="salon-piece" data-lb-src="images/organic-DRjZN_fCLXa.jpg" data-lb-title="Untitled (Fashion)" data-lb-year="2025" data-lb-medium="Personal practice · Instagram Reel" data-lb-metrics="511,000 views" data-lb-prov="From the artist's private collection" role="button" tabindex="0" aria-label="Open artwork: Untitled (Fashion)">
+          <div class="salon-frame">
+            <img src="images/organic-DRjZN_fCLXa.jpg" width="120" height="165" alt="Organic work: Untitled (Fashion), 2025">
+          </div>
+          <div class="salon-label">
+            <div class="salon-label-title">Untitled (Fashion)</div>
+            <div class="salon-label-views">511,000 views</div>
+          </div>
+        </div>
+
+        <div class="salon-piece" data-lb-src="images/organic-DR6npUDCK23.jpg" data-lb-title="Untitled (Lifestyle)" data-lb-year="2025" data-lb-medium="Personal practice · Instagram Reel" data-lb-metrics="425,000 views" data-lb-prov="From the artist's private collection" role="button" tabindex="0" aria-label="Open artwork: Untitled (Lifestyle)">
+          <div class="salon-frame">
+            <img src="images/organic-DR6npUDCK23.jpg" width="132" height="180" alt="Organic work: Untitled (Lifestyle), 2025">
+          </div>
+          <div class="salon-label">
+            <div class="salon-label-title">Untitled (Lifestyle)</div>
+            <div class="salon-label-views">425,000 views</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- bottom row: 3 pieces, staggered -->
+      <div class="salon-row bot-row">
+        <div class="salon-piece" data-lb-src="images/organic-DEsVR0TtO64.jpg" data-lb-title="Untitled (Beauty)" data-lb-year="2024" data-lb-medium="Personal practice · Instagram Reel" data-lb-metrics="258,000 views" data-lb-prov="From the artist's private collection" role="button" tabindex="0" aria-label="Open artwork: Untitled (Beauty)">
+          <div class="salon-frame">
+            <img src="images/organic-DEsVR0TtO64.jpg" width="128" height="172" alt="Organic work: Untitled (Beauty), 2024">
+          </div>
+          <div class="salon-label">
+            <div class="salon-label-title">Untitled (Beauty)</div>
+            <div class="salon-label-views">258,000 views</div>
+          </div>
+        </div>
+
+        <div class="salon-piece" data-lb-src="images/organic-DTndqTCiLFF.jpg" data-lb-title="Untitled (Home)" data-lb-year="2025" data-lb-medium="Personal practice · Instagram Reel" data-lb-metrics="247,000 views" data-lb-prov="From the artist's private collection" role="button" tabindex="0" aria-label="Open artwork: Untitled (Home)">
+          <div class="salon-frame">
+            <img src="images/organic-DTndqTCiLFF.jpg" width="140" height="190" alt="Organic work: Untitled (Home), 2025">
+          </div>
+          <div class="salon-label">
+            <div class="salon-label-title">Untitled (Home)</div>
+            <div class="salon-label-views">247,000 views</div>
+          </div>
+        </div>
+
+        <div class="salon-piece" data-lb-src="images/organic-DNz2mq70H81.jpg" data-lb-title="Untitled (Portrait)" data-lb-year="2024" data-lb-medium="Personal practice · Instagram Reel" data-lb-metrics="185,000 views" data-lb-prov="From the artist's private collection" role="button" tabindex="0" aria-label="Open artwork: Untitled (Portrait)">
+          <div class="salon-frame">
+            <img src="images/organic-DNz2mq70H81.jpg" width="118" height="158" alt="Organic work: Untitled (Portrait), 2024">
+          </div>
+          <div class="salon-label">
+            <div class="salon-label-title">Untitled (Portrait)</div>
+            <div class="salon-label-views">185,000 views</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="salon-note" style="margin-top:20px;">From the artist's private practice.<br>No paid promotion.</p>
+    </div>
+
+  </section><!-- /ROOM II -->
+
+  <!-- ═══════════════════════════════════════
+       ROOM III — THE ARTIST
+  ══════════════════════════════════════════ -->
+  <section class="section" data-room="ROOM III" aria-label="Room III — The Artist">
+
+    <div class="room-marker">
+      <span class="room-number">III</span>
+      <span class="room-title">The Artist</span>
+    </div>
+
+    <div id="artist-room">
+      <div class="artist-portrait-col" style="width:300px;height:100%;">
+        <div class="artist-eye-level">
+          <div class="frame" data-lb-src="images/profile.jpg" data-lb-title="Inidė Jasnauskaitė" data-lb-year="2026" data-lb-medium="Portrait · Photograph" data-lb-metrics="359,000 collectors daily" data-lb-prov="Courtesy of the artist" role="button" tabindex="0" aria-label="Open portrait of Inidė Jasnauskaitė">
+            <img src="images/profile.jpg" width="260" height="340" alt="Portrait of Inidė Jasnauskaitė">
+          </div>
+        </div>
+      </div>
+      <div class="artist-bio-col">
+        <div class="artist-label">
+          <p class="artist-label-name">Inidė Jasnauskaitė</p>
+          <p class="label-year" style="margin-bottom:8px;">b. Lithuania. Lives and works in Vilnius.</p>
+          <div class="label-divider"></div>
+          <p class="artist-label-bio">
+            Works in fashion, beauty, and lifestyle. Her pieces reach an audience of 359,000 collectors daily. Selected commissions: Mionetto, Hellmann's, Nissan, Akropolis, Maxima, McDonald's, Bioderma, MyProtein, and sixty-five others. Her practice encompasses both long-form brand narratives and organic cultural observation — the latter often outperforming the former.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </section><!-- /ROOM III -->
+
+  <!-- ═══════════════════════════════════════
+       CTA WALL
+  ══════════════════════════════════════════ -->
+  <section id="cta-wall" data-room="COMMISSION" aria-label="Commission inquiry">
+    <p class="cta-eyebrow">Open for Commissions &#8212; 2026</p>
+    <h2 class="cta-headline">Commission<br>an original.</h2>
+    <a class="cta-email" href="mailto:osvaldas@reelize.lt">osvaldas@reelize.lt</a>
+    <div class="cta-links">
+      <a class="cta-link" href="https://instagram.com/jasnauskaite" target="_blank" rel="noopener">Instagram &#8599;</a>
+      <a class="cta-link" href="https://tiktok.com/@jasnauskaite" target="_blank" rel="noopener">TikTok &#8599;</a>
+    </div>
+  </section>
+
+  <div class="end-pad" aria-hidden="true"></div>
+
+</div>
+</main>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Artwork detail" aria-hidden="true">
+  <button id="lb-close" aria-label="Close lightbox">ESC &#8202; Close</button>
+  <div id="lb-inner">
+    <div id="lb-frame">
+      <img id="lb-img" src="" alt="">
+    </div>
+    <div id="lb-label">
+      <span class="label-title" id="lb-t"></span>
+      <span class="label-year" id="lb-y" style="display:block;margin-top:4px;"></span>
+      <div class="label-divider"></div>
+      <span class="label-medium" id="lb-m" style="display:block"></span>
+      <span class="label-metrics" id="lb-v" style="display:block;margin-top:6px;"></span>
+      <span class="label-provenance" id="lb-p" style="display:block;margin-top:4px;"></span>
+      <span class="label-stamp" id="lb-s" style="display:none;margin-top:10px;"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const hall = document.getElementById('hall');
+  const progressBar = document.getElementById('scroll-progress-bar');
+  const progressEl = document.getElementById('scroll-progress');
+  const roomIndicator = document.getElementById('room-indicator');
+  const lightbox = document.getElementById('lightbox');
+
+  /* ── HORIZONTAL WHEEL → SCROLL ──
+     scroll-behavior:smooth has been removed from #hall CSS so that direct
+     scrollLeft assignments are not swallowed by in-progress smooth animations.
+     Wheel: redirect vertical delta to horizontal; let native horizontal delta
+     (trackpad swipe) also contribute. preventDefault only when we handle it.
+     Keyboard arrows: use scrollBy with behavior smooth for a nice glide.
+  ── */
+  hall.addEventListener('wheel', function(e){
+    if(window.innerWidth <= 768) return;
+    // If horizontal trackpad gesture dominates, let it scroll natively
+    if(Math.abs(e.deltaX) > Math.abs(e.deltaY)){
+      // native horizontal — still prevent default to stop page scroll on
+      // some browsers, and drive scrollLeft directly for consistency
+      e.preventDefault();
+      hall.scrollLeft += e.deltaX;
+    } else {
+      // vertical wheel → translate to horizontal
+      e.preventDefault();
+      hall.scrollLeft += e.deltaY;
+    }
+  }, {passive:false});
+
+  /* ── DRAG TO PAN ── */
+  let isDragging = false, startX = 0, scrollAtStart = 0;
+  hall.addEventListener('mousedown', function(e){
+    if(e.target.closest('[role="button"]')) return;
+    isDragging = true;
+    startX = e.pageX;
+    scrollAtStart = hall.scrollLeft;
+    hall.classList.add('dragging');
+  });
+  document.addEventListener('mousemove', function(e){
+    if(!isDragging) return;
+    hall.scrollLeft = scrollAtStart - (e.pageX - startX);
+  });
+  document.addEventListener('mouseup', function(){
+    isDragging = false;
+    hall.classList.remove('dragging');
+  });
+
+  /* ── KEYBOARD ARROWS ── */
+  hall.addEventListener('keydown', function(e){
+    if(window.innerWidth <= 768) return;
+    const step = Math.round(window.innerWidth * 0.8);
+    if(e.key === 'ArrowRight'){e.preventDefault(); hall.scrollBy({left:step, behavior:'smooth'});}
+    if(e.key === 'ArrowLeft'){e.preventDefault(); hall.scrollBy({left:-step, behavior:'smooth'});}
+  });
+
+  /* ── PROGRESS + ROOM INDICATOR ── */
+  function updateProgress(){
+    const max = hall.scrollWidth - hall.clientWidth;
+    if(max <= 0) return;
+    const pct = Math.round((hall.scrollLeft / max) * 100);
+    progressBar.style.width = pct + '%';
+    progressEl.setAttribute('aria-valuenow', pct);
+
+    const sections = document.querySelectorAll('[data-room]');
+    let currentRoom = 'ENTRANCE';
+    sections.forEach(function(sec){
+      const rect = sec.getBoundingClientRect();
+      if(rect.left < window.innerWidth * 0.55){
+        currentRoom = sec.getAttribute('data-room');
+      }
+    });
+    if(roomIndicator.textContent !== currentRoom){
+      roomIndicator.style.opacity = '0';
+      setTimeout(function(){
+        roomIndicator.textContent = currentRoom;
+        roomIndicator.style.opacity = '1';
+      }, 200);
+    }
+  }
+  hall.addEventListener('scroll', updateProgress, {passive:true});
+
+  /* ── LIGHTBOX ── */
+  function openLightbox(el){
+    const src = el.getAttribute('data-lb-src') || el.closest('[data-lb-src]').getAttribute('data-lb-src');
+    const title = el.getAttribute('data-lb-title') || el.closest('[data-lb-title]').getAttribute('data-lb-title') || '';
+    const year = el.getAttribute('data-lb-year') || el.closest('[data-lb-year]').getAttribute('data-lb-year') || '';
+    const medium = el.getAttribute('data-lb-medium') || el.closest('[data-lb-medium]').getAttribute('data-lb-medium') || '';
+    const metrics = el.getAttribute('data-lb-metrics') || el.closest('[data-lb-metrics]').getAttribute('data-lb-metrics') || '';
+    const prov = el.getAttribute('data-lb-prov') || el.closest('[data-lb-prov]').getAttribute('data-lb-prov') || '';
+    const stamp = el.getAttribute('data-lb-stamp') || el.closest('[data-lb-stamp]').getAttribute('data-lb-stamp') || '';
+
+    document.getElementById('lb-img').src = src;
+    document.getElementById('lb-img').alt = title;
+    document.getElementById('lb-t').textContent = title;
+    document.getElementById('lb-y').textContent = year;
+    document.getElementById('lb-m').textContent = medium;
+    document.getElementById('lb-v').textContent = metrics;
+    document.getElementById('lb-p').textContent = prov;
+    var stampEl = document.getElementById('lb-s');
+    if(stamp){stampEl.textContent = stamp; stampEl.style.display='inline-block';}
+    else{stampEl.style.display='none';}
+
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden','false');
+    document.getElementById('lb-close').focus();
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden','true');
+  }
+
+  /* Delegate clicks from frames and salon pieces */
+  document.addEventListener('click', function(e){
+    const target = e.target.closest('[data-lb-src]');
+    if(target && !lightbox.contains(target)){
+      openLightbox(target);
+    }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){
+      const target = document.activeElement && document.activeElement.closest('[data-lb-src]');
+      if(target && !lightbox.contains(target)) openLightbox(target);
+    }
+    if(e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+  });
+  document.getElementById('lb-close').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e){
+    if(e.target === lightbox) closeLightbox();
+  });
+
+  /* ── PARALLAX: labels lag slightly behind frames ── */
+  var isMobile = window.innerWidth <= 768;
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!isMobile && !reducedMotion){
+    hall.addEventListener('scroll', function(){
+      var labels = document.querySelectorAll('.wall-label');
+      var offset = hall.scrollLeft;
+      labels.forEach(function(lbl){
+        lbl.style.transform = 'translateX(' + (offset * 0.012) + 'px)';
+      });
+    }, {passive:true});
+  }
+
+  window.addEventListener('resize', function(){
+    isMobile = window.innerWidth <= 768;
+    if(isMobile){
+      document.querySelectorAll('.wall-label').forEach(function(l){l.style.transform='';});
+    }
+  });
+
+  /* Initial state */
+  updateProgress();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inidė Jasnauskaitė — Content Creator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --paper:#F4F2EE; --paper-2:#EDEAE4; --ink:#1A1A1A; --ink-soft:#6E6A64; --hair:#E0DCD4;
+  --app-bg:#FFFFFF; --app-ink:#111; --app-soft:#737373; --app-hair:#EFEFEF;
+  --ig-a:#833AB4; --ig-b:#C13584; --ig-c:#E1306C; --ig-d:#F77737; --ig-e:#FCAF45;
+  --ring:conic-gradient(from 210deg,#FCAF45,#F77737,#E1306C,#C13584,#833AB4,#FCAF45);
+  --sans:'Hanken Grotesk',sans-serif; --mono:'IBM Plex Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--sans);cursor:pointer}
+.mono{font-family:var(--mono)}
+.klabel{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* ============ SITE HEADER ============ */
+.site-head{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+  padding:14px 28px;background:rgba(244,242,238,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--hair)}
+.wordmark{font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+.site-nav{display:flex;gap:26px}
+.site-nav a{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);transition:color .2s}
+.site-nav a:hover{color:var(--ink)}
+.site-nav a.nav-links{color:var(--ig-b)}
+
+/* ============ HERO LAYOUT ============ */
+.hero{min-height:100svh;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:40px;
+  max-width:1360px;margin:0 auto;padding:96px 40px 40px}
+.col-left,.col-right{display:flex;flex-direction:column}
+.col-right{align-items:flex-end;text-align:right}
+
+/* left brand list */
+.plist-head{margin-bottom:14px}
+.prow{display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding:11px 10px 11px 14px;border-bottom:1px solid var(--hair);
+  cursor:pointer;position:relative;transition:background .2s;max-width:300px;user-select:none}
+.prow:first-of-type{border-top:1px solid var(--hair)}
+.prow .pname{font-size:14px;font-weight:500;letter-spacing:.02em;transition:transform .25s}
+.prow .pmet{font-family:var(--mono);font-size:10.5px;color:var(--ink-soft)}
+.prow::before{content:'';position:absolute;left:0;top:50%;width:3px;height:0;background:var(--ink);transition:height .22s;transform:translateY(-50%)}
+.prow:hover{background:rgba(0,0,0,.025)}
+.prow:hover .pname{transform:translateX(4px)}
+.prow.active::before{height:62%}
+.prow.active .pname{transform:translateX(6px);font-weight:600}
+.pmore{position:relative;padding:12px 14px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-soft);background:none;border:0;cursor:pointer;text-align:left;transition:color .2s}
+.pmore:hover{color:var(--ink)}
+.pmore-pop{position:absolute;left:0;bottom:calc(100% + 8px);z-index:80;width:min(420px,80vw);max-height:340px;overflow-y:auto;
+  background:#fff;border:1px solid var(--hair);border-radius:14px;padding:16px 18px;box-shadow:0 24px 60px -18px rgba(0,0,0,.34);
+  opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .2s,transform .2s,visibility .2s;
+  columns:2;column-gap:20px;scrollbar-width:thin}
+.pmore:hover .pmore-pop,.pmore:focus-visible .pmore-pop{opacity:1;visibility:visible;transform:translateY(0)}
+.pmore-pop .pp-head{column-span:all;font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:var(--ig-b);margin-bottom:10px}
+.pmore-pop .bx{display:block;font-family:var(--sans);font-size:12.5px;letter-spacing:0;text-transform:none;color:var(--ink-soft);
+  padding:3.5px 0;break-inside:avoid;transition:color .15s;text-decoration:none}
+.pmore-pop a.bx:hover{color:var(--ig-b)}
+.pmore-pop .bx b{color:var(--ink);font-weight:600}
+.pmore-pop .bx-plain{color:var(--ink-faint,#aaa89f);cursor:default}
+.pmore-pop .bx-arr{font-size:9px;opacity:0;transition:opacity .15s}
+.pmore-pop a.bx:hover .bx-arr{opacity:.6}
+
+/* right stats */
+.stats-wrap{display:flex;flex-direction:column}
+.bigstat{padding:16px 0;border-bottom:1px solid var(--hair);min-width:200px}
+.bigstat:first-of-type{border-top:1px solid var(--hair)}
+.bigstat .v{font-size:clamp(34px,3.4vw,50px);font-weight:300;letter-spacing:-.03em;line-height:1}
+.bigstat .l{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);margin-top:6px}
+
+/* hint under phone */
+.phone-zone{display:flex;flex-direction:column;align-items:center;gap:18px}
+.hint{font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft)}
+.scroll-ind{display:flex;flex-direction:column;align-items:center;gap:6px;opacity:.6}
+.scroll-ind .line{width:1px;height:26px;background:var(--ink-soft);animation:pulseH 2.2s ease-in-out infinite}
+@keyframes pulseH{0%,100%{transform:scaleY(.3);opacity:.3}50%{transform:scaleY(1);opacity:.8}}
+
+/* ============ PHONE BEZEL ============ */
+.phone{position:relative;width:330px;height:712px;border-radius:54px;background:#1B1B1D;
+  box-shadow:inset 0 0 0 1.5px #3a3a3c,inset 0 0 0 5px #000,0 30px 70px -18px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.16);
+  animation:breathe 7s ease-in-out infinite}
+@keyframes breathe{0%,100%{box-shadow:inset 0 0 0 1.5px #3a3a3c,inset 0 0 0 5px #000,0 30px 70px -18px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.16)}
+  50%{box-shadow:inset 0 0 0 1.5px #3a3a3c,inset 0 0 0 5px #000,0 42px 84px -18px rgba(0,0,0,.34),0 12px 28px rgba(0,0,0,.13)}}
+.phone::before{content:'';position:absolute;right:-2.5px;top:190px;width:2.5px;height:64px;border-radius:2px;background:#2c2c2e}
+.phone::after{content:'';position:absolute;left:-2.5px;top:150px;width:2.5px;height:30px;border-radius:2px;background:#2c2c2e;box-shadow:0 44px 0 #2c2c2e,0 100px 0 #2c2c2e}
+.screen{position:absolute;inset:9px;border-radius:46px;overflow:hidden;background:#000}
+.island{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:96px;height:26px;border-radius:14px;background:#000;z-index:40;box-shadow:0 0 0 .5px rgba(255,255,255,.06)}
+
+/* ============ LOCK SCREEN ============ */
+.lock{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;color:#fff;border:0;width:100%;
+  background:linear-gradient(160deg,#3c3168 0%,#7b4397 34%,#c0667f 68%,#e8a87c 100%);
+  transition:transform .65s cubic-bezier(.32,0,.18,1),opacity .6s;cursor:pointer;font-family:var(--sans)}
+.lock.away{transform:translateY(-103%);opacity:.4}
+.lock .ltime{margin-top:88px;font-size:64px;font-weight:300;letter-spacing:-.02em;line-height:1}
+.lock .ldate{font-size:13px;font-weight:500;opacity:.85;margin-top:6px}
+.lock .notifs{margin-top:34px;display:flex;flex-direction:column;gap:9px;width:calc(100% - 36px)}
+.notif{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.22);backdrop-filter:blur(18px);
+  border-radius:18px;padding:11px 13px;text-align:left}
+.notif .nic{width:30px;height:30px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center}
+.notif .nic.ig{background:linear-gradient(45deg,#FCAF45,#E1306C,#833AB4)}
+.notif .nic.tt{background:#111}
+.notif .nic svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:1.8}
+.notif .nt{flex:1}
+.notif .nrow{display:flex;justify-content:space-between;font-size:10px;opacity:.8}
+.notif .nmsg{font-size:11.5px;font-weight:500;line-height:1.32;margin-top:1px}
+.lock .unlock-hint{margin-top:auto;margin-bottom:26px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.8;animation:hintPulse 2s ease-in-out infinite}
+@keyframes hintPulse{0%,100%{opacity:.45}50%{opacity:.95}}
+
+/* ============ IG APP — PROFILE ============ */
+.app{position:absolute;inset:0;background:var(--app-bg);color:var(--app-ink);display:flex;flex-direction:column;font-size:12px}
+.app-top{display:flex;align-items:center;justify-content:space-between;padding:50px 16px 10px;border-bottom:1px solid var(--app-hair)}
+.app-top .uname{font-weight:700;font-size:15px}
+.app-top svg{width:18px;height:18px;stroke:var(--app-ink);fill:none;stroke-width:1.8}
+.app-scroll{flex:1;overflow-y:auto;scrollbar-width:none}
+.app-scroll::-webkit-scrollbar{display:none}
+.prof-head{display:flex;align-items:center;gap:18px;padding:14px 16px 4px}
+.avatar-ring{width:74px;height:74px;border-radius:50%;padding:2.5px;background:var(--ring);flex:none;border:0;cursor:pointer;position:relative;transition:transform .2s}
+.avatar-ring:hover{transform:scale(1.05)}
+.avatar-ring .av-in{width:100%;height:100%;border-radius:50%;border:2.5px solid var(--app-bg);overflow:hidden}
+.avatar-ring img{width:100%;height:100%;object-fit:cover}
+.avatar-ring::after{content:'▶';position:absolute;bottom:-1px;right:-1px;width:21px;height:21px;border-radius:50%;
+  background:var(--ig-c);color:#fff;font-size:8px;display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--app-bg);padding-left:1px}
+.pstats{flex:1;display:flex;justify-content:space-around;text-align:center}
+.pstats .ps b{display:block;font-size:15.5px;font-weight:700}
+.pstats .ps span{font-size:10.5px;color:var(--app-soft)}
+.prof-bio{padding:10px 16px 0;line-height:1.45}
+.prof-bio .nm{font-weight:600;font-size:12.5px}
+.prof-bio .bio-mail{color:#2350a8;font-weight:500}
+.prof-btns{display:flex;gap:7px;padding:12px 16px 4px}
+.btn-follow{flex:1;text-align:center;padding:8px 0;border-radius:9px;color:#fff;font-weight:600;font-size:12.5px;
+  background:linear-gradient(90deg,var(--ig-a),var(--ig-c),var(--ig-d))}
+.btn-msg{flex:1;text-align:center;padding:8px 0;border-radius:9px;border:1px solid #dcdcdc;font-weight:600;font-size:12.5px}
+.hl-row{display:flex;gap:14px;padding:16px 16px 8px;overflow-x:auto;scrollbar-width:none}
+.hl-row::-webkit-scrollbar{display:none}
+.hl{display:flex;flex-direction:column;align-items:center;gap:5px;flex:none;background:none;border:0}
+.hl .hl-ring{width:56px;height:56px;border-radius:50%;padding:2px;background:var(--ring);transition:transform .2s}
+.hl .hl-in{width:100%;height:100%;border-radius:50%;border:2px solid var(--app-bg);overflow:hidden;background:#eee}
+.hl img{width:100%;height:100%;object-fit:cover}
+.hl span{font-size:10px;color:var(--app-ink)}
+.hl:hover .hl-ring{transform:scale(1.05)}
+.grid-tabs{display:flex;border-top:1px solid var(--app-hair);margin-top:8px}
+.grid-tabs div{flex:1;text-align:center;padding:9px 0;border-top:1.5px solid transparent}
+.grid-tabs div.on{border-top-color:var(--app-ink)}
+.grid-tabs svg{width:18px;height:18px;stroke:var(--app-ink);fill:none;stroke-width:1.6;opacity:.85}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding-bottom:20px}
+.ptile{position:relative;aspect-ratio:4/5;overflow:hidden;border:0;padding:0;background:#eee}
+.ptile img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
+.ptile:hover img{transform:scale(1.06)}
+.ptile .views{position:absolute;left:6px;bottom:6px;display:flex;align-items:center;gap:4px;color:#fff;font-size:10px;font-weight:600;
+  text-shadow:0 1px 5px rgba(0,0,0,.7)}
+.ptile .views svg{width:11px;height:11px;fill:#fff}
+
+/* ============ CASE VIEWER ============ */
+.case{position:absolute;inset:0;z-index:25;background:#000;display:none}
+.case.open{display:block}
+.case-media{position:absolute;inset:0;overflow:hidden}
+/* blur'intas tamsus fonas — paslepia žemos raiškos thumbnail'ą (135×240) pilname ekrane */
+.case-media .cm-bg{position:absolute;inset:-12%;background-size:cover;background-position:center;
+  filter:blur(26px) brightness(.46) saturate(1.15);transform:scale(1.06);animation:cmZoom 6s ease-out forwards}
+@keyframes cmZoom{from{transform:scale(1.16)}to{transform:scale(1)}}
+/* aštri „reel kortelė" — rodoma mažesniu dydžiu, kur thumbnail'as atrodo ryškiai */
+.case-media .cm-card{position:absolute;top:15%;left:50%;transform:translateX(-50%);width:54%;aspect-ratio:9/16;
+  object-fit:cover;border-radius:16px;box-shadow:0 20px 55px rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.14);
+  animation:cmCard .6s cubic-bezier(.22,1,.36,1) both}
+@keyframes cmCard{from{opacity:0;transform:translateX(-50%) translateY(10px) scale(.97)}to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}
+@keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.055)}}
+.case-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.42) 0%,transparent 26%,transparent 55%,rgba(0,0,0,.62) 100%)}
+.case-bars{position:absolute;top:54px;left:12px;right:12px;display:flex;gap:4px;z-index:5}
+.cbar{flex:1;height:2.5px;border-radius:2px;background:rgba(255,255,255,.32);overflow:hidden}
+.cbar i{display:block;height:100%;width:0;background:#fff}
+.case-head{position:absolute;top:64px;left:14px;right:10px;display:flex;align-items:center;gap:9px;z-index:9;color:#fff}
+.case-head .chav{width:30px;height:30px;border-radius:50%;padding:1.5px;background:var(--ring)}
+.case-head .chav img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:1.5px solid #000}
+.case-head .cht{font-size:12px;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.case-head .cht span{opacity:.75;font-weight:400;margin-left:5px;font-size:11px}
+.case-close{margin-left:auto;background:none;border:0;padding:6px}
+.case-close svg{width:20px;height:20px;stroke:#fff;stroke-width:2.2;fill:none}
+.case-body{position:absolute;inset:0;z-index:9;display:flex;flex-direction:column;justify-content:flex-end;padding:0 20px 62px;color:#fff;pointer-events:none}
+/* tuščios vietos praleidžia tap'ą navigacijai, bet turinys/linkai paspaudžiami virš tapzonų */
+.case-body a,.case-body button,.case-body .case-minigrid .mg{pointer-events:auto}
+button.chip-link{border:0;cursor:pointer;font-family:var(--sans)}
+.case-num{font-size:64px;font-weight:700;letter-spacing:-.04em;line-height:.95;text-shadow:0 2px 18px rgba(0,0,0,.35)}
+.case-sub{font-size:13px;font-weight:500;opacity:.92;margin-top:6px;letter-spacing:.04em}
+.case-kick{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;opacity:.85;margin-bottom:10px;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.case-rows{display:flex;gap:0;border-top:1px solid rgba(255,255,255,.4);margin-top:18px}
+.case-rows .cr{flex:1;padding:11px 10px 0 0}
+.case-rows .cr b{display:block;font-size:23px;font-weight:600;letter-spacing:-.02em;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.case-rows .cr span{font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;opacity:.8}
+.case-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{background:rgba(255,255,255,.94);color:#111;font-size:11px;font-weight:700;padding:7px 12px;border-radius:9px;transform:rotate(-1.4deg);box-shadow:0 3px 12px rgba(0,0,0,.25)}
+.chip.alt{transform:rotate(1.2deg)}
+.chip.zero{background:#0a7d3c;color:#fff;transform:rotate(1.2deg)}
+.chip-link{display:inline-flex;align-items:center;gap:7px;background:#fff;color:#111;font-size:11.5px;font-weight:700;padding:9px 14px;border-radius:11px;margin-top:14px;width:max-content;box-shadow:0 4px 14px rgba(0,0,0,.3);transition:transform .2s;position:relative;z-index:10}
+.chip-link:hover{transform:scale(1.04)}
+.chip-link svg{width:12px;height:12px;fill:#111;stroke:none}
+.case-minigrid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:12px;position:relative;z-index:10}
+.case-minigrid .mg{position:relative;aspect-ratio:4/5;border-radius:5px;overflow:hidden;display:block;outline:1px solid transparent;transition:outline-color .2s,transform .2s}
+.case-minigrid .mg:hover{outline-color:rgba(255,255,255,.85);transform:scale(1.04);z-index:2}
+.case-minigrid .mg img{width:100%;height:100%;object-fit:cover;animation:none}
+.case-minigrid .mg span{position:absolute;left:5px;bottom:4px;font-size:9px;font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+.case-minigrid .mg-more{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:rgba(255,255,255,.16);backdrop-filter:blur(6px);color:#fff;text-decoration:none}
+.case-minigrid .mg-more b{font-size:16px;font-weight:700}
+.case-minigrid .mg-more i{font-style:normal;font-size:8px;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.tapzone{position:absolute;top:90px;bottom:96px;z-index:8;cursor:pointer;background:transparent;border:0}
+.tz-l{left:0;width:38%}.tz-r{right:0;width:62%}
+.case-reply{position:absolute;left:14px;right:14px;bottom:12px;z-index:9;display:flex;align-items:center;gap:10px}
+.case-reply .rin{flex:1;border:1px solid rgba(255,255,255,.55);border-radius:22px;padding:9px 15px;color:rgba(255,255,255,.85);font-size:12px;background:rgba(0,0,0,.18);backdrop-filter:blur(6px)}
+.case-reply button{background:none;border:0;padding:0;flex:none;position:relative}
+.case-reply svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.7;flex:none;transition:transform .15s}
+.case-reply button:active svg{transform:scale(1.25)}
+.case-reply button.liked svg{fill:#ff3040;stroke:#ff3040}
+
+/* ── EASTER EGGS ── */
+.heart-pop{position:absolute;bottom:8px;left:50%;font-size:18px;pointer-events:none;animation:heartFly 1.1s ease-out forwards;z-index:30}
+@keyframes heartFly{0%{transform:translate(-50%,0) scale(.6);opacity:1}100%{transform:translate(calc(-50% + var(--hx,0px)),-130px) scale(1.25);opacity:0}}
+.phone-toast{position:absolute;top:64px;left:50%;transform:translate(-50%,-12px);background:rgba(20,20,20,.92);color:#fff;
+  font-size:11.5px;font-weight:600;padding:10px 16px;border-radius:12px;z-index:45;opacity:0;transition:all .3s;white-space:nowrap;backdrop-filter:blur(8px)}
+.phone-toast.show{opacity:1;transform:translate(-50%,0)}
+.sheet-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:46;opacity:0;pointer-events:none;transition:opacity .25s}
+.sheet-backdrop.show{opacity:1;pointer-events:auto}
+.fact-sheet{position:absolute;left:6px;right:6px;bottom:6px;background:#fff;border-radius:18px;z-index:47;padding:18px 18px 14px;
+  transform:translateY(110%);transition:transform .32s cubic-bezier(.32,.72,.22,1);color:var(--app-ink)}
+.fact-sheet.show{transform:translateY(0)}
+.fact-sheet .fs-grab{width:36px;height:4px;border-radius:2px;background:#ddd;margin:0 auto 14px}
+.fact-sheet .fs-kicker{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ig-b);text-align:center;margin-bottom:8px}
+.fact-sheet .fs-text{font-size:14.5px;font-weight:600;line-height:1.45;text-align:center;min-height:62px;display:flex;align-items:center;justify-content:center}
+.fact-sheet .fs-btns{display:flex;gap:8px;margin-top:14px}
+.fact-sheet .fs-btns button{flex:1;border:0;border-radius:10px;padding:10px 0;font-size:12px;font-weight:600;font-family:var(--sans)}
+.fact-sheet .fs-more{background:#111;color:#fff}
+.fact-sheet .fs-close{background:#efefef;color:#111}
+.island{cursor:pointer;transition:width .35s cubic-bezier(.32,.72,.22,1)}
+.island.expanded{width:240px}
+.island .isl-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:7px;color:#fff;font-size:10px;
+  font-weight:600;opacity:0;transition:opacity .25s .15s;white-space:nowrap;overflow:hidden}
+.island.expanded .isl-text{opacity:1}
+.island .isl-dot{width:6px;height:6px;border-radius:50%;background:#ff3040;animation:islPulse 1.2s ease-in-out infinite;flex:none}
+@keyframes islPulse{0%,100%{opacity:1}50%{opacity:.3}}
+.reels-empty{padding:36px 24px 44px;text-align:center;color:var(--app-ink)}
+.reels-empty svg{width:44px;height:44px;stroke:var(--app-ink);fill:none;stroke-width:1.3;margin:0 auto 14px;display:block}
+.reels-empty .re-big{font-size:15px;font-weight:700;margin-bottom:6px}
+.reels-empty .re-sub{font-size:12px;color:var(--app-soft);margin-bottom:18px}
+.reels-empty a{display:inline-block;background:linear-gradient(90deg,var(--ig-a),var(--ig-c),var(--ig-d));color:#fff;font-size:12.5px;font-weight:600;padding:9px 20px;border-radius:9px}
+
+/* ── EMAIL POPUP ── */
+.email-pop{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.email-pop.show{display:flex}
+.ep-backdrop{position:absolute;inset:0;background:rgba(20,18,16,.55);backdrop-filter:blur(6px)}
+.ep-card{position:relative;background:#fff;border-radius:22px;padding:30px 28px 24px;width:min(360px,92vw);text-align:center;box-shadow:0 30px 80px -20px rgba(0,0,0,.5);animation:epIn .3s cubic-bezier(.32,.72,.22,1)}
+@keyframes epIn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+.ep-x{position:absolute;top:12px;right:15px;background:none;border:0;font-size:16px;color:var(--ink-soft);cursor:pointer;line-height:1}
+.ep-kick{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ig-b);margin-bottom:14px}
+.ep-avatar{width:58px;height:58px;border-radius:50%;padding:2.5px;background:var(--ring);margin:0 auto 14px}
+.ep-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:2.5px solid #fff}
+.ep-mail{font-size:clamp(18px,4vw,23px);font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+.ep-sub{font-size:12px;color:var(--ink-soft);margin-top:6px}
+.ep-btns{display:flex;gap:9px;margin-top:20px}
+.ep-btns>*{flex:1;padding:12px 0;border-radius:11px;font-size:13px;font-weight:600;border:0;cursor:pointer;text-align:center;font-family:var(--sans)}
+.ep-copy{background:#F4F2EE;color:var(--ink)}
+.ep-copy.done{background:#0a7d3c;color:#fff}
+.ep-open{background:var(--ink);color:#fff;text-decoration:none;display:flex;align-items:center;justify-content:center}
+
+/* ── POSTS POPUP (View all) ── */
+.posts-pop{position:fixed;inset:0;z-index:210;display:none;align-items:center;justify-content:center;padding:20px}
+.posts-pop.show{display:flex}
+.pp2-backdrop{position:absolute;inset:0;background:rgba(20,18,16,.6);backdrop-filter:blur(8px)}
+.pp2-card{position:relative;background:#fff;border-radius:22px;width:min(540px,94vw);max-height:86vh;display:flex;flex-direction:column;
+  overflow:hidden;box-shadow:0 30px 90px -20px rgba(0,0,0,.5);animation:epIn .3s cubic-bezier(.32,.72,.22,1)}
+.pp2-head{display:flex;align-items:center;gap:12px;padding:18px 18px 14px;border-bottom:1px solid var(--app-hair)}
+.pp2-av{width:44px;height:44px;border-radius:50%;padding:2px;background:var(--ring);flex:none}
+.pp2-av img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid #fff}
+.pp2-meta{flex:1;min-width:0}
+.pp2-meta b{display:block;font-size:14px;font-weight:700;color:var(--ink)}
+.pp2-meta span{font-size:11.5px;color:var(--ink-soft)}
+.pp2-x{background:#F4F2EE;border:0;width:32px;height:32px;border-radius:50%;font-size:14px;color:var(--ink);cursor:pointer;flex:none}
+.pp2-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;overflow-y:auto;padding:3px}
+.pp2-grid a{position:relative;aspect-ratio:4/5;overflow:hidden;display:block;background:#eee}
+.pp2-grid a img{width:100%;height:100%;object-fit:cover;transition:transform .3s,filter .3s}
+.pp2-grid a:hover img{transform:scale(1.06);filter:brightness(.85)}
+.pp2-grid a .pv{position:absolute;left:6px;bottom:6px;display:flex;align-items:center;gap:3px;color:#fff;font-size:11px;font-weight:700;text-shadow:0 1px 5px rgba(0,0,0,.75)}
+.pp2-grid a .pv svg{width:11px;height:11px;fill:#fff}
+.pp2-grid a .pcat{position:absolute;top:5px;left:5px;font-family:var(--mono);font-size:7px;font-weight:700;letter-spacing:.06em;
+  background:rgba(255,255,255,.92);color:#111;border-radius:4px;padding:2px 5px}
+.pp2-grid a .pcat.trv{background:linear-gradient(95deg,#2f7cf6,#00b4d8);color:#fff}
+.pp2-grid a::after{content:'↗';position:absolute;top:6px;right:7px;color:#fff;font-size:11px;opacity:0;transition:opacity .2s;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.pp2-grid a:hover::after{opacity:1}
+@media (max-width:560px){.pp2-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* View all mygtukai */
+.mini-foot .view-all{background:none;border:1px solid #dcdcdc;border-radius:8px;padding:6px 13px;font-size:10.5px;font-weight:700;
+  color:var(--app-ink);cursor:pointer;font-family:var(--sans);transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.mini-foot .view-all:hover{border-color:var(--ink);background:#fafafa}
+button.row-link{border:1px solid var(--ink);background:none;cursor:pointer;font-family:var(--sans);display:inline-flex;align-items:center;gap:8px}
+
+/* ============ SECTIONS BELOW ============ */
+section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
+.band-head{display:flex;align-items:baseline;gap:18px;margin-bottom:44px}
+.band-head h2{font-size:clamp(24px,2.6vw,34px);font-weight:600}
+.numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--hair)}
+.numcell{padding:34px 26px 30px;border-bottom:1px solid var(--hair);border-right:1px solid var(--hair)}
+.numcell:first-child{padding-left:0}
+.numcell:last-child{border-right:0}
+.numcell .v{font-size:clamp(54px,6.4vw,92px);font-weight:300;letter-spacing:-.045em;line-height:1}
+.numcell .l{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);margin-top:10px}
+.numbers-note{margin-top:22px;font-size:14px;color:var(--ink-soft)}
+.numbers-note b{color:var(--ink);font-weight:600}
+/* faktas „išlystantis" po skaičiumi — hover (desktop), visada matomas (touch) */
+.numcell{position:relative}
+.numcell:focus{outline:none}
+.numcell:focus-visible{outline:1.5px solid var(--ig-b);outline-offset:-1.5px}
+.numcell .nf{font-family:var(--mono);font-size:10px;line-height:1.5;letter-spacing:.03em;color:var(--ink-faint,#aaa89f);
+  margin-top:14px;max-width:24ch;min-height:2.8em;opacity:0;transform:translateY(-3px);
+  transition:opacity .32s ease,transform .32s ease}
+.numcell:hover .nf,.numcell:focus-within .nf{opacity:1;transform:translateY(0)}
+@media (hover:none){.numcell .nf{opacity:.85;transform:none}}
+
+/* campaign walls — mini phones, 3 perjungiami formatai */
+.layout-switch{display:flex;gap:8px;margin-left:auto}
+.lsw{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;border:1px solid var(--hair);
+  background:none;border-radius:999px;padding:8px 16px;color:var(--ink-soft);transition:all .2s}
+.lsw:hover{border-color:var(--ink-soft)}
+.lsw.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* — mode: GRID (numatytasis senas) — */
+.walls{display:grid;grid-template-columns:repeat(3,1fr);gap:48px 34px;justify-items:center}
+.wall-unit{display:flex;flex-direction:column;align-items:center}
+
+/* — mode: SHELF (horizontali lentyna) — */
+.walls.mode-shelf{display:flex;gap:30px;overflow-x:auto;padding:10px 4px 26px;scroll-snap-type:x mandatory;
+  scrollbar-width:none;justify-items:initial;mask-image:linear-gradient(90deg,transparent 0,#000 4%,#000 96%,transparent 100%);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 4%,#000 96%,transparent 100%)}
+.walls.mode-shelf::-webkit-scrollbar{display:none}
+.walls.mode-shelf .wall-unit{flex:none;scroll-snap-align:center}
+.shelf-nav{display:none;gap:10px;justify-content:center;margin-top:6px}
+.walls-zone.is-shelf .shelf-nav{display:flex}
+.shelf-nav button{width:42px;height:42px;border-radius:50%;border:1px solid var(--hair);background:#fff;font-size:16px;color:var(--ink);transition:all .2s}
+.shelf-nav button:hover{border-color:var(--ink)}
+
+/* — mode: ROWS (editorial juostos, po 2 brendus eilutėje) — */
+.walls.mode-rows{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.walls.mode-rows .wall-unit{flex-direction:row;align-items:center;gap:30px;justify-content:center;
+  padding:42px 16px;border-bottom:1px solid var(--hair)}
+.walls.mode-rows .wall-unit:nth-last-child(-n+2){border-bottom:0}
+.walls.mode-rows .wall-unit:nth-child(odd){border-right:1px solid var(--hair)}
+.row-info{max-width:300px;min-width:0}
+.row-info .ri-kicker{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ig-b);margin-bottom:10px}
+.row-info h3{font-size:clamp(22px,2vw,30px);font-weight:600;letter-spacing:-.01em;margin-bottom:5px}
+.row-info .ri-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px}
+.row-nums{display:flex;gap:0;border-top:1px solid var(--hair)}
+.row-nums .rn{flex:1;padding:12px 14px 0 0}
+.row-nums .rn b{display:block;font-size:clamp(20px,1.8vw,27px);font-weight:300;letter-spacing:-.02em}
+.row-nums .rn span{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+.row-link{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-size:12px;font-weight:600;
+  border:1px solid var(--ink);border-radius:999px;padding:10px 22px;transition:all .2s}
+.row-link:hover{background:var(--ink);color:var(--paper)}
+.walls.mode-rows .wall-cap{display:none}
+.mini-phone{width:256px;border-radius:38px;background:#1B1B1D;padding:7px;position:relative;
+  box-shadow:inset 0 0 0 1px #3a3a3c,0 18px 44px -14px rgba(0,0,0,.32);transition:transform .3s}
+.wall-unit:hover .mini-phone{transform:translateY(-6px)}
+/* organic sienos akcentas — IG gradient žiedas aplink telefoną */
+.wall-unit.u-organic .mini-phone::after{content:'';position:absolute;inset:-7px;border-radius:45px;padding:2.5px;
+  background:var(--ring);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  mask-composite:exclude;pointer-events:none}
+.wall-unit.u-organic .wall-cap span{background:linear-gradient(90deg,#F77737,#E1306C,#833AB4);
+  -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700}
+.mini-screen{border-radius:31px;overflow:hidden;background:var(--app-bg);position:relative}
+.mini-notch{position:absolute;top:7px;left:50%;transform:translateX(-50%);width:64px;height:17px;border-radius:10px;background:#000;z-index:5}
+.mini-head{display:flex;align-items:center;gap:9px;padding:34px 13px 9px;color:var(--app-ink)}
+.mini-head .mav{width:38px;height:38px;border-radius:50%;padding:1.8px;background:var(--ring);flex:none}
+.mini-head .mav img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:1.8px solid #fff}
+.mini-head .mt b{display:block;font-size:11.5px;font-weight:700;line-height:1.2}
+.mini-head .mt span{font-size:9.5px;color:var(--app-soft)}
+.mini-stats{display:flex;justify-content:space-between;padding:7px 13px 9px;border-bottom:1px solid var(--app-hair);color:var(--app-ink)}
+.mini-stats .ms b{display:block;font-size:12.5px;font-weight:700}
+.mini-stats .ms span{font-size:8.5px;color:var(--app-soft);text-transform:uppercase;letter-spacing:.06em}
+.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px}
+.mini-grid .mgt{position:relative;aspect-ratio:4/5;overflow:hidden;background:#eee;display:block}
+.mini-grid .mgt img{width:100%;height:100%;object-fit:cover;transition:transform .3s,filter .3s}
+.mini-grid .mgt:hover img{transform:scale(1.07);filter:brightness(1.06)}
+.mini-grid .more-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  background:#F4F2EE;color:var(--app-ink);text-align:center;aspect-ratio:auto}
+.mini-grid .more-tile b{font-size:14px;font-weight:700}
+.mini-grid .more-tile span{position:static;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--app-soft);text-shadow:none;font-weight:600}
+.mini-grid .more-tile:hover{background:#ECE8E1}
+.mini-grid .mgt span{position:absolute;left:4px;bottom:3px;color:#fff;font-size:8.5px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.75)}
+/* kategorijų chip'ai (organic + travel akcentai) */
+.mini-grid .mgt em,.case-minigrid .mg em{position:absolute;top:4px;left:4px;font-style:normal;font-family:var(--mono);
+  font-size:6.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.93);
+  color:#111;border-radius:4px;padding:2.5px 5px;z-index:2;pointer-events:none}
+.case-minigrid .mg em{font-size:7.5px;top:5px;left:5px}
+.mini-grid .mgt em.trv,.case-minigrid .mg em.trv{background:linear-gradient(95deg,#2f7cf6,#00b4d8);color:#fff}
+.mini-foot{display:flex;justify-content:center;padding:9px}
+.mini-foot a{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;color:var(--app-ink);border:1px solid #dcdcdc;border-radius:8px;padding:6px 13px;transition:border-color .2s}
+.mini-foot a:hover{border-color:var(--ink)}
+.wall-cap{margin-top:13px;text-align:center}
+.wall-cap b{font-size:13px;font-weight:600;display:block}
+.wall-cap span{font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+/* brand text wall */
+.brandwall{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:34px 12px;
+  display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;column-gap:0;row-gap:14px;max-width:100%}
+.brandwall .bx{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap;display:inline-flex;align-items:baseline;text-decoration:none;transition:color .15s}
+.brandwall .bx b{color:var(--ink);font-weight:600}
+.brandwall a.bx{cursor:pointer}
+.brandwall a.bx:hover{color:var(--ig-b)}
+.brandwall a.bx:hover b{color:var(--ig-b)}
+.brandwall .bx::after{content:'·';margin:0 14px;color:#c9c4ba}
+.brandwall .bx:last-child::after{content:none;margin:0}
+
+/* contact */
+.contact-band{text-align:center;padding:110px 40px 70px}
+.contact-band h2{font-size:clamp(30px,4.4vw,56px);font-weight:300;letter-spacing:-.02em;max-width:760px;margin:0 auto}
+.contact-band h2 em{font-style:italic}
+.cmail{display:inline-block;margin-top:34px;font-size:clamp(20px,2.6vw,30px);font-weight:600;border-bottom:2px solid var(--ink);padding-bottom:4px;transition:color .2s,border-color .2s}
+.cmail:hover{color:var(--ig-b);border-color:var(--ig-b)}
+.cpills{display:flex;gap:12px;justify-content:center;margin-top:36px;flex-wrap:wrap}
+.cpill{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--ink);border-radius:999px;padding:12px 26px;transition:all .2s}
+.cpill:hover{background:var(--ink);color:var(--paper)}
+.foot{padding:30px;text-align:center;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);border-top:1px solid var(--hair)}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1023px){
+  .hero{grid-template-columns:1fr;gap:34px;padding:86px 18px 40px;justify-items:center}
+  .col-right{order:1;width:100%;align-items:stretch;text-align:left}
+  .stats-wrap{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--hair)}
+  .bigstat{border-top:0!important;min-width:0;padding:14px 6px}
+  .bigstat .v{font-size:30px}
+  .phone-zone{order:2}
+  .col-left{order:3;width:100%}
+  .prow{max-width:none}
+  .walls{grid-template-columns:repeat(auto-fit,minmax(238px,1fr))}
+  .walls.mode-rows{grid-template-columns:1fr}
+  .walls.mode-rows .wall-unit{flex-direction:column;gap:24px;padding:34px 0;border-right:0!important}
+  .walls.mode-rows .wall-unit:nth-last-child(-n+2){border-bottom:1px solid var(--hair)}
+  .walls.mode-rows .wall-unit:last-child{border-bottom:0}
+  .row-info{max-width:none;width:100%;text-align:center}
+  .row-nums .rn{padding:14px 8px 0}
+  .band-head{flex-wrap:wrap;gap:12px}
+  .layout-switch{margin-left:0;width:100%}
+  .numbers-grid{grid-template-columns:1fr 1fr}
+  .numcell{padding:24px 14px}
+  .numcell:nth-child(2n){border-right:0}
+  section.band{padding:60px 18px}
+}
+@media (max-width:560px){
+  .site-nav{gap:14px}
+  .phone{width:min(330px,92vw)}
+}
+
+/* ============ REDUCED MOTION ============ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <a class="wordmark" href="#work">Inidė Jasnauskaitė</a>
+  <nav class="site-nav" aria-label="Site">
+    <a href="#work">Work</a>
+    <a href="#numbers">Numbers</a>
+    <a class="nav-links" href="/links/">Links</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<div class="hero" id="work">
+
+  <!-- LEFT: brand list controls the phone -->
+  <div class="col-left">
+    <p class="klabel plist-head">Selected partners</p>
+    <div id="plist"></div>
+    <div class="pmore" id="pmore" role="button" tabindex="0" aria-label="See all brands">+ <span id="pmoreN">64</span> more brands →
+      <div class="pmore-pop" id="pmorePop"></div>
+    </div>
+  </div>
+
+  <!-- CENTER: the phone -->
+  <div class="phone-zone">
+    <div class="phone" id="phone">
+      <div class="island" id="island" role="button" aria-label="Now playing">
+        <span class="isl-text"><span class="isl-dot"></span><span id="islMsg">her content: 18+ years of watch time</span></span>
+      </div>
+      <div class="screen" id="screen">
+
+        <!-- IG APP: PROFILE -->
+        <div class="app" id="app" aria-label="Instagram profile replica">
+          <div class="app-top">
+            <span class="uname">jasnauskaite</span>
+            <button id="dotsBtn" aria-label="More" style="background:none;border:0;padding:4px"><svg viewBox="0 0 24 24" style="width:18px;height:18px"><circle cx="12" cy="5" r="1.6" fill="#111" stroke="none"/><circle cx="12" cy="12" r="1.6" fill="#111" stroke="none"/><circle cx="12" cy="19" r="1.6" fill="#111" stroke="none"/></svg></button>
+          </div>
+          <div class="app-scroll">
+            <div class="prof-head">
+              <button class="avatar-ring" id="avatarBtn" aria-label="Watch Inidė's story"><div class="av-in"><img src="images/profile.jpg" alt="Inidė Jasnauskaitė"></div></button>
+              <div class="pstats">
+                <div class="ps"><b data-db="brandedPosts">784</b><span>posts</span></div>
+                <div class="ps"><b data-db="followers">359K</b><span>followers</span></div>
+                <div class="ps"><b data-db="totalViewsShort">590M</b><span>views</span></div>
+              </div>
+            </div>
+            <div class="prof-bio">
+              <p class="nm">Inidė Jasnauskaitė</p>
+              <p>fashion · beauty · lifestyle — Vilnius 🇱🇹</p>
+              <a class="bio-mail" href="mailto:osvaldas@reelize.lt">✉ osvaldas@reelize.lt</a>
+            </div>
+            <div class="prof-btns">
+              <a class="btn-follow" href="https://instagram.com/jasnauskaite" target="_blank" rel="noopener noreferrer">Follow</a>
+              <a class="btn-msg" href="mailto:osvaldas@reelize.lt">Message</a>
+            </div>
+            <div class="hl-row" id="hlrow"></div>
+            <div class="grid-tabs">
+              <div class="on" id="tabGrid" role="button" aria-label="Posts grid"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+              <div id="tabReels" role="button" aria-label="Reels"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="4"/><line x1="2" y1="8" x2="22" y2="8"/><polygon points="10,12 10,18 16,15" fill="currentColor" stroke="none"/></svg></div>
+            </div>
+            <div class="pgrid" id="pgrid"></div>
+            <div class="reels-empty" id="reelsEmpty" style="display:none">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="4"/><line x1="2" y1="8" x2="22" y2="8"/><polygon points="10,12 10,18 16,15" fill="currentColor" stroke="none"/></svg>
+              <div class="re-big">The good stuff lives on Instagram</div>
+              <div class="re-sub">775+ reels · new ones weekly</div>
+              <a href="https://instagram.com/jasnauskaite" target="_blank" rel="noopener noreferrer">Open Instagram ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CASE VIEWER -->
+        <div class="case" id="case" role="region" aria-label="Campaign case viewer">
+          <div class="case-media" id="caseMedia"></div>
+          <div class="case-scrim"></div>
+          <div class="case-bars" id="caseBars"></div>
+          <div class="case-head">
+            <div class="chav"><img src="images/profile.jpg" alt=""></div>
+            <div class="cht">jasnauskaite <span id="caseBrand"></span></div>
+            <button class="case-close" id="caseClose" aria-label="Close case"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          </div>
+          <div class="case-body" id="caseBody"></div>
+          <button class="tapzone tz-l" id="tzL" aria-label="Previous"></button>
+          <button class="tapzone tz-r" id="tzR" aria-label="Next"></button>
+          <div class="case-reply">
+            <a class="rin" href="mailto:osvaldas@reelize.lt">Send message…</a>
+            <button id="likeBtn" aria-label="Like"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+            <button id="planeBtn" aria-label="Share"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+          </div>
+        </div>
+
+        <!-- EASTER EGG OVERLAYS -->
+        <div class="phone-toast" id="phoneToast"></div>
+        <div class="sheet-backdrop" id="sheetBackdrop"></div>
+        <div class="fact-sheet" id="factSheet">
+          <div class="fs-grab"></div>
+          <div class="fs-kicker">Did you know?</div>
+          <div class="fs-text" id="fsText"></div>
+          <div class="fs-btns">
+            <button class="fs-more" id="fsMore">Another one</button>
+            <button class="fs-close" id="fsClose">Close</button>
+          </div>
+        </div>
+
+        <!-- LOCK SCREEN -->
+        <button class="lock" id="lock" aria-label="Tap to unlock">
+          <div class="ltime" id="ltime">09:41</div>
+          <div class="ldate" id="ldate">Thursday, June 12</div>
+          <div class="notifs">
+            <div class="notif"><div class="nic ig"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff" stroke="none"/></svg></div>
+              <div class="nt"><div class="nrow"><span>Instagram</span><span>now</span></div><div class="nmsg">mionetto and 153 other brands follow you</div></div></div>
+            <div class="notif"><div class="nic ig"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff" stroke="none"/></svg></div>
+              <div class="nt"><div class="nrow"><span>Instagram</span><span>2m ago</span></div><div class="nmsg">Your reel passed 14,000,000 views</div></div></div>
+            <div class="notif"><div class="nic tt"><svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></div>
+              <div class="nt"><div class="nrow"><span>TikTok</span><span>5m ago</span></div><div class="nmsg">Your video is trending in Lithuania 🔥</div></div></div>
+          </div>
+          <div class="unlock-hint">tap to unlock</div>
+        </button>
+
+      </div>
+    </div>
+    <p class="hint">tap the phone — it's real</p>
+    <div class="scroll-ind"><div class="line"></div><span class="hint" style="letter-spacing:.3em">scroll</span></div>
+  </div>
+
+  <!-- RIGHT: big clear stats -->
+  <div class="col-right">
+    <div class="stats-wrap">
+      <div class="bigstat"><div class="v" data-db="followers">359K</div><div class="l">Instagram followers</div></div>
+      <div class="bigstat"><div class="v" data-db="engagement">5.0%</div><div class="l">Engagement rate</div></div>
+      <div class="bigstat"><div class="v" data-db="totalViews">590M+</div><div class="l">Total views</div></div>
+      <div class="bigstat"><div class="v" data-db="brandedPosts">784</div><div class="l">Branded posts</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= NUMBERS ================= -->
+<section class="band" id="numbers">
+  <div class="band-head"><span class="klabel">Nº 01</span><h2>The track record</h2></div>
+  <div class="numbers-grid">
+    <div class="numcell" tabindex="0"><div class="v" data-db="followers">359K</div><div class="l">IG followers</div><div class="nf">About the size of a city. None of them bought.</div></div>
+    <div class="numcell" tabindex="0"><div class="v" data-db="engagement">5.0%</div><div class="l">Engagement</div><div class="nf">Platform average is 1.9%. But who's counting.</div></div>
+    <div class="numcell" tabindex="0"><div class="v" data-db="totalViews">590M+</div><div class="l">Total views</div><div class="nf">Most of these views came from outside Lithuania.</div></div>
+    <div class="numcell" tabindex="0"><div class="v" data-db="brandPartners">154+</div><div class="l">Brand partners</div><div class="nf">70 of them came back for seconds.</div></div>
+  </div>
+  <p class="numbers-note"><b>Most brands come back.</b> <span data-db="brandedPosts">784</span> branded posts over 8 years, against a <span data-db="platformAvg">1.9%</span> platform-average engagement.</p>
+</section>
+
+<!-- ================= CAMPAIGN WALLS ================= -->
+<section class="band walls-zone" id="campaigns">
+  <div class="band-head">
+    <span class="klabel">Nº 02</span><h2>Campaign walls</h2>
+  </div>
+  <div class="walls" id="walls"></div>
+</section>
+
+<!-- ================= BRAND WALL ================= -->
+<section class="band" id="brands">
+  <div class="band-head"><span class="klabel">Nº 03</span><h2>Trusted by <span id="brandsCount"></span></h2></div>
+  <div class="brandwall" id="brandwall"></div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact-band" id="contact">
+  <h2>Let's make something <em>people watch.</em></h2>
+  <a class="cmail" href="mailto:osvaldas@reelize.lt">osvaldas@reelize.lt</a>
+  <div class="cpills">
+    <a class="cpill" href="https://instagram.com/jasnauskaite" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+    <a class="cpill" href="https://tiktok.com/@jasnauskaite" target="_blank" rel="noopener noreferrer">TikTok ↗</a>
+    <a class="cpill" href="/links/">All links →</a>
+  </div>
+</section>
+<footer class="foot">© 2026 jasnauskaite.lt — Vilnius, Lithuania</footer>
+
+<!-- ================= EMAIL POPUP ================= -->
+<div class="email-pop" id="emailPop" role="dialog" aria-modal="true" aria-label="Contact Inidė">
+  <div class="ep-backdrop" id="epBackdrop"></div>
+  <div class="ep-card">
+    <button class="ep-x" id="epX" aria-label="Close">✕</button>
+    <div class="ep-kick">Get in touch</div>
+    <div class="ep-avatar"><img src="images/profile.jpg" alt=""></div>
+    <div class="ep-mail" id="epMail">osvaldas@reelize.lt</div>
+    <div class="ep-sub">Replies within 24h · Vilnius, Lithuania</div>
+    <div class="ep-btns">
+      <button class="ep-copy" id="epCopy">Copy email</button>
+      <a class="ep-open" id="epOpen" href="mailto:osvaldas@reelize.lt">Open mail app</a>
+    </div>
+  </div>
+</div>
+
+<!-- ================= POSTS POPUP (View all) ================= -->
+<div class="posts-pop" id="postsPop" role="dialog" aria-modal="true" aria-label="All posts">
+  <div class="pp2-backdrop" id="pp2Backdrop"></div>
+  <div class="pp2-card">
+    <div class="pp2-head">
+      <div class="pp2-av"><img src="images/profile.jpg" alt=""></div>
+      <div class="pp2-meta"><b id="pp2Title">jasnauskaite × brand</b><span id="pp2Sub"></span></div>
+      <button class="pp2-x" id="pp2X" aria-label="Close">✕</button>
+    </div>
+    <div class="pp2-grid" id="pp2Grid"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   DATA — vienintelis keičiamas blokas.
+   Ateityje šiuos skaičius atnaujins automatika (IG stats) arba
+   ranka: keiti čia → atsinaujina telefonas, sąrašas ir sienos.
+   ============================================================ */
+const DATA = {
+  /* ═══════════════════════════════════════════════════════════════
+     @db  DB-DERIVED — atsinaujina iš Reelize content DB.
+     Atnaujinimas kai DB pasikeičia: paleisk build-content-data.py →
+     įkelk naujus skaičius į db{} (žemiau), cases[] (stats/wall/made),
+     allBrands[]. Visi <... data-db="key"> HTML elementai auto-pildosi
+     iš db{}. Grep visiems DB elementams rasti:  @db  arba  data-db
+     Last synced: 2026-06-12
+     ═══════════════════════════════════════════════════════════════ */
+  db: {
+    lastSynced:'2026-06-12',
+    /* MANUAL — iš IG insights / media kit (NE content DB), keisk ranka: */
+    followers:'359K', totalViewsShort:'590M', totalViews:'590M+',
+    engagement:'5.0%', platformAvg:'1.9%',
+    /* AUTO — perskaičiuoja build-content-data.py iš content DB: */
+    brandedPosts:'784', brandPartners:'154+', brandCount:154,
+    repeatPartners:'70', topReel:'37.2M', otherBrands:153
+  },
+  /* @db wall įrašai: [nuotrauka, views, posto URL, kategorija] — TIKRI postai iš Reelize
+     content DB (build-content-data.py snapshot'ina + parsisiunčia thumbnail'us).
+     Brendo header (posts/views/er) — lifetime iš media kit. period/made/aud —
+     story slide'ų 2 ir 4 PLACEHOLDER (DB neturi auditorijos demografijos). */
+  cases: [
+    { id:'mionetto', brand:'Mionetto', handle:'@mionetto', posts:22, views:'16.7M', er:'6.8%', top:'6.9M',
+      reel:'https://www.instagram.com/reel/DNXetzOMT__/',
+      cover:'images/db/ig_18033565103697953.jpg',
+      period:'2024 → 2026', made:[['24','reels'],['6','tiktoks'],['30','posts']],
+      wall:[["images/db/ig_18033565103697953.jpg","6.9M","https://www.instagram.com/reel/DNXetzOMT__/"],["images/db/ig_17875020749996951.jpg","3.4M","https://www.instagram.com/reel/C4SX92Zt6pN/"],["images/db/ig_18026839199640885.jpg","1.8M","https://www.instagram.com/reel/DG-SQyytdoI/"],["images/db/ig_17910264744188075.jpg","918K","https://www.instagram.com/p/DM4n-6qN19d/"],["images/db/ig_18303896626246220.jpg","417K","https://www.instagram.com/reel/DKWRHayI3Zb/"],["images/db/ig_18484402999063901.jpg","382K","https://www.instagram.com/reel/DEsVR0TtO64/"],["images/db/ig_18024185435472079.jpg","264K","https://www.instagram.com/reel/C8jU8wJNyMX/"],["images/db/ig_18342780139091849.jpg","240K","https://www.instagram.com/reel/DKpcgboNrea/"],["images/db/ig_17968012223783807.jpg","238K","https://www.instagram.com/p/C-5kN-uNlXb/"],["images/db/ig_17905231062190270.jpg","225K","https://www.instagram.com/p/DLc0e2uN_fA/"],["images/db/ig_18036252119116705.jpg","216K","https://www.instagram.com/reel/C_PrB1tt8Lx/"],["images/db/ig_18063838112034845.jpg","210K","https://www.instagram.com/reel/DKjLkJwtPi_/"],["images/db/ig_18052938455411121.jpg","208K","https://www.instagram.com/reel/DTpUe_fiBCu/"],["images/db/tt_7567316738740587798.jpg","191K","https://www.tiktok.com/@jasnauskaite/video/7567316738740587798"],["images/db/ig_18299443324161280.jpg","184K","https://www.instagram.com/reel/C-cIa_5NswM/"]] },
+    { id:'hellmanns', brand:"Hellmann's", handle:'@hellmanns', posts:5, views:'15M', er:'6.0%', top:'11.2M',
+      reel:'https://www.instagram.com/reel/DD46xnfNBmJ/',
+      cover:'images/db/ig_18067130647780793.jpg',
+      period:'winter 2025', made:[['5','reels'],['5','posts']],
+      wall:[["images/db/ig_18067130647780793.jpg","11.2M","https://www.instagram.com/reel/DD46xnfNBmJ/"],["images/db/ig_18052706273223967.jpg","333K","https://www.instagram.com/reel/DIYLIQ8tN8e/"],["images/db/ig_17878566210381473.jpg","241K","https://www.instagram.com/reel/DNKnA2loYEu/"],["images/db/ig_18186527266375277.jpg","189K","https://www.instagram.com/reel/DWa5l4jCOoT/"],["images/db/ig_17917234257246923.jpg","150K","https://www.instagram.com/reel/DSjujJZiFPx/"]] },
+    { id:'akropolis', brand:'Akropolis', handle:'@akropolis', posts:53, views:'14.5M', er:'1.6%', top:'1.7M',
+      reel:'https://www.instagram.com/reel/DPDlAeZiEuJ/',
+      cover:'images/db/ig_18081147002050824.jpg',
+      period:'2023 → 2026', made:[['37','reels'],['16','tiktoks'],['53','posts']],
+      wall:[["images/db/ig_18081147002050824.jpg","1.7M","https://www.instagram.com/reel/DPDlAeZiEuJ/"],["images/db/ig_17857298979560141.jpg","1.5M","https://www.instagram.com/reel/DRjZN_fCLXa/"],["images/db/ig_18064873301168785.jpg","1.1M","https://www.instagram.com/reel/DR6npUDCK23/"],["images/db/ig_17910436434152803.jpg","830K","https://www.instagram.com/reel/DLeaWEINDFo/"],["images/db/ig_18057074005822356.jpg","469K","https://www.instagram.com/reel/DDjVYlSN-Qt/"],["images/db/ig_18054128705137176.jpg","365K","https://www.instagram.com/reel/DGdoiXStQMZ/"]],
+      /* du turinio srautai — kūrybinės kampanijos vs stilius */
+      streams:[
+        { id:'akropolis-creative', label:'Akropolis', sub:'Creative campaigns', kicker:'concept · production', handle:'@akropolis', posts:32, views:'4.9M', er:'3.2%', top:'469K', reel:'https://www.instagram.com/reel/DDjVYlSN-Qt/',
+          wall:[["images/db/ig_18057074005822356.jpg","469K","https://www.instagram.com/reel/DDjVYlSN-Qt/"],["images/db/ig_18054128705137176.jpg","365K","https://www.instagram.com/reel/DGdoiXStQMZ/"],["images/db/ig_18043529411009914.jpg","316K","https://www.instagram.com/reel/DEr1JHHt5je/"],["images/db/ig_17890152801133720.jpg","266K","https://www.instagram.com/reel/DDADz7ZtEI5/"],["images/db/ig_17892331761270545.jpg","261K","https://www.instagram.com/reel/DLt5rwatNv-/"],["images/db/ig_18550555906030466.jpg","256K","https://www.instagram.com/reel/DTXNRR9CIED/"],["images/db/tt_7443105923561737494.jpg","244K","https://www.tiktok.com/@jasnauskaite/video/7443105923561737494"],["images/db/ig_18079042466500662.jpg","211K","https://www.instagram.com/reel/DNkXzZ7sxZi/"],["images/db/ig_18022450361689661.jpg","209K","https://www.instagram.com/reel/DJj1Zz7oi3T/"],["images/db/ig_18062424730979161.jpg","199K","https://www.instagram.com/reel/DHlvnG6NF6w/"],["images/db/ig_17987854541956866.jpg","188K","https://www.instagram.com/reel/DV_Sf4RCEee/"],["images/db/ig_18126867478441735.jpg","185K","https://www.instagram.com/reel/DJn6oU1IQwI/"],["images/db/ig_17928567312015498.jpg","174K","https://www.instagram.com/reel/DQ61jU7iI0k/"],["images/db/tt_7504195490620181782.jpg","157K","https://www.tiktok.com/@jasnauskaite/video/7504195490620181782"],["images/db/ig_18091423114732208.jpg","152K","https://www.instagram.com/reel/DRrzXc2CBH7/"]] },
+        { id:'akropolis-style', label:'Akropolis × Stilius', sub:'Style edit', kicker:'outfit · trend', handle:'@akropolis', posts:21, views:'9.6M', er:'2.0%', top:'1.7M', reel:'https://www.instagram.com/reel/DPDlAeZiEuJ/',
+          wall:[["images/db/ig_18081147002050824.jpg","1.7M","https://www.instagram.com/reel/DPDlAeZiEuJ/"],["images/db/ig_17857298979560141.jpg","1.5M","https://www.instagram.com/reel/DRjZN_fCLXa/"],["images/db/ig_18064873301168785.jpg","1.1M","https://www.instagram.com/reel/DR6npUDCK23/"],["images/db/ig_17910436434152803.jpg","830K","https://www.instagram.com/reel/DLeaWEINDFo/"],["images/db/ig_17931047808101374.jpg","791K","https://www.instagram.com/p/DQRlHaGiEfJ/"],["images/db/ig_18033968933733498.jpg","377K","https://www.instagram.com/reel/DSE7HPgjGA2/"],["images/db/ig_18070117601149447.jpg","375K","https://www.instagram.com/reel/DNz2mq70H81/"],["images/db/ig_18342032482091110.jpg","363K","https://www.instagram.com/reel/DKB5ul8NTMh/"],["images/db/ig_18063003548224739.jpg","351K","https://www.instagram.com/reel/DMhbbXmt4bk/"],["images/db/ig_18314716807284894.jpg","284K","https://www.instagram.com/reel/DWI5v9JCI28/"],["images/db/ig_18140311774419094.jpg","254K","https://www.instagram.com/reel/DNfOHQws3re/"],["images/db/ig_18068434745132297.jpg","223K","https://www.instagram.com/reel/DNuojVa0FUB/"],["images/db/ig_18071152916162391.jpg","207K","https://www.instagram.com/reel/DO6G51wiNxn/"],["images/db/ig_18355922617095167.jpg","191K","https://www.instagram.com/reel/DPLVC9xCBCk/"],["images/db/ig_18114221812814486.jpg","179K","https://www.instagram.com/reel/DWyCAzHCJ48/"]] }
+      ] },
+    { id:'nissan', brand:'Nissan', handle:'@nissan', posts:38, views:'6.5M', er:'1.2%', top:'3.5M',
+      reel:'https://www.instagram.com/reel/DUBIIXDj5AJ/',
+      cover:'images/db/ig_18389032630147037.jpg',
+      period:'2022 → 2025', made:[['39','reels'],['1','tiktok'],['40','posts']],
+      wall:[["images/db/ig_18389032630147037.jpg","3.5M","https://www.instagram.com/reel/DUBIIXDj5AJ/"],["images/db/ig_18320194741099687.jpg","291K","https://www.instagram.com/reel/CxqaJMINKnX/"],["images/db/ig_18060157580628664.jpg","253K","https://www.instagram.com/p/DPtlaj6iOgA/"],["images/db/ig_17976548642937073.jpg","216K","https://www.instagram.com/p/DPG0cf2iP7w/"],["images/db/ig_18074042596867369.jpg","211K","https://www.instagram.com/reel/DJhTrIft9dU/"],["images/db/ig_18062190709464789.jpg","201K","https://www.instagram.com/reel/Cz5zcx2IWed/"],["images/db/ig_18059528261187686.jpg","148K","https://www.instagram.com/reel/DPzAuz7CLoX/"],["images/db/ig_17952584507782243.jpg","141K","https://www.instagram.com/reel/C52nPEYtBaS/"],["images/db/ig_18013210549753191.jpg","135K","https://www.instagram.com/reel/CvrZO7yPjDr/"],["images/db/ig_17988110840891416.jpg","133K","https://www.instagram.com/reel/DRARSgHCMAi/"],["images/db/ig_18082220170436030.jpg","129K","https://www.instagram.com/reel/C30fuMFNlxF/"],["images/db/ig_17926575035875560.jpg","125K","https://www.instagram.com/reel/C7V3ye7oPIq/"],["images/db/ig_17982484979158220.jpg","123K","https://www.instagram.com/reel/Cvt4qPaMfVE/"],["images/db/ig_17902662906258183.jpg","121K","https://www.instagram.com/reel/DPOG-HRCLmX/"]] },
+    { id:'maxima', brand:'Maxima', handle:'@maxima.lt', posts:9, views:'3.2M', er:'1.8%', top:'1.2M',
+      reel:'https://www.instagram.com/reel/DMK9spgtfv-/',
+      cover:'images/db/ig_18076084813764675.jpg',
+      period:'2025 → 2026', made:[['12','reels'],['6','tiktoks'],['18','posts']],
+      wall:[["images/db/ig_18076084813764675.jpg","1.2M","https://www.instagram.com/reel/DMK9spgtfv-/"],["images/db/ig_18066487675780395.jpg","327K","https://www.instagram.com/reel/DIVm3NptTjs/"],["images/db/ig_18078917005640416.jpg","310K","https://www.instagram.com/reel/DG3aQF9tUMM/"],["images/db/ig_18045199817378891.jpg","305K","https://www.instagram.com/reel/DIGJU2StHSx/"],["images/db/ig_17938765515212332.jpg","237K","https://www.instagram.com/reel/DYR5CG8ord0/"],["images/db/ig_17913289884148170.jpg","223K","https://www.instagram.com/reel/DVOUef5CEQZ/"],["images/db/ig_18499215439047550.jpg","212K","https://www.instagram.com/reel/DI36OggIEYu/"],["images/db/ig_17979439703777968.jpg","194K","https://www.instagram.com/p/DRHDHA5iH02/"],["images/db/ig_17860094763328054.jpg","175K","https://www.instagram.com/reel/DIMSmVzNMXY/"],["images/db/ig_18011450114895056.jpg","138K","https://www.instagram.com/reel/DYOuZ1kIN9f/"],["images/db/tt_7490090743529213206.jpg","133K","https://www.tiktok.com/@jasnauskaite/video/7490090743529213206"],["images/db/ig_17862042324551847.jpg","127K","https://www.instagram.com/reel/DSemzp4CLmu/"],["images/db/tt_7478748221100002582.jpg","83K","https://www.tiktok.com/@jasnauskaite/video/7478748221100002582"],["images/db/tt_7490942171038633238.jpg","81K","https://www.tiktok.com/@jasnauskaite/video/7490942171038633238"],["images/db/tt_7585856709881597206.jpg","77K","https://www.tiktok.com/@jasnauskaite/video/7585856709881597206"]] },
+    { id:'organic', brand:'Organic', handle:'her own feed', posts:'∞', views:'590M+', er:'5.0%', top:'37.2M',
+      reel:'https://instagram.com/jasnauskaite',
+      cover:'images/db/ig_18390413014056110.jpg',
+      period:'since 2019', made:[['4–6','reels / week'],['daily','stories'],['365','days / year']],
+      wall:[["images/db/ig_18390413014056110.jpg","37.2M","https://www.instagram.com/reel/Cx3TvgAN8Yg/","FASHION"],["images/db/ig_18074660734735316.jpg","21.4M","https://www.instagram.com/reel/DGFhWE6S-nw/","TRAVEL"],["images/db/ig_18019012205533023.jpg","20.4M","https://www.instagram.com/reel/DAyn3g9NAgc/","FASHION"],["images/db/tt_7451282832766291222.jpg","13.6M","https://www.tiktok.com/@jasnauskaite/video/7451282832766291222","TRAVEL"],["images/db/tt_7285053630388915489.jpg","13.1M","https://www.tiktok.com/@jasnauskaite/video/7285053630388915489","FASHION"],["images/db/ig_18004841183644994.jpg","12.4M","https://www.instagram.com/reel/C_LjTpxtsll/","COUPLE"],["images/db/ig_17956625387009497.jpg","11.3M","https://www.instagram.com/reel/CiNoYeYjzad/","TRAVEL"],["images/db/ig_18038462123305133.jpg","11.2M","https://www.instagram.com/reel/C9u55uOtQT5/","EVENTS"],["images/db/ig_17991032711117877.jpg","9.8M","https://www.instagram.com/reel/CuhlThCM5zB/","FASHION"],["images/db/ig_17981848048680573.jpg","9.7M","https://www.instagram.com/reel/ClvX2uzrslA/","TRAVEL"],["images/db/ig_18345446797130758.jpg","9.5M","https://www.instagram.com/reel/DA_VLwNtJQG/","COUPLE"],["images/db/tt_7503202828144364822.jpg","9.5M","https://www.tiktok.com/@jasnauskaite/video/7503202828144364822","LIFESTYLE"],["images/db/ig_17937640691865191.jpg","8.8M","https://www.instagram.com/reel/C_bHmA_NC2T/","FASHION"],["images/db/tt_7566643185930325270.jpg","8.8M","https://www.tiktok.com/@jasnauskaite/video/7566643185930325270","LIFESTYLE"],["images/db/ig_18117033973555245.jpg","6.5M","https://www.instagram.com/reel/DVeAfdViCDB/","LIFESTYLE"]] },
+  ],
+  gridExtra: [ ['images/cover-0.jpg','390K'], ['images/cover-1.jpg','512K'], ['images/cover-2.jpg','298K'],
+               ['images/cover-3.jpg','276K'], ['images/cover-4.jpg','431K'], ['images/cover-5.jpg','364K'] ],
+  /* allBrands — VISI 154 brendai su kuriais dirbo (1+ branded postas, Reelize DB), pagal postų kiekį. */
+  /* allBrands — [vardas, IG handle] iš DB caption @mention'ų + curated. Išvalyta: sumerge'inti dublikatai (McDonald*), išmesti asmenvardžiai/kreditai.
+     handle=null → rodomas paprastas tekstas (be linko). */
+  allBrands: [["Akropolis", "akropolislietuva"], ["Nissan", "nissanlietuva"], ["Wolt", "wolt.lietuva"], ["Mionetto", "mionetto_nealkoholinis"], ["About You", "aboutyou_lt"], ["Ozas", "ozaslt"], ["Maxima", "maxima.lt"], ["NewMood", "newmoodfashion"], ["Dione", "dioneicecream"], ["Apranga", "aprangagroup"], ["Kotex", "kotexlietuva"], ["ALDO", "aldo_shoes"], ["Omniva", "omnivalietuva"], ["Noriu Noriu Noriu", "noriunoriunoriu"], ["Lindex", "lindexofficial"], ["IKI", "iki_lietuva"], ["Pigu", "pigu.lt"], ["Luminor", "luminor_lietuva"], ["L'Occitane", "loccitanelt"], ["Akvilė", "vanduo_akvile"], ["Armani", "armanibeauty"], ["MOVA", "mova_lietuva"], ["Zalando", "zalando"], ["Burga", "burgaofficial"], ["Perfectil", "perfectil_lietuva"], ["Eurovaistinė", "eurovaistine_internete"], ["Sapiegų Klinika", "sapiegosklinika"], ["Lumene", "lumene_lietuva"], ["Nature Box", "natureboxbeauty"], ["Vita Balans", "vitabalans_lt"], ["Daniel Wellington", "danielwellington"], ["Hellmann's", "hellmanns.lithuania"], ["Lancôme", "lancomeofficial"], ["Aruelle", "thearuelle"], ["Moroccanoil", "moroccanoileu"], ["Visit Dubai", "visit.dubai"], ["GoVilnius", "govilnius"], ["Garnier", "garnier_baltics"], ["Krispo", "krispohomefragrances"], ["L'Oréal", null], ["Milka", "milka"], ["Telia", "teliaplay_lt"], ["Denim Dream", "denimdream.lt"], ["MyProtein", "myproteinlt"], ["Magija", "magija_lt"], ["Soulz", "soulz.lt"], ["Saulės Miestas", null], ["Mobilfox", "mobilfox_lt"], ["Locherber", "locherbermilano"], ["McDonald's", "mcdonaldslietuva"], ["Kelionių Akademija", "kelioniu.akademija"], ["Fuetec", null], ["Stiliaus kodas", "stiliauskodas"], ["KitKat", "kitkat"], ["Pandora", "theofficialpandora"], ["Zozole", "zozole_official"], ["Martini", null], ["Vytautas Mineral SPA", "vytautasmineralspa"], ["Odore d'Amore", "odoredamore.shop"], ["Ieva Salonas", "ieva_salonas"], ["Novaturas", "novaturas"], ["Trollbeads", "trollbeadslt"], ["BaByliss", "babyliss"], ["Alita", "alitachardonnay_nealkoholinis"], ["Biocell", "biocell_lietuva"], ["NewCrush", "newcrush"], ["Deichmann", "deichmann_lt"], ["Paulig", "paulig_lietuva"], ["Donum", "donum.lt"], ["SAKAI", null], ["Moérie", null], ["Fujifilm", "fujifilm_lietuva"], ["Pepsi", "pepsi"], ["Žemaitijos Pienas", "zemaitijos_pienas"], ["Ribas", "ribasjewellery"], ["Circle K", "circlek_lietuva"], ["Huawei", "huaweimobilelt"], ["Balcia", "balcialt"], ["Factcool", "factcool_lt"], ["Dentistė", "klinika_dentiste"], ["Diamante", "diamante.lt"], ["LNK", "lnk.lt"], ["Žygio Batai", "zygiobatai"], ["Oh Polly", "ohpolly"], ["Surfshark", "surfshark"], ["Dyson", "dyson"], ["Tamaris", "tamaris_official"], ["Neris ir Nemunas", "nerisirnemunas"], ["La Roche-Posay", "larocheposay"], ["Mandarina Duck", "mandarinaduckstore_lithuania"], ["Teva", "tevalietuva"], ["Watalook", "watalook.lithuania"], ["Fashion Zone", "fashionzone_lt"], ["Intymioji Pagunda", "intymipagunda"], ["Cosmoprof", "cosmoprofbaltic"], ["Dovanorama", null], ["Mari Made", "mari_made_"], ["Medestetus", "medestetus_klinika"], ["IKEA", "ikealietuva"], ["AURUM", "aurum.ledai"], ["Vilnius Grand Resort", "vilniusgrandresort"], ["Kempinski", "kempinskivilnius"], ["Mano Kosmetika", "manokosmetika"], ["H&M", "hm"], ["Green Feels", "greenfeelskosmetika"], ["Nosize", "nosizebody"], ["UNIQA", "uniqa_lt"], ["Saapio", "saapio.beauty"], ["Philips Sonicare", null], ["Livly", "livly.cosmetics"], ["Garbanų Klinika", "garbanuklinika"], ["Gera Dovana", "gera_dovana"], ["Vilniaus Savivaldybe", "vilniaus_savivaldybe"], ["Lavazza", "lavazzalietuva"], ["Australian Gold", "australian_gold_lietuva"], ["ODORO", "odoro.lt"], ["MemberShop", "membershop"], ["Dove", "dove"], ["Dallmayr", "dallmayr"], ["Decoflux", "decofluxhome"], ["Mano Sofa", "manosofa"], ["DFDS", "dfds_lithuania"], ["Carol Home", "carolhomelt"], ["RentBoutique", "rentboutique_lietuva"], ["Max&Co", "maxandco"], ["Candy Pop", "candypop.lt"], ["Nizoral", "nizoral"], ["Swedbank", "swedbanklietuvoje"], ["Laisvalaikio Dovanos", "laisvalaikiodovanos"], ["Farfetch", "farfetch"], ["Maria Nila", "marianila"], ["Bitė", "bite_lietuva"], ["Oho Klubas", "ohoklubas"], ["Bronx Shoes", "bronxshoes"], ["Oral-B", "oralb"], ["Ivo Nikkolo", "ivonikkolo"], ["Eucerin", "eucerin"], ["Kerastase", "kerastase_official"], ["Aroma Gold", "aroma_gold_coffee"], ["Rapid White", null], ["Schogetten", "schogetten_lietuva"], ["Uoga Uoga", "uoga_uoga"], ["Etam", "etam"], ["Reserved", "reserved"], ["Ciao Sole", "ciao_sole_kava"], ["Lietuvos Pastas", "lietuvospastas"], ["Dr. Martens", "drmartensofficial"], ["Santa Maria", "santamarialt"], ["Dr. Oetker", "droetker"], ["Olaplex", "olaplex"], ["Schwarzkopf", "schwarzkopf"], ["Nescafé", "nescafe"], ["Akiniai Fielmann", "akiniai_fielmann"], ["Uriage", "uriage.lt"]],
+  /* Easter egg faktai — ⋯ mygtukas profilyje. Atnaujinami kartu su skaičiais. */
+  facts: [
+    'If every view lasted one second, that\'s 18+ years of nonstop watch time.',
+    '784 branded posts in 8 years — a new one every 3.7 days, on average.',
+    'Her top reel hit 37.2M views. The algorithm just likes the work.',
+    'Her engagement rate is 5.0%. The platform average is 1.9%. You do the math.',
+    'Of her 154+ brand partners, 70 came back for 3+ posts. Mionetto leads with 22.',
+    'She has never bought a follower. The 359K showed up on their own.',
+    'A Mionetto reel starring her grandmother hit 16.7M views. Casting is everything.',
+    'A car campaign and a skincare reel, filmed the same week. Range is the job.'
+  ],
+  /* Avatar story — atsidaro paspaudus profilio rutuliuką. Asmeninis IG-stiliaus intro. */
+  intro: [
+    { img:'images/profile.jpg', kick:'jasnauskaite · your story',
+      big:'Hi 👋', sub:'I\'m Inidė — the face behind the numbers. Fashion, beauty & lifestyle, from Vilnius.' },
+    { img:'images/organic-C4SX92Zt6pN.jpg', kick:'how it works',
+      big:'8 years.', sub:'One feed. 359K people who actually show up — not bought, not boosted.' },
+    { img:'images/cover-0.jpg', kick:'the honest part',
+      big:'37.2M.', sub:'My best reel — and the algorithm just likes the work.' },
+    { img:'images/mionetto-DNXetzOMT__.jpg', kick:'let\'s talk', cta:true,
+      big:'Your turn?', sub:'Brands come for the reach and stay for the results.' }
+  ]
+};
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ============ LOCK SCREEN ============ */
+const lock = document.getElementById('lock');
+let locked = true;
+function tickClock(){
+  const d = new Date();
+  document.getElementById('ltime').textContent = d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('ldate').textContent = d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+}
+tickClock(); setInterval(tickClock, 30000);
+function unlock(cb){
+  if (!locked){ if(cb) cb(); return; }
+  locked = false;
+  lock.classList.add('away');
+  setTimeout(()=>{ lock.style.display='none'; if(cb) cb(); }, reduced ? 0 : 600);
+}
+lock.addEventListener('click', ()=>unlock());
+lock.addEventListener('pointerup', ()=>unlock());
+
+/* ============ AVATAR STORY ============ */
+document.getElementById('avatarBtn').addEventListener('click', openIntro);
+
+/* ============ PROFILE: highlights + grid ============ */
+const hlrow = document.getElementById('hlrow');
+const pgrid = document.getElementById('pgrid');
+const play = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+DATA.cases.forEach(c => {
+  const b = document.createElement('button');
+  b.className = 'hl'; b.setAttribute('aria-label', 'Open case: ' + c.brand);
+  b.innerHTML = `<div class="hl-ring"><div class="hl-in"><img src="${c.cover}" alt=""></div></div><span>${c.brand}</span>`;
+  b.addEventListener('click', () => openCase(c.id));
+  hlrow.appendChild(b);
+});
+const tiles = [];
+DATA.cases.forEach(c => tiles.push({img:c.cover, v:c.top, caseId:c.id}));
+DATA.gridExtra.forEach(g => tiles.push({img:g[0], v:g[1], caseId:null}));
+tiles.slice(0,12).forEach(t => {
+  const el = document.createElement('button');
+  el.className = 'ptile';
+  el.innerHTML = `<img src="${t.img}" alt=""><span class="views">${play}${t.v}</span>`;
+  el.addEventListener('click', () => t.caseId ? openCase(t.caseId) : window.open('https://instagram.com/jasnauskaite','_blank','noopener'));
+  pgrid.appendChild(el);
+});
+
+/* ============ CASE VIEWER (state machine) ============ */
+const caseEl = document.getElementById('case'), caseMedia = document.getElementById('caseMedia'),
+      caseBars = document.getElementById('caseBars'), caseBody = document.getElementById('caseBody'),
+      caseBrand = document.getElementById('caseBrand');
+let cur = null, slideIdx = 0, timer = null, paused = false, prog = 0, holdT = null, introMode = false;
+const SLIDE_MS = 5200, TICK = 50;
+
+/* intro (avatar) story slides — asmeninis, ne brendas */
+function introSlides(){
+  return DATA.intro.map(s => ({ img:s.img, html:`
+    <div class="case-kick">${s.kick}</div>
+    <div class="case-num" style="font-size:54px">${s.big}</div>
+    <div class="case-sub" style="font-size:14px;font-weight:500;max-width:280px;margin-top:8px">${s.sub}</div>
+    ${s.cta ? `<div class="case-chips" style="margin-top:16px"><a class="chip-link" style="margin-top:0" href="mailto:osvaldas@reelize.lt">✦ start a campaign</a></div>` : ''}` }));
+}
+/* aktyvūs slide'ai — intro ARBA brendo case */
+function activeSlides(){ return introMode ? introSlides() : slidesFor(DATA.cases.find(x=>x.id===cur)); }
+
+function slidesFor(c){
+  const rows = a => `<div class="case-rows">${a.map(p=>`<div class="cr"><b>${p[0]}</b><span>${p[1]}</span></div>`).join('')}</div>`;
+  return [
+    { img:c.cover, html:`
+      <div class="case-num">${c.views}</div>
+      <div class="case-sub">views · ${c.posts} posts · ER ${c.er}</div>
+      <div class="case-chips"><span class="chip">TOP ${c.top}</span>${c.id==='organic'?'<span class="chip zero">🌱 ORGANIC</span>':'<span class="chip alt">REPEAT PARTNER</span>'}</div>
+      <a class="chip-link" href="${c.reel}" target="_blank" rel="noopener noreferrer">${play} watch on Instagram</a>` },
+    { img:(c.wall[1] ? c.wall[1][0] : c.cover), html:`
+      <div class="case-kick">${c.id==='organic'?'her own feed':'the collaboration'}</div>
+      <div class="case-num" style="font-size:40px">${c.period}</div>
+      ${rows(c.made)}` },
+    { img:(c.wall[2] ? c.wall[2][0] : c.cover), html:`
+      <div class="case-sub" style="font-size:15px;font-weight:700">${c.brand} — published wall</div>
+      <div class="case-minigrid">${c.wall.slice(0,9).map(w=>`<a class="mg" href="${w[2]||c.reel}" target="_blank" rel="noopener noreferrer" aria-label="Open post on Instagram"><img src="${w[0]}" alt="">${w[3]?`<em class="${w[3]==='TRAVEL'?'trv':''}">${w[3]==='TRAVEL'?'✈ ':''}${w[3]}</em>`:''}<span>▶ ${w[1]}</span></a>`).join('')}</div>
+      <button class="chip-link" data-unit="${c.id}">▦ view all ${c.wall.length} posts</button>` },
+    { img:(c.wall[3] ? c.wall[3][0] : (c.wall[1] ? c.wall[1][0] : c.cover)), html:`
+      <div class="case-kick">the takeaway</div>
+      <div class="case-num" style="font-size:34px">${c.id==='organic'?'Her own audience.':'A repeat partner.'}</div>
+      <div class="case-sub">${c.period}</div>
+      <a class="chip-link" href="${c.id==='organic'?c.reel:'mailto:osvaldas@reelize.lt'}"${c.id==='organic'?' target="_blank" rel="noopener noreferrer"':''}>${c.id==='organic'?play+' see the full feed':'✦ start a campaign'}</a>` }
+  ];
+}
+function renderSlide(){
+  const sl = activeSlides()[slideIdx];
+  /* slide 1 (showcase) — aštri reel kortelė + blur fonas; kiti slide'ai — tik blur fonas (turinys virš) */
+  const card = (slideIdx===0 && !introMode) ? `<img class="cm-card" src="${sl.img}" alt=""${reduced?' style="animation:none"':''}>` : '';
+  caseMedia.innerHTML = `<div class="cm-bg" style="background-image:url('${sl.img}')"></div>${card}`;
+  caseBody.innerHTML = sl.html;
+  [...caseBars.children].forEach((b,i)=>{
+    b.firstElementChild.style.width = i < slideIdx ? '100%' : '0';
+  });
+  prog = 0;
+}
+function startTimer(){
+  stopTimer();
+  if (reduced) return;
+  timer = setInterval(()=>{
+    if (paused) return;
+    prog += TICK;
+    const f = caseBars.children[slideIdx] && caseBars.children[slideIdx].firstElementChild;
+    if (f) f.style.width = Math.min(100, prog/SLIDE_MS*100) + '%';
+    if (prog >= SLIDE_MS) next();
+  }, TICK);
+}
+function stopTimer(){ if (timer){ clearInterval(timer); timer = null; } }
+function openCase(id){
+  introMode = false; cur = id; slideIdx = 0; paused = false;
+  const c = DATA.cases.find(x=>x.id===id);
+  caseBrand.textContent = '× ' + c.brand;
+  caseBars.innerHTML = activeSlides().map(()=>'<div class="cbar"><i></i></div>').join('');
+  caseEl.classList.add('open');
+  document.querySelectorAll('.prow').forEach(r=>r.classList.toggle('active', r.dataset.case===id));
+  renderSlide(); startTimer();
+}
+function openIntro(){
+  introMode = true; cur = '__intro'; slideIdx = 0; paused = false;
+  caseBrand.textContent = '· 2h';
+  caseBars.innerHTML = activeSlides().map(()=>'<div class="cbar"><i></i></div>').join('');
+  caseEl.classList.add('open');
+  renderSlide(); startTimer();
+}
+function closeCase(){
+  caseEl.classList.remove('open'); stopTimer(); cur = null; paused = false; introMode = false;
+  document.querySelectorAll('.prow').forEach(r=>r.classList.remove('active'));
+}
+function next(){ if(!cur) return;
+  const last = activeSlides().length - 1;
+  if (slideIdx < last){ slideIdx++; renderSlide(); startTimer(); } else closeCase(); }
+function prev(){ if(!cur) return;
+  if (slideIdx > 0){ slideIdx--; renderSlide(); startTimer(); } else closeCase(); }
+document.getElementById('caseClose').addEventListener('click', closeCase);
+/* tap vs hold: short press = nav, hold ≥220ms = pause */
+function bindZone(el, fn){
+  let downAt = 0;
+  el.addEventListener('pointerdown', e=>{ downAt = Date.now(); holdT = setTimeout(()=>{ paused = true; }, 220); });
+  el.addEventListener('pointerup', e=>{
+    clearTimeout(holdT);
+    const wasHold = Date.now() - downAt >= 220;
+    paused = false;
+    if (!wasHold) fn();
+  });
+  el.addEventListener('pointercancel', ()=>{ clearTimeout(holdT); paused = false; });
+}
+bindZone(document.getElementById('tzR'), next);
+bindZone(document.getElementById('tzL'), prev);
+document.addEventListener('keydown', e=>{
+  if (document.getElementById('emailPop').classList.contains('show')) return; // popup gauna Escape pirmas
+  if (document.getElementById('postsPop').classList.contains('show')) return;
+  if (!cur) return;
+  if (e.key==='Escape') closeCase();
+  if (e.key==='ArrowRight') next();
+  if (e.key==='ArrowLeft') prev();
+});
+
+/* ============ LEFT LIST — controls the phone ============ */
+const plist = document.getElementById('plist');
+const screen = document.getElementById('screen');
+let prevEl = null, prevHide = null;
+DATA.cases.forEach(c=>{
+  const r = document.createElement('div');
+  r.className = 'prow'; r.dataset.case = c.id; r.setAttribute('role','button'); r.tabIndex = 0;
+  r.innerHTML = `<span class="pname">${c.brand}</span><span class="pmet">${c.views}</span>`;
+  r.addEventListener('click', ()=>{ hidePreview(); unlock(()=>openCase(c.id)); });
+  r.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); r.click(); }});
+  r.addEventListener('mouseenter', ()=>{
+    if (cur || locked) return;
+    clearTimeout(prevHide);
+    showPreview(c);
+  });
+  r.addEventListener('mouseleave', ()=>{ prevHide = setTimeout(hidePreview, 220); });
+  plist.appendChild(r);
+});
+function showPreview(c){
+  hidePreview();
+  prevEl = document.createElement('div');
+  prevEl.style.cssText = 'position:absolute;inset:0;z-index:20;background:#000;opacity:0;transition:opacity .3s;pointer-events:none;overflow:hidden';
+  prevEl.innerHTML = `<img src="${c.cover}" style="width:100%;height:100%;object-fit:cover;opacity:.92" alt="">
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:20px;background:linear-gradient(transparent,rgba(0,0,0,.78));color:#fff;font-family:var(--sans)">
+      <div style="font-weight:700;font-size:16px">${c.brand}</div>
+      <div style="font-size:11.5px;opacity:.85;margin-top:2px">${c.views} views · click to open case</div></div>`;
+  screen.appendChild(prevEl);
+  requestAnimationFrame(()=>{ if(prevEl) prevEl.style.opacity = '1'; });
+}
+function hidePreview(){ if (prevEl){ prevEl.remove(); prevEl = null; } }
+
+/* ============ CAMPAIGN WALLS (mini phones, 3 formatai) ============ */
+const walls = document.getElementById('walls');
+const wallsZone = document.querySelector('.walls-zone');
+/* units = case'ai, bet Akropolis išskaidytas į 2 srautus (creative / style) */
+const UNITS = [];
+DATA.cases.forEach(c=>{
+  if (c.streams){
+    c.streams.forEach(s=>UNITS.push({key:s.id, name:s.label, miniName:'akropolis', tagLine:s.sub.toLowerCase(),
+      kicker:s.kicker, handle:s.handle, posts:s.posts, views:s.views, er:s.er, top:s.top, reel:s.reel, wall:s.wall, isOrganic:false}));
+  } else {
+    UNITS.push({key:c.id, name:c.brand, miniName:c.brand.toLowerCase(),
+      tagLine:c.id==='organic'?'own feed':'paid partnership',
+      kicker:c.id==='organic'?'Organic — her own feed':'Branded campaign',
+      handle:c.handle, posts:c.posts, views:c.views, er:c.er, top:c.top, reel:c.reel, wall:c.wall, isOrganic:c.id==='organic'});
+  }
+});
+const unitByKey = k => UNITS.find(u=>u.key===k);
+
+function miniGridTiles(u){
+  /* 3×3 IG grid — visos foto kvadratinės, max 9 tiles */
+  return u.wall.slice(0,9).map(x=>`<a class="mgt" href="${x[2]||u.reel}" target="_blank" rel="noopener noreferrer" aria-label="Open ${u.name} post on Instagram"><img src="${x[0]}" alt="${u.name} post" loading="lazy">${x[3]?`<em class="${x[3]==='TRAVEL'?'trv':''}">${x[3]==='TRAVEL'?'✈ ':''}${x[3]}</em>`:''}<span>▶ ${x[1]}</span></a>`).join('');
+}
+function miniPhoneHTML(u){
+  return `
+  <div class="mini-phone">
+    <div class="mini-screen">
+      <div class="mini-notch"></div>
+      <div class="mini-head">
+        <div class="mav"><img src="images/profile.jpg" alt=""></div>
+        <div class="mt"><b>jasnauskaite <span style="color:var(--app-soft)">×</span> ${u.miniName}</b><span>${u.handle} · ${u.tagLine}</span></div>
+      </div>
+      <div class="mini-stats">
+        <div class="ms"><b>${u.posts}</b><span>posts</span></div>
+        <div class="ms"><b>${u.views}</b><span>views</span></div>
+        <div class="ms"><b>${u.er}</b><span>ER</span></div>
+        <div class="ms"><b>${u.top}</b><span>top post</span></div>
+      </div>
+      <div class="mini-grid">${miniGridTiles(u)}</div>
+      <div class="mini-foot"><button class="view-all" data-unit="${u.key}">▦ View all ${u.wall.length} posts</button></div>
+    </div>
+  </div>`;
+}
+function renderWalls(mode){
+  walls.className = 'walls' + (mode==='grid' ? '' : ' mode-'+mode);
+  wallsZone.classList.toggle('is-shelf', mode==='shelf');
+  walls.innerHTML = '';
+  UNITS.forEach(u=>{
+    const w = document.createElement('div');
+    w.className = 'wall-unit' + (u.isOrganic ? ' u-organic' : '');
+    const cap = `<div class="wall-cap"><b>${u.name}</b><span>${u.isOrganic ? 'her own feed' : u.tagLine}</span></div>`;
+    if (mode==='rows'){
+      w.innerHTML = miniPhoneHTML(u) + `
+      <div class="row-info">
+        <div class="ri-kicker">${u.kicker}</div>
+        <h3>${u.name}</h3>
+        <div class="ri-sub">${u.handle}${u.isOrganic ? '' : ' · ' + u.tagLine}</div>
+        <div class="row-nums">
+          <div class="rn"><b>${u.views}</b><span>views</span></div>
+          <div class="rn"><b>${u.er}</b><span>ER</span></div>
+          <div class="rn"><b>${u.top}</b><span>top post</span></div>
+        </div>
+        <button class="row-link" data-unit="${u.key}">▦ View all ${u.wall.length} posts</button>
+      </div>`;
+    } else {
+      w.innerHTML = miniPhoneHTML(u) + cap;
+    }
+    walls.appendChild(w);
+  });
+}
+/* resolve unit (srautas) ARBA case pagal key */
+function resolveUnit(key){
+  const u = unitByKey(key);
+  if (u) return u;
+  const c = DATA.cases.find(x=>x.id===key);
+  if (!c) return null;
+  return { key:c.id, name:c.brand, miniName:c.brand.toLowerCase(), tagLine:c.id==='organic'?'own feed':'paid partnership',
+           handle:c.handle, posts:c.posts, reel:c.reel, wall:c.wall, isOrganic:c.id==='organic' };
+}
+/* ============ POSTS POPUP (View all) ============ */
+const postsPop = document.getElementById('postsPop'), pp2Grid = document.getElementById('pp2Grid'),
+      pp2Title = document.getElementById('pp2Title'), pp2Sub = document.getElementById('pp2Sub');
+const playMini = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+function openPostsPopup(u){
+  if (!u) return;
+  pp2Title.innerHTML = `jasnauskaite <span style="color:var(--app-soft);font-weight:400">×</span> ${u.miniName}`;
+  pp2Sub.textContent = `${u.handle} · ${u.wall.length} posts · tap to open on Instagram`;
+  pp2Grid.innerHTML = u.wall.map(x=>`<a href="${x[2]||u.reel}" target="_blank" rel="noopener noreferrer" aria-label="Open post on Instagram"><img src="${x[0]}" alt="" loading="lazy">${x[3]?`<span class="pcat ${x[3]==='TRAVEL'?'trv':''}">${x[3]==='TRAVEL'?'✈ ':''}${x[3]}</span>`:''}<span class="pv">${playMini}${x[1]}</span></a>`).join('');
+  pp2Grid.scrollTop = 0;
+  postsPop.classList.add('show');
+}
+function closePostsPopup(){ postsPop.classList.remove('show'); }
+document.getElementById('pp2X').addEventListener('click', closePostsPopup);
+document.getElementById('pp2Backdrop').addEventListener('click', closePostsPopup);
+/* „View all" mygtukai → posts popup (event delegation) */
+document.addEventListener('click', e=>{
+  const b = e.target.closest('[data-unit]');
+  if (b){ e.preventDefault(); openPostsPopup(resolveUnit(b.dataset.unit)); }
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && postsPop.classList.contains('show')) closePostsPopup(); });
+renderWalls('rows'); // tik juostų režimas
+
+/* ============ BRAND TEXT WALL + „more brands" popover ============ */
+const FEATURED = new Set(DATA.cases.filter(c=>c.id!=='organic').map(c=>c.brand));
+/* brendo „čipas": jei yra IG handle → <a> linkas į profilį, kitaip <span> tekstas */
+function brandChip(name, handle){
+  const inner = FEATURED.has(name) ? `<b>${name}</b>` : name;
+  return handle
+    ? `<a class="bx" href="https://instagram.com/${handle}" target="_blank" rel="noopener noreferrer" title="@${handle}">${inner}</a>`
+    : `<span class="bx bx-plain">${inner}</span>`;
+}
+/* siena: featured paryškinti, su handle — linkai į profilį */
+document.getElementById('brandwall').innerHTML =
+  DATA.allBrands.map(([n,h])=>brandChip(n,h)).join('');
+document.getElementById('brandsCount').textContent = DATA.allBrands.length + '+ brands';
+/* @db auto-fill: visi [data-db] elementai pasiima reikšmę iš DATA.db (vienas SSOT) */
+document.querySelectorAll('[data-db]').forEach(function(el){ var v=DATA.db[el.dataset.db]; if(v!=null) el.textContent=v; });
+/* kairės "+ N more brands" → hover popover (linkai į profilius) + click scroll */
+const moreN = DATA.allBrands.length - FEATURED.size;
+document.getElementById('pmoreN').textContent = moreN;
+document.getElementById('pmorePop').innerHTML =
+  `<div class="pp-head">${DATA.allBrands.length}+ BRANDS · TAP TO OPEN PROFILE</div>` +
+  DATA.allBrands.map(([n,h])=>h
+    ? `<a class="bx" href="https://instagram.com/${h}" target="_blank" rel="noopener noreferrer">${FEATURED.has(n)?`<b>${n}</b>`:n} <span class="bx-arr">↗</span></a>`
+    : `<span class="bx bx-plain">${FEATURED.has(n)?`<b>${n}</b>`:n}</span>`).join('');
+function scrollToBrands(){ document.getElementById('brands').scrollIntoView({behavior:'smooth', block:'start'}); }
+document.getElementById('pmore').addEventListener('click', e=>{
+  if (e.target.closest('a.bx')) return; // brendo profilio linkas atsidaro pats
+  e.preventDefault();
+  scrollToBrands();
+});
+document.getElementById('pmore').addEventListener('keydown', e=>{
+  if (e.key==='Enter' || e.key===' '){ e.preventDefault(); scrollToBrands(); }
+});
+
+/* ============ EASTER EGGS ============ */
+/* ❤️ like burst */
+const likeBtn = document.getElementById('likeBtn');
+likeBtn.addEventListener('click', ()=>{
+  likeBtn.classList.add('liked');
+  const n = 7 + Math.floor(Math.random()*5);
+  for (let i=0;i<n;i++){
+    const h = document.createElement('span');
+    h.className = 'heart-pop';
+    h.textContent = ['❤️','🧡','💖','🤍'][Math.floor(Math.random()*4)];
+    h.style.setProperty('--hx', (Math.random()*120-60)+'px');
+    h.style.animationDelay = (Math.random()*0.18)+'s';
+    likeBtn.appendChild(h);
+    setTimeout(()=>h.remove(), 1400);
+  }
+  setTimeout(()=>likeBtn.classList.remove('liked'), 900);
+});
+/* ✈️ share toast */
+const toast = document.getElementById('phoneToast');
+const planeMsgs = ['✓ Shared with your marketing team','They seem impressed.','Forwarded to the CMO. Bold move.','OK, that\'s the whole company now.'];
+let planeIdx = 0, toastT = null;
+function showToast(msg){
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(()=>toast.classList.remove('show'), 2200);
+}
+document.getElementById('planeBtn').addEventListener('click', ()=>{
+  showToast(planeMsgs[Math.min(planeIdx, planeMsgs.length-1)]);
+  planeIdx++;
+});
+/* ⋯ fun fact sheet */
+const sheet = document.getElementById('factSheet'), backdrop = document.getElementById('sheetBackdrop'),
+      fsText = document.getElementById('fsText');
+let factIdx = Math.floor(Math.random()*DATA.facts.length);
+function openSheet(){ fsText.textContent = DATA.facts[factIdx]; sheet.classList.add('show'); backdrop.classList.add('show'); }
+function closeSheet(){ sheet.classList.remove('show'); backdrop.classList.remove('show'); }
+document.getElementById('dotsBtn').addEventListener('click', openSheet);
+document.getElementById('fsMore').addEventListener('click', ()=>{
+  factIdx = (factIdx+1) % DATA.facts.length;
+  fsText.style.opacity = '0';
+  setTimeout(()=>{ fsText.textContent = DATA.facts[factIdx]; fsText.style.opacity = '1'; }, 160);
+});
+document.getElementById('fsClose').addEventListener('click', closeSheet);
+backdrop.addEventListener('click', closeSheet);
+/* dynamic island — now playing */
+const island = document.getElementById('island'), islMsg = document.getElementById('islMsg');
+const islMsgs = ['her content: 18+ years of watch time','now trending: your next campaign','590,000,000 views and counting','♪ viral since 2017'];
+let islIdx = 0, islT = null;
+island.addEventListener('click', ()=>{
+  islMsg.textContent = islMsgs[islIdx % islMsgs.length]; islIdx++;
+  island.classList.add('expanded');
+  clearTimeout(islT);
+  islT = setTimeout(()=>island.classList.remove('expanded'), 3000);
+});
+/* reels tab — empty state joke */
+const tabGrid = document.getElementById('tabGrid'), tabReels = document.getElementById('tabReels'),
+      reelsEmpty = document.getElementById('reelsEmpty');
+tabReels.addEventListener('click', ()=>{
+  tabGrid.classList.remove('on'); tabReels.classList.add('on');
+  pgrid.style.display = 'none'; reelsEmpty.style.display = 'block';
+});
+tabGrid.addEventListener('click', ()=>{
+  tabReels.classList.remove('on'); tabGrid.classList.add('on');
+  reelsEmpty.style.display = 'none'; pgrid.style.display = 'grid';
+});
+
+/* ============ EMAIL POPUP (vietoj mailto navigacijos) ============ */
+const emailPop = document.getElementById('emailPop'), epMail = document.getElementById('epMail'),
+      epCopy = document.getElementById('epCopy'), epOpen = document.getElementById('epOpen');
+function openEmailPop(addr){
+  const a = addr || 'osvaldas@reelize.lt';
+  epMail.textContent = a; epOpen.href = 'mailto:' + a;
+  epCopy.textContent = 'Copy email'; epCopy.classList.remove('done');
+  emailPop.classList.add('show');
+}
+function closeEmailPop(){ emailPop.classList.remove('show'); }
+document.getElementById('epX').addEventListener('click', closeEmailPop);
+document.getElementById('epBackdrop').addEventListener('click', closeEmailPop);
+epCopy.addEventListener('click', ()=>{
+  const a = epMail.textContent, done = ()=>{ epCopy.textContent = '✓ Copied'; epCopy.classList.add('done'); };
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(a).then(done).catch(()=>fallbackCopy(a, done));
+  } else fallbackCopy(a, done);
+});
+function fallbackCopy(a, done){
+  const t = document.createElement('textarea'); t.value = a; t.style.position='fixed'; t.style.opacity='0';
+  document.body.appendChild(t); t.select();
+  try { document.execCommand('copy'); done(); } catch(e){}
+  t.remove();
+}
+/* perimam VISAS mailto nuorodas — atidaro popup, NEnukreipia pagrindinio puslapio */
+document.addEventListener('click', e=>{
+  const a = e.target.closest('a[href^="mailto:"]');
+  if (a && a.id !== 'epOpen'){
+    e.preventDefault();
+    openEmailPop(a.getAttribute('href').replace('mailto:','').split('?')[0]);
+  }
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && emailPop.classList.contains('show')) closeEmailPop(); });
+
+/* 🥚 console — sveikina smalsuolį, atidariusį DevTools */
+console.log('%c Inidė Jasnauskaitė ','font:600 20px/1.7 sans-serif;color:#1A1A1A');
+console.log('%cInspecting the markup? Fair. The reels outperform the code — 590M views can vouch.\nIf you build things too: osvaldas@reelize.lt','font:12px/1.5 monospace;color:#9b9b9b');
+
+/* 🥚 tab title — kai išeini iš tab\'o, antraštė pakomentuoja; grįžus — atstatoma */
+const _realTitle = document.title;
+const _awayTitles = ['the reel isn\'t over','← 590M views and you leave?','come back, brands are watching','psst — still here','your move'];
+let _awayIdx = 0;
+document.addEventListener('visibilitychange', ()=>{
+  if (document.hidden){ document.title = _awayTitles[_awayIdx % _awayTitles.length]; _awayIdx++; }
+  else document.title = _realTitle;
+});
+</script>
+</body>
+</html>

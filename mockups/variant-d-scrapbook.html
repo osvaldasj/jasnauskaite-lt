@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inidė Jasnauskaitė — Content Creator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream:#FAF6EF;
+  --cream-deep:#F0E8DA;
+  --white:#FFFFFF;
+  --blush:#F2C4CE;
+  --sage:#C9D8C5;
+  --butter:#F5E6B8;
+  --lavender:#D4C9E8;
+  --peach:#F7D4C2;
+  --ink:#2C1F14;
+  --ink-muted:#5C4A38;
+  --red-pen:#C0392B;
+  --shadow-soft:0 8px 24px rgba(44,31,20,0.10), 0 2px 6px rgba(44,31,20,0.06);
+  --shadow-lifted:0 18px 48px rgba(44,31,20,0.18), 0 4px 12px rgba(44,31,20,0.10);
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background-color:var(--cream);
+  font-family:'Karla',sans-serif;
+  color:var(--ink);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* Linen texture overlay */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat:repeat;
+  opacity:0.6;
+}
+
+.desk{
+  position:relative;
+  z-index:1;
+  max-width:1200px;
+  margin:0 auto;
+  padding:48px 32px 80px;
+}
+
+/* ===================== POLAROID ===================== */
+.polaroid{
+  position:relative;
+  display:inline-block;
+  background:var(--white);
+  padding:12px 12px 44px;
+  box-shadow:var(--shadow-soft);
+  cursor:grab;
+  user-select:none;
+  transition:box-shadow 0.2s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  will-change:transform;
+}
+.polaroid:hover{
+  box-shadow:var(--shadow-lifted);
+  z-index:100!important;
+}
+.polaroid.dragging{
+  cursor:grabbing;
+  box-shadow:var(--shadow-lifted);
+  z-index:999!important;
+  transition:box-shadow 0.15s ease;
+}
+.polaroid img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  pointer-events:none;
+  -webkit-user-drag:none;
+  user-drag:none;
+}
+/* Block pointer events on ALL polaroid children so the polaroid itself always receives them */
+.polaroid *{pointer-events:none;}
+.polaroid .caption{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Caveat',cursive;
+  font-size:15px;
+  font-weight:600;
+  color:var(--ink);
+  padding:0 8px;
+  text-align:center;
+  line-height:1.2;
+}
+
+/* ===================== WASHI TAPE ===================== */
+.tape{
+  position:absolute;
+  height:22px;
+  width:72px;
+  opacity:0.82;
+  pointer-events:none;
+  border-radius:2px;
+  z-index:10;
+}
+.tape-blush{background:var(--blush)}
+.tape-sage{background:var(--sage)}
+.tape-butter{background:var(--butter)}
+.tape-lavender{background:var(--lavender)}
+.tape-peach{background:var(--peach)}
+
+/* ===================== STICKY NOTE ===================== */
+.sticky{
+  position:relative;
+  padding:14px 16px 20px;
+  font-family:'Caveat',cursive;
+  font-size:16px;
+  line-height:1.45;
+  color:var(--ink);
+  box-shadow:2px 4px 12px rgba(44,31,20,0.13);
+  cursor:default;
+}
+.sticky::after{
+  content:'';
+  position:absolute;
+  bottom:0;right:0;
+  width:18px;height:18px;
+  background:linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.08) 50%);
+}
+.sticky-yellow{background:#FFF3A3}
+.sticky-pink{background:#FFD6DC}
+.sticky-mint{background:#C8F0D4}
+.sticky-blue{background:#C8E4F8}
+
+/* ===================== HEADER / DESK TOP ===================== */
+.header-area{
+  position:relative;
+  min-height:160px;
+  margin-bottom:32px;
+}
+
+.name-label{
+  display:inline-block;
+  background:var(--white);
+  border:1px solid rgba(44,31,20,0.12);
+  padding:10px 20px 10px 16px;
+  font-family:'Karla',sans-serif;
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--ink);
+  position:absolute;
+  left:0;top:16px;
+  box-shadow:1px 2px 6px rgba(44,31,20,0.08);
+}
+.name-label span{
+  display:block;
+  font-weight:300;
+  letter-spacing:0.04em;
+  font-size:10px;
+  color:var(--ink-muted);
+  margin-top:2px;
+}
+
+.tagline-note{
+  position:absolute;
+  left:12px;top:70px;
+  transform:rotate(-2deg);
+  width:280px;
+}
+
+.contact-sticky{
+  position:absolute;
+  right:0;top:0;
+  width:210px;
+  transform:rotate(1.5deg);
+}
+
+/* ===================== HERO COLLAGE ===================== */
+.hero-zone{
+  position:relative;
+  min-height:560px;
+  margin-bottom:40px;
+}
+
+/* ===================== CORKBOARD SECTION ===================== */
+.corkboard-label{
+  display:inline-block;
+  background:var(--butter);
+  padding:5px 16px;
+  font-family:'Caveat',cursive;
+  font-size:18px;
+  font-weight:700;
+  color:var(--ink);
+  transform:rotate(-1deg);
+  margin-bottom:8px;
+  box-shadow:1px 2px 4px rgba(44,31,20,0.1);
+}
+
+.corkboard{
+  position:relative;
+  border:2px dashed rgba(44,31,20,0.15);
+  border-radius:4px;
+  padding:40px 32px 48px;
+  margin-bottom:64px;
+  background:rgba(255,255,255,0.15);
+  min-height:520px;
+}
+
+.torn-list{
+  position:relative;
+  background:var(--white);
+  padding:16px 20px;
+  font-family:'Caveat',cursive;
+  font-size:15px;
+  line-height:1.8;
+  color:var(--ink);
+  box-shadow:var(--shadow-soft);
+  max-width:260px;
+  /* torn top edge effect */
+}
+.torn-list::before{
+  content:'';
+  position:absolute;
+  top:-8px;left:0;right:0;
+  height:10px;
+  background:var(--white);
+  clip-path:polygon(0% 100%,2% 30%,5% 80%,8% 20%,12% 70%,16% 10%,20% 65%,24% 15%,28% 75%,32% 25%,36% 80%,40% 20%,44% 70%,48% 10%,52% 60%,56% 0%,60% 55%,64% 5%,68% 65%,72% 15%,76% 70%,80% 20%,84% 75%,88% 25%,92% 80%,96% 30%,100% 60%,100% 100%);
+}
+
+/* ===================== JUST ME STRIP ===================== */
+.strip-label{
+  font-family:'Caveat',cursive;
+  font-size:22px;
+  font-weight:700;
+  color:var(--ink);
+  transform:rotate(-1deg);
+  display:inline-block;
+  margin-bottom:20px;
+}
+
+.strip-row{
+  position:relative;
+  display:flex;
+  gap:24px;
+  flex-wrap:wrap;
+  min-height:280px;
+  margin-bottom:64px;
+  align-items:flex-start;
+}
+
+/* ===================== FOOTER ===================== */
+.footer-desk{
+  text-align:center;
+  padding:40px 20px 20px;
+  position:relative;
+}
+.footer-big{
+  font-family:'Caveat',cursive;
+  font-size:clamp(24px,4vw,44px);
+  font-weight:700;
+  color:var(--ink);
+  line-height:1.3;
+  margin-bottom:20px;
+}
+.footer-sticker{
+  display:inline-block;
+  background:var(--white);
+  border:1px solid rgba(44,31,20,0.15);
+  padding:10px 24px;
+  font-family:'Karla',sans-serif;
+  font-weight:600;
+  letter-spacing:0.05em;
+  font-size:14px;
+  color:var(--red-pen);
+  text-decoration:none;
+  box-shadow:var(--shadow-soft);
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
+}
+.footer-sticker:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-lifted);
+}
+.footer-links{
+  margin-top:20px;
+  font-family:'Caveat',cursive;
+  font-size:17px;
+  color:var(--ink-muted);
+}
+.footer-links a{
+  color:var(--ink-muted);
+  text-decoration:underline;
+  margin:0 10px;
+}
+.footer-copy{
+  margin-top:16px;
+  font-family:'Karla',sans-serif;
+  font-size:12px;
+  color:var(--ink-muted);
+  opacity:0.6;
+}
+
+/* ===================== DOODLE SVGS ===================== */
+.doodle{
+  position:absolute;
+  pointer-events:none;
+  z-index:5;
+}
+
+/* ===================== LOAD ANIMATION ===================== */
+@keyframes landDesk{
+  0%{opacity:0;transform:var(--drop-rot) translateY(-40px) scale(0.92)}
+  70%{opacity:1;transform:var(--final-rot) translateY(4px) scale(1.01)}
+  85%{transform:var(--final-rot) translateY(-2px) scale(0.99)}
+  100%{opacity:1;transform:var(--final-rot) translateY(0) scale(1)}
+}
+.polaroid.animate-in{
+  animation:landDesk 0.55s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@media(prefers-reduced-motion:reduce){
+  .polaroid.animate-in{animation:none}
+}
+
+/* ===================== MOBILE ===================== */
+@media(max-width:700px){
+  .desk{padding:24px 16px 60px}
+  .header-area{min-height:auto;display:flex;flex-direction:column;gap:16px;margin-bottom:24px}
+  .name-label{position:static;width:100%}
+  .tagline-note{position:static;transform:none;width:100%}
+  .contact-sticky{position:static;transform:none;width:100%}
+  .hero-zone,.corkboard,.strip-row{min-height:auto;display:flex;flex-direction:column;gap:20px;align-items:flex-start}
+  .corkboard{padding:24px 16px 32px}
+  .polaroid{cursor:default!important}
+  .polaroid:hover{transform:var(--final-rot)!important}
+  .polaroid.dragging{cursor:default!important}
+}
+</style>
+</head>
+<body>
+
+<main class="desk" role="main">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Inidė Jasnauskaitė — Fashion, beauty and lifestyle content creator portfolio based in Vilnius, Lithuania. 359K Instagram followers, 590M+ views.</h2>
+
+  <!-- =========== HEADER =========== -->
+  <div class="header-area">
+    <div class="name-label">
+      INIDĖ JASNAUSKAITĖ
+      <span>Content creator — fashion · beauty · lifestyle</span>
+    </div>
+
+    <div class="tagline-note sticky sticky-yellow" style="position:absolute;left:12px;top:70px;width:260px;transform:rotate(-2deg);">
+      fashion · beauty · lifestyle<br>from Vilnius w/ love ♥
+    </div>
+
+    <!-- Header doodle underline -->
+    <svg class="doodle" style="left:0;top:44px;width:340px;height:18px" viewBox="0 0 340 18" fill="none">
+      <path d="M4 13 C40 7, 90 15, 140 10 S220 5, 270 11 S310 15, 336 9" stroke="#C0392B" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.7"
+        style="stroke-dasharray:350;stroke-dashoffset:350;animation:drawLine 0.8s 0.3s ease forwards"/>
+    </svg>
+
+    <div class="sticky sticky-pink contact-sticky" style="position:absolute;right:0;top:0;width:210px;transform:rotate(1.5deg);font-size:15px;">
+      say hi →<br>
+      <a href="mailto:osvaldas@reelize.lt" style="color:var(--red-pen);font-weight:700;text-decoration:none;font-size:16px;">osvaldas@reelize.lt</a>
+    </div>
+  </div>
+
+  <!-- =========== HERO COLLAGE =========== -->
+  <div class="hero-zone" id="heroZone">
+
+    <!-- Main profile polaroid -->
+    <div class="polaroid animate-in"
+      id="pol-main"
+      data-rot="-3deg"
+      style="position:absolute;left:0;top:20px;width:280px;height:336px;
+             --final-rot:rotate(-3deg);--drop-rot:rotate(-6deg);animation-delay:0.05s;z-index:20;">
+      <img src="images/profile.jpg" alt="Inidė — profile" style="width:100%;height:100%;">
+      <span class="caption">me, somewhere sunny ☀</span>
+      <div class="tape tape-blush" style="top:-10px;left:50%;transform:translateX(-50%) rotate(-3deg)"></div>
+    </div>
+
+    <!-- Arrow doodle from profile to stats -->
+    <svg class="doodle" style="left:260px;top:80px;width:160px;height:100px" viewBox="0 0 160 100" fill="none">
+      <path d="M10 80 C40 60, 80 30, 140 20" stroke="#C0392B" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.8"
+        style="stroke-dasharray:180;stroke-dashoffset:180;animation:drawLine 0.7s 0.6s ease forwards"/>
+      <path d="M140 20 L128 28 M140 20 L134 32" stroke="#C0392B" stroke-width="2.5" stroke-linecap="round" opacity="0.8"
+        style="opacity:0;animation:fadeIn 0.2s 1.3s ease forwards"/>
+    </svg>
+
+    <!-- Stats sticky note -->
+    <div class="sticky sticky-yellow animate-in"
+      style="position:absolute;left:300px;top:10px;width:210px;transform:rotate(2deg);
+             font-size:17px;z-index:18;line-height:1.6;
+             box-shadow:2px 4px 14px rgba(44,31,20,0.15);
+             --final-rot:rotate(2deg);--drop-rot:rotate(5deg);animation-delay:0.25s;">
+      <strong style="font-size:20px;font-weight:700;color:var(--red-pen)">359K</strong> friends on IG<br>
+      <strong style="font-size:20px;font-weight:700;color:var(--red-pen)">590M+</strong> views (!!) <br>
+      <strong style="font-size:20px;font-weight:700;color:var(--red-pen)">5.0%</strong> ER — they actually watch<br>
+      <strong style="font-size:20px;font-weight:700;color:var(--red-pen)">8 years</strong> of this
+      <!-- Red circle around 5.0% -->
+      <svg style="position:absolute;left:2px;top:68px;width:115px;height:28px" viewBox="0 0 115 28" fill="none">
+        <ellipse cx="57" cy="14" rx="54" ry="12" stroke="#C0392B" stroke-width="2" fill="none" opacity="0.6"
+          style="stroke-dasharray:360;stroke-dashoffset:360;animation:drawLine 0.6s 1.1s ease forwards"/>
+      </svg>
+    </div>
+
+    <!-- Cover-1 polaroid -->
+    <div class="polaroid animate-in"
+      id="pol-c1"
+      data-rot="3.5deg"
+      style="position:absolute;left:520px;top:0;width:220px;height:272px;
+             --final-rot:rotate(3.5deg);--drop-rot:rotate(7deg);animation-delay:0.15s;z-index:15;">
+      <img src="images/cover-1.jpg" alt="Inidė — cover 1" style="width:100%;height:100%;">
+      <span class="caption">favourite fit ✦</span>
+      <div class="tape tape-sage" style="top:-10px;left:16px;transform:rotate(4deg)"></div>
+      <div class="tape tape-sage" style="top:-10px;right:16px;transform:rotate(-3deg)"></div>
+    </div>
+
+    <!-- Organic DTndq polaroid -->
+    <div class="polaroid animate-in"
+      id="pol-org1"
+      data-rot="-2deg"
+      style="position:absolute;left:740px;top:30px;width:200px;height:252px;
+             --final-rot:rotate(-2deg);--drop-rot:rotate(-5deg);animation-delay:0.3s;z-index:14;">
+      <img src="images/organic-DTndqTCiLFF.jpg" alt="Inidė — organic" style="width:100%;height:100%;">
+      <span class="caption">golden hour magic</span>
+      <div class="tape tape-butter" style="top:-10px;left:50%;transform:translateX(-50%) rotate(2deg)"></div>
+    </div>
+
+    <!-- Cover-3 polaroid -->
+    <div class="polaroid animate-in"
+      id="pol-c3"
+      data-rot="4deg"
+      style="position:absolute;left:580px;top:260px;width:210px;height:262px;
+             --final-rot:rotate(4deg);--drop-rot:rotate(8deg);animation-delay:0.4s;z-index:16;">
+      <img src="images/cover-3.jpg" alt="Inidė — cover 3" style="width:100%;height:100%;">
+      <span class="caption">in my element 🌿</span>
+      <div class="tape tape-blush" style="top:-10px;right:20px;transform:rotate(-4deg)"></div>
+    </div>
+
+    <!-- "8 yrs of creating" side note — overlaps bottom portion of org1, in front of it -->
+    <div class="sticky sticky-mint animate-in"
+      style="position:absolute;left:900px;top:280px;width:220px;transform:rotate(-3deg);
+             font-size:15px;line-height:1.5;z-index:22;
+             --final-rot:rotate(-3deg);--drop-rot:rotate(-6deg);animation-delay:0.5s;">
+      started when it was all about filters &amp; fun 😌<br>still here, still making stuff I'd actually want to watch
+    </div>
+
+    <!-- Spacer to push corkboard down — tight to actual content (~550px tallest column) -->
+    <div style="height:520px"></div>
+  </div>
+
+  <!-- =========== CORKBOARD SECTION =========== -->
+  <div>
+    <div class="corkboard-label">CLIENT WORK — THE HITS</div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+      <div style="height:1px;background:rgba(44,31,20,0.12);flex:1"></div>
+      <span style="font-family:'Caveat',cursive;font-size:14px;color:var(--ink-muted)">(drag these too)</span>
+      <div style="height:1px;background:rgba(44,31,20,0.12);flex:1"></div>
+    </div>
+    <div class="corkboard" id="corkboard">
+
+      <!-- Mionetto big polaroid -->
+      <div class="polaroid animate-in"
+        id="pol-mion"
+        data-rot="-4deg"
+        style="position:absolute;left:20px;top:30px;width:240px;height:292px;
+               --final-rot:rotate(-4deg);--drop-rot:rotate(-7deg);animation-delay:0.6s;z-index:20;">
+        <img src="images/mionetto-DNXetzOMT__.jpg" alt="Mionetto collab" style="width:100%;height:100%;">
+        <span class="caption">Mionetto 🥂</span>
+        <div class="tape tape-blush" style="top:-10px;left:20px;transform:rotate(-3deg)"></div>
+      </div>
+      <!-- Mionetto stat note + circle doodle — overlapping bottom-right corner of Mionetto polaroid -->
+      <div class="sticky sticky-yellow animate-in"
+        style="position:absolute;left:190px;top:265px;width:160px;transform:rotate(-2deg);font-size:17px;z-index:22;
+               --final-rot:rotate(-2deg);--drop-rot:rotate(-5deg);animation-delay:0.7s;">
+        <strong style="color:var(--red-pen)">16.7M views</strong>
+        <svg style="position:absolute;left:-2px;top:4px;width:130px;height:30px" viewBox="0 0 130 30" fill="none">
+          <ellipse cx="65" cy="15" rx="62" ry="13" stroke="#C0392B" stroke-width="2.2" fill="none" opacity="0.7"
+            style="stroke-dasharray:400;stroke-dashoffset:400;animation:drawLine 0.5s 1.4s ease forwards"/>
+        </svg>
+      </div>
+
+      <!-- Hellmanns -->
+      <div class="polaroid animate-in"
+        id="pol-hell"
+        data-rot="3deg"
+        style="position:absolute;left:240px;top:10px;width:230px;height:282px;
+               --final-rot:rotate(3deg);--drop-rot:rotate(6deg);animation-delay:0.65s;z-index:18;">
+        <img src="images/hellmanns.jpg" alt="Hellmanns collab" style="width:100%;height:100%;">
+        <span class="caption">Hellmann's — 15M</span>
+        <div class="tape tape-sage" style="top:-10px;right:20px;transform:rotate(3deg)"></div>
+      </div>
+      <div class="sticky sticky-mint"
+        style="position:absolute;left:242px;top:302px;width:210px;transform:rotate(-2deg);font-size:14px;z-index:10;">
+        one reel did 14M all by itself 🤯
+      </div>
+
+      <!-- Akropolis -->
+      <div class="polaroid animate-in"
+        id="pol-akro"
+        data-rot="-2.5deg"
+        style="position:absolute;left:490px;top:25px;width:220px;height:272px;
+               --final-rot:rotate(-2.5deg);--drop-rot:rotate(-5deg);animation-delay:0.7s;z-index:16;">
+        <img src="images/akropolis-DPDlAeZiEuJ.jpg" alt="Akropolis collab" style="width:100%;height:100%;">
+        <span class="caption">Akropolis, 35 posts</span>
+        <div class="tape tape-lavender" style="top:-10px;left:50%;transform:translateX(-50%) rotate(-1deg)"></div>
+      </div>
+
+      <!-- Nissan -->
+      <div class="polaroid animate-in"
+        id="pol-nissan"
+        data-rot="4.5deg"
+        style="position:absolute;left:750px;top:10px;width:220px;height:272px;
+               --final-rot:rotate(4.5deg);--drop-rot:rotate(8deg);animation-delay:0.75s;z-index:15;">
+        <img src="images/nissan.jpg" alt="Nissan road trip" style="width:100%;height:100%;">
+        <span class="caption">Nissan road trip — 6.5M</span>
+        <div class="tape tape-butter" style="top:-10px;left:16px;transform:rotate(5deg)"></div>
+        <div class="tape tape-butter" style="top:-10px;right:16px;transform:rotate(-4deg)"></div>
+      </div>
+
+      <!-- Maxima -->
+      <div class="polaroid animate-in"
+        id="pol-max"
+        data-rot="-3.5deg"
+        style="position:absolute;left:490px;top:305px;width:210px;height:262px;
+               --final-rot:rotate(-3.5deg);--drop-rot:rotate(-7deg);animation-delay:0.8s;z-index:14;">
+        <img src="images/maxima-DMK9spgtfv-.jpg" alt="Maxima collab" style="width:100%;height:100%;">
+        <span class="caption">Maxima 3.2M ✓</span>
+        <div class="tape tape-peach" style="top:-10px;left:20px;transform:rotate(-3deg)"></div>
+      </div>
+
+      <!-- Mionetto backstage -->
+      <div class="polaroid animate-in"
+        id="pol-mion2"
+        data-rot="2deg"
+        style="position:absolute;left:750px;top:295px;width:200px;height:252px;
+               --final-rot:rotate(2deg);--drop-rot:rotate(5deg);animation-delay:0.85s;z-index:13;">
+        <img src="images/mionetto2.jpg" alt="Mionetto backstage" style="width:100%;height:100%;">
+        <span class="caption">backstage ✨</span>
+        <div class="tape tape-blush" style="top:-10px;right:16px;transform:rotate(-2deg)"></div>
+      </div>
+
+      <!-- Torn list -->
+      <div class="torn-list animate-in"
+        style="position:absolute;left:240px;top:320px;transform:rotate(1deg);z-index:12;">
+        <strong style="font-family:'Karla',sans-serif;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;opacity:0.5;">also worked with:</strong><br>
+        Lancôme · McDonald's · Tele2<br>
+        Milka · Barbora · GoVilnius<br>
+        Boozt · Perfectil · Huawei<br>
+        …and 59+ more brands
+      </div>
+
+      <!-- Corkboard doodle arrow -->
+      <svg class="doodle" style="left:22px;top:0;width:100px;height:36px" viewBox="0 0 100 36" fill="none">
+        <path d="M5 28 Q30 5 90 18" stroke="#C0392B" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.5"
+          style="stroke-dasharray:120;stroke-dashoffset:120;animation:drawLine 0.5s 1.5s ease forwards"/>
+        <path d="M90 18 L80 13 M90 18 L82 24" stroke="#C0392B" stroke-width="1.8" stroke-linecap="round" opacity="0.5"
+          style="opacity:0;animation:fadeIn 0.2s 2.0s ease forwards"/>
+      </svg>
+
+      <!-- Spacer -->
+      <div style="height:570px"></div>
+    </div>
+  </div>
+
+  <!-- =========== JUST ME STRIP =========== -->
+  <div style="margin-bottom:64px">
+    <div class="strip-label">JUST ME — organic reach, no ad money</div>
+    <div class="strip-row" id="stripRow">
+
+      <div class="polaroid animate-in"
+        id="pol-s1"
+        data-rot="-3deg"
+        style="position:relative;width:210px;height:262px;display:inline-block;
+               --final-rot:rotate(-3deg);--drop-rot:rotate(-6deg);animation-delay:0.9s;flex-shrink:0;">
+        <img src="images/organic-C4SX92Zt6pN.jpg" alt="Organic post" style="width:100%;height:100%;">
+        <span class="caption">2.2M ✈</span>
+        <div class="tape tape-blush" style="top:-10px;left:50%;transform:translateX(-50%) rotate(-2deg)"></div>
+      </div>
+
+      <div class="polaroid animate-in"
+        id="pol-s2"
+        data-rot="4deg"
+        style="position:relative;width:210px;height:262px;display:inline-block;
+               --final-rot:rotate(4deg);--drop-rot:rotate(7deg);animation-delay:0.95s;flex-shrink:0;margin-top:24px;">
+        <img src="images/organic-DRjZN_fCLXa.jpg" alt="Organic post 2" style="width:100%;height:100%;">
+        <span class="caption">511K</span>
+        <div class="tape tape-sage" style="top:-10px;right:16px;transform:rotate(3deg)"></div>
+      </div>
+
+      <div class="polaroid animate-in"
+        id="pol-s3"
+        data-rot="-1.5deg"
+        style="position:relative;width:210px;height:262px;display:inline-block;
+               --final-rot:rotate(-1.5deg);--drop-rot:rotate(-4deg);animation-delay:1.0s;flex-shrink:0;margin-top:12px;">
+        <img src="images/organic-DR6npUDCK23.jpg" alt="Organic post 3" style="width:100%;height:100%;">
+        <span class="caption">425K</span>
+        <div class="tape tape-butter" style="top:-10px;left:20px;transform:rotate(-3deg)"></div>
+      </div>
+
+      <div class="polaroid animate-in"
+        id="pol-s4"
+        data-rot="3deg"
+        style="position:relative;width:210px;height:262px;display:inline-block;
+               --final-rot:rotate(3deg);--drop-rot:rotate(6deg);animation-delay:1.05s;flex-shrink:0;margin-top:30px;">
+        <img src="images/organic-DNz2mq70H81.jpg" alt="Organic post 4" style="width:100%;height:100%;">
+        <span class="caption">185K</span>
+        <div class="tape tape-lavender" style="top:-10px;left:50%;transform:translateX(-50%) rotate(1deg)"></div>
+      </div>
+
+      <!-- Side note about organic -->
+      <div class="sticky sticky-blue animate-in"
+        style="align-self:center;width:200px;transform:rotate(-2.5deg);font-size:15px;line-height:1.5;flex-shrink:0;">
+        people follow her for her, not just the brand deals. that's the rare part.
+      </div>
+    </div>
+  </div>
+
+  <!-- =========== FOOTER =========== -->
+  <div class="footer-desk">
+    <!-- Doodle heart -->
+    <svg style="display:block;margin:0 auto 12px;width:48px;height:40px" viewBox="0 0 48 40" fill="none">
+      <path d="M24 36 C12 26, 2 18, 2 10 C2 5, 6 2, 11 2 C15 2, 19 5, 24 10 C29 5, 33 2, 37 2 C42 2, 46 5, 46 10 C46 18, 36 26, 24 36 Z"
+        stroke="#C0392B" stroke-width="2.2" fill="none" opacity="0.7"
+        style="stroke-dasharray:180;stroke-dashoffset:180;animation:drawLine 0.8s 1.8s ease forwards"/>
+    </svg>
+    <div class="footer-big">
+      want your brand on this desk?<br>
+      write me →
+    </div>
+    <a href="mailto:osvaldas@reelize.lt" class="footer-sticker">OSVALDAS@REELIZE.LT</a>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/jasnauskaite" target="_blank" rel="noopener">IG @jasnauskaite ↗</a>
+      <a href="https://www.tiktok.com/@jasnauskaite" target="_blank" rel="noopener">TikTok ↗</a>
+    </div>
+    <div class="footer-copy">© 2026 Inidė Jasnauskaitė · Vilnius · All rights reserved</div>
+  </div>
+
+</main>
+
+<style>
+@keyframes drawLine{to{stroke-dashoffset:0}}
+@keyframes fadeIn{to{opacity:0.8}}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+</style>
+
+<script>
+(function(){
+  /* ---- Prevent native image drag from hijacking pointer events ---- */
+  document.addEventListener('dragstart', function(e){
+    if(e.target.closest('.polaroid')) e.preventDefault();
+  });
+  document.querySelectorAll('.polaroid img').forEach(function(img){
+    img.setAttribute('draggable','false');
+  });
+
+  /* ---- Rotate-to-final on load (CSS vars drive the animation) ---- */
+  document.querySelectorAll('.polaroid.animate-in').forEach(function(p){
+    var rot = p.dataset.rot || '0deg';
+    p.style.setProperty('--final-rot','rotate('+rot+')');
+    var drop = parseFloat(rot)*2.2;
+    p.style.setProperty('--drop-rot','rotate('+drop+'deg)');
+    p.style.transform = 'rotate('+rot+')';
+  });
+
+  /* ---- Hover: gentle straighten ---- */
+  var isTouch = window.matchMedia('(pointer:coarse)').matches;
+
+  /* ---- Drag & Drop (desktop only) via Pointer Events delegation ---- */
+  if(!isTouch){
+    var activeDrag = null;
+    var dragOffX = 0, dragOffY = 0;
+    /* Track each polaroid's current placed position (relative to its offsetParent) */
+
+    /* Pointer down — delegated on document so we always catch it */
+    document.addEventListener('pointerdown', function(e){
+      if(e.button !== 0) return;
+      var pol = e.target.closest('.polaroid');
+      if(!pol) return;
+      e.preventDefault();
+
+      var origRot = pol.dataset.rot || '0deg';
+      var rect = pol.getBoundingClientRect();
+
+      /* Convert current visual position to fixed so we can move freely */
+      /* We DON'T reparent — keep the element in its DOM parent,
+         just override position to fixed and snap to current visual coords */
+      pol.style.position = 'fixed';
+      pol.style.left = rect.left + 'px';
+      pol.style.top  = rect.top  + 'px';
+      pol.style.width  = rect.width  + 'px';
+      pol.style.height = rect.height + 'px';
+      pol.style.margin = '0';
+      pol.style.zIndex = '9999';
+      pol.classList.add('dragging');
+      pol.style.transform = 'rotate(' + origRot + ') scale(1.04)';
+
+      /* Capture pointer so moves/ups route here even if cursor leaves element */
+      pol.setPointerCapture(e.pointerId);
+
+      dragOffX = e.clientX - rect.left;
+      dragOffY = e.clientY - rect.top;
+      activeDrag = pol;
+    }, {passive: false});
+
+    document.addEventListener('pointermove', function(e){
+      if(!activeDrag) return;
+      e.preventDefault();
+      activeDrag.style.left = (e.clientX - dragOffX) + 'px';
+      activeDrag.style.top  = (e.clientY - dragOffY) + 'px';
+    }, {passive: false});
+
+    function endDrag(e){
+      if(!activeDrag) return;
+      var pol = activeDrag;
+      var origRot = pol.dataset.rot || '0deg';
+      pol.classList.remove('dragging');
+      pol.style.transform = 'rotate(' + origRot + ')';
+      pol.style.zIndex = '100';
+      /* Leave position:fixed with its final left/top so it stays where dropped */
+      activeDrag = null;
+    }
+    document.addEventListener('pointerup',   endDrag);
+    document.addEventListener('pointercancel', endDrag);
+
+    /* Hover straighten (only when not dragging) */
+    document.querySelectorAll('.polaroid').forEach(function(pol){
+      var rot = pol.dataset.rot || '0deg';
+      pol.addEventListener('mouseenter', function(){
+        if(activeDrag !== pol){
+          pol.style.transform = 'rotate(0deg) scale(1.02)';
+        }
+      });
+      pol.addEventListener('mouseleave', function(){
+        if(activeDrag !== pol){
+          pol.style.transform = 'rotate(' + rot + ')';
+        }
+      });
+    });
+  }
+
+  /* ---- Touch: slight tilt on tap ---- */
+  if(isTouch){
+    document.querySelectorAll('.polaroid').forEach(function(pol){
+      var rot = pol.dataset.rot || '0deg';
+      pol.addEventListener('touchstart',function(){
+        pol.style.transform = 'rotate('+rot+') scale(1.03)';
+        pol.style.zIndex = '50';
+      },{passive:true});
+      pol.addEventListener('touchend',function(){
+        setTimeout(function(){
+          pol.style.transform = 'rotate('+rot+')';
+          pol.style.zIndex = '';
+        },300);
+      });
+    });
+  }
+
+  /* ---- Staggered fade-in for sticky notes ---- */
+  document.querySelectorAll('.sticky').forEach(function(el,i){
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 0.4s ease';
+    setTimeout(function(){ el.style.opacity = '1'; }, 300 + i*120);
+  });
+
+  /* ---- Torn list ---- */
+  var tl = document.querySelector('.torn-list');
+  if(tl){
+    tl.style.opacity = '0';
+    tl.style.transition = 'opacity 0.4s ease';
+    setTimeout(function(){ tl.style.opacity = '1'; }, 900);
+  }
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Jasnauskaitė Times — Vol. IX · Nº 787</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --paper: #F7F4EC;
+    --ink: #1B1A17;
+    --rule: #C9C4B8;
+    --rule-heavy: #8C8880;
+    --red: #B3261E;
+    --muted: #5A5750;
+    --col-gap: 18px;
+  }
+
+  html { background: #E8E4DA; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'PT Serif', Georgia, serif;
+    font-size: 13px;
+    line-height: 1.55;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0;
+    /* SVG grain overlay */
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    z-index: 9999;
+  }
+
+  /* ── FOLIO LINE ── */
+  .folio {
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 3px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    text-align: center;
+    padding: 14px 20px 10px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .masthead-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 900;
+    font-size: clamp(38px, 7.5vw, 96px);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .masthead-motto {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 4px 0;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .masthead-rule-double {
+    margin-top: 0;
+    border: none;
+    border-top: 3px double var(--ink);
+  }
+
+  /* ── PAPER WRAPPER ── */
+  .paper {
+    padding: 0 12px 24px;
+  }
+
+  /* ── SECTION LABELS ── */
+  .section-rule {
+    border: none;
+    border-top: 1px solid var(--ink);
+    margin: 0 0 6px;
+  }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--rule);
+    padding: 2px 0 4px;
+    margin-bottom: 8px;
+  }
+
+  /* ── 4-COLUMN GRID ── */
+  .broadsheet-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+  }
+
+  .col-rule {
+    border-left: 1px solid var(--rule);
+    padding-left: var(--col-gap);
+    padding-right: calc(var(--col-gap) / 2);
+  }
+
+  .col-no-rule {
+    padding-right: var(--col-gap);
+  }
+
+  /* ── LEAD BLOCK ── */
+  .lead-block {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 14px;
+    margin-bottom: 0;
+    align-items: start;
+  }
+
+  .lead-photo-col {
+    padding-right: var(--col-gap);
+    border-right: 1px solid var(--rule);
+  }
+
+  .lead-story-col {
+    padding-left: var(--col-gap);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    align-items: start;
+  }
+
+  .lead-story-inner {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+
+  .story-col-inner {
+    padding-right: calc(var(--col-gap) + 2px);
+  }
+
+  .story-col-inner + .story-col-inner {
+    padding-left: calc(var(--col-gap) / 2);
+    border-left: 1px solid var(--rule);
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  .headline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 900;
+    color: var(--ink);
+    line-height: 1.0;
+    margin-bottom: 6px;
+    hyphens: auto;
+  }
+
+  .headline-lead {
+    font-size: clamp(28px, 4vw, 54px);
+    margin-bottom: 8px;
+  }
+
+  .headline-secondary {
+    font-size: clamp(16px, 2.2vw, 22px);
+  }
+
+  .headline-small {
+    font-size: clamp(14px, 1.8vw, 18px);
+  }
+
+  .deck {
+    font-family: 'PT Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ink);
+    margin-bottom: 7px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+  }
+
+  .byline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 7px;
+    display: block;
+  }
+
+  .body-text {
+    font-family: 'PT Serif', Georgia, serif;
+    font-size: 13px;
+    line-height: 1.58;
+    text-align: justify;
+    hyphens: auto;
+    word-break: break-word;
+    color: var(--ink);
+  }
+
+  .body-text + .body-text {
+    margin-top: 7px;
+  }
+
+  /* Drop cap */
+  .drop-cap::first-letter {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 900;
+    font-size: 4.1em;
+    line-height: 0.72;
+    float: left;
+    margin-right: 4px;
+    margin-top: 6px;
+    color: var(--ink);
+  }
+
+  /* ── PHOTO FURNITURE ── */
+  .photo-frame {
+    border: 1px solid var(--rule-heavy);
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .photo-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: saturate(0.75);
+    transition: filter 0.4s ease;
+  }
+
+  .photo-frame:hover img {
+    filter: saturate(1);
+  }
+
+  .photo-caption {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    line-height: 1.4;
+    color: var(--muted);
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .photo-credit {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7.5px;
+    color: var(--rule-heavy);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-top: 1px;
+  }
+
+  .thumb-photo {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    display: block;
+    border: 1px solid var(--rule);
+    filter: saturate(0.7);
+    transition: filter 0.35s ease;
+    margin-bottom: 5px;
+  }
+
+  .thumb-photo:hover {
+    filter: saturate(1);
+  }
+
+  /* ── MARKET DATA BOX ── */
+  .market-data {
+    border: 1px solid var(--ink);
+    padding: 8px 10px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .market-data-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 2px 6px;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+
+  .market-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+  }
+
+  .market-table tr {
+    border-bottom: 1px dotted var(--rule);
+  }
+
+  .market-table td {
+    padding: 2.5px 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .market-table .ticker {
+    color: var(--muted);
+    font-size: 8px;
+  }
+
+  .market-table .val {
+    font-weight: 500;
+    text-align: right;
+    color: var(--ink);
+  }
+
+  .market-table .change-up {
+    color: #2A7A3B;
+    text-align: right;
+    font-size: 8px;
+  }
+
+  /* ── ORGANIC STRIP ── */
+  .organic-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding: 10px 0;
+    margin-bottom: 14px;
+  }
+
+  .organic-item img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+    border: 1px solid var(--rule);
+    filter: saturate(0.65);
+    transition: filter 0.35s ease;
+  }
+
+  .organic-item img:hover {
+    filter: saturate(1);
+  }
+
+  .organic-cap {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-top: 3px;
+    line-height: 1.35;
+  }
+
+  /* ── CLASSIFIEDS ── */
+  .classifieds-box {
+    border: 2px solid var(--ink);
+    padding: 10px 14px;
+    margin-bottom: 6px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 14px;
+    align-items: start;
+  }
+
+  .classified-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    color: var(--muted);
+    align-self: center;
+    border-right: 1px solid var(--rule);
+    padding-right: 8px;
+  }
+
+  .classified-body {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .classified-body a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .classified-body a:hover {
+    color: var(--red);
+  }
+
+  .extra-badge {
+    background: var(--red);
+    color: var(--paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 2px 7px;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+
+  .extra-circle {
+    display: inline-block;
+    border: 1.5px solid var(--red);
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    line-height: 1.15;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: 10px;
+    color: var(--red);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  /* ── FOOTER FOLIO ── */
+  .footer-folio {
+    border-top: 1px solid var(--ink);
+    padding: 5px 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  /* ── JUMP LINE ── */
+  .jump-line {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-style: normal;
+    margin-top: 7px;
+    display: block;
+  }
+
+  .jump-line a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* ── RED EXTRA tag ── */
+  .extra-tag {
+    background: var(--red);
+    color: var(--paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 1px 5px;
+    display: inline-block;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  /* ── HOVER on headlines ── */
+  .headline:hover {
+    letter-spacing: 0.01em;
+    transition: letter-spacing 0.25s ease;
+  }
+
+  /* ── PAGE LOAD ANIMATION ── */
+  @media (prefers-reduced-motion: no-preference) {
+    .paper-sheet {
+      animation: press-settle 0.7s ease forwards;
+    }
+
+    @keyframes press-settle {
+      from { transform: scale(1.004); opacity: 0.92; }
+      to   { transform: scale(1);     opacity: 1;    }
+    }
+  }
+
+  /* ── HORIZONTAL RULE ── */
+  hr.col-div {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 10px 0;
+  }
+
+  /* ── BELOW FOLD SECTION ── */
+  .below-fold {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+  }
+
+  .below-col {
+    padding-right: var(--col-gap);
+  }
+
+  .below-col + .below-col {
+    padding-left: calc(var(--col-gap) / 2);
+    border-left: 1px solid var(--rule);
+  }
+
+  /* ── ORGANIC SECTION HEADER ── */
+  .organic-section-label {
+    border-top: 3px solid var(--ink);
+    padding-top: 5px;
+    margin-bottom: 0;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .lead-block {
+      display: block;
+    }
+    .lead-photo-col {
+      border-right: none;
+      border-bottom: 1px solid var(--rule);
+      padding-right: 0;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+    }
+    .lead-story-col {
+      padding-left: 0;
+      display: block;
+    }
+    .lead-story-inner {
+      display: block;
+    }
+    .story-col-inner {
+      padding-right: 0;
+    }
+    .story-col-inner + .story-col-inner {
+      border-left: none;
+      padding-left: 0;
+      border-top: 1px solid var(--rule);
+      margin-top: 10px;
+      padding-top: 10px;
+    }
+    .below-fold {
+      display: block;
+    }
+    .below-col {
+      padding-right: 0;
+      border-left: none;
+      padding-left: 0;
+    }
+    .below-col + .below-col {
+      border-left: none;
+      padding-left: 0;
+      border-top: 1px solid var(--rule);
+      margin-top: 12px;
+      padding-top: 12px;
+    }
+    .organic-strip {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .classifieds-box {
+      grid-template-columns: 1fr;
+    }
+    .classified-label {
+      writing-mode: horizontal-tb;
+      transform: none;
+      border-right: none;
+      border-bottom: 1px solid var(--rule);
+      padding-right: 0;
+      padding-bottom: 6px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .masthead-title {
+      font-size: clamp(28px, 11vw, 52px);
+    }
+    .headline-lead {
+      font-size: clamp(22px, 7vw, 36px);
+    }
+    .organic-strip {
+      grid-template-columns: 1fr 1fr;
+    }
+    .folio {
+      flex-direction: column;
+      gap: 2px;
+      text-align: center;
+    }
+    .extra-circle {
+      display: none;
+    }
+  }
+
+  /* ── DIVIDER BAR BETWEEN SECTIONS ── */
+  .section-divider {
+    height: 2px;
+    background: var(--ink);
+    margin: 0 0 6px;
+  }
+
+  .thin-rule {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 8px 0;
+  }
+
+  /* ── INLINE STAT PULL ── */
+  .pull-stat {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 900;
+    font-size: 28px;
+    color: var(--ink);
+    display: block;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding: 4px 0 6px;
+    margin: 10px 0 7px;
+    line-height: 1;
+  }
+
+  .pull-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<div class="paper-sheet">
+
+<!-- FOLIO LINE -->
+<div class="folio">
+  <span>Vol. IX &mdash; N&ordm;&thinsp;787</span>
+  <span>Vilnius, Lithuania &middot; June 2026</span>
+  <span>Price: One DM</span>
+</div>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <span class="masthead-title">The Jasnauskait&#279; Times</span>
+  <div class="masthead-motto">All the content that&rsquo;s fit to post</div>
+</div>
+<hr class="masthead-rule-double">
+
+<!-- PAPER BODY -->
+<div class="paper">
+
+  <!-- LEAD BLOCK: photo left + story right -->
+  <div class="lead-block" style="margin-top: 12px;">
+
+    <!-- PHOTO COL -->
+    <div class="lead-photo-col">
+      <div class="photo-frame">
+        <img src="images/mionetto-DNXetzOMT__.jpg" alt="Mionetto Prosecco campaign — 16.7 million views">
+      </div>
+      <p class="photo-caption">PROSECCO HOUR &mdash; The Mionetto campaign that drew 16.7&thinsp;million views across two platforms in three weeks. Content delivered ahead of schedule; brand confirmed repeat booking.</p>
+      <span class="photo-credit">Photo: @jasnauskaite</span>
+
+      <hr class="thin-rule">
+
+      <!-- MARKET DATA BOX -->
+      <div class="market-data">
+        <span class="market-data-label">Market Data &mdash; Live</span>
+        <table class="market-table">
+          <tr>
+            <td class="ticker">Followers</td>
+            <td class="val">359&thinsp;000</td>
+            <td class="change-up">&#9650;</td>
+          </tr>
+          <tr>
+            <td class="ticker">Eng. Rate</td>
+            <td class="val">5.0&thinsp;%</td>
+            <td class="change-up">&#9650;</td>
+          </tr>
+          <tr>
+            <td class="ticker">Total Views</td>
+            <td class="val">590&thinsp;M+</td>
+            <td class="change-up">&#9650;</td>
+          </tr>
+          <tr>
+            <td class="ticker">Avg. Views</td>
+            <td class="val">493&thinsp;K</td>
+            <td class="change-up">&#9650;</td>
+          </tr>
+          <tr>
+            <td class="ticker">Brands</td>
+            <td class="val">69+</td>
+            <td class="change-up">&#9650;</td>
+          </tr>
+          <tr>
+            <td class="ticker">Years Active</td>
+            <td class="val">8</td>
+            <td class="change-up">&mdash;</td>
+          </tr>
+          <tr>
+            <td class="ticker">Branded Posts</td>
+            <td class="val">787</td>
+            <td class="change-up">&mdash;</td>
+          </tr>
+        </table>
+      </div>
+
+      <span class="pull-stat">5.0%<br><span class="pull-label">Engagement rate &mdash; IG avg. 1.9%</span></span>
+
+    </div>
+
+    <!-- LEAD STORY COL -->
+    <div class="lead-story-col">
+      <div class="lead-story-inner">
+
+        <div class="story-col-inner" style="grid-column: 1 / -1; margin-bottom: 8px;">
+          <span class="kicker">Media &middot; Advertising</span>
+          <h1 class="headline headline-lead">Lithuanian Creator Reaches 590&thinsp;Million Views; Brands Keep Coming Back</h1>
+          <p class="deck">Eight years, 69&thinsp;partners, 787&thinsp;branded posts &mdash; an audit of an unusually consistent track record in an industry where most accounts peak and retreat in eighteen months.</p>
+          <span class="byline">By Reelize Staff &nbsp;&middot;&nbsp; Vilnius, June 12</span>
+        </div>
+
+        <div class="story-col-inner">
+          <p class="body-text drop-cap"><span>V</span>ILNIUS &mdash; A social media portfolio reviewed by this newspaper this week suggests that Inid&#279; Jasnauskait&#279;, the fashion and lifestyle content creator who has published on Instagram and TikTok since 2016, has accumulated an audience and commercial relationship record that is, by most measurable standards, unusual for the Lithuanian market.</p>
+          <p class="body-text">The figures are plain enough: 359&thinsp;000 Instagram followers, a 5.0&thinsp;per cent engagement rate at a moment when the platform average sits closer to 1.9, and a cumulative view count now exceeding 590&thinsp;million. The more telling detail is the repeat-client rate. Of 69&thinsp;brands that have commissioned content, a substantial proportion have returned for second and third campaigns &mdash; a data point that is difficult to manufacture and that agencies, in private, regard as the only metric that truly cannot be faked.</p>
+        </div>
+
+        <div class="story-col-inner">
+          <p class="body-text">"You can buy followers," one brand manager told this newspaper on condition of anonymity. "You cannot, in eight years, buy back repeat bookings from the likes of Mionetto and Hellmann's."</p>
+          <p class="body-text">The Mionetto campaign &mdash; a prosecco brand positioning exercise covering the spring drinking occasion &mdash; drew 16.7&thinsp;million views. Hellmann's, the condiment manufacturer whose Lithuanian operation commissioned a single recipe reel, saw that post accrue 14&thinsp;million views before the campaign window closed. Neither figure required a paid-amplification budget.</p>
+
+          <span class="pull-stat">69+<br><span class="pull-label">Partner brands &mdash; 8 years</span></span>
+
+          <p class="body-text">Akropolis Group, the shopping-centre operator with properties in four Baltic cities, ran a 35-post season contract yielding 13.2&thinsp;million combined views. Nissan Lithuania executed a multi-part automotive series that closed at 6.5&thinsp;million. In each case, the content category &mdash; fashion, beauty, home, food &mdash; was treated not as product placement but as editorially coherent storytelling, a distinction that audiences, apparently, notice.</p>
+          <span class="jump-line">&rarr; Full portfolio: <a href="https://jasnauskaite.lt" target="_blank">jasnauskaite.lt</a></span>
+        </div>
+
+        <div class="story-col-inner" style="grid-column: 1 / -1; margin-top: 10px; border-top: 1px solid var(--rule); padding-top: 10px;">
+          <span class="kicker">Editor&rsquo;s note &mdash; On methodology</span>
+          <p class="body-text" style="font-style: italic; font-size: 11.5px;">View figures cited in this edition derive from campaign-close analytics provided by the creator&rsquo;s management company, Reelize, and have not been independently audited by this newspaper. Engagement rate calculated as interactions divided by reach on a trailing twelve-month basis. Competitor benchmarks sourced from publicly available platform studies.</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /lead-block -->
+
+  <!-- BELOW FOLD: 3 secondary stories -->
+  <div class="section-divider" style="margin-top: 14px;"></div>
+  <div class="below-fold">
+
+    <div class="below-col">
+      <span class="kicker">Food &middot; Brand Partnerships</span>
+      <img src="images/hellmanns.jpg" alt="Hellmann's campaign" class="thumb-photo">
+      <h2 class="headline headline-secondary">Mayonnaise Reel Tops 14&thinsp;Million</h2>
+      <p class="body-text">A single recipe video commissioned by Hellmann's Lithuania &mdash; in which a jar of mayonnaise is deployed with improbable elegance in a pasta preparation &mdash; has become the most-viewed piece of branded food content produced by a Lithuanian creator in the past twenty-four months. The result surprised the brand's regional marketing team, who had budgeted conservatively. A repeat contract is understood to have been offered.</p>
+      <span class="jump-line">&rarr; Cont. jasnauskaite.lt/hellmanns</span>
+    </div>
+
+    <div class="below-col">
+      <span class="kicker">Retail &middot; Long-Form Contracts</span>
+      <img src="images/akropolis-DPDlAeZiEuJ.jpg" alt="Akropolis season contract" class="thumb-photo">
+      <h2 class="headline headline-secondary">Mall Giant Books 35-Post Season; Views Hit 13.2M</h2>
+      <p class="body-text">Akropolis Group, operator of the largest retail complexes in Vilnius, Kaunas, Riga and Tallinn, signed a season-length content agreement with Jasnauskait&#279; for a fashion and lifestyle series to run across autumn and winter. The thirty-five posts, combining outfit content, brand spotlights, and editorial-style lookbooks, reached a combined 13.2&thinsp;million views. Industry observers note the contract length as an indicator of institutional confidence unusual in short-form creator agreements.</p>
+    </div>
+
+    <div class="below-col">
+      <span class="kicker">Automotive &middot; Series Format</span>
+      <img src="images/nissan.jpg" alt="Nissan series" class="thumb-photo">
+      <h2 class="headline headline-secondary">On the Road: Nissan Series Closes at 6.5M</h2>
+      <p class="body-text">Nissan Lithuania's multi-episode content series &mdash; structured around travel and lifestyle rather than technical specification &mdash; represents a format that has proven effective for automotive brands seeking to reach audiences who do not self-identify as car enthusiasts. The six-post arc, filmed across three Lithuanian locations, closed at 6.5&thinsp;million views. The project illustrates a recurring pattern in Jasnauskait&#279;&rsquo;s commercial work: high-production content that sits comfortably alongside organic posts without triggering the instinctive disengagement audiences direct at obviously promotional material.</p>
+      <span class="jump-line">
+        <span class="extra-tag">Extra</span> Booking summer 2026 &mdash; contact below
+      </span>
+    </div>
+
+  </div>
+
+  <!-- ORGANIC SECTION -->
+  <div class="organic-section-label">The Organic Section &mdash; No Brand, No Budget, No Problem</div>
+  <div class="organic-strip">
+    <div class="organic-item">
+      <img src="images/organic-C4SX92Zt6pN.jpg" alt="Organic content 2.2M views">
+      <p class="organic-cap">Wire photo &mdash; 2.2M views, zero brand spend. Filed from Vilnius, April.</p>
+    </div>
+    <div class="organic-item">
+      <img src="images/organic-DRjZN_fCLXa.jpg" alt="Organic content 511K views">
+      <p class="organic-cap">511&thinsp;K views. Wardrobe edit, no hashtag campaign, no boost.</p>
+    </div>
+    <div class="organic-item">
+      <img src="images/organic-DR6npUDCK23.jpg" alt="Organic content 425K views">
+      <p class="organic-cap">425&thinsp;K views. Morning routine, standard lighting, considerable audience.</p>
+    </div>
+    <div class="organic-item">
+      <img src="images/organic-DNz2mq70H81.jpg" alt="Organic content 185K views">
+      <p class="organic-cap">185&thinsp;K views. Casual outfit. Posted Tuesday. Treated as ordinary.</p>
+    </div>
+  </div>
+
+  <!-- CLASSIFIEDS -->
+  <div style="border-top: 2px solid var(--ink); padding-top: 8px; margin-bottom: 6px;">
+    <span style="font-family:'Playfair Display',serif; font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.18em;">Classifieds &amp; Notices</span>
+  </div>
+
+  <div class="classifieds-box">
+    <div class="classified-label">For Sale / Enquiry</div>
+    <div class="classified-body">
+      <span class="extra-badge">Extra &mdash; Summer 2026 dates filling</span><br>
+      <strong>WANTED: AMBITIOUS BRANDS.</strong> Fashion, beauty, food, travel, automotive, lifestyle.<br>
+      Minimum viable campaign: one reel. Maximum possible outcome: sixteen million views and counting.<br>
+      <br>
+      Serious enquiries only, addressed to management:<br>
+      Email: <a href="mailto:osvaldas@reelize.lt">OSVALDAS@REELIZE.LT</a><br>
+      Instagram: <a href="https://www.instagram.com/jasnauskaite" target="_blank">@JASNAUSKAITE &#8599;</a><br>
+      TikTok: <a href="https://www.tiktok.com/@jasnauskaite" target="_blank">@JASNAUSKAITE &#8599;</a><br>
+      <br>
+      No speculative enquiries. No bartering arrangements. No unsolicited creative direction.<br>
+      Management reads all correspondence. Response within forty-eight hours for qualified briefs.
+    </div>
+    <div class="extra-circle">
+      <span style="font-size:7.5px; letter-spacing:0.06em; text-transform:uppercase;">Book</span>
+      <span style="font-size:13px; font-weight:900; line-height:1;">Now</span>
+      <span style="font-size:7px; letter-spacing:0.06em; text-transform:uppercase;">Q3 2026</span>
+    </div>
+  </div>
+
+</div><!-- /paper -->
+
+<!-- FOOTER FOLIO -->
+<div class="footer-folio">
+  &copy; 2026 The Jasnauskait&#279; Times &mdash; Published by Reelize, Vilnius &middot; All rights reserved &middot; <a href="https://jasnauskaite.lt" target="_blank" style="color:var(--muted); text-underline-offset:2px;">jasnauskaite.lt</a>
+</div>
+
+</div><!-- /paper-sheet -->
+</body>
+</html>

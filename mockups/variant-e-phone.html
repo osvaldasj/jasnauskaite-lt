@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jasnauskaite.lt — The Phone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F4F2EE;
+    --ink: #1A1A1A;
+    --ink-muted: #6B6860;
+    --ink-faint: #AAA89F;
+    --phone-w: 320px;
+    --phone-h: 692px;
+    --phone-r: 52px;
+    --bezel: 10px;
+    --screen-r: 44px;
+    --ig-grad: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    font-family: 'Hanken Grotesk', sans-serif;
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ─── DESKTOP LAYOUT ─── */
+  .scene {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "topleft  topcenter  topright"
+      "left     center     right"
+      ".        bottom     .";
+    align-items: start;
+    padding: 32px 40px 48px;
+    gap: 0;
+  }
+
+  /* ─── TOP BAR ─── */
+  .wordmark {
+    grid-area: topleft;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding-top: 4px;
+  }
+  .contact-link {
+    grid-area: topright;
+    text-align: right;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-decoration: none;
+    padding-top: 4px;
+    transition: color 0.2s;
+  }
+  .contact-link:hover { color: var(--ink); }
+
+  /* ─── CENTER: PHONE ─── */
+  .phone-wrap {
+    grid-area: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0 24px;
+  }
+
+  .phone {
+    position: relative;
+    width: var(--phone-w);
+    height: var(--phone-h);
+    border-radius: var(--phone-r);
+    background: #1C1C1E;
+    box-shadow:
+      0 0 0 1.5px #4A4A50,
+      0 0 0 2.5px #2A2A2E,
+      0 40px 120px rgba(0,0,0,0.22),
+      0 16px 40px rgba(0,0,0,0.14),
+      inset 0 1px 0 rgba(255,255,255,0.12);
+    animation: float 6s ease-in-out infinite;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .phone { animation: none; }
+  }
+
+  /* Side buttons */
+  .phone::before {
+    content: '';
+    position: absolute;
+    right: -3px;
+    top: 120px;
+    width: 3px;
+    height: 72px;
+    background: #3A3A3E;
+    border-radius: 0 2px 2px 0;
+    box-shadow: 0 90px 0 #3A3A3E;
+  }
+  .phone::after {
+    content: '';
+    position: absolute;
+    left: -3px;
+    top: 100px;
+    width: 3px;
+    height: 36px;
+    background: #3A3A3E;
+    border-radius: 2px 0 0 2px;
+    box-shadow: 0 52px 0 #3A3A3E, 0 104px 0 #3A3A3E;
+  }
+
+  /* Screen area */
+  .screen {
+    position: absolute;
+    inset: var(--bezel);
+    border-radius: var(--screen-r);
+    overflow: hidden;
+    background: #000;
+  }
+
+  /* Dynamic island */
+  .dynamic-island {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 34px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 100;
+  }
+
+  /* ─── STORIES CONTAINER ─── */
+  .stories {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    border-radius: var(--screen-r);
+    overflow: hidden;
+  }
+
+  /* Progress bars */
+  .progress-bars {
+    position: absolute;
+    top: 56px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    gap: 3px;
+    z-index: 50;
+  }
+  .progress-track {
+    flex: 1;
+    height: 2px;
+    background: rgba(255,255,255,0.35);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #fff;
+    border-radius: 2px;
+    transition: width 0.05s linear;
+  }
+  .progress-fill.done { width: 100%; transition: none; }
+  .progress-fill.empty { width: 0%; transition: none; }
+
+  /* Story header */
+  .story-header {
+    position: absolute;
+    top: 66px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 50;
+  }
+  .avatar-ring {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    padding: 2px;
+    background: var(--ig-grad);
+    flex-shrink: 0;
+  }
+  .avatar-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1.5px solid #000;
+    overflow: hidden;
+  }
+  .avatar-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .story-meta {
+    flex: 1;
+    min-width: 0;
+  }
+  .story-username {
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+  }
+  .story-time {
+    font-size: 11px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.2;
+  }
+  .story-close {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.8);
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  /* Story slides */
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+    z-index: 2;
+  }
+
+  .slide-bg {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .slide-scrim-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 55%;
+    background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0) 100%);
+  }
+  .slide-scrim-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 100%);
+  }
+
+  /* Caption overlay */
+  .caption {
+    position: absolute;
+    bottom: 40px;
+    left: 16px;
+    right: 16px;
+    z-index: 30;
+    color: #fff;
+  }
+  .caption-title {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+  }
+  .caption-sub {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+  }
+
+  /* Stat sticker */
+  .sticker {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255,255,255,0.95);
+    color: #1A1A1A;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 5px 10px;
+    border-radius: 20px;
+    transform: rotate(-2.5deg);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .sticker.rotate-pos { transform: rotate(1.8deg); }
+  .sticker.rotate-neg { transform: rotate(-2.5deg); }
+
+  .sticker-wrap {
+    position: absolute;
+    z-index: 30;
+  }
+
+  /* Brand tag */
+  .brand-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(4px);
+    color: rgba(255,255,255,0.9);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 12px;
+    border: 0.5px solid rgba(255,255,255,0.3);
+    letter-spacing: 0.02em;
+    margin-top: 5px;
+  }
+
+  /* ─── SOLID COLOR SLIDES ─── */
+  .slide-cream {
+    position: absolute;
+    inset: 0;
+    background: #FAF7F2;
+  }
+  .slide-cream-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    gap: 12px;
+  }
+  .cream-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9A9690;
+  }
+  .cream-stat {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1A1A1A;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .cream-stat span {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: #9A9690;
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+  }
+  .cream-divider {
+    width: 32px;
+    height: 1px;
+    background: #D8D4CE;
+    margin: 4px auto;
+  }
+  .cream-swipe {
+    font-size: 11px;
+    color: #B8B4AE;
+    letter-spacing: 0.08em;
+    margin-top: 8px;
+  }
+
+  /* CTA slide */
+  .slide-cta-bg {
+    position: absolute;
+    inset: 0;
+    background: #FAF7F2;
+  }
+  .slide-cta-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    text-align: center;
+    gap: 16px;
+  }
+  .cta-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #9A9690;
+  }
+  .cta-headline {
+    font-size: 26px;
+    font-weight: 600;
+    color: #1A1A1A;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .cta-divider {
+    width: 32px;
+    height: 1px;
+    background: #D8D4CE;
+  }
+  .cta-email {
+    display: block;
+    background: #1A1A1A;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 10px 20px;
+    border-radius: 24px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .cta-email:hover { background: #333; }
+  .cta-dm {
+    font-size: 11px;
+    color: #9A9690;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .cta-dm:hover { color: #1A1A1A; }
+
+  /* Tap zones */
+  .tap-prev {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 40%;
+    z-index: 60;
+    cursor: pointer;
+  }
+  .tap-next {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 60%;
+    z-index: 60;
+    cursor: pointer;
+  }
+
+  /* ─── LEFT COLUMN ─── */
+  .col-left {
+    grid-area: left;
+    padding-top: 120px;
+    padding-right: 32px;
+  }
+  .col-label {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 18px;
+  }
+  .partner-list {
+    list-style: none;
+    line-height: 2.4;
+  }
+  .partner-list li {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--ink-muted);
+    border-bottom: 0.5px solid #DDD9D2;
+    padding-bottom: 2px;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+  .partner-list li:hover { color: var(--ink); }
+
+  /* ─── RIGHT COLUMN ─── */
+  .col-right {
+    grid-area: right;
+    padding-top: 120px;
+    padding-left: 32px;
+  }
+  .stat-block {
+    margin-bottom: 28px;
+  }
+  .stat-number {
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--ink);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 4px;
+  }
+
+  /* ─── BOTTOM HINT ─── */
+  .bottom-hint {
+    grid-area: bottom;
+    text-align: center;
+    font-size: 10px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    padding-top: 20px;
+  }
+
+  /* ─── MOBILE: full-screen stories ─── */
+  @media (max-width: 767px) {
+    .scene {
+      display: block;
+      padding: 0;
+      min-height: 100svh;
+    }
+    .wordmark, .contact-link, .col-left, .col-right, .bottom-hint { display: none; }
+    .phone-wrap {
+      padding: 0;
+      height: 100svh;
+    }
+    .phone {
+      width: 100%;
+      height: 100svh;
+      border-radius: 0;
+      box-shadow: none;
+      animation: none;
+      display: flex;
+      align-items: stretch;
+    }
+    .phone::before, .phone::after { display: none; }
+    .screen {
+      inset: 0;
+      border-radius: 0;
+      position: relative;
+      flex: 1;
+    }
+    .dynamic-island { display: none; }
+    .stories { border-radius: 0; }
+    .mobile-footer {
+      display: block !important;
+    }
+  }
+
+  /* Mobile footer sheet */
+  .mobile-footer {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(250,247,242,0.95);
+    backdrop-filter: blur(12px);
+    border-top: 0.5px solid #DDD9D2;
+    padding: 12px 24px 28px;
+    z-index: 200;
+    transform: translateY(calc(100% - 44px));
+    transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .mobile-footer.open {
+    transform: translateY(0);
+  }
+  .footer-handle {
+    width: 36px;
+    height: 4px;
+    background: #C8C4BC;
+    border-radius: 2px;
+    margin: 0 auto 16px;
+    cursor: pointer;
+  }
+  .footer-tabs {
+    display: flex;
+    gap: 24px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 12px;
+  }
+  .footer-tabs span.active { color: var(--ink); }
+  .footer-stats {
+    display: flex;
+    gap: 20px;
+  }
+  .footer-stat {
+    flex: 1;
+  }
+  .footer-stat-n {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .footer-stat-l {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 2px;
+  }
+
+  /* Pause overlay */
+  .paused-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 80;
+    pointer-events: none;
+  }
+  .paused-indicator.visible { opacity: 1; }
+  .pause-icon {
+    display: flex;
+    gap: 4px;
+  }
+  .pause-bar {
+    width: 3px;
+    height: 16px;
+    background: #fff;
+    border-radius: 2px;
+  }
+
+  /* ─── LIGHT SLIDE HEADER THEME ─── */
+  .story-header.theme-light .story-username,
+  .story-header.theme-light .story-close {
+    color: #1A1A1A;
+  }
+  .story-header.theme-light .story-time {
+    color: rgba(26,26,26,0.55);
+  }
+  .story-header.theme-light .avatar-inner {
+    border-color: rgba(26,26,26,0.15);
+  }
+  .progress-bars.theme-light .progress-track {
+    background: rgba(26,26,26,0.20);
+  }
+  .progress-bars.theme-light .progress-fill {
+    background: #1A1A1A;
+  }
+</style>
+</head>
+<body>
+
+<div class="scene">
+
+  <!-- Top bar -->
+  <div class="wordmark">JASNAUSKAITE.LT</div>
+  <div></div><!-- topcenter -->
+  <a class="contact-link" href="mailto:osvaldas@reelize.lt">Contact ↗</a>
+
+  <!-- Left column -->
+  <aside class="col-left" aria-label="Selected partners">
+    <p class="col-label">Selected Partners</p>
+    <ul class="partner-list">
+      <li>Mionetto</li>
+      <li>Hellmann's</li>
+      <li>Akropolis</li>
+      <li>Nissan</li>
+      <li>Maxima</li>
+      <li>Lancôme</li>
+      <li>McDonald's</li>
+      <li>Tele2</li>
+      <li>Barbora</li>
+      <li>GoVilnius</li>
+    </ul>
+  </aside>
+
+  <!-- Phone -->
+  <div class="phone-wrap">
+    <div class="phone" id="phone" role="region" aria-label="Portfolio stories — use arrow keys or click to navigate">
+
+      <div class="screen">
+
+        <!-- Dynamic island -->
+        <div class="dynamic-island" aria-hidden="true"></div>
+
+        <!-- Stories wrapper -->
+        <div class="stories" id="stories">
+
+          <!-- Progress bars -->
+          <div class="progress-bars" id="progress-bars" aria-hidden="true">
+            <!-- filled by JS -->
+          </div>
+
+          <!-- Story header -->
+          <div class="story-header" id="story-header" aria-hidden="true">
+            <div class="avatar-ring">
+              <div class="avatar-inner">
+                <img src="images/profile.jpg" alt="Inidė">
+              </div>
+            </div>
+            <div class="story-meta">
+              <div class="story-username">jasnauskaite</div>
+              <div class="story-time">2h</div>
+            </div>
+            <div class="story-close" aria-hidden="true">×</div>
+          </div>
+
+          <!-- ── SLIDE 0: Cover ── -->
+          <div class="slide active" id="slide-0" aria-label="Story 1: Cover">
+            <img class="slide-bg" src="images/profile.jpg" alt="Inidė Jasnauskaitė">
+            <div class="slide-scrim-top"></div>
+            <div class="slide-scrim-bottom"></div>
+            <div class="caption">
+              <div class="caption-title">INIDĖ<br>JASNAUSKAITĖ</div>
+              <div class="caption-sub">fashion · beauty · lifestyle — Vilnius</div>
+              <div class="caption-sub" style="margin-top:4px; opacity:0.65">359K followers</div>
+            </div>
+          </div>
+
+          <!-- ── SLIDE 1: Intro stats ── -->
+          <div class="slide" id="slide-1" data-theme="light" aria-label="Story 2: About">
+            <div class="slide-cream"></div>
+            <div class="slide-cream-center">
+              <div class="cream-eyebrow">Work with me?</div>
+              <div class="cream-divider"></div>
+              <div class="cream-stat">8 years<span>creating</span></div>
+              <div class="cream-stat">69+ brands<span>partnered</span></div>
+              <div class="cream-stat">590M+<span>total views</span></div>
+              <div class="cream-divider"></div>
+              <div class="cream-swipe">swipe →</div>
+            </div>
+          </div>
+
+          <!-- ── SLIDE 2: Mionetto ── -->
+          <div class="slide" id="slide-2" aria-label="Story 3: Mionetto campaign">
+            <img class="slide-bg" src="images/mionetto-DNXetzOMT__.jpg" alt="Mionetto campaign">
+            <div class="slide-scrim-top"></div>
+            <div class="slide-scrim-bottom"></div>
+            <div class="sticker-wrap" style="top: 120px; right: 20px;">
+              <div class="sticker rotate-neg">16.7M VIEWS · ER 6.8%</div>
+            </div>
+            <div class="caption">
+              <div class="caption-title">Mionetto</div>
+              <div class="brand-tag">@mionetto · paid partnership</div>
+            </div>
+          </div>
+
+          <!-- ── SLIDE 3: Hellmann's ── -->
+          <div class="slide" id="slide-3" aria-label="Story 4: Hellmanns campaign">
+            <img class="slide-bg" src="images/hellmanns.jpg" alt="Hellmann's campaign">
+            <div class="slide-scrim-top"></div>
+            <div class="slide-scrim-bottom"></div>
+            <div class="sticker-wrap" style="top: 128px; left: 16px;">
+              <div class="sticker rotate-pos">15M VIEWS</div>
+            </div>
+            <div class="sticker-wrap" style="top: 164px; left: 16px;">
+              <div class="sticker rotate-neg" style="font-size:10px; padding:4px 8px;">14M on one reel</div>
+            </div>
+            <div class="caption">
+              <div class="caption-title">Hellmann's</div>
+              <div class="brand-tag">@hellmanns · paid partnership</div>
+            </div>
+          </div>
+
+          <!-- ── SLIDE 4: Akropolis ── -->
+          <div class="slide" id="slide-4" aria-label="Story 5: Akropolis campaign">
+            <img class="slide-bg" src="images/akropolis-DPDlAeZiEuJ.jpg" alt="Akropolis campaign">
+            <div class="slide-scrim-top"></div>
+            <div class="slide-scrim-bottom"></div>
+            <div class="sticker-wrap" style="bottom: 130px; right: 16px;">
+              <div class="sticker rotate-pos">13.2M VIEWS</div>
+            </div>
+            <div class="sticker-wrap" style="bottom: 96px; right: 16px;">
+              <div class="sticker rotate-neg" style="font-size:10px; padding:4px 8px;">35 posts</div>
+            </div>
+            <div class="caption">
+              <div class="caption-title">Akropolis</div>
+              <div class="brand-tag">@akropolislt · paid partnership</div>
+            </div>
+          </div>
+
+          <!-- ── SLIDE 5: Nissan ── -->
+          <div class="slide" id="slide-5" aria-label="Story 6: Nissan campaign">
+            <img class="slide-bg" src="images/nissan.jpg" alt="Nissan campaign">
+            <div class="slide-scrim-top"></div>
+            <div class="slide-scrim-bottom"></div>
+            <div class="sticker-wrap" style="top: 120px; left: 50%; transform: translateX(-50%);">
+              <div class="sticker rotate-neg">6.5M VIEWS</div>
+            </div>
+            <div class="caption">
+              <div class="caption-title">Nissan</div>
+              <div class="brand-tag">@nissan · paid partnership</div>
+            </div>
+          </div>
+
+          <!-- ── SLIDE 6: Organic ── -->
+          <div class="slide" id="slide-6" aria-label="Story 7: Organic reach">
+            <img class="slide-bg" src="images/organic-C4SX92Zt6pN.jpg" alt="Organic content">
+            <div class="slide-scrim-top"></div>
+            <div class="slide-scrim-bottom"></div>
+            <div class="sticker-wrap" style="top: 120px; right: 14px;">
+              <div class="sticker rotate-pos" style="font-size:10px; background: rgba(255,255,255,0.92);">ORGANIC</div>
+            </div>
+            <div class="caption">
+              <div class="caption-title">2.2M views</div>
+              <div class="caption-sub">zero ad spend · pure audience trust</div>
+            </div>
+          </div>
+
+          <!-- ── SLIDE 7: CTA ── -->
+          <div class="slide" id="slide-7" data-theme="light" aria-label="Story 8: Contact">
+            <div class="slide-cta-bg"></div>
+            <div class="slide-cta-center">
+              <div class="cta-eyebrow">Your brand's next story?</div>
+              <div class="cta-headline">Let's make<br>something<br>people watch.</div>
+              <div class="cta-divider"></div>
+              <a class="cta-email" href="mailto:osvaldas@reelize.lt">osvaldas@reelize.lt</a>
+              <a class="cta-dm" href="https://www.instagram.com/jasnauskaite/" target="_blank" rel="noopener">DM @jasnauskaite ↗</a>
+            </div>
+          </div>
+
+          <!-- Tap zones -->
+          <div class="tap-prev" id="tap-prev" aria-label="Previous story"></div>
+          <div class="tap-next" id="tap-next" aria-label="Next story"></div>
+
+          <!-- Pause indicator -->
+          <div class="paused-indicator" id="paused-indicator" aria-hidden="true">
+            <div class="pause-icon">
+              <div class="pause-bar"></div>
+              <div class="pause-bar"></div>
+            </div>
+          </div>
+
+        </div><!-- /stories -->
+      </div><!-- /screen -->
+    </div><!-- /phone -->
+    <div class="bottom-hint" aria-label="Navigation hint">TAP THE PHONE TO BROWSE STORIES</div>
+  </div><!-- /phone-wrap -->
+
+  <!-- Right column -->
+  <aside class="col-right" aria-label="Key statistics">
+    <div class="stat-block">
+      <div class="stat-number">359K</div>
+      <div class="stat-label">Followers</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">5.0%</div>
+      <div class="stat-label">Engagement</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">590M+</div>
+      <div class="stat-label">Views</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">787</div>
+      <div class="stat-label">Branded Posts</div>
+    </div>
+  </aside>
+
+</div><!-- /scene -->
+
+<!-- Mobile footer sheet -->
+<div class="mobile-footer" id="mobile-footer">
+  <div class="footer-handle" id="footer-handle"></div>
+  <div class="footer-tabs">
+    <span class="active">Stats</span>
+    <span>Partners</span>
+    <a href="mailto:osvaldas@reelize.lt" style="color:inherit;text-decoration:none;">Contact ↗</a>
+  </div>
+  <div class="footer-stats">
+    <div class="footer-stat">
+      <div class="footer-stat-n">359K</div>
+      <div class="footer-stat-l">Followers</div>
+    </div>
+    <div class="footer-stat">
+      <div class="footer-stat-n">5.0%</div>
+      <div class="footer-stat-l">Engagement</div>
+    </div>
+    <div class="footer-stat">
+      <div class="footer-stat-n">590M+</div>
+      <div class="footer-stat-l">Views</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const STORY_COUNT = 8;
+  const AUTO_DURATION = 5000; // ms per story
+  const TICK = 50; // ms per progress tick
+
+  let current = 0;
+  let progress = 0; // 0..1
+  let paused = false;
+  let holdTimer = null;
+  let autoTimer = null;
+  let reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Build progress bars
+  const barsEl = document.getElementById('progress-bars');
+  const headerEl = document.getElementById('story-header');
+  const fills = [];
+  for (let i = 0; i < STORY_COUNT; i++) {
+    const track = document.createElement('div');
+    track.className = 'progress-track';
+    const fill = document.createElement('div');
+    fill.className = 'progress-fill';
+    track.appendChild(fill);
+    barsEl.appendChild(track);
+    fills.push(fill);
+  }
+
+  // Bug 4: clear inline styles before setting class so CSS class wins for done/empty
+  function updateBars() {
+    for (let i = 0; i < STORY_COUNT; i++) {
+      const f = fills[i];
+      if (i < current) {
+        // completed — clear inline styles so CSS class width/transition win
+        f.style.width = '';
+        f.style.transition = '';
+        f.className = 'progress-fill done';
+      } else if (i === current) {
+        f.style.width = (progress * 100).toFixed(1) + '%';
+        f.style.transition = 'width 0.05s linear';
+        f.className = 'progress-fill';
+      } else {
+        // future — clear inline styles
+        f.style.width = '';
+        f.style.transition = '';
+        f.className = 'progress-fill empty';
+      }
+    }
+  }
+
+  // Bug 3: apply dark ink theme when current slide has data-theme="light"
+  function updateTheme() {
+    const slides = document.querySelectorAll('.slide');
+    const isLight = slides[current] && slides[current].dataset.theme === 'light';
+    barsEl.classList.toggle('theme-light', isLight);
+    headerEl.classList.toggle('theme-light', isLight);
+  }
+
+  function showSlide(idx) {
+    document.querySelectorAll('.slide').forEach((s, i) => {
+      s.classList.toggle('active', i === idx);
+    });
+  }
+
+  function goTo(idx) {
+    clearInterval(autoTimer);
+    current = Math.max(0, Math.min(STORY_COUNT - 1, idx));
+    progress = 0;
+    paused = false;
+    showSlide(current);
+    updateBars();
+    updateTheme();
+    if (!reducedMotion) {
+      startAuto();
+    }
+  }
+
+  function next() {
+    if (current < STORY_COUNT - 1) {
+      goTo(current + 1);
+    } else {
+      // loop back
+      goTo(0);
+    }
+  }
+
+  function prev() {
+    if (current > 0) {
+      goTo(current - 1);
+    } else {
+      // Bug 4: restart timer even when staying on slide 0
+      goTo(0);
+    }
+  }
+
+  function startAuto() {
+    clearInterval(autoTimer);
+    const steps = AUTO_DURATION / TICK;
+    const increment = 1 / steps;
+    autoTimer = setInterval(() => {
+      if (paused) return;
+      progress += increment;
+      if (progress >= 1) {
+        progress = 1;
+        updateBars();
+        clearInterval(autoTimer);
+        setTimeout(next, 80);
+        return;
+      }
+      updateBars();
+    }, TICK);
+  }
+
+  // Tap zones
+  const tapNext = document.getElementById('tap-next');
+  const tapPrev = document.getElementById('tap-prev');
+  const pauseIndicator = document.getElementById('paused-indicator');
+
+  // Bug 2: use a flag to track whether a hold is in progress, not a raw timestamp.
+  // Also avoid e.preventDefault() on mousedown — it can silently eat mouseup in some
+  // browser/OS combinations when the window was not previously focused. Instead we
+  // preventDefault only on touchstart to block scroll, and handle clicks via pointerdown/up.
+  let holdActive = false;
+  let holdStartTime = 0;
+
+  function startHold(e) {
+    // Only prevent default for touch (stops page scroll); don't block pointer events on mouse.
+    if (e.type === 'touchstart') e.preventDefault();
+    holdActive = true;
+    holdStartTime = Date.now();
+    holdTimer = setTimeout(() => {
+      if (!holdActive) return;
+      paused = true;
+      pauseIndicator.classList.add('visible');
+    }, 180);
+  }
+
+  function endHold(e, zone) {
+    if (!holdActive) return;
+    holdActive = false;
+    clearTimeout(holdTimer);
+    const held = Date.now() - holdStartTime;
+    if (paused) {
+      paused = false;
+      pauseIndicator.classList.remove('visible');
+      return;
+    }
+    if (held < 350) {
+      if (zone === 'next') next();
+      else prev();
+    }
+  }
+
+  // Use pointerdown/pointerup for unified mouse + touch handling; fall back to mouse/touch.
+  if (window.PointerEvent) {
+    tapNext.addEventListener('pointerdown', startHold);
+    tapNext.addEventListener('pointerup', (e) => endHold(e, 'next'));
+    tapNext.addEventListener('pointercancel', (e) => { holdActive = false; clearTimeout(holdTimer); });
+    tapPrev.addEventListener('pointerdown', startHold);
+    tapPrev.addEventListener('pointerup', (e) => endHold(e, 'prev'));
+    tapPrev.addEventListener('pointercancel', (e) => { holdActive = false; clearTimeout(holdTimer); });
+    // Prevent touch-scroll while interacting with tap zones
+    tapNext.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
+    tapPrev.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
+  } else {
+    ['mousedown','touchstart'].forEach(ev => {
+      tapNext.addEventListener(ev, startHold, { passive: false });
+      tapPrev.addEventListener(ev, startHold, { passive: false });
+    });
+    tapNext.addEventListener('mouseup', (e) => endHold(e, 'next'));
+    tapNext.addEventListener('touchend', (e) => endHold(e, 'next'));
+    tapPrev.addEventListener('mouseup', (e) => endHold(e, 'prev'));
+    tapPrev.addEventListener('touchend', (e) => endHold(e, 'prev'));
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') next();
+    else if (e.key === 'ArrowLeft') prev();
+    else if (e.key === ' ') {
+      e.preventDefault();
+      paused = !paused;
+      pauseIndicator.classList.toggle('visible', paused);
+    }
+  });
+
+  // Mobile footer toggle
+  const footer = document.getElementById('mobile-footer');
+  const handle = document.getElementById('footer-handle');
+  if (handle) {
+    handle.addEventListener('click', () => {
+      footer.classList.toggle('open');
+    });
+  }
+
+  // Bug 2: focus the document on load so the first click isn't eaten by browser
+  // window-activation. This is a no-op if the page is already focused.
+  window.focus();
+
+  // Init
+  showSlide(0);
+  updateBars();
+  updateTheme();
+  if (!reducedMotion) {
+    startAuto();
+  }
+
+})();
+</script>
+</body>
+</html>

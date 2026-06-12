@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASNAUSKAITĖ — INDEX OF BRANDED WORKS 2017–2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #111111;
+    --white: #ffffff;
+    --rule: #dddddd;
+    --rule-strong: #111111;
+    --blue: #0000EE;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'Archivo', sans-serif;
+    --row-hover-bg: #111111;
+    --row-hover-text: #ffffff;
+  }
+
+  html { background: var(--white); color: var(--black); }
+
+  body {
+    font-family: var(--sans);
+    font-size: 13px;
+    line-height: 1.4;
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+  }
+
+  a {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  a:hover { text-decoration: none; }
+
+  /* ───────── HEADER BAR ───────── */
+  .site-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 10px 24px;
+    border-bottom: 1px solid var(--rule-strong);
+    position: sticky;
+    top: 0;
+    background: var(--white);
+    z-index: 100;
+  }
+
+  .site-header__left {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .site-header__center {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #555;
+  }
+
+  .site-header__right {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  /* ───────── MASTHEAD ───────── */
+  .masthead {
+    padding: 48px 24px 40px;
+    border-bottom: 1px solid var(--rule-strong);
+  }
+
+  .masthead__name {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: clamp(48px, 10vw, 140px);
+    letter-spacing: -0.02em;
+    line-height: 0.92;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .masthead__meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #555;
+    line-height: 1.8;
+  }
+
+  .masthead__meta span {
+    display: inline-block;
+    margin-right: 0;
+  }
+
+  .masthead__meta .sep {
+    margin: 0 10px;
+    color: var(--rule);
+  }
+
+  /* ───────── SECTION LABEL ───────── */
+  .section-label {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 24px;
+    border-bottom: 1px solid var(--rule-strong);
+    background: var(--white);
+  }
+
+  .section-label__title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .section-label__rule {
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .section-label__count {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: #888;
+    white-space: nowrap;
+  }
+
+  /* ───────── INDEX TABLE ───────── */
+  .index-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  .index-table thead tr {
+    border-bottom: 1px solid var(--rule-strong);
+  }
+
+  .index-table thead th {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #888;
+    padding: 8px 24px;
+    text-align: left;
+  }
+
+  .index-table thead th:nth-child(1) { width: 60px; }
+  .index-table thead th:nth-child(2) { width: auto; }
+  .index-table thead th:nth-child(3) { width: 120px; }
+  .index-table thead th:nth-child(4) { width: 70px; }
+  .index-table thead th:nth-child(5) { width: 80px; text-align: right; }
+  .index-table thead th:nth-child(6) { width: 130px; text-align: right; }
+  .index-table thead th:nth-child(7) { width: 70px; text-align: right; padding-right: 24px; }
+
+  .index-table tbody tr {
+    border-bottom: 1px solid var(--rule);
+    cursor: default;
+    transition: background 0.08s, color 0.08s;
+    position: relative;
+  }
+
+  .index-table tbody tr.has-image {
+    cursor: crosshair;
+  }
+
+  .index-table tbody tr:hover {
+    background: var(--row-hover-bg);
+    color: var(--row-hover-text);
+  }
+
+  .index-table tbody tr:hover .col-num,
+  .index-table tbody tr:hover .col-cat,
+  .index-table tbody tr:hover .col-year,
+  .index-table tbody tr:hover .col-em,
+  .index-table tbody tr:hover .col-dash {
+    color: rgba(255,255,255,0.55);
+  }
+
+  .index-table tbody td {
+    padding: 13px 24px;
+    font-size: 13px;
+    line-height: 1.3;
+    vertical-align: middle;
+  }
+
+  /* Mobile row expansion — hidden by default on all viewports */
+  tr.mobile-image-row {
+    display: none;
+  }
+
+  .row-image-mobile {
+    padding: 0 24px 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .row-image-mobile img {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    display: block;
+  }
+
+  .col-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #888;
+    letter-spacing: 0.04em;
+  }
+
+  .col-brand {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .col-cat {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #666;
+    letter-spacing: 0.02em;
+  }
+
+  .col-year {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #666;
+  }
+
+  .col-posts,
+  .col-views,
+  .col-em {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-align: right;
+  }
+
+  .col-em {
+    padding-right: 24px;
+    color: #666;
+  }
+
+  .col-dash {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #bbb;
+    text-align: right;
+  }
+
+  /* ───────── CURSOR FLOAT IMAGE ───────── */
+  #cursor-img {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    width: 300px;
+    height: auto;
+    display: none;
+    border: none;
+    border-radius: 0;
+  }
+
+  /* ───────── ORGANIC SECTION ───────── */
+  .organic-table thead th:nth-child(1) { width: 96px; }
+  .organic-table thead th:nth-child(2) { width: auto; }
+  .organic-table thead th:nth-child(3) { width: 120px; }
+  .organic-table thead th:nth-child(4) { width: 150px; text-align: right; }
+  .organic-table thead th:nth-child(5) { width: 0; display: none; }
+  .organic-table thead th:nth-child(6) { width: 0; display: none; }
+  .organic-table thead th:nth-child(7) { width: 100px; text-align: right; padding-right: 24px; }
+
+  .organic-table .col-num { white-space: nowrap; }
+
+  /* ───────── SPECIMEN STRIP ───────── */
+  .specimen {
+    border-top: 1px solid var(--rule-strong);
+    border-bottom: 1px solid var(--rule-strong);
+  }
+
+  .specimen-strip {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+  }
+
+  .specimen-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+  }
+
+  .specimen-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .specimen-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 6px 8px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    background: rgba(255,255,255,0.85);
+    color: var(--black);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  /* ───────── FOOTER ───────── */
+  .site-footer {
+    padding: 48px 24px 40px;
+    border-top: 1px solid var(--rule-strong);
+  }
+
+  .footer-email {
+    font-family: var(--mono);
+    font-size: clamp(14px, 2.5vw, 22px);
+    letter-spacing: 0.01em;
+    display: block;
+    margin-bottom: 32px;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .footer-links {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .footer-links a {
+    color: var(--blue);
+  }
+
+  .footer-copy {
+    margin-left: auto;
+    color: #888;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ───────── STAGGER ANIMATION ───────── */
+  @media (prefers-reduced-motion: no-preference) {
+    .index-table tbody tr {
+      opacity: 0;
+      transform: translateY(4px);
+      animation: rowReveal 0.25s ease forwards;
+    }
+
+    .masthead__name {
+      opacity: 0;
+      animation: fadeUp 0.4s ease 0.05s forwards;
+    }
+
+    .masthead__meta {
+      opacity: 0;
+      animation: fadeUp 0.35s ease 0.2s forwards;
+    }
+
+    @keyframes rowReveal {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  /* ───────── RESPONSIVE ───────── */
+  @media (max-width: 700px) {
+    .site-header {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 4px;
+      padding: 8px 16px;
+    }
+    .site-header__center {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      text-align: left;
+      font-size: 9px;
+    }
+
+    .masthead { padding: 28px 16px 24px; }
+    .section-label { padding: 8px 16px; }
+
+    /* Hide posts/views/er on mobile — show only brand + category + year */
+    .index-table thead th:nth-child(5),
+    .index-table thead th:nth-child(6),
+    .index-table thead th:nth-child(7),
+    .index-table tbody td:nth-child(5),
+    .index-table tbody td:nth-child(6),
+    .index-table tbody td:nth-child(7) {
+      display: none;
+    }
+
+    .index-table thead th,
+    .index-table tbody td {
+      padding: 11px 16px;
+    }
+
+    .index-table thead th:nth-child(1) { width: 44px; }
+    .index-table thead th:nth-child(3) { width: 90px; }
+    .index-table thead th:nth-child(4) { width: 52px; }
+
+    .specimen-strip {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .site-footer { padding: 32px 16px 28px; }
+
+    .footer-links {
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .footer-copy { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER BAR -->
+<header class="site-header">
+  <div class="site-header__left">Jasnauskaitė</div>
+  <div class="site-header__center">Index of Branded Works 2017–2026</div>
+  <div class="site-header__right"><a href="mailto:osvaldas@reelize.lt">Contact</a></div>
+</header>
+
+<!-- MASTHEAD -->
+<section class="masthead">
+  <h1 class="masthead__name">Inidė<br>Jasnauskaitė</h1>
+  <p class="masthead__meta">
+    <span>Fashion / Beauty / Lifestyle</span><span class="sep">—</span><span>Vilnius, LT</span><span class="sep">—</span><span>359,000 Followers</span><span class="sep">—</span><span>590,000,000+ Views</span><span class="sep">—</span><span>ER 5.0%</span><span class="sep">—</span><span>Est. 2017</span>
+  </p>
+</section>
+
+<!-- BRAND CAMPAIGNS INDEX -->
+<div class="section-label">
+  <span class="section-label__title">Brand Campaigns</span>
+  <div class="section-label__rule"></div>
+  <span class="section-label__count">010 Records</span>
+</div>
+
+<table class="index-table" aria-label="Brand campaign index">
+  <thead>
+    <tr>
+      <th>Nº</th>
+      <th>Brand</th>
+      <th>Category</th>
+      <th>Year</th>
+      <th>Posts</th>
+      <th>Views</th>
+      <th>ER</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="has-image" data-img="images/mionetto-DNXetzOMT__.jpg">
+      <td class="col-num">001</td>
+      <td class="col-brand">Mionetto</td>
+      <td class="col-cat">Lifestyle</td>
+      <td class="col-year">2025</td>
+      <td class="col-posts">22</td>
+      <td class="col-views">16,700,000</td>
+      <td class="col-em">6.8%</td>
+    </tr>
+    <tr class="mobile-image-row" data-for="0"><td colspan="7"><div class="row-image-mobile"><img src="images/mionetto-DNXetzOMT__.jpg" alt="Mionetto campaign"></div></td></tr>
+
+    <tr class="has-image" data-img="images/hellmanns.jpg">
+      <td class="col-num">002</td>
+      <td class="col-brand">Hellmann's</td>
+      <td class="col-cat">FMCG</td>
+      <td class="col-year">2024</td>
+      <td class="col-posts">5</td>
+      <td class="col-views">15,000,000</td>
+      <td class="col-em">6.0%</td>
+    </tr>
+    <tr class="mobile-image-row" data-for="1"><td colspan="7"><div class="row-image-mobile"><img src="images/hellmanns.jpg" alt="Hellmann's campaign"></div></td></tr>
+
+    <tr class="has-image" data-img="images/akropolis-DPDlAeZiEuJ.jpg">
+      <td class="col-num">003</td>
+      <td class="col-brand">Akropolis</td>
+      <td class="col-cat">Fashion</td>
+      <td class="col-year">2025</td>
+      <td class="col-posts">35</td>
+      <td class="col-views">13,200,000</td>
+      <td class="col-em">1.3%</td>
+    </tr>
+    <tr class="mobile-image-row" data-for="2"><td colspan="7"><div class="row-image-mobile"><img src="images/akropolis-DPDlAeZiEuJ.jpg" alt="Akropolis campaign"></div></td></tr>
+
+    <tr class="has-image" data-img="images/nissan.jpg">
+      <td class="col-num">004</td>
+      <td class="col-brand">Nissan</td>
+      <td class="col-cat">Automotive</td>
+      <td class="col-year">2025</td>
+      <td class="col-posts">38</td>
+      <td class="col-views">6,500,000</td>
+      <td class="col-em">1.2%</td>
+    </tr>
+    <tr class="mobile-image-row" data-for="3"><td colspan="7"><div class="row-image-mobile"><img src="images/nissan.jpg" alt="Nissan campaign"></div></td></tr>
+
+    <tr class="has-image" data-img="images/maxima-DMK9spgtfv-.jpg">
+      <td class="col-num">005</td>
+      <td class="col-brand">Maxima</td>
+      <td class="col-cat">FMCG</td>
+      <td class="col-year">2025</td>
+      <td class="col-posts">9</td>
+      <td class="col-views">3,200,000</td>
+      <td class="col-em">1.8%</td>
+    </tr>
+    <tr class="mobile-image-row" data-for="4"><td colspan="7"><div class="row-image-mobile"><img src="images/maxima-DMK9spgtfv-.jpg" alt="Maxima campaign"></div></td></tr>
+
+    <tr>
+      <td class="col-num">006</td>
+      <td class="col-brand">Lancôme</td>
+      <td class="col-cat">Beauty</td>
+      <td class="col-year">2024</td>
+      <td class="col-dash">—</td>
+      <td class="col-dash">—</td>
+      <td class="col-dash col-em">—</td>
+    </tr>
+    <tr>
+      <td class="col-num">007</td>
+      <td class="col-brand">McDonald's</td>
+      <td class="col-cat">FMCG</td>
+      <td class="col-year">2026</td>
+      <td class="col-dash">—</td>
+      <td class="col-dash">—</td>
+      <td class="col-dash col-em">—</td>
+    </tr>
+    <tr>
+      <td class="col-num">008</td>
+      <td class="col-brand">Barbora</td>
+      <td class="col-cat">FMCG</td>
+      <td class="col-year">2026</td>
+      <td class="col-dash">—</td>
+      <td class="col-dash">—</td>
+      <td class="col-dash col-em">—</td>
+    </tr>
+    <tr>
+      <td class="col-num">009</td>
+      <td class="col-brand">Tele2</td>
+      <td class="col-cat">Telecom</td>
+      <td class="col-year">2024</td>
+      <td class="col-dash">—</td>
+      <td class="col-dash">—</td>
+      <td class="col-dash col-em">—</td>
+    </tr>
+    <tr>
+      <td class="col-num">010</td>
+      <td class="col-brand">GoVilnius</td>
+      <td class="col-cat">Tourism</td>
+      <td class="col-year">2023</td>
+      <td class="col-dash">—</td>
+      <td class="col-dash">—</td>
+      <td class="col-dash col-em">—</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ORGANIC CONTENT INDEX -->
+<div class="section-label" style="margin-top: 0;">
+  <span class="section-label__title">Organic Content — Selected</span>
+  <div class="section-label__rule"></div>
+  <span class="section-label__count">004 Records</span>
+</div>
+
+<table class="index-table organic-table" aria-label="Organic content index">
+  <thead>
+    <tr>
+      <th>Ref</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th style="text-align:right">Views</th>
+      <th style="display:none"></th>
+      <th style="display:none"></th>
+      <th style="text-align:right; padding-right:24px">Platform</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="has-image" data-img="images/organic-C4SX92Zt6pN.jpg">
+      <td class="col-num">ORG-01</td>
+      <td class="col-brand" style="font-weight:400; text-transform:none;">Lifestyle reel</td>
+      <td class="col-cat">Lifestyle</td>
+      <td class="col-views">2,200,000</td>
+      <td style="display:none"></td>
+      <td style="display:none"></td>
+      <td class="col-em">Instagram</td>
+    </tr>
+    <tr class="mobile-image-row" data-for="org0"><td colspan="7"><div class="row-image-mobile"><img src="images/organic-C4SX92Zt6pN.jpg" alt="Organic lifestyle reel"></div></td></tr>
+
+    <tr class="has-image" data-img="images/organic-DRjZN_fCLXa.jpg">
+      <td class="col-num">ORG-02</td>
+      <td class="col-brand" style="font-weight:400; text-transform:none;">Fashion edit</td>
+      <td class="col-cat">Fashion</td>
+      <td class="col-views">511,000</td>
+      <td style="display:none"></td>
+      <td style="display:none"></td>
+      <td class="col-em">Instagram</td>
+    </tr>
+    <tr class="mobile-image-row" data-for="org1"><td colspan="7"><div class="row-image-mobile"><img src="images/organic-DRjZN_fCLXa.jpg" alt="Organic fashion edit"></div></td></tr>
+
+    <tr class="has-image" data-img="images/organic-DR6npUDCK23.jpg">
+      <td class="col-num">ORG-03</td>
+      <td class="col-brand" style="font-weight:400; text-transform:none;">Style series</td>
+      <td class="col-cat">Style</td>
+      <td class="col-views">425,000</td>
+      <td style="display:none"></td>
+      <td style="display:none"></td>
+      <td class="col-em">Instagram</td>
+    </tr>
+    <tr class="mobile-image-row" data-for="org2"><td colspan="7"><div class="row-image-mobile"><img src="images/organic-DR6npUDCK23.jpg" alt="Organic style series"></div></td></tr>
+
+    <tr class="has-image" data-img="images/organic-DEsVR0TtO64.jpg">
+      <td class="col-num">ORG-04</td>
+      <td class="col-brand" style="font-weight:400; text-transform:none;">Everyday moment</td>
+      <td class="col-cat">Everyday</td>
+      <td class="col-views">258,000</td>
+      <td style="display:none"></td>
+      <td style="display:none"></td>
+      <td class="col-em">Instagram</td>
+    </tr>
+    <tr class="mobile-image-row" data-for="org3"><td colspan="7"><div class="row-image-mobile"><img src="images/organic-DEsVR0TtO64.jpg" alt="Organic everyday moment"></div></td></tr>
+  </tbody>
+</table>
+
+<!-- SPECIMEN STRIP -->
+<div class="section-label">
+  <span class="section-label__title">Visual Record</span>
+  <div class="section-label__rule"></div>
+  <span class="section-label__count">006 Figures</span>
+</div>
+
+<section class="specimen" aria-label="Visual specimen strip">
+  <div class="specimen-strip">
+    <div class="specimen-item">
+      <img src="images/cover-0.jpg" alt="Figure 01" loading="eager">
+      <span class="specimen-caption">Fig. 01</span>
+    </div>
+    <div class="specimen-item">
+      <img src="images/cover-1.jpg" alt="Figure 02" loading="eager">
+      <span class="specimen-caption">Fig. 02</span>
+    </div>
+    <div class="specimen-item">
+      <img src="images/cover-2.jpg" alt="Figure 03" loading="eager">
+      <span class="specimen-caption">Fig. 03</span>
+    </div>
+    <div class="specimen-item">
+      <img src="images/cover-3.jpg" alt="Figure 04" loading="eager">
+      <span class="specimen-caption">Fig. 04</span>
+    </div>
+    <div class="specimen-item">
+      <img src="images/cover-4.jpg" alt="Figure 05" loading="eager">
+      <span class="specimen-caption">Fig. 05</span>
+    </div>
+    <div class="specimen-item">
+      <img src="images/cover-5.jpg" alt="Figure 06" loading="eager">
+      <span class="specimen-caption">Fig. 06</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <a class="footer-email" href="mailto:osvaldas@reelize.lt">
+    For collaboration inquiries:<br>osvaldas@reelize.lt
+  </a>
+  <div class="footer-links">
+    <a href="https://instagram.com/jasnauskaite" target="_blank" rel="noopener">Instagram ↗</a>
+    <a href="https://tiktok.com/@jasnauskaite" target="_blank" rel="noopener">TikTok ↗</a>
+    <span class="footer-copy">© 2026 Jasnauskaite.lt</span>
+  </div>
+</footer>
+
+<!-- CURSOR FLOATING IMAGE -->
+<img id="cursor-img" src="" alt="Campaign visual" aria-hidden="true">
+
+<script>
+(function () {
+  var cursorImg = document.getElementById('cursor-img');
+  var mouseX = 0;
+  var mouseY = 0;
+  var raf = null;
+  var noHover = window.matchMedia('(hover: none)').matches;
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Desktop: floating cursor image ── */
+  function updateCursor() {
+    var offsetX = 20;
+    var offsetY = -20;
+    var imgW = 300;
+    var imgH = (cursorImg.naturalWidth && cursorImg.naturalHeight)
+      ? Math.round((300 / cursorImg.naturalWidth) * cursorImg.naturalHeight)
+      : 400;
+    var x = mouseX + offsetX;
+    var y = mouseY + offsetY;
+    if (x + imgW > window.innerWidth)  x = mouseX - imgW - offsetX;
+    if (y + imgH > window.innerHeight) y = window.innerHeight - imgH - 16;
+    if (y < 0) y = 16;
+    cursorImg.style.left = x + 'px';
+    cursorImg.style.top  = y + 'px';
+    raf = null;
+  }
+
+  if (!noHover) {
+    document.addEventListener('mousemove', function (e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (cursorImg.style.display === 'block' && !raf) {
+        raf = requestAnimationFrame(updateCursor);
+      }
+    });
+
+    document.querySelectorAll('tr.has-image').forEach(function (row) {
+      var imgSrc = row.getAttribute('data-img');
+      if (!imgSrc) return;
+
+      row.addEventListener('mouseenter', function (e) {
+        cursorImg.src = imgSrc;
+        /* position immediately so first paint is not at 0,0 */
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        updateCursor();
+        if (!prefersReducedMotion) {
+          cursorImg.style.transition = 'none';
+          cursorImg.style.opacity = '0';
+          cursorImg.style.display = 'block';
+          /* force reflow so the transition sees the opacity:0 start */
+          void cursorImg.offsetWidth;
+          cursorImg.style.transition = 'opacity 0.12s ease';
+          cursorImg.style.opacity = '1';
+        } else {
+          cursorImg.style.display = 'block';
+          cursorImg.style.opacity = '1';
+        }
+      });
+
+      row.addEventListener('mouseleave', function () {
+        cursorImg.style.display = 'none';
+        cursorImg.style.opacity = '0';
+      });
+    });
+  }
+
+  /* ── Mobile: tap-to-expand image row ── */
+  if (noHover) {
+    document.querySelectorAll('tr.has-image').forEach(function (row) {
+      row.style.cursor = 'pointer';
+      row.addEventListener('click', function () {
+        var next = row.nextElementSibling;
+        if (!next || !next.classList.contains('mobile-image-row')) return;
+        var isOpen = next.style.display === 'table-row';
+        next.style.display = isOpen ? 'none' : 'table-row';
+      });
+    });
+  }
+
+  /* ── Stagger animation delays ── */
+  if (!prefersReducedMotion) {
+    document.querySelectorAll('.index-table tbody tr:not(.mobile-image-row)').forEach(function (row, i) {
+      row.style.animationDelay = (0.04 + i * 0.045) + 's';
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
