@@ -90,6 +90,14 @@ button{font-family:var(--sans);cursor:pointer}
   50%{box-shadow:inset 0 0 0 1.5px #3a3a3c,inset 0 0 0 5px #000,0 42px 84px -18px rgba(0,0,0,.34),0 12px 28px rgba(0,0,0,.13)}}
 .phone::before{content:'';position:absolute;right:-2.5px;top:190px;width:2.5px;height:64px;border-radius:2px;background:#2c2c2e}
 .phone::after{content:'';position:absolute;left:-2.5px;top:150px;width:2.5px;height:30px;border-radius:2px;background:#2c2c2e;box-shadow:0 44px 0 #2c2c2e,0 100px 0 #2c2c2e}
+/* clickable side buttons (permatomi, virš pseudo-bar'ų; platus hit-area) */
+.pbtn{position:absolute;z-index:7;cursor:pointer;border:0;padding:0;background:transparent;border-radius:3px}
+.pbtn::after{content:'';position:absolute;inset:-9px -13px}
+.pbtn:active{background:rgba(255,255,255,.3)}
+.pbtn-pwr{right:-4px;top:188px;width:6px;height:68px}
+.pbtn-act{left:-4px;top:148px;width:6px;height:34px}
+.pbtn-vup{left:-4px;top:192px;width:6px;height:34px}
+.pbtn-vdn{left:-4px;top:248px;width:6px;height:34px}
 .screen{position:absolute;inset:9px;border-radius:46px;overflow:hidden;background:#000}
 .island{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:96px;height:26px;border-radius:14px;background:#000;z-index:40;box-shadow:0 0 0 .5px rgba(255,255,255,.06)}
 
@@ -197,6 +205,12 @@ button.chip-link{border:0;cursor:pointer;font-family:var(--sans)}
 .case-rows .cr b{display:block;font-size:23px;font-weight:600;letter-spacing:-.02em;text-shadow:0 1px 8px rgba(0,0,0,.4)}
 .case-rows .cr span{font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;opacity:.8}
 .case-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.age-story{margin-top:18px;display:flex;flex-direction:column;gap:9px;max-width:300px;pointer-events:none}
+.age-story .asr{display:grid;grid-template-columns:48px 1fr 36px;align-items:center;gap:11px}
+.age-story .asl{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;opacity:.85}
+.age-story .asb{height:7px;border-radius:4px;background:rgba(255,255,255,.22);overflow:hidden}
+.age-story .asb i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#fff,#f6cfe6)}
+.age-story .asv{text-align:right;font-size:13.5px;font-weight:700;text-shadow:0 1px 6px rgba(0,0,0,.45)}
 .chip{background:rgba(255,255,255,.94);color:#111;font-size:11px;font-weight:700;padding:7px 12px;border-radius:9px;transform:rotate(-1.4deg);box-shadow:0 3px 12px rgba(0,0,0,.25)}
 .chip.alt{transform:rotate(1.2deg)}
 .chip.zero{background:#0a7d3c;color:#fff;transform:rotate(1.2deg)}
@@ -494,6 +508,10 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
       <div class="island" id="island" role="button" aria-label="Now playing">
         <span class="isl-text"><span class="isl-dot"></span><span id="islMsg">her content: 18+ years of watch time</span></span>
       </div>
+      <button class="pbtn pbtn-pwr" id="btnPwr" aria-label="Lock"></button>
+      <button class="pbtn pbtn-act" id="btnAct" aria-label="Ring/silent"></button>
+      <button class="pbtn pbtn-vup" id="btnVup" aria-label="Volume up"></button>
+      <button class="pbtn pbtn-vdn" id="btnVdn" aria-label="Volume down"></button>
       <div class="screen" id="screen">
 
         <!-- IG APP: PROFILE -->
@@ -507,8 +525,8 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
               <button class="avatar-ring" id="avatarBtn" aria-label="Watch Inidė's story"><div class="av-in"><img src="images/profile.jpg" alt="Inidė Jasnauskaitė"></div></button>
               <div class="pstats">
                 <div class="ps"><b data-db="brandedPosts">784</b><span>posts</span></div>
-                <div class="ps"><b data-db="followers">359K</b><span>followers</span></div>
-                <div class="ps"><b data-db="totalViewsShort">590M</b><span>views</span></div>
+                <div class="ps"><b data-db="followers">364K</b><span>followers</span></div>
+                <div class="ps"><b data-db="totalViewsShort">570M</b><span>views</span></div>
               </div>
             </div>
             <div class="prof-bio">
@@ -574,7 +592,7 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
           <div class="ldate" id="ldate">Thursday, June 12</div>
           <div class="notifs">
             <div class="notif"><div class="nic ig"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff" stroke="none"/></svg></div>
-              <div class="nt"><div class="nrow"><span>Instagram</span><span>now</span></div><div class="nmsg">mionetto and 153 other brands follow you</div></div></div>
+              <div class="nt"><div class="nrow"><span>Instagram</span><span>now</span></div><div class="nmsg">mionetto and 169 other brands follow you</div></div></div>
             <div class="notif"><div class="nic ig"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff" stroke="none"/></svg></div>
               <div class="nt"><div class="nrow"><span>Instagram</span><span>2m ago</span></div><div class="nmsg">Your reel passed 14,000,000 views</div></div></div>
             <div class="notif"><div class="nic tt"><svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></div>
@@ -592,9 +610,9 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
   <!-- RIGHT: big clear stats -->
   <div class="col-right">
     <div class="stats-wrap">
-      <div class="bigstat"><div class="v" data-db="followers">359K</div><div class="l">Instagram followers</div></div>
+      <div class="bigstat"><div class="v" data-db="followers">364K</div><div class="l">Instagram followers</div></div>
       <div class="bigstat"><div class="v" data-db="engagement">5.0%</div><div class="l">Engagement rate</div></div>
-      <div class="bigstat"><div class="v" data-db="totalViews">590M+</div><div class="l">Total views</div></div>
+      <div class="bigstat"><div class="v" data-db="totalViews">570M+</div><div class="l">Total views</div></div>
       <div class="bigstat"><div class="v" data-db="brandedPosts">784</div><div class="l">Branded posts</div></div>
     </div>
   </div>
@@ -604,10 +622,10 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
 <section class="band" id="numbers">
   <div class="band-head"><span class="klabel">Nº 01</span><h2>The track record</h2></div>
   <div class="numbers-grid">
-    <div class="numcell" tabindex="0"><div class="v" data-db="followers">359K</div><div class="l">IG followers</div><div class="nf">About the size of a city. None of them bought.</div></div>
+    <div class="numcell" tabindex="0"><div class="v" data-db="followers">364K</div><div class="l">IG followers</div><div class="nf">About the size of a city. None of them bought.</div></div>
     <div class="numcell" tabindex="0"><div class="v" data-db="engagement">5.0%</div><div class="l">Engagement</div><div class="nf">Platform average is 1.9%. But who's counting.</div></div>
-    <div class="numcell" tabindex="0"><div class="v" data-db="totalViews">590M+</div><div class="l">Total views</div><div class="nf">Most of these views came from outside Lithuania.</div></div>
-    <div class="numcell" tabindex="0"><div class="v" data-db="brandPartners">154+</div><div class="l">Brand partners</div><div class="nf">70 of them came back for seconds.</div></div>
+    <div class="numcell" tabindex="0"><div class="v" data-db="totalViews">570M+</div><div class="l">Total views</div><div class="nf">Most of these views came from outside Lithuania.</div></div>
+    <div class="numcell" tabindex="0"><div class="v" data-db="brandPartners">170</div><div class="l">Brand partners</div><div class="nf">70 of them came back for seconds.</div></div>
   </div>
   <p class="numbers-note"><b>Most brands come back.</b> <span data-db="brandedPosts">784</span> branded posts over 8 years, against a <span data-db="platformAvg">1.9%</span> platform-average engagement.</p>
 </section>
@@ -683,56 +701,63 @@ const DATA = {
      Last synced: 2026-06-12
      ═══════════════════════════════════════════════════════════════ */
   db: {
-    lastSynced:'2026-06-12',
+    lastSynced:'2026-06-13',
     /* MANUAL — iš IG insights / media kit (NE content DB), keisk ranka: */
-    followers:'359K', totalViewsShort:'590M', totalViews:'590M+',
+    followers:'364K', totalViewsShort:'570M', totalViews:'570M+',
     engagement:'5.0%', platformAvg:'1.9%',
     /* AUTO — perskaičiuoja build-content-data.py iš content DB: */
-    brandedPosts:'784', brandPartners:'154+', brandCount:154,
-    repeatPartners:'70', topReel:'37.2M', otherBrands:153
+    brandedPosts:'784', brandPartners:'170', brandCount:170,
+    repeatPartners:'70', topReel:'37.2M', otherBrands:169
   },
   /* @db wall įrašai: [nuotrauka, views, posto URL, kategorija] — TIKRI postai iš Reelize
      content DB (build-content-data.py snapshot'ina + parsisiunčia thumbnail'us).
      Brendo header (posts/views/er) — lifetime iš media kit. period/made/aud —
      story slide'ų 2 ir 4 PLACEHOLDER (DB neturi auditorijos demografijos). */
   cases: [
-    { id:'mionetto', brand:'Mionetto', handle:'@mionetto', posts:22, views:'16.7M', er:'6.8%', top:'6.9M',
-      reel:'https://www.instagram.com/reel/DNXetzOMT__/',
-      cover:'images/db/ig_18033565103697953.jpg',
-      period:'2024 → 2026', made:[['24','reels'],['6','tiktoks'],['30','posts']],
-      wall:[["images/db/ig_18033565103697953.jpg","6.9M","https://www.instagram.com/reel/DNXetzOMT__/"],["images/db/ig_17875020749996951.jpg","3.4M","https://www.instagram.com/reel/C4SX92Zt6pN/"],["images/db/ig_18026839199640885.jpg","1.8M","https://www.instagram.com/reel/DG-SQyytdoI/"],["images/db/ig_17910264744188075.jpg","918K","https://www.instagram.com/p/DM4n-6qN19d/"],["images/db/ig_18303896626246220.jpg","417K","https://www.instagram.com/reel/DKWRHayI3Zb/"],["images/db/ig_18484402999063901.jpg","382K","https://www.instagram.com/reel/DEsVR0TtO64/"],["images/db/ig_18024185435472079.jpg","264K","https://www.instagram.com/reel/C8jU8wJNyMX/"],["images/db/ig_18342780139091849.jpg","240K","https://www.instagram.com/reel/DKpcgboNrea/"],["images/db/ig_17968012223783807.jpg","238K","https://www.instagram.com/p/C-5kN-uNlXb/"],["images/db/ig_17905231062190270.jpg","225K","https://www.instagram.com/p/DLc0e2uN_fA/"],["images/db/ig_18036252119116705.jpg","216K","https://www.instagram.com/reel/C_PrB1tt8Lx/"],["images/db/ig_18063838112034845.jpg","210K","https://www.instagram.com/reel/DKjLkJwtPi_/"],["images/db/ig_18052938455411121.jpg","208K","https://www.instagram.com/reel/DTpUe_fiBCu/"],["images/db/tt_7567316738740587798.jpg","191K","https://www.tiktok.com/@jasnauskaite/video/7567316738740587798"],["images/db/ig_18299443324161280.jpg","184K","https://www.instagram.com/reel/C-cIa_5NswM/"]] },
-    { id:'hellmanns', brand:"Hellmann's", handle:'@hellmanns', posts:5, views:'15M', er:'6.0%', top:'11.2M',
-      reel:'https://www.instagram.com/reel/DD46xnfNBmJ/',
-      cover:'images/db/ig_18067130647780793.jpg',
-      period:'winter 2025', made:[['5','reels'],['5','posts']],
-      wall:[["images/db/ig_18067130647780793.jpg","11.2M","https://www.instagram.com/reel/DD46xnfNBmJ/"],["images/db/ig_18052706273223967.jpg","333K","https://www.instagram.com/reel/DIYLIQ8tN8e/"],["images/db/ig_17878566210381473.jpg","241K","https://www.instagram.com/reel/DNKnA2loYEu/"],["images/db/ig_18186527266375277.jpg","189K","https://www.instagram.com/reel/DWa5l4jCOoT/"],["images/db/ig_17917234257246923.jpg","150K","https://www.instagram.com/reel/DSjujJZiFPx/"]] },
-    { id:'akropolis', brand:'Akropolis', handle:'@akropolis', posts:53, views:'14.5M', er:'1.6%', top:'1.7M',
-      reel:'https://www.instagram.com/reel/DPDlAeZiEuJ/',
-      cover:'images/db/ig_18081147002050824.jpg',
-      period:'2023 → 2026', made:[['37','reels'],['16','tiktoks'],['53','posts']],
-      wall:[["images/db/ig_18081147002050824.jpg","1.7M","https://www.instagram.com/reel/DPDlAeZiEuJ/"],["images/db/ig_17857298979560141.jpg","1.5M","https://www.instagram.com/reel/DRjZN_fCLXa/"],["images/db/ig_18064873301168785.jpg","1.1M","https://www.instagram.com/reel/DR6npUDCK23/"],["images/db/ig_17910436434152803.jpg","830K","https://www.instagram.com/reel/DLeaWEINDFo/"],["images/db/ig_18057074005822356.jpg","469K","https://www.instagram.com/reel/DDjVYlSN-Qt/"],["images/db/ig_18054128705137176.jpg","365K","https://www.instagram.com/reel/DGdoiXStQMZ/"]],
-      /* du turinio srautai — kūrybinės kampanijos vs stilius */
-      streams:[
-        { id:'akropolis-creative', label:'Akropolis', sub:'Creative campaigns', kicker:'concept · production', handle:'@akropolis', posts:32, views:'4.9M', er:'3.2%', top:'469K', reel:'https://www.instagram.com/reel/DDjVYlSN-Qt/',
-          wall:[["images/db/ig_18057074005822356.jpg","469K","https://www.instagram.com/reel/DDjVYlSN-Qt/"],["images/db/ig_18054128705137176.jpg","365K","https://www.instagram.com/reel/DGdoiXStQMZ/"],["images/db/ig_18043529411009914.jpg","316K","https://www.instagram.com/reel/DEr1JHHt5je/"],["images/db/ig_17890152801133720.jpg","266K","https://www.instagram.com/reel/DDADz7ZtEI5/"],["images/db/ig_17892331761270545.jpg","261K","https://www.instagram.com/reel/DLt5rwatNv-/"],["images/db/ig_18550555906030466.jpg","256K","https://www.instagram.com/reel/DTXNRR9CIED/"],["images/db/tt_7443105923561737494.jpg","244K","https://www.tiktok.com/@jasnauskaite/video/7443105923561737494"],["images/db/ig_18079042466500662.jpg","211K","https://www.instagram.com/reel/DNkXzZ7sxZi/"],["images/db/ig_18022450361689661.jpg","209K","https://www.instagram.com/reel/DJj1Zz7oi3T/"],["images/db/ig_18062424730979161.jpg","199K","https://www.instagram.com/reel/DHlvnG6NF6w/"],["images/db/ig_17987854541956866.jpg","188K","https://www.instagram.com/reel/DV_Sf4RCEee/"],["images/db/ig_18126867478441735.jpg","185K","https://www.instagram.com/reel/DJn6oU1IQwI/"],["images/db/ig_17928567312015498.jpg","174K","https://www.instagram.com/reel/DQ61jU7iI0k/"],["images/db/tt_7504195490620181782.jpg","157K","https://www.tiktok.com/@jasnauskaite/video/7504195490620181782"],["images/db/ig_18091423114732208.jpg","152K","https://www.instagram.com/reel/DRrzXc2CBH7/"]] },
-        { id:'akropolis-style', label:'Akropolis × Stilius', sub:'Style edit', kicker:'outfit · trend', handle:'@akropolis', posts:21, views:'9.6M', er:'2.0%', top:'1.7M', reel:'https://www.instagram.com/reel/DPDlAeZiEuJ/',
-          wall:[["images/db/ig_18081147002050824.jpg","1.7M","https://www.instagram.com/reel/DPDlAeZiEuJ/"],["images/db/ig_17857298979560141.jpg","1.5M","https://www.instagram.com/reel/DRjZN_fCLXa/"],["images/db/ig_18064873301168785.jpg","1.1M","https://www.instagram.com/reel/DR6npUDCK23/"],["images/db/ig_17910436434152803.jpg","830K","https://www.instagram.com/reel/DLeaWEINDFo/"],["images/db/ig_17931047808101374.jpg","791K","https://www.instagram.com/p/DQRlHaGiEfJ/"],["images/db/ig_18033968933733498.jpg","377K","https://www.instagram.com/reel/DSE7HPgjGA2/"],["images/db/ig_18070117601149447.jpg","375K","https://www.instagram.com/reel/DNz2mq70H81/"],["images/db/ig_18342032482091110.jpg","363K","https://www.instagram.com/reel/DKB5ul8NTMh/"],["images/db/ig_18063003548224739.jpg","351K","https://www.instagram.com/reel/DMhbbXmt4bk/"],["images/db/ig_18314716807284894.jpg","284K","https://www.instagram.com/reel/DWI5v9JCI28/"],["images/db/ig_18140311774419094.jpg","254K","https://www.instagram.com/reel/DNfOHQws3re/"],["images/db/ig_18068434745132297.jpg","223K","https://www.instagram.com/reel/DNuojVa0FUB/"],["images/db/ig_18071152916162391.jpg","207K","https://www.instagram.com/reel/DO6G51wiNxn/"],["images/db/ig_18355922617095167.jpg","191K","https://www.instagram.com/reel/DPLVC9xCBCk/"],["images/db/ig_18114221812814486.jpg","179K","https://www.instagram.com/reel/DWyCAzHCJ48/"]] }
-      ] },
-    { id:'nissan', brand:'Nissan', handle:'@nissan', posts:38, views:'6.5M', er:'1.2%', top:'3.5M',
-      reel:'https://www.instagram.com/reel/DUBIIXDj5AJ/',
-      cover:'images/db/ig_18389032630147037.jpg',
-      period:'2022 → 2025', made:[['39','reels'],['1','tiktok'],['40','posts']],
-      wall:[["images/db/ig_18389032630147037.jpg","3.5M","https://www.instagram.com/reel/DUBIIXDj5AJ/"],["images/db/ig_18320194741099687.jpg","291K","https://www.instagram.com/reel/CxqaJMINKnX/"],["images/db/ig_18060157580628664.jpg","253K","https://www.instagram.com/p/DPtlaj6iOgA/"],["images/db/ig_17976548642937073.jpg","216K","https://www.instagram.com/p/DPG0cf2iP7w/"],["images/db/ig_18074042596867369.jpg","211K","https://www.instagram.com/reel/DJhTrIft9dU/"],["images/db/ig_18062190709464789.jpg","201K","https://www.instagram.com/reel/Cz5zcx2IWed/"],["images/db/ig_18059528261187686.jpg","148K","https://www.instagram.com/reel/DPzAuz7CLoX/"],["images/db/ig_17952584507782243.jpg","141K","https://www.instagram.com/reel/C52nPEYtBaS/"],["images/db/ig_18013210549753191.jpg","135K","https://www.instagram.com/reel/CvrZO7yPjDr/"],["images/db/ig_17988110840891416.jpg","133K","https://www.instagram.com/reel/DRARSgHCMAi/"],["images/db/ig_18082220170436030.jpg","129K","https://www.instagram.com/reel/C30fuMFNlxF/"],["images/db/ig_17926575035875560.jpg","125K","https://www.instagram.com/reel/C7V3ye7oPIq/"],["images/db/ig_17982484979158220.jpg","123K","https://www.instagram.com/reel/Cvt4qPaMfVE/"],["images/db/ig_17902662906258183.jpg","121K","https://www.instagram.com/reel/DPOG-HRCLmX/"]] },
-    { id:'maxima', brand:'Maxima', handle:'@maxima.lt', posts:9, views:'3.2M', er:'1.8%', top:'1.2M',
-      reel:'https://www.instagram.com/reel/DMK9spgtfv-/',
-      cover:'images/db/ig_18076084813764675.jpg',
-      period:'2025 → 2026', made:[['12','reels'],['6','tiktoks'],['18','posts']],
-      wall:[["images/db/ig_18076084813764675.jpg","1.2M","https://www.instagram.com/reel/DMK9spgtfv-/"],["images/db/ig_18066487675780395.jpg","327K","https://www.instagram.com/reel/DIVm3NptTjs/"],["images/db/ig_18078917005640416.jpg","310K","https://www.instagram.com/reel/DG3aQF9tUMM/"],["images/db/ig_18045199817378891.jpg","305K","https://www.instagram.com/reel/DIGJU2StHSx/"],["images/db/ig_17938765515212332.jpg","237K","https://www.instagram.com/reel/DYR5CG8ord0/"],["images/db/ig_17913289884148170.jpg","223K","https://www.instagram.com/reel/DVOUef5CEQZ/"],["images/db/ig_18499215439047550.jpg","212K","https://www.instagram.com/reel/DI36OggIEYu/"],["images/db/ig_17979439703777968.jpg","194K","https://www.instagram.com/p/DRHDHA5iH02/"],["images/db/ig_17860094763328054.jpg","175K","https://www.instagram.com/reel/DIMSmVzNMXY/"],["images/db/ig_18011450114895056.jpg","138K","https://www.instagram.com/reel/DYOuZ1kIN9f/"],["images/db/tt_7490090743529213206.jpg","133K","https://www.tiktok.com/@jasnauskaite/video/7490090743529213206"],["images/db/ig_17862042324551847.jpg","127K","https://www.instagram.com/reel/DSemzp4CLmu/"],["images/db/tt_7478748221100002582.jpg","83K","https://www.tiktok.com/@jasnauskaite/video/7478748221100002582"],["images/db/tt_7490942171038633238.jpg","81K","https://www.tiktok.com/@jasnauskaite/video/7490942171038633238"],["images/db/tt_7585856709881597206.jpg","77K","https://www.tiktok.com/@jasnauskaite/video/7585856709881597206"]] },
-    { id:'organic', brand:'Organic', handle:'her own feed', posts:'∞', views:'590M+', er:'5.0%', top:'37.2M',
-      reel:'https://instagram.com/jasnauskaite',
-      cover:'images/db/ig_18390413014056110.jpg',
+    { id:'organic', brand:'Organic', handle:'her own feed', posts:'1,957', views:'448M', er:'5.0%', top:'37.2M',
+      reel:'https://instagram.com/jasnauskaite', cover:'images/db/ig_18390413014056110.jpg',
       period:'since 2019', made:[['4–6','reels / week'],['daily','stories'],['365','days / year']],
-      wall:[["images/db/ig_18390413014056110.jpg","37.2M","https://www.instagram.com/reel/Cx3TvgAN8Yg/","FASHION"],["images/db/ig_18074660734735316.jpg","21.4M","https://www.instagram.com/reel/DGFhWE6S-nw/","TRAVEL"],["images/db/ig_18019012205533023.jpg","20.4M","https://www.instagram.com/reel/DAyn3g9NAgc/","FASHION"],["images/db/tt_7451282832766291222.jpg","13.6M","https://www.tiktok.com/@jasnauskaite/video/7451282832766291222","TRAVEL"],["images/db/tt_7285053630388915489.jpg","13.1M","https://www.tiktok.com/@jasnauskaite/video/7285053630388915489","FASHION"],["images/db/ig_18004841183644994.jpg","12.4M","https://www.instagram.com/reel/C_LjTpxtsll/","COUPLE"],["images/db/ig_17956625387009497.jpg","11.3M","https://www.instagram.com/reel/CiNoYeYjzad/","TRAVEL"],["images/db/ig_18038462123305133.jpg","11.2M","https://www.instagram.com/reel/C9u55uOtQT5/","EVENTS"],["images/db/ig_17991032711117877.jpg","9.8M","https://www.instagram.com/reel/CuhlThCM5zB/","FASHION"],["images/db/ig_17981848048680573.jpg","9.7M","https://www.instagram.com/reel/ClvX2uzrslA/","TRAVEL"],["images/db/ig_18345446797130758.jpg","9.5M","https://www.instagram.com/reel/DA_VLwNtJQG/","COUPLE"],["images/db/tt_7503202828144364822.jpg","9.5M","https://www.tiktok.com/@jasnauskaite/video/7503202828144364822","LIFESTYLE"],["images/db/ig_17937640691865191.jpg","8.8M","https://www.instagram.com/reel/C_bHmA_NC2T/","FASHION"],["images/db/tt_7566643185930325270.jpg","8.8M","https://www.tiktok.com/@jasnauskaite/video/7566643185930325270","LIFESTYLE"],["images/db/ig_18117033973555245.jpg","6.5M","https://www.instagram.com/reel/DVeAfdViCDB/","LIFESTYLE"]] },
+      wall:[["images/db/ig_18390413014056110.jpg", "37.2M", "https://www.instagram.com/reel/Cx3TvgAN8Yg/", "FASHION"], ["images/db/ig_18074660734735316.jpg", "21.4M", "https://www.instagram.com/reel/DGFhWE6S-nw/", "COUPLE"], ["images/db/ig_18019012205533023.jpg", "20.4M", "https://www.instagram.com/reel/DAyn3g9NAgc/", "FASHION"], ["images/db/tt_7451282832766291222.jpg", "13.6M", "https://www.tiktok.com/@jasnauskaite/video/7451282832766291222", "FOOD"], ["images/db/tt_7566643185930325270.jpg", "8.8M", "https://www.tiktok.com/@jasnauskaite/video/7566643185930325270", "FASHION"], ["images/db/tt_7285053630388915489.jpg", "13.1M", "https://www.tiktok.com/@jasnauskaite/video/7285053630388915489", "FASHION"], ["images/db/ig_18004841183644994.jpg", "12.4M", "https://www.instagram.com/reel/C_LjTpxtsll/", "EVENTS"], ["images/db/ig_18117033973555245.jpg", "6.5M", "https://www.instagram.com/reel/DVeAfdViCDB/", "LIFESTYLE"], ["images/db/tt_7503202828144364822.jpg", "9.5M", "https://www.tiktok.com/@jasnauskaite/video/7503202828144364822", "EVENTS"], ["images/db/ig_17956625387009497.jpg", "11.3M", "https://www.instagram.com/reel/CiNoYeYjzad/", "EVENTS"], ["images/db/ig_18038462123305133.jpg", "11.2M", "https://www.instagram.com/reel/C9u55uOtQT5/", "EVENTS"], ["images/db/ig_17991032711117877.jpg", "9.8M", "https://www.instagram.com/reel/CuhlThCM5zB/", "FASHION"], ["images/db/ig_17981848048680573.jpg", "9.7M", "https://www.instagram.com/reel/ClvX2uzrslA/", "FASHION"], ["images/db/ig_18345446797130758.jpg", "9.5M", "https://www.instagram.com/reel/DA_VLwNtJQG/", "COUPLE"], ["images/db/ig_18381949525093346.jpg", "5M", "https://www.instagram.com/reel/DV6UQ8lCJzS/", "FASHION"]] },
+    { id:'travel', brand:'Travel', handle:'✈️ content pillar', posts:'591', views:'131M', er:'5.0%', top:'21.4M',
+      reel:'https://www.instagram.com/p/DYhUTXAiI4Y/', cover:'images/db/ig_18534709069075153.jpg',
+      period:'since 2019', made:[['591','posts'],['131M','reach'],['21.4M','top reel']],
+      wall:[["images/db/ig_18534709069075153.jpg", "4.8M", "https://www.instagram.com/p/DYhUTXAiI4Y/"], ["images/db/ig_18034689929055765.jpg", "7.8M", "https://www.instagram.com/reel/DBZKwbNNU4U/"], ["images/db/ig_18086914316273426.jpg", "3.4M", "https://www.instagram.com/reel/DUz4sgkiHvT/"], ["images/db/ig_18274487845273363.jpg", "3.5M", "https://www.instagram.com/reel/DMVf9mZtg0D/"], ["images/db/ig_18558995020032449.jpg", "2.6M", "https://www.instagram.com/reel/DUlMPbnjzrG/"], ["images/db/ig_17918243403131432.jpg", "2.7M", "https://www.instagram.com/p/DMUiGGLNP_A/"], ["images/db/ig_18171536566320131.jpg", "3.2M", "https://www.instagram.com/reel/DGOVOm-N2a2/"], ["images/db/ig_18074512412406096.jpg", "1.8M", "https://www.instagram.com/reel/DYkAPC8ISgF/"], ["images/db/ig_18023862637764217.jpg", "3M", "https://www.instagram.com/reel/C198bISv4zn/"], ["images/db/ig_18269278576081728.jpg", "2.9M", "https://www.instagram.com/reel/CydFqXDtv-y/"], ["images/db/ig_18053153888199423.jpg", "1.8M", "https://www.instagram.com/reel/DOSonz_CAnH/"], ["images/db/ig_18081457607139038.jpg", "1.3M", "https://www.instagram.com/reel/DYZAnf9o60r/"], ["images/db/ig_18156299008417073.jpg", "1.2M", "https://www.instagram.com/reel/DZAoq-mIhNF/"], ["images/db/ig_17883131151201572.jpg", "1.9M", "https://www.instagram.com/reel/DLHS_45NWQl/"], ["images/db/ig_18000138131854610.jpg", "1.1M", "https://www.instagram.com/reel/DU5_RdjiCZQ/"]] },
+    { id:'fashion', brand:'Fashion', handle:'🧥 content pillar', posts:'1,315', views:'244M', er:'5.0%', top:'37.2M',
+      reel:'https://www.instagram.com/reel/DA3u6B-NiN3/', cover:'images/db/ig_18034983836235428.jpg',
+      period:'since 2019', made:[['1,315','posts'],['244M','reach'],['37.2M','top reel']],
+      wall:[["images/db/ig_18034983836235428.jpg", "6.4M", "https://www.instagram.com/reel/DA3u6B-NiN3/"], ["images/db/ig_17912056242071504.jpg", "5.3M", "https://www.instagram.com/reel/DH3s8EtNU0V/"], ["images/db/ig_18043963102748222.jpg", "5.8M", "https://www.instagram.com/reel/C-XD_MettxA/"], ["images/db/ig_17907796830010377.jpg", "5.8M", "https://www.instagram.com/reel/C__DGnXtiSp/"], ["images/db/ig_18403271524177883.jpg", "2.9M", "https://www.instagram.com/reel/DWMWiOKiAFP/"], ["images/db/ig_18249007777263978.jpg", "5.1M", "https://www.instagram.com/reel/DDU0H8Ut4Ow/"], ["images/db/ig_17973144182449347.jpg", "4M", "https://www.instagram.com/reel/CvCmqNBsbf2/"], ["images/db/ig_17991528281790341.jpg", "2.7M", "https://www.instagram.com/reel/DH75rSftenA/"], ["images/db/ig_17932811795562868.jpg", "3.1M", "https://www.instagram.com/reel/Cl4FdcIJ0rl/"], ["images/db/ig_18022488011660623.jpg", "2.4M", "https://www.instagram.com/reel/DHiV5QfNQXZ/"], ["images/db/ig_18158088526432916.jpg", "1.4M", "https://www.instagram.com/reel/DWdeK3nCMvI/"], ["images/db/ig_18081147002050824.jpg", "1.7M", "https://www.instagram.com/reel/DPDlAeZiEuJ/"], ["images/db/ig_17973066584802582.jpg", "2.3M", "https://www.instagram.com/reel/DDJgk10NNDu/"], ["images/db/ig_18093630826694479.jpg", "1.5M", "https://www.instagram.com/reel/DPbxRijiF5U/"], ["images/db/ig_17995317002592763.jpg", "1.9M", "https://www.instagram.com/reel/DEo8mqdtTr4/"]] },
+    { id:'couple', brand:'Couple', handle:'💑 content pillar', posts:'410', views:'142M', er:'5.0%', top:'21.4M',
+      reel:'https://www.instagram.com/reel/DNXetzOMT__/', cover:'images/db/ig_18033565103697953.jpg',
+      period:'since 2019', made:[['410','posts'],['142M','reach'],['21.4M','top reel']],
+      wall:[["images/db/ig_18033565103697953.jpg", "6.9M", "https://www.instagram.com/reel/DNXetzOMT__/"], ["images/db/ig_17937640691865191.jpg", "8.8M", "https://www.instagram.com/reel/C_bHmA_NC2T/"], ["images/db/ig_18333723658228344.jpg", "4.9M", "https://www.instagram.com/reel/DPOtd3OiKDN/"], ["images/db/ig_18466973770027013.jpg", "5.6M", "https://www.instagram.com/reel/DCuDiSgNeJw/"], ["images/db/ig_18013160713564049.jpg", "5.4M", "https://www.instagram.com/reel/CqKjxQstWTi/"], ["images/db/ig_18276041056228367.jpg", "4.2M", "https://www.instagram.com/reel/C9pAg3OtlPE/"], ["images/db/ig_17993293129877219.jpg", "2.9M", "https://www.instagram.com/reel/CrP5y-Fr76O/"], ["images/db/ig_18112617409640830.jpg", "1M", "https://www.instagram.com/p/DU3jgMnCNg3/"], ["images/db/ig_18099780199718263.jpg", "1.2M", "https://www.instagram.com/p/DOYf1RZiLlU/"], ["images/db/ig_18032908139655861.jpg", "1.3M", "https://www.instagram.com/p/DKobNL7No9W/"], ["images/db/ig_17910264744188075.jpg", "918K", "https://www.instagram.com/p/DM4n-6qN19d/"], ["images/db/ig_17862015918261671.jpg", "1M", "https://www.instagram.com/reel/DFVnzy1tAuA/"], ["images/db/ig_18105740302496856.jpg", "953K", "https://www.instagram.com/reel/DIqLv9ytr8m/"], ["images/db/ig_17929226172150352.jpg", "685K", "https://www.instagram.com/reel/DRZ1MbCCGYY/"], ["images/db/ig_18086949130906297.jpg", "539K", "https://www.instagram.com/p/DU1F81hCNSn/"]] },
+    { id:'events', brand:'Events', handle:'🎉 content pillar', posts:'329', views:'141M', er:'5.0%', top:'21.4M',
+      reel:'https://www.instagram.com/reel/C7TS_lJNYzJ/', cover:'images/db/ig_18023453573130504.jpg',
+      period:'since 2019', made:[['329','posts'],['141M','reach'],['21.4M','top reel']],
+      wall:[["images/db/ig_18023453573130504.jpg", "3.7M", "https://www.instagram.com/reel/C7TS_lJNYzJ/"], ["images/db/ig_17875020749996951.jpg", "3.4M", "https://www.instagram.com/reel/C4SX92Zt6pN/"], ["images/db/ig_17948076026764915.jpg", "2.9M", "https://www.instagram.com/reel/DB0ll6ltNcc/"], ["images/db/ig_17965823648810597.jpg", "2.4M", "https://www.instagram.com/reel/DCwilcYNOtE/"], ["images/db/ig_18076179206332585.jpg", "1.6M", "https://www.instagram.com/reel/DRH0RoBCKTA/"], ["images/db/ig_18138678439550997.jpg", "1.2M", "https://www.instagram.com/reel/DZJ7smKoHTu/"], ["images/db/ig_18003071498644085.jpg", "2.1M", "https://www.instagram.com/reel/C_U8s8WtprA/"], ["images/db/ig_18084872743964286.jpg", "1.4M", "https://www.instagram.com/reel/DQd0OCpiDMq/"], ["images/db/ig_18026839199640885.jpg", "1.8M", "https://www.instagram.com/reel/DG-SQyytdoI/"], ["images/db/ig_18032688455110865.jpg", "1.9M", "https://www.instagram.com/reel/DC1uFkut2Pl/"], ["images/db/ig_18060840716281843.jpg", "1.4M", "https://www.instagram.com/reel/DJmVE5sIii7/"], ["images/db/ig_18019718786007967.jpg", "1.3M", "https://www.instagram.com/reel/C2kImlGNFcT/"], ["images/db/ig_18072530299925084.jpg", "904K", "https://www.instagram.com/reel/DJqf6JQtgzw/"], ["images/db/ig_17878185548973223.jpg", "1M", "https://www.instagram.com/reel/CzGIv7Ktni6/"], ["images/db/ig_17973238898880703.jpg", "537K", "https://www.instagram.com/reel/DYM57LVISK3/"]] },
+    { id:'partnerships', brand:'Partnerships', handle:'170 brands', posts:784, views:'122M', er:'5.0%', top:'11.2M',
+      reel:'https://www.instagram.com/reel/DD46xnfNBmJ/', cover:'images/db/ig_18067130647780793.jpg',
+      period:'2019 → 2026', made:[['170','brands'],['784','posts'],['70','repeat partners']],
+      wall:[["images/db/ig_18067130647780793.jpg", "11.2M", "https://www.instagram.com/reel/DD46xnfNBmJ/"], ["images/db/ig_18389032630147037.jpg", "3.5M", "https://www.instagram.com/reel/DUBIIXDj5AJ/"], ["images/db/ig_17857298979560141.jpg", "1.5M", "https://www.instagram.com/reel/DRjZN_fCLXa/"], ["images/db/ig_18076084813764675.jpg", "1.2M", "https://www.instagram.com/reel/DMK9spgtfv-/"], ["images/db/ig_18064873301168785.jpg", "1.1M", "https://www.instagram.com/reel/DR6npUDCK23/"], ["images/db/ig_18247914613089382.jpg", "1.5M", "https://www.instagram.com/reel/CrvxzNUMtIt/"], ["images/db/ig_18013604012351711.jpg", "1.2M", "https://www.instagram.com/reel/DBLWsx8OG7f/"], ["images/db/ig_17931047808101374.jpg", "791K", "https://www.instagram.com/p/DQRlHaGiEfJ/"], ["images/db/ig_18043571680848754.jpg", "1.1M", "https://www.instagram.com/reel/DAjKJ_fNbjv/"], ["images/db/ig_17998893020691635.jpg", "1.1M", "https://www.instagram.com/reel/DBWssk2t-yO/"], ["images/db/ig_17910436434152803.jpg", "830K", "https://www.instagram.com/reel/DLeaWEINDFo/"], ["images/db/ig_18194630113333850.jpg", "643K", "https://www.instagram.com/reel/DSPITvBCBR1/"], ["images/db/ig_18062671117739197.jpg", "958K", "https://www.instagram.com/reel/DBje3xQNn17/"], ["images/db/ig_18067411913301085.jpg", "684K", "https://www.instagram.com/reel/DKH4TYNI_tZ/"], ["images/db/ig_17995289177195760.jpg", "754K", "https://www.instagram.com/reel/C03kKMxN6ta/"]] },
+    { id:'mionetto', brand:'Mionetto', handle:'@mionetto', posts:30, views:'17.1M', er:'6.8%', top:'6.9M',
+      reel:'https://www.instagram.com/reel/DNXetzOMT__/', cover:'images/db/ig_17875020749996951.jpg',
+      period:'2024 → 2026', made:[['24','reels'],['6','tiktoks'],['30','posts']],
+      wall:[["images/db/ig_18033565103697953.jpg", "6.9M", "https://www.instagram.com/reel/DNXetzOMT__/"], ["images/db/ig_17875020749996951.jpg", "3.4M", "https://www.instagram.com/reel/C4SX92Zt6pN/"], ["images/db/ig_18026839199640885.jpg", "1.8M", "https://www.instagram.com/reel/DG-SQyytdoI/"], ["images/db/ig_17910264744188075.jpg", "918K", "https://www.instagram.com/p/DM4n-6qN19d/"], ["images/db/ig_18303896626246220.jpg", "417K", "https://www.instagram.com/reel/DKWRHayI3Zb/"], ["images/db/ig_18484402999063901.jpg", "382K", "https://www.instagram.com/reel/DEsVR0TtO64/"], ["images/db/ig_18052938455411121.jpg", "208K", "https://www.instagram.com/reel/DTpUe_fiBCu/"], ["images/db/ig_17867024502544003.jpg", "176K", "https://www.instagram.com/p/DTp9vJQCCew/"], ["images/db/ig_18104336152754680.jpg", "161K", "https://www.instagram.com/reel/DTndqTCiLFF/"], ["images/db/ig_18342780139091849.jpg", "240K", "https://www.instagram.com/reel/DKpcgboNrea/"], ["images/db/tt_7567316738740587798.jpg", "191K", "https://www.tiktok.com/@jasnauskaite/video/7567316738740587798"], ["images/db/ig_17905231062190270.jpg", "225K", "https://www.instagram.com/p/DLc0e2uN_fA/"], ["images/db/ig_18024185435472079.jpg", "264K", "https://www.instagram.com/reel/C8jU8wJNyMX/"], ["images/db/ig_18063838112034845.jpg", "210K", "https://www.instagram.com/reel/DKjLkJwtPi_/"], ["images/db/ig_18384289588176914.jpg", "168K", "https://www.instagram.com/reel/DQcKKv3CBQ3/"]] },
+    { id:'akropolis', brand:'Akropolis', handle:'@akropolis', posts:53, views:'14.5M', er:'1.6%', top:'1.7M',
+      reel:'https://www.instagram.com/reel/DPDlAeZiEuJ/', cover:'images/db/ig_18081147002050824.jpg',
+      period:'2023 → 2026', made:[['37','reels'],['16','tiktoks'],['53','posts']],
+      wall:[["images/db/ig_18081147002050824.jpg", "1.7M", "https://www.instagram.com/reel/DPDlAeZiEuJ/"], ["images/db/ig_17857298979560141.jpg", "1.5M", "https://www.instagram.com/reel/DRjZN_fCLXa/"], ["images/db/ig_18064873301168785.jpg", "1.1M", "https://www.instagram.com/reel/DR6npUDCK23/"], ["images/db/ig_17931047808101374.jpg", "791K", "https://www.instagram.com/p/DQRlHaGiEfJ/"], ["images/db/ig_17910436434152803.jpg", "830K", "https://www.instagram.com/reel/DLeaWEINDFo/"], ["images/db/ig_18033968933733498.jpg", "377K", "https://www.instagram.com/reel/DSE7HPgjGA2/"], ["images/db/ig_18070117601149447.jpg", "375K", "https://www.instagram.com/reel/DNz2mq70H81/"], ["images/db/ig_18314716807284894.jpg", "284K", "https://www.instagram.com/reel/DWI5v9JCI28/"], ["images/db/ig_18063003548224739.jpg", "351K", "https://www.instagram.com/reel/DMhbbXmt4bk/"], ["images/db/ig_18550555906030466.jpg", "256K", "https://www.instagram.com/reel/DTXNRR9CIED/"], ["images/db/ig_18342032482091110.jpg", "363K", "https://www.instagram.com/reel/DKB5ul8NTMh/"], ["images/db/ig_17892331761270545.jpg", "261K", "https://www.instagram.com/reel/DLt5rwatNv-/"], ["images/db/ig_18140311774419094.jpg", "254K", "https://www.instagram.com/reel/DNfOHQws3re/"], ["images/db/ig_17987854541956866.jpg", "188K", "https://www.instagram.com/reel/DV_Sf4RCEee/"], ["images/db/ig_18114221812814486.jpg", "180K", "https://www.instagram.com/reel/DWyCAzHCJ48/"]],
+      streams:[
+        { id:'akropolis-creative', label:'Akropolis', sub:'Creative campaigns', kicker:'concept · production', handle:'@akropolis', posts:32, views:'4.9M', er:'3.2%', top:'469K', reel:'https://www.instagram.com/reel/DDjVYlSN-Qt/', wall:[["images/db/ig_18057074005822356.jpg", "469K", "https://www.instagram.com/reel/DDjVYlSN-Qt/"], ["images/db/ig_18054128705137176.jpg", "365K", "https://www.instagram.com/reel/DGdoiXStQMZ/"], ["images/db/ig_18043529411009914.jpg", "316K", "https://www.instagram.com/reel/DEr1JHHt5je/"], ["images/db/ig_18079042466500662.jpg", "211K", "https://www.instagram.com/reel/DNkXzZ7sxZi/"], ["images/db/ig_18071152916162391.jpg", "207K", "https://www.instagram.com/reel/DO6G51wiNxn/"], ["images/db/ig_18117560860599290.jpg", "149K", "https://www.instagram.com/reel/DTfyudOiC3b/"], ["images/db/ig_17890152801133720.jpg", "266K", "https://www.instagram.com/reel/DDADz7ZtEI5/"], ["images/db/ig_17928567312015498.jpg", "174K", "https://www.instagram.com/reel/DQ61jU7iI0k/"], ["images/db/ig_18022450361689661.jpg", "209K", "https://www.instagram.com/reel/DJj1Zz7oi3T/"], ["images/db/tt_7443105923561737494.jpg", "244K", "https://www.tiktok.com/@jasnauskaite/video/7443105923561737494"], ["images/db/ig_18062424730979161.jpg", "199K", "https://www.instagram.com/reel/DHlvnG6NF6w/"], ["images/db/ig_18091423114732208.jpg", "152K", "https://www.instagram.com/reel/DRrzXc2CBH7/"], ["images/db/ig_18126867478441735.jpg", "185K", "https://www.instagram.com/reel/DJn6oU1IQwI/"], ["images/db/tt_7504195490620181782.jpg", "157K", "https://www.tiktok.com/@jasnauskaite/video/7504195490620181782"], ["images/db/tt_7475022691016183062.jpg", "148K", "https://www.tiktok.com/@jasnauskaite/video/7475022691016183062"]] },
+        { id:'akropolis-style', label:'Akropolis × Stilius', sub:'Style edit', kicker:'outfit · trend', handle:'@akropolis', posts:21, views:'9.6M', er:'2.0%', top:'1.7M', reel:'https://www.instagram.com/reel/DPDlAeZiEuJ/', wall:[["images/db/ig_18081147002050824.jpg", "1.7M", "https://www.instagram.com/reel/DPDlAeZiEuJ/"], ["images/db/ig_17857298979560141.jpg", "1.5M", "https://www.instagram.com/reel/DRjZN_fCLXa/"], ["images/db/ig_18064873301168785.jpg", "1.1M", "https://www.instagram.com/reel/DR6npUDCK23/"], ["images/db/ig_17931047808101374.jpg", "791K", "https://www.instagram.com/p/DQRlHaGiEfJ/"], ["images/db/ig_17910436434152803.jpg", "830K", "https://www.instagram.com/reel/DLeaWEINDFo/"], ["images/db/ig_18033968933733498.jpg", "377K", "https://www.instagram.com/reel/DSE7HPgjGA2/"], ["images/db/ig_18070117601149447.jpg", "375K", "https://www.instagram.com/reel/DNz2mq70H81/"], ["images/db/ig_18314716807284894.jpg", "284K", "https://www.instagram.com/reel/DWI5v9JCI28/"], ["images/db/ig_18063003548224739.jpg", "351K", "https://www.instagram.com/reel/DMhbbXmt4bk/"], ["images/db/ig_18550555906030466.jpg", "256K", "https://www.instagram.com/reel/DTXNRR9CIED/"], ["images/db/ig_18342032482091110.jpg", "363K", "https://www.instagram.com/reel/DKB5ul8NTMh/"], ["images/db/ig_17892331761270545.jpg", "261K", "https://www.instagram.com/reel/DLt5rwatNv-/"], ["images/db/ig_18140311774419094.jpg", "254K", "https://www.instagram.com/reel/DNfOHQws3re/"], ["images/db/ig_17987854541956866.jpg", "188K", "https://www.instagram.com/reel/DV_Sf4RCEee/"], ["images/db/ig_18114221812814486.jpg", "180K", "https://www.instagram.com/reel/DWyCAzHCJ48/"]] }
+      ] },
+    { id:'hellmanns', brand:"Hellmann's", handle:'@hellmanns', posts:5, views:'15M', er:'6.0%', top:'11.2M',
+      reel:'https://www.instagram.com/reel/DD46xnfNBmJ/', cover:'images/db/ig_18052706273223967.jpg',
+      period:'winter 2025', made:[['5','reels'],['5','posts']],
+      wall:[["images/db/ig_18067130647780793.jpg", "11.2M", "https://www.instagram.com/reel/DD46xnfNBmJ/"], ["images/db/ig_18052706273223967.jpg", "333K", "https://www.instagram.com/reel/DIYLIQ8tN8e/"], ["images/db/ig_17878566210381473.jpg", "241K", "https://www.instagram.com/reel/DNKnA2loYEu/"], ["images/db/ig_18186527266375277.jpg", "189K", "https://www.instagram.com/reel/DWa5l4jCOoT/"], ["images/db/ig_17917234257246923.jpg", "150K", "https://www.instagram.com/reel/DSjujJZiFPx/"]] },
+    { id:'nissan', brand:'Nissan', handle:'@nissan', posts:40, views:'6.7M', er:'1.2%', top:'3.5M',
+      reel:'https://www.instagram.com/reel/DUBIIXDj5AJ/', cover:'images/db/ig_18389032630147037.jpg',
+      period:'2022 → 2025', made:[['39','reels'],['1','tiktok'],['40','posts']],
+      wall:[["images/db/ig_18389032630147037.jpg", "3.5M", "https://www.instagram.com/reel/DUBIIXDj5AJ/"], ["images/db/ig_18060157580628664.jpg", "253K", "https://www.instagram.com/p/DPtlaj6iOgA/"], ["images/db/ig_17976548642937073.jpg", "216K", "https://www.instagram.com/p/DPG0cf2iP7w/"], ["images/db/ig_18320194741099687.jpg", "291K", "https://www.instagram.com/reel/CxqaJMINKnX/"], ["images/db/ig_18074042596867369.jpg", "211K", "https://www.instagram.com/reel/DJhTrIft9dU/"], ["images/db/ig_18059528261187686.jpg", "148K", "https://www.instagram.com/reel/DPzAuz7CLoX/"], ["images/db/ig_18062190709464789.jpg", "201K", "https://www.instagram.com/reel/Cz5zcx2IWed/"], ["images/db/ig_17988110840891416.jpg", "133K", "https://www.instagram.com/reel/DRARSgHCMAi/"], ["images/db/ig_17902662906258183.jpg", "121K", "https://www.instagram.com/reel/DPOG-HRCLmX/"], ["images/db/ig_17952584507782243.jpg", "141K", "https://www.instagram.com/reel/C52nPEYtBaS/"], ["images/db/ig_17934923945980087.jpg", "92K", "https://www.instagram.com/reel/DMpN_JftU0e/"], ["images/db/ig_18013210549753191.jpg", "135K", "https://www.instagram.com/reel/CvrZO7yPjDr/"], ["images/db/ig_18082220170436030.jpg", "129K", "https://www.instagram.com/reel/C30fuMFNlxF/"], ["images/db/ig_17926575035875560.jpg", "125K", "https://www.instagram.com/reel/C7V3ye7oPIq/"], ["images/db/ig_17982484979158220.jpg", "123K", "https://www.instagram.com/reel/Cvt4qPaMfVE/"]] },
   ],
   gridExtra: [ ['images/cover-0.jpg','390K'], ['images/cover-1.jpg','512K'], ['images/cover-2.jpg','298K'],
                ['images/cover-3.jpg','276K'], ['images/cover-4.jpg','431K'], ['images/cover-5.jpg','364K'] ],
@@ -746,17 +771,23 @@ const DATA = {
     '784 branded posts in 8 years — a new one every 3.7 days, on average.',
     'Her top reel hit 37.2M views. The algorithm just likes the work.',
     'Her engagement rate is 5.0%. The platform average is 1.9%. You do the math.',
-    'Of her 154+ brand partners, 70 came back for 3+ posts. Mionetto leads with 22.',
-    'She has never bought a follower. The 359K showed up on their own.',
+    'Of her 170 brand partners, 70 came back for 3+ posts. Mionetto leads with 30.',
+    'She has never bought a follower. The 364K showed up on their own.',
     'A Mionetto reel starring her grandmother hit 16.7M views. Casting is everything.',
-    'A car campaign and a skincare reel, filmed the same week. Range is the job.'
+    'A car campaign and a skincare reel, filmed the same week. Range is the job.',
+    '81% of her reach is organic. Brands just borrow the other 19%.',
+    '64% of her audience is 25–44 — peak spending age, not just scrollers.',
+    'Travel is a whole genre here: 591 posts, 131M views, and a lot of airports.',
+    'Fashion is the home turf — her single biggest pillar, 1,300+ posts deep.'
   ],
   /* Avatar story — atsidaro paspaudus profilio rutuliuką. Asmeninis IG-stiliaus intro. */
   intro: [
     { img:'images/profile.jpg', kick:'jasnauskaite · your story',
       big:'Hi 👋', sub:'I\'m Inidė — the face behind the numbers. Fashion, beauty & lifestyle, from Vilnius.' },
     { img:'images/organic-C4SX92Zt6pN.jpg', kick:'how it works',
-      big:'8 years.', sub:'One feed. 359K people who actually show up — not bought, not boosted.' },
+      big:'8 years.', sub:'One feed. 364K people who actually show up — not bought, not boosted.' },
+    { img:'images/cover-1.jpg', kick:'who\'s watching', age:true,
+      big:'64%', sub:'of them are 25–44 — the people who actually buy things.' },
     { img:'images/cover-0.jpg', kick:'the honest part',
       big:'37.2M.', sub:'My best reel — and the algorithm just likes the work.' },
     { img:'images/mionetto-DNXetzOMT__.jpg', kick:'let\'s talk', cta:true,
@@ -817,11 +848,22 @@ const SLIDE_MS = 5200, TICK = 50;
 
 /* intro (avatar) story slides — asmeninis, ne brendas */
 function introSlides(){
-  return DATA.intro.map(s => ({ img:s.img, html:`
+  const AGE = [['13–17','3',7],['18–24','18',43],['25–34','42',100],['35–44','22',52],['45+','14',33]];
+  return DATA.intro.map(s => {
+    if (s.age) return { img:s.img, html:`
+    <div class="case-kick">${s.kick}</div>
+    <div class="case-num" style="font-size:40px">25–44 = 64%</div>
+    <div class="case-sub" style="margin-top:4px;opacity:.9">prime spending years — the people who actually buy</div>
+    <div class="age-story">
+      ${AGE.map(r=>`<div class="asr"><span class="asl">${r[0]}</span><span class="asb"><i style="width:${r[2]}%"></i></span><span class="asv">${r[1]}%</span></div>`).join('')}
+    </div>
+    <div class="case-sub" style="font-size:9.5px;opacity:.7;margin-top:11px;letter-spacing:.1em">SOURCE · INSTAGRAM AUDIENCE INSIGHTS</div>` };
+    return { img:s.img, html:`
     <div class="case-kick">${s.kick}</div>
     <div class="case-num" style="font-size:54px">${s.big}</div>
     <div class="case-sub" style="font-size:14px;font-weight:500;max-width:280px;margin-top:8px">${s.sub}</div>
-    ${s.cta ? `<div class="case-chips" style="margin-top:16px"><a class="chip-link" style="margin-top:0" href="mailto:osvaldas@reelize.lt">✦ start a campaign</a></div>` : ''}` }));
+    ${s.cta ? `<div class="case-chips" style="margin-top:16px"><a class="chip-link" style="margin-top:0" href="mailto:osvaldas@reelize.lt">✦ start a campaign</a></div>` : ''}` };
+  });
 }
 /* aktyvūs slide'ai — intro ARBA brendo case */
 function activeSlides(){ return introMode ? introSlides() : slidesFor(DATA.cases.find(x=>x.id===cur)); }
@@ -1058,7 +1100,7 @@ document.addEventListener('keydown', e=>{ if(e.key==='Escape' && postsPop.classL
 renderWalls('rows'); // tik juostų režimas
 
 /* ============ BRAND TEXT WALL + „more brands" popover ============ */
-const FEATURED = new Set(DATA.cases.filter(c=>c.id!=='organic').map(c=>c.brand));
+const FEATURED = new Set(DATA.cases.filter(c=>(c.handle||'').startsWith('@')).map(c=>c.brand));
 /* brendo „čipas": jei yra IG handle → <a> linkas į profilį, kitaip <span> tekstas */
 function brandChip(name, handle){
   const inner = FEATURED.has(name) ? `<b>${name}</b>` : name;
@@ -1069,11 +1111,11 @@ function brandChip(name, handle){
 /* siena: featured paryškinti, su handle — linkai į profilį */
 document.getElementById('brandwall').innerHTML =
   DATA.allBrands.map(([n,h])=>brandChip(n,h)).join('');
-document.getElementById('brandsCount').textContent = DATA.allBrands.length + '+ brands';
+document.getElementById('brandsCount').textContent = DATA.db.brandCount + ' brands';
 /* @db auto-fill: visi [data-db] elementai pasiima reikšmę iš DATA.db (vienas SSOT) */
 document.querySelectorAll('[data-db]').forEach(function(el){ var v=DATA.db[el.dataset.db]; if(v!=null) el.textContent=v; });
 /* kairės "+ N more brands" → hover popover (linkai į profilius) + click scroll */
-const moreN = DATA.allBrands.length - FEATURED.size;
+const moreN = DATA.db.brandCount - FEATURED.size;
 document.getElementById('pmoreN').textContent = moreN;
 document.getElementById('pmorePop').innerHTML =
   `<div class="pp-head">${DATA.allBrands.length}+ BRANDS · TAP TO OPEN PROFILE</div>` +
@@ -1120,6 +1162,15 @@ function showToast(msg){
 document.getElementById('planeBtn').addEventListener('click', ()=>{
   showToast(planeMsgs[Math.min(planeIdx, planeMsgs.length-1)]);
   planeIdx++;
+});
+/* ============ SIDE BUTTONS — fun micro-interactions ============ */
+let _fi = 0, _silent = false;
+document.getElementById('btnVup').addEventListener('click', ()=> showToast('🔊 ' + DATA.facts[_fi++ % DATA.facts.length]));
+document.getElementById('btnVdn').addEventListener('click', ()=> showToast('🔉 ' + DATA.facts[(DATA.facts.length - 1 - (_fi++ % DATA.facts.length))]));
+document.getElementById('btnAct').addEventListener('click', ()=>{ _silent = !_silent; showToast(_silent ? '🔕 Silenced. The brand DMs disagree.' : '🔔 Sound on. Casting calls incoming.'); });
+document.getElementById('btnPwr').addEventListener('click', ()=>{
+  if (lock && !locked){ locked = true; lock.style.display=''; lock.classList.remove('away'); showToast('🔒 Locked — tap the screen to unlock.'); }
+  else showToast('🔒 Already locked. Tap to unlock.');
 });
 /* ⋯ fun fact sheet */
 const sheet = document.getElementById('factSheet'), backdrop = document.getElementById('sheetBackdrop'),
@@ -1193,11 +1244,11 @@ document.addEventListener('keydown', e=>{ if(e.key==='Escape' && emailPop.classL
 
 /* 🥚 console — sveikina smalsuolį, atidariusį DevTools */
 console.log('%c Inidė Jasnauskaitė ','font:600 20px/1.7 sans-serif;color:#1A1A1A');
-console.log('%cInspecting the markup? Fair. The reels outperform the code — 590M views can vouch.\nIf you build things too: osvaldas@reelize.lt','font:12px/1.5 monospace;color:#9b9b9b');
+console.log('%cInspecting the markup? Fair. The reels outperform the code — 570M views can vouch.\nIf you build things too: osvaldas@reelize.lt','font:12px/1.5 monospace;color:#9b9b9b');
 
 /* 🥚 tab title — kai išeini iš tab\'o, antraštė pakomentuoja; grįžus — atstatoma */
 const _realTitle = document.title;
-const _awayTitles = ['the reel isn\'t over','← 590M views and you leave?','come back, brands are watching','psst — still here','your move'];
+const _awayTitles = ['the reel isn\'t over','← 570M views and you leave?','come back, brands are watching','psst — still here','your move'];
 let _awayIdx = 0;
 document.addEventListener('visibilitychange', ()=>{
   if (document.hidden){ document.title = _awayTitles[_awayIdx % _awayTitles.length]; _awayIdx++; }

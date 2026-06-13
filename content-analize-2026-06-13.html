@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turinio kategorizacijos analizė — 2026-06-13</title>
+<style>
+  :root { --ink:#1a1a1a; --muted:#6b6b6b; --line:#ece7df; --cream:#faf7f2; --accent:#C13584; --good:#1f9d55; --warn:#c2410c; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#ffffff; color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; line-height:1.55; }
+  .wrap { max-width:920px; margin:0 auto; padding:48px 28px 80px; }
+  h1 { font-size:30px; margin:0 0 4px; letter-spacing:-0.02em; }
+  .sub { color:var(--muted); font-size:15px; margin-bottom:36px; }
+  h2 { font-size:21px; margin:44px 0 14px; padding-bottom:8px; border-bottom:2px solid var(--line); letter-spacing:-0.01em; }
+  h3 { font-size:16px; margin:26px 0 10px; }
+  table { border-collapse:collapse; width:100%; font-size:14px; margin:14px 0; }
+  th,td { text-align:left; padding:8px 12px; border-bottom:1px solid var(--line); }
+  th { font-weight:600; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:0.04em; }
+  td.num,th.num { text-align:right; font-variant-numeric:tabular-nums; }
+  tr:last-child td { border-bottom:none; }
+  .card { background:var(--cream); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin:16px 0; }
+  .up { color:var(--good); font-weight:600; } .down { color:var(--warn); font-weight:600; }
+  .pill { display:inline-block; background:var(--cream); border:1px solid var(--line); border-radius:999px; padding:2px 10px; font-size:12px; color:var(--muted); }
+  .big { font-size:34px; font-weight:700; letter-spacing:-0.02em; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:16px 0; }
+  .stat { background:var(--cream); border:1px solid var(--line); border-radius:12px; padding:16px; }
+  .stat .l { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:0.04em; }
+  .stat .v { font-size:24px; font-weight:700; margin-top:4px; letter-spacing:-0.01em; }
+  .rec { border-left:4px solid var(--accent); padding:4px 0 4px 16px; margin:14px 0; }
+  .bar { height:9px; background:var(--line); border-radius:6px; overflow:hidden; display:inline-block; width:120px; vertical-align:middle; }
+  .bar > span { display:block; height:100%; background:linear-gradient(90deg,#833AB4,#C13584,#E1306C); }
+  code { background:var(--cream); padding:1px 6px; border-radius:5px; font-size:13px; }
+  .q { background:#fff7ed; border:1px solid #fed7aa; border-radius:12px; padding:16px 20px; margin:14px 0; }
+  .muted { color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Turinio kategorizacijos analizė</h1>
+  <div class="sub">jasnauskaite.lt · 2026-06-13 · DB šviežia (364,267 sekėjai) · 3,390 postų perklasifikuoti</div>
+
+  <div class="grid">
+    <div class="stat"><div class="l">Postų perklasifikuota</div><div class="v">3,390</div></div>
+    <div class="stat"><div class="l">LLM tikslumas</div><div class="v">100%</div></div>
+    <div class="stat"><div class="l">Over-tagging ↓</div><div class="v">−96%</div></div>
+    <div class="stat"><div class="l">Sekėjai</div><div class="v">364K</div></div>
+  </div>
+
+  <h2>1. Kas pasikeitė kategorizacijoje</h2>
+  <p>Sena sistema žymėjo kategorijas pagal <b>caption raktažodžius</b> (regex). Dvikalbiam (LT/EN), travel-gausiam turiniui tai buvo labai netikslu — žymėjo ir per daug, ir per mažai. Naują sistemą sudaro <b>LLM klasifikatorius</b> (supranta kontekstą) su keyword fallback, viena <b>pagrindinė (primary) kategorija</b> ir rankinio taisymo galimybė. Nauji postai kategorizuojami automatiškai.</p>
+
+  <div class="card">
+    <h3 style="margin-top:0">Tikslumo šuolis</h3>
+    <table>
+      <tr><th>Metrika</th><th class="num">Sena (keyword)</th><th class="num">Nauja (LLM)</th></tr>
+      <tr><td>Vid. kategorijų / postui</td><td class="num">1.96</td><td class="num"><span class="up">1.28</span></td></tr>
+      <tr><td>Postų su 3+ kategorijomis</td><td class="num">882</td><td class="num"><span class="up">41</span></td></tr>
+      <tr><td>Keyword fallback panaudota</td><td class="num">—</td><td class="num">0 / 3,390</td></tr>
+    </table>
+  </div>
+
+  <h3>Travel pavyzdys — esminis pataisymas</h3>
+  <p>Sena sistema <b>Kelionės = 1,636 postai</b>. Tai buvo <b>išpūsta</b>: žodžiai „beach / island / trip / <b>vilnius</b>" žymėjo ne-travel postus (ji <b>gyvena</b> Vilniuje — kasdienybė ≠ kelionė). Tuo pačiu <b>praleido</b> realias keliones, kurių pavadinimų nebuvo sąraše.</p>
+  <table>
+    <tr><th></th><th class="num">Postų</th><th>Pavyzdžiai</th></tr>
+    <tr><td><span class="down">Išmesta iš Travel</span> (klaidingai žymėta)</td><td class="num">1,106</td><td class="muted">„Sesė Vilniuje", grožio/maisto postai, Kaziuko mugė</td></tr>
+    <tr><td><span class="up">Pridėta į Travel</span> (LLM rado)</td><td class="num">221</td><td class="muted">Bodrum 🇹🇷, London, „abroad", Tenerife, Copenhagen</td></tr>
+    <tr><td><b>Galutinis Kelionės</b></td><td class="num"><b>751</b></td><td class="muted">tikslus, patikimas skaičius</td></tr>
+  </table>
+  <p class="muted" style="font-size:13px">Validuota rankiniu spot-check'u: pataisymai teisingi (Bodrum/Turkey/London pridėti, Vilnius-namų kasdienybė pašalinta). ~90%+ tikslumas, keli borderline atvejai (pvz. „Italian food 🇮🇹" — LLM laiko maistu, ne kelione).</p>
+
+  <h2>2. Tikras turinio veidas (pagal pagrindinę kategoriją)</h2>
+  <p>Kiekvienas postas priskirtas <b>vienai</b> pagrindinei temai → švarus „apie ką iš tikro yra šis profilis":</p>
+  <table>
+    <tr><th>Tema</th><th class="num">Postų</th><th class="num">Peržiūros</th><th>Dalis (pagal views)</th></tr>
+    <tr><td>🧥 <b>Fashion</b> (Outfitai)</td><td class="num">1,333</td><td class="num">260.4M</td><td><span class="bar"><span style="width:100%"></span></span> 37.0%</td></tr>
+    <tr><td>💑 <b>Couple</b> (Pora)</td><td class="num">346</td><td class="num">119.5M</td><td><span class="bar"><span style="width:46%"></span></span> 17.0%</td></tr>
+    <tr><td>🎉 <b>Events</b> (Renginiai)</td><td class="num">331</td><td class="num">115.5M</td><td><span class="bar"><span style="width:44%"></span></span> 16.4%</td></tr>
+    <tr><td>✈️ <b>Travel</b> (Kelionės)</td><td class="num">491</td><td class="num">86.1M</td><td><span class="bar"><span style="width:33%"></span></span> 12.2%</td></tr>
+    <tr><td>Lifestyle</td><td class="num">302</td><td class="num">39.8M</td><td><span class="bar"><span style="width:15%"></span></span> 5.7%</td></tr>
+    <tr><td>🍽️ Food (Maistas)</td><td class="num">184</td><td class="num">32.3M</td><td><span class="bar"><span style="width:12%"></span></span> 4.6%</td></tr>
+    <tr><td>🛒 FMCG</td><td class="num">80</td><td class="num">28.5M</td><td><span class="bar"><span style="width:11%"></span></span> 4.0%</td></tr>
+    <tr><td>💄 Beauty (Grožis)</td><td class="num">286</td><td class="num">16.1M</td><td><span class="bar"><span style="width:6%"></span></span> 2.3%</td></tr>
+  </table>
+  <p class="muted" style="font-size:13px">Įžvalga: <b>Events (16.4%) — netikėtai stiprus</b> (koncertai, šventės, mergvakariai). Anksčiau jį keyword'as praleisdavo (171 → 480 postų).</p>
+
+  <h2>3. Filtrų taksonomija (website + media kit)</h2>
+  <p>Kategorijos = <b>filtrai</b> virš tų pačių duomenų (DB neliesta). Kiekvienas — su organic / partnerystės skaidymu:</p>
+  <table>
+    <tr><th>Filtras</th><th class="num">Viso</th><th class="num">Organic</th><th class="num">Partnerystės</th></tr>
+    <tr><td>🧥 Fashion</td><td class="num">1,555 / 288.1M</td><td class="num">1,338 / 263.7M</td><td class="num">217 / 24.3M</td></tr>
+    <tr><td>🎉 Events</td><td class="num">480 / 179.0M</td><td class="num">389 / 156.8M</td><td class="num">91 / 22.2M</td></tr>
+    <tr><td>💑 Couple</td><td class="num">532 / 164.8M</td><td class="num">491 / 152.5M</td><td class="num">41 / 12.3M</td></tr>
+    <tr><td>✈️ Travel</td><td class="num">751 / 148.6M</td><td class="num">659 / 128.8M</td><td class="num">92 / 19.8M</td></tr>
+    <tr><td>🍽️ Food</td><td class="num">250 / 43.3M</td><td class="num">119 / 20.6M</td><td class="num">131 / 22.7M</td></tr>
+    <tr><td>💄 Beauty</td><td class="num">311 / 22.8M</td><td class="num">168 / 12.4M</td><td class="num">143 / 10.3M</td></tr>
+  </table>
+  <div class="grid">
+    <div class="stat"><div class="l">🌱 Organic (viskas)</div><div class="v">2,606 <span class="muted" style="font-size:15px">/ 574.6M</span></div></div>
+    <div class="stat"><div class="l">🤝 Partnerships (agreguota verslams)</div><div class="v">784 <span class="muted" style="font-size:15px">/ 128.5M</span></div></div>
+  </div>
+  <p class="muted" style="font-size:13px">Travel partnerystės: Visit Dubai (10.2M) · Nissan · Mionetto · KitKat · DFDS · Luminor — geras įrodymas tourism/travel brendams.</p>
+
+  <h2>4. Media kit — atnaujinti ar ne?</h2>
+  <p>Esamas media kit generuotas iš <b>2026-04-14 profilio (2 mėn. senas)</b>. Palyginau senus vs šviežius skaičius:</p>
+  <table>
+    <tr><th>Metrika</th><th class="num">Senas (04-14)</th><th class="num">Šviežias (06-13)</th><th class="num">Δ</th></tr>
+    <tr><td>Sekėjai</td><td class="num">359,412</td><td class="num">364,267</td><td class="num"><span class="up">+1.4%</span></td></tr>
+    <tr><td>Viral 1M+</td><td class="num">85</td><td class="num">87</td><td class="num"><span class="up">+2</span></td></tr>
+    <tr><td>Unikalūs brendai</td><td class="num">189</td><td class="num">194</td><td class="num"><span class="up">+5</span></td></tr>
+    <tr><td>Branded postai</td><td class="num">786</td><td class="num">801</td><td class="num"><span class="up">+15</span></td></tr>
+    <tr><td>LT followers</td><td class="num">~107K</td><td class="num">~108K</td><td class="num"><span class="up">+1.7%</span></td></tr>
+    <tr><td>Vid. peržiūros (2024+)</td><td class="num">631K</td><td class="num">567K</td><td class="num"><span class="down">−10.0%</span></td></tr>
+    <tr><td>Branded vid. peržiūros</td><td class="num">495K</td><td class="num">433K</td><td class="num"><span class="down">−12.6%</span></td></tr>
+    <tr><td>IG total views (lifetime)</td><td class="num">591.3M</td><td class="num">572.2M</td><td class="num"><span class="down">−3.2%</span></td></tr>
+  </table>
+
+  <div class="card">
+    <h3 style="margin-top:0">Kodėl kai kurie skaičiai krenta?</h3>
+    <p style="margin-bottom:0"><b>Tai NE realus smukimas.</b> Vid. peržiūros krenta, nes per 2 mėn. pridėta <b>nesubrendusių</b> postų (peržiūros kaupiasi savaitėmis-mėnesiais) — jie laikinai temptelėja vidurkį žemyn. Total views „kritimas" −3.2% = Meta metrikų nestabilumas tarp collection'ų (perskaičiuoja senus), ne prarastos peržiūros. „591M+" su „+" vis tiek galioja.</p>
+  </div>
+
+  <h3>Rekomendacija: selektyvus atnaujinimas, NE aklas full-refresh</h3>
+  <div class="rec">✅ <b>Atnaujinti</b> (aiškūs pliusai): sekėjai 364K · brendai 194 · viral 87 · pridėti naujus travel case'us (Bodrum, London, Italija) + naujas partnerystes.</div>
+  <div class="rec">🚫 <b>NEnaudoti „LT views/mėn"</b> (atmesta 2026-06-13): follower-bazės modelis (95%/35%) nepagrįstas — reach≠tik sekėjai. LT followers (~108K, tikras Meta) — galima.</div>
+  <div class="rec">⏸️ <b>NEnumušti</b> vidutinių peržiūrų (631K→567K): pardavimų įrankiui rodyti mažesnį skaičių be realios priežasties — žala. Variantas: skaičiuoti vidurkį <b>be paskutinių ~60 d.</b> (nesubrendusių postų) → lieka teisingas ir stabilus.</div>
+  <div class="rec">🔗 <b>Pasirinktinai suvienodinti</b>: media kit travel/branded naudoja savo atskirą detekciją. Travel jau ≈ sutampa (511 ≈ 491 LLM primary). Brendų skaičių galima suvienodinti su švariu 154 (vietoj 194).</div>
+
+  <h2>5. Sprendimai, kurių reikia iš tavęs</h2>
+  <div class="q"><b>1. Highlights kategorijos website'e?</b><br>Siūlau (pagal duomenis): <b>Organic · Travel · Partnerships</b> (agreguota) <b>· Fashion · Couple · Events</b> + top klientai (Mionetto, Akropolis, Hellmann's). Events stipresnis nei tikėtasi — verta įtraukti.</div>
+  <div class="q"><b>2. Media kit:</b> selektyvus refresh dabar (su stabilizuotu vidurkiu), ar palaukti ~mėnesį kol nauji postai subręs?</div>
+  <div class="q"><b>3. Sekėjai rodyti kaip „364K"?</b></div>
+
+  <p class="muted" style="font-size:12px; margin-top:40px; border-top:1px solid var(--line); padding-top:16px">
+    Techninė bazė: <code>modules/categorizer.js</code> (LLM + keyword fallback) · <code>scripts/categorize-backfill.js</code> (resumable) · <code>content-db.js</code> integracija (primaryCategory, manual&gt;LLM&gt;keyword) · <code>social-collector.js</code> hook (nauji postai auto). Cache: <code>data/analytics/content-categories.json</code> (3,390 įrašų). DB neperkrapštyta — tik filtrai.
+  </p>
+
+</div>
+</body>
+</html>
