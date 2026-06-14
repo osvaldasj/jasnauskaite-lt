@@ -111,7 +111,7 @@ button{font-family:var(--sans);cursor:pointer}
 .lock.away{transform:translateY(-103%);opacity:.4}
 .lock .ltime{margin-top:88px;font-size:64px;font-weight:300;letter-spacing:-.02em;line-height:1}
 .lock .ldate{font-size:13px;font-weight:500;opacity:.85;margin-top:6px}
-.lock .notifs{margin-top:34px;display:flex;flex-direction:column;gap:9px;width:calc(100% - 36px)}
+.lock .notifs{margin-top:34px;display:flex;flex-direction:column;gap:0;width:calc(100% - 36px)}
 .notif{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.22);backdrop-filter:blur(18px);
   border-radius:18px;padding:11px 13px;text-align:left}
 .notif .nic{width:30px;height:30px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center}
@@ -1285,6 +1285,8 @@ document.addEventListener('visibilitychange', ()=>{
 @keyframes pe-slide{from{opacity:0;transform:translateY(-14px) scale(.96)}to{opacity:1;transform:none}}
 html,body{overflow-x:hidden;max-width:100vw}
 .phone{transform-origin:top center}
+
+.notif{max-height:150px;overflow:hidden;margin-bottom:9px;transition:max-height .55s cubic-bezier(0.22,1,0.36,1),opacity .45s,transform .5s,margin-bottom .5s}.notif:last-child{margin-bottom:0}.notif.n-enter{max-height:0;opacity:0;margin-bottom:0;transform:translateY(-8px)}.notif.n-show{max-height:150px;opacity:1;margin-bottom:9px;transform:none}.notif.n-leave{max-height:0;opacity:0;margin-bottom:0;transform:translateY(-6px)}
 </style>
 <script id="phone-embed-rotate">
 (function(){
@@ -1311,7 +1313,7 @@ html,body{overflow-x:hidden;max-width:100vw}
   ];
   var last=-1;
   function pick(){var i;do{i=Math.floor(Math.random()*pool.length);}while(i===last&&pool.length>1);last=i;return pool[i];}
-  function rotate(){var pp=pick();var el=document.createElement('div');el.className='notif n-in';el.innerHTML=pp.a+'<div class="nt"><div class="nrow"><span>'+pp.n+'</span><span>'+pp.t+'</span></div><div class="nmsg">'+pp.m+'</div></div>';box.insertBefore(el,box.firstChild);while(box.children.length>3){box.removeChild(box.lastChild);} }
+  function rotate(){var pp=pick();var el=document.createElement('div');el.className='notif n-enter';el.innerHTML=pp.a+'<div class="nt"><div class="nrow"><span>'+pp.n+'</span><span>'+pp.t+'</span></div><div class="nmsg">'+pp.m+'</div></div>';box.insertBefore(el,box.firstChild);void el.offsetHeight;requestAnimationFrame(function(){el.classList.remove('n-enter');el.classList.add('n-show');});if(box.children.length>3){var lst=box.children[box.children.length-1];lst.classList.add('n-leave');setTimeout(function(){if(lst.parentNode)lst.parentNode.removeChild(lst);},560);} }
   setInterval(rotate, 6500);
 })();
 </script>
