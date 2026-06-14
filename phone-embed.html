@@ -1280,5 +1280,35 @@ document.addEventListener('visibilitychange', ()=>{
   .hero { display:flex !important; justify-content:center !important; align-items:flex-start !important; min-height:0 !important; padding:4px !important; gap:0 !important; grid-template-columns:none !important; }
   .phone-zone { margin:0 auto !important; }
 </style>
+<style>
+.notif.n-in{animation:pe-slide .5s cubic-bezier(0.22,1,0.36,1)}
+@keyframes pe-slide{from{opacity:0;transform:translateY(-12px) scale(.97)}to{opacity:1;transform:none}}
+</style>
+<script id="phone-embed-rotate">
+(function(){
+  var box=document.querySelector('.notifs'); if(!box)return;
+  var IG='<div class="nic ig"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff" stroke="none"/></svg></div>';
+  var TT='<div class="nic tt"><svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></div>';
+  var pool=[
+    {a:IG,n:'Instagram',t:'just now',m:'New brand collaboration request 💌'},
+    {a:IG,n:'Instagram',t:'1m ago',m:'Your story is on the Explore page'},
+    {a:TT,n:'TikTok',t:'2m ago',m:'Your sound is going viral 🎵'},
+    {a:IG,n:'Instagram',t:'now',m:'Someone shared your reel to their story'},
+    {a:TT,n:'TikTok',t:'4m ago',m:'Your latest video hit a new milestone ✨'},
+    {a:IG,n:'Instagram',t:'now',m:'mionetto and 169 other brands follow you'},
+    {a:IG,n:'Instagram',t:'3m ago',m:'Your reel passed 14,000,000 views'},
+    {a:TT,n:'TikTok',t:'6m ago',m:'Your video is trending in Lithuania 🔥'}
+  ];
+  var k=0;
+  function rotate(){ if(document.hidden)return;
+    var pp=pool[k]; k=(k+1)%pool.length;
+    var el=document.createElement('div'); el.className='notif n-in';
+    el.innerHTML=pp.a+'<div class="nt"><div class="nrow"><span>'+pp.n+'</span><span>'+pp.t+'</span></div><div class="nmsg">'+pp.m+'</div></div>';
+    box.insertBefore(el, box.firstChild);
+    while(box.children.length>3){ box.removeChild(box.lastChild); }
+  }
+  setInterval(rotate, 4800);
+})();
+</script>
 </body>
 </html>
