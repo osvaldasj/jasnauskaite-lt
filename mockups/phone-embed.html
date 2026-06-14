@@ -1300,7 +1300,7 @@ document.addEventListener('visibilitychange', ()=>{
     {a:TT,n:'TikTok',t:'6m ago',m:'Your video is trending in Lithuania 🔥'}
   ];
   var k=0;
-  function rotate(){ if(document.hidden)return;
+  function rotate(){
     var pp=pool[k]; k=(k+1)%pool.length;
     var el=document.createElement('div'); el.className='notif n-in';
     el.innerHTML=pp.a+'<div class="nt"><div class="nrow"><span>'+pp.n+'</span><span>'+pp.t+'</span></div><div class="nmsg">'+pp.m+'</div></div>';
