@@ -107,7 +107,7 @@ button{font-family:var(--sans);cursor:pointer}
 /* ============ LOCK SCREEN ============ */
 .lock{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;color:#fff;border:0;width:100%;
   background:linear-gradient(160deg,#3c3168 0%,#7b4397 34%,#c0667f 68%,#e8a87c 100%);
-  transition:transform .65s cubic-bezier(.32,0,.18,1),opacity .6s;cursor:pointer;font-family:var(--sans)}
+  transition:transform .65s cubic-bezier(.32,0,.18,1),opacity .6s,background 1.5s ease;cursor:pointer;font-family:var(--sans)}
 .lock.away{transform:translateY(-103%);opacity:.4}
 .lock .ltime{margin-top:88px;font-size:64px;font-weight:300;letter-spacing:-.02em;line-height:1}
 .lock .ldate{font-size:13px;font-weight:500;opacity:.85;margin-top:6px}
@@ -162,7 +162,10 @@ button{font-family:var(--sans);cursor:pointer}
 .grid-tabs div.on{border-top-color:var(--app-ink)}
 .grid-tabs svg{width:18px;height:18px;stroke:var(--app-ink);fill:none;stroke-width:1.6;opacity:.85}
 .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding-bottom:20px}
-.ptile{position:relative;aspect-ratio:4/5;overflow:hidden;border:0;padding:0;background:#eee}
+.ptile{position:relative;aspect-ratio:4/5;overflow:hidden;border:0;padding:0;background:#eee;touch-action:manipulation}
+.ig-dbl-heart{position:absolute;left:50%;top:50%;width:46%;max-width:84px;aspect-ratio:1;transform:translate(-50%,-50%) scale(0);pointer-events:none;z-index:25;color:#fff;filter:drop-shadow(0 3px 14px rgba(0,0,0,.4));animation:igDblHeart .9s cubic-bezier(.17,.89,.32,1.28) forwards}
+.ig-dbl-heart svg{width:100%;height:100%;fill:currentColor;display:block}
+@keyframes igDblHeart{0%{transform:translate(-50%,-50%) scale(0) rotate(-15deg);opacity:0}20%{opacity:1}35%{transform:translate(-50%,-50%) scale(1.15) rotate(0);opacity:1}75%{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}100%{transform:translate(-50%,-50%) scale(.92) rotate(0);opacity:0}}
 .ptile img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
 .ptile:hover img{transform:scale(1.06)}
 .ptile .views{position:absolute;left:6px;bottom:6px;display:flex;align-items:center;gap:4px;color:#fff;font-size:10px;font-weight:600;
@@ -802,10 +805,13 @@ const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* ============ LOCK SCREEN ============ */
 const lock = document.getElementById('lock');
 let locked = true;
+const LOCK_WALL={morning:'linear-gradient(160deg,#243049 0%,#6f6fa8 38%,#e29b8f 72%,#f3c89a 100%)',day:'linear-gradient(160deg,#2f3d80 0%,#7d6fb8 38%,#c98fb0 72%,#efc59a 100%)',golden:'linear-gradient(160deg,#3c2f63 0%,#9b4f80 38%,#d4726a 72%,#f0a86a 100%)',night:'linear-gradient(160deg,#0e1130 0%,#281f57 40%,#553874 72%,#7a466a 100%)'};
 function tickClock(){
   const d = new Date();
   document.getElementById('ltime').textContent = d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
   document.getElementById('ldate').textContent = d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  var hr=d.getHours(); var wk=(hr>=6&&hr<11)?'morning':(hr>=11&&hr<17)?'day':(hr>=17&&hr<21)?'golden':'night';
+  if(typeof lock!=='undefined' && lock) lock.style.background=LOCK_WALL[wk];
 }
 tickClock(); setInterval(tickClock, 30000);
 function unlock(cb){
@@ -838,9 +844,15 @@ tiles.slice(0,12).forEach(t => {
   const el = document.createElement('button');
   el.className = 'ptile';
   el.innerHTML = `<img src="${t.img}" alt=""><span class="views">${play}${t.v}</span>`;
-  el.addEventListener('click', () => t.caseId ? openCase(t.caseId) : window.open('https://instagram.com/jasnauskaite','_blank','noopener'));
+  const act = () => t.caseId ? openCase(t.caseId) : window.open('https://instagram.com/jasnauskaite','_blank','noopener');
+  el.addEventListener('click', () => {
+    const now = Date.now();
+    if(el._lt && now - el._lt < 320){ clearTimeout(el._tt); el._lt = 0; igHeartBurst(el); }
+    else { el._lt = now; clearTimeout(el._tt); el._tt = setTimeout(() => { el._lt = 0; act(); }, 320); }
+  });
   pgrid.appendChild(el);
 });
+function igHeartBurst(host){ if(!host) return; var h=document.createElement('div'); h.className='ig-dbl-heart'; h.innerHTML='<svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>'; host.appendChild(h); setTimeout(function(){ h.remove(); }, 950); }
 
 /* ============ CASE VIEWER (state machine) ============ */
 const caseEl = document.getElementById('case'), caseMedia = document.getElementById('caseMedia'),
