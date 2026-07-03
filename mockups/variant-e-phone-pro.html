@@ -1247,7 +1247,7 @@ function openCaseBySlug(slug){
 /* Telefonas gali būti toli virš viewport'o (brendų siena ~5000px žemyn arba
    „+152 more" popover). Case atsidaro TELEFONE, tad be scroll'o naudotojas nemato
    jokio pokyčio ("telefonai glitchina"). Centruojam telefoną viewport'e.
-   Šiame puslapyje scrollcontainer = <body>{overflow:auto}, todėl element.scrollIntoView()
+   Šiame puslapyje scrollcontainer yra body elementas (overflow:auto), todėl element.scrollIntoView()
    NEVEIKIA (browser'is nemato body kaip scroller'io) — skaičiuojam target ranka ir
    varom window.scrollTo(). Bandom smooth (gražu), bet GARANTUOJAM galutinę poziciją:
    jei po smooth scroll'as nepajudėjo (kai kur smooth suppressed), instant fallback.
