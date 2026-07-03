@@ -315,6 +315,15 @@ button.chip-link{border:0;cursor:pointer;font-family:var(--sans)}
 .pp2-grid a::after{content:'↗';position:absolute;top:9px;right:10px;color:#fff;font-size:11px;opacity:0;transition:opacity .2s;text-shadow:0 1px 4px rgba(0,0,0,.6)}
 .pp2-grid a:hover::after{opacity:1}
 @media (max-width:560px){.pp2-grid{grid-template-columns:repeat(3,1fr)}}
+/* grouped-by-theme mode: sekcijos su antrašte + savas 3-col tinklelis */
+.pp2-grid.is-grouped{display:block}
+.pp2-group + .pp2-group{margin-top:20px}
+.pp2-gh{display:flex;align-items:baseline;gap:9px;padding:0 2px 10px;position:sticky;top:0;z-index:1;
+  background:linear-gradient(#fff 72%,rgba(255,255,255,0))}
+.pp2-gh b{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.pp2-gh .pp2-gh-line{flex:1;height:1px;background:var(--app-hair)}
+.pp2-gh span{font-family:var(--mono);font-size:9px;color:var(--ink-soft);letter-spacing:.04em}
+.pp2-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
 
 /* View all mygtukai */
 .mini-foot .view-all{background:none;border:1px solid #dcdcdc;border-radius:8px;padding:6px 13px;font-size:10.5px;font-weight:700;
@@ -925,8 +934,8 @@ function slidesFor(c){
       ${rows(c.made)}` },
     { img:(c.wall[2] ? c.wall[2][0] : c.cover), html:`
       <div class="case-sub" style="font-size:15px;font-weight:700">${c.brand} — published wall</div>
-      <div class="case-minigrid">${c.wall.slice(0,9).map(w=>`<a class="mg" href="${w[2]||c.reel}" target="_blank" rel="noopener noreferrer" aria-label="Open post on Instagram"><img src="${w[0]}" alt="">${w[3]?`<em class="${w[3]==='TRAVEL'?'trv':''}">${w[3]==='TRAVEL'?'✈ ':''}${w[3]}</em>`:''}<span>▶ ${w[1]}</span></a>`).join('')}</div>
-      <button class="chip-link" data-unit="${c.id}">▦ view all ${c.wall.length} posts</button>` },
+      <div class="case-minigrid">${(c.featured || c.wall).slice(0,9).map(w=>`<a class="mg" href="${w[2]||c.reel}" target="_blank" rel="noopener noreferrer" aria-label="Open post on Instagram"><img src="${w[0]}" alt="" loading="lazy">${w[3]?`<em class="${w[3]==='TRAVEL'?'trv':''}">${w[3]==='TRAVEL'?'✈ ':''}${w[3]}</em>`:''}<span>▶ ${w[1]}</span></a>`).join('')}</div>
+      <button class="chip-link" data-unit="${c.id}">▦ view all ${(c.items && c.items.length) || c.wall.length} posts</button>` },
     { img:(c.wall[3] ? c.wall[3][0] : (c.wall[1] ? c.wall[1][0] : c.cover)), html:`
       <div class="case-kick">the takeaway</div>
       <div class="case-num" style="font-size:34px">${isPillar?'Her own audience.':(c.repeat!==false?'A repeat partner.':'A brand partner.')}</div>
@@ -995,9 +1004,13 @@ function loadBrandCases(){
 }
 /* JSON case → DATA.cases-suderinamas objektas */
 function buildCaseFromJson(jc){
-  const wall = (jc.items || []).map(it => [it.thumb, it.viewsFmt, it.permalink]);
+  const items = jc.items || [];
+  /* theme įtraukiam į wall[i][3] — kaip curated case'uose (UPPERCASE label) */
+  const toWall = arr => arr.map(it => [it.thumb, it.viewsFmt, it.permalink, (it.theme ? it.theme.toUpperCase() : '')]);
+  const wall = toWall(items);                       // VISI postai (popup „view all")
+  const featured = toWall(jc.featured || items.slice(0,12)); // mini-grid (≤12)
   const cover = wall.length ? wall[0][0] : 'images/profile.jpg';
-  const reel = (jc.items && jc.items[0] && jc.items[0].permalink) || 'https://instagram.com/jasnauskaite';
+  const reel = (items[0] && items[0].permalink) || 'https://instagram.com/jasnauskaite';
   const made = [];
   made.push([String(jc.posts), jc.posts === 1 ? 'post' : 'posts']);
   if (jc.viewsFmt) made.push([jc.viewsFmt, 'views']);
@@ -1010,17 +1023,32 @@ function buildCaseFromJson(jc){
     top: jc.topFmt || (wall.length ? wall[0][1] : '—'),
     reel, cover,
     period: jc.period || '', repeat: !!jc.repeat, _fromJson: true,
-    made, wall
+    made, wall, featured,
+    items                                            // themed items → grouped popup
   };
 }
-/* atidaro bet kurį brendą pagal slug — lazy fetch + inject + openCase */
+/* curated case'ą (rankinis header/story) PRATURTINAM JSON themed postais, kad
+   „view all" rodytų VISUS postus sugrupuotus pagal theme. Header/stats/period —
+   NEliečiam (paliekam rankinius). Praturtinam tik jei case dar neturi items. */
+function hydrateCaseFromJson(c, jc){
+  if (c.items && c.items.length) return;              // jau praturtinta
+  const items = jc.items || [];
+  if (!items.length) return;                          // nėra ką grupuoti → paliekam flat wall
+  const toWall = arr => arr.map(it => [it.thumb, it.viewsFmt, it.permalink, (it.theme ? it.theme.toUpperCase() : '')]);
+  c.items = items;
+  c.featured = toWall(jc.featured || items.slice(0,12));
+}
+/* atidaro bet kurį brendą pagal slug — lazy fetch + inject/hydrate + openCase */
 function openCaseBySlug(slug){
   loadBrandCases().then(d => {
     const jc = d.cases && d.cases[slug];
     if (!jc){ console.warn('No case for slug', slug); return; }
     /* jei jau yra DATA.cases (curated arba anksčiau injectintas) — atidaryk tą */
-    if (!DATA.cases.some(c => c.id === slug)){
+    const existing = DATA.cases.find(c => c.id === slug);
+    if (!existing){
       DATA.cases.push(buildCaseFromJson(jc));
+    } else {
+      hydrateCaseFromJson(existing, jc);              // curated → prisegam themed items
     }
     openCase(slug);
   }).catch(err => console.warn('brand-cases load failed:', err));
@@ -1194,22 +1222,62 @@ function renderWalls(mode){
 /* resolve unit (srautas) ARBA case pagal key */
 function resolveUnit(key){
   const u = unitByKey(key);
-  if (u) return u;
+  if (u){
+    /* jei tas pats case praturtintas themed items (curated → hydrate) — prisegam,
+       kad „view all" rodytų VISUS postus sugrupuotus (ne curated flat wall). */
+    const hc = DATA.cases.find(x=>x.id===key && x.items && x.items.length);
+    return hc ? { ...u, items: hc.items } : u;
+  }
   const c = DATA.cases.find(x=>x.id===key);
   if (!c) return null;
   const isPillar = PILLAR_IDS.includes(c.id);
   return { key:c.id, name:c.brand, miniName:c.brand.toLowerCase(), tagLine:isPillar?'content pillar':'paid partnership',
-           handle:c.handle, posts:c.posts, reel:c.reel, wall:c.wall, isOrganic:c.id==='organic', isPillar };
+           handle:c.handle, posts:c.posts, reel:c.reel, wall:c.wall, items:c.items, isOrganic:c.id==='organic', isPillar };
 }
 /* ============ POSTS POPUP (View all) ============ */
 const postsPop = document.getElementById('postsPop'), pp2Grid = document.getElementById('pp2Grid'),
       pp2Title = document.getElementById('pp2Title'), pp2Sub = document.getElementById('pp2Sub');
 const playMini = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+/* vieno posto tile'as (naudoja abu renderiai — flat ir grouped) */
+function ppTile(img, viewsFmt, permalink, theme, reel){
+  const cat = theme
+    ? `<span class="pcat ${theme==='TRAVEL'?'trv':''}">${theme==='TRAVEL'?'✈ ':''}${theme}</span>` : '';
+  return `<a href="${permalink||reel}" target="_blank" rel="noopener noreferrer" aria-label="Open post on Instagram"><img src="${img}" alt="" loading="lazy">${cat}<span class="pv">${playMini}${viewsFmt}</span></a>`;
+}
+/* items sugrupuojami pagal theme, temos rikiuojamos pagal bendrus views desc */
+function groupItemsByTheme(items){
+  const order = [], byTheme = {};
+  items.forEach(it => {
+    const t = it.theme || 'Other';
+    if (!byTheme[t]){ byTheme[t] = { theme:t, items:[], views:0 }; order.push(t); }
+    byTheme[t].items.push(it);
+    byTheme[t].views += (it.views || 0);
+  });
+  return order.map(t => byTheme[t]).sort((a,b)=> b.views - a.views);
+}
 function openPostsPopup(u){
   if (!u) return;
   pp2Title.innerHTML = `jasnauskaite <span style="color:var(--app-soft);font-weight:400">×</span> ${u.miniName}`;
-  pp2Sub.textContent = `${u.handle} · ${u.wall.length} posts · tap to open on Instagram`;
-  pp2Grid.innerHTML = u.wall.map(x=>`<a href="${x[2]||u.reel}" target="_blank" rel="noopener noreferrer" aria-label="Open post on Instagram"><img src="${x[0]}" alt="" loading="lazy">${x[3]?`<span class="pcat ${x[3]==='TRAVEL'?'trv':''}">${x[3]==='TRAVEL'?'✈ ':''}${x[3]}</span>`:''}<span class="pv">${playMini}${x[1]}</span></a>`).join('');
+  const total = (u.items && u.items.length) || (u.wall ? u.wall.length : 0);
+  pp2Sub.textContent = `${u.handle} · ${total} posts · tap to open on Instagram`;
+  /* jei case turi themed items → grupuojam pagal theme; kitaip (curated/legacy wall) → flat */
+  if (u.items && u.items.length){
+    const groups = groupItemsByTheme(u.items);
+    const single = groups.length <= 1;
+    pp2Grid.classList.toggle('is-grouped', !single);
+    if (single){
+      pp2Grid.innerHTML = u.items.map(it => ppTile(it.thumb, it.viewsFmt, it.permalink, (it.theme||'').toUpperCase(), u.reel)).join('');
+    } else {
+      pp2Grid.innerHTML = groups.map(g => `
+        <section class="pp2-group">
+          <div class="pp2-gh"><b>${(g.theme||'').toUpperCase()}</b><span>${g.items.length}</span><span class="pp2-gh-line"></span></div>
+          <div class="pp2-tiles">${g.items.map(it => ppTile(it.thumb, it.viewsFmt, it.permalink, (it.theme||'').toUpperCase(), u.reel)).join('')}</div>
+        </section>`).join('');
+    }
+  } else {
+    pp2Grid.classList.remove('is-grouped');
+    pp2Grid.innerHTML = (u.wall||[]).map(x => ppTile(x[0], x[1], x[2], x[3], u.reel)).join('');
+  }
   pp2Grid.scrollTop = 0;
   postsPop.classList.add('show');
 }
