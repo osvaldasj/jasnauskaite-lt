@@ -1129,12 +1129,13 @@ const UNITS = [];
 DATA.cases.forEach(c=>{
   if (c.streams){
     c.streams.forEach(s=>UNITS.push({key:s.id, name:s.label, miniName:'akropolis', tagLine:s.sub.toLowerCase(),
-      kicker:s.kicker, handle:s.handle, posts:s.posts, views:s.views, er:s.er, top:s.top, reel:s.reel, wall:s.wall, isOrganic:false}));
+      kicker:s.kicker, handle:s.handle, posts:s.posts, views:s.views, er:s.er, top:s.top, reel:s.reel, wall:s.wall, isOrganic:false, isPillar:false}));
   } else {
+    const isPillar = PILLAR_IDS.includes(c.id);
     UNITS.push({key:c.id, name:c.brand, miniName:c.brand.toLowerCase(),
-      tagLine:c.id==='organic'?'own feed':'paid partnership',
-      kicker:c.id==='organic'?'Organic — her own feed':'Branded campaign',
-      handle:c.handle, posts:c.posts, views:c.views, er:c.er, top:c.top, reel:c.reel, wall:c.wall, isOrganic:c.id==='organic'});
+      tagLine:isPillar?'content pillar':'paid partnership',
+      kicker:isPillar?'Content pillar — her own audience':'Branded campaign',
+      handle:c.handle, posts:c.posts, views:c.views, er:c.er, top:c.top, reel:c.reel, wall:c.wall, isOrganic:c.id==='organic', isPillar});
   }
 });
 const unitByKey = k => UNITS.find(u=>u.key===k);
@@ -1150,7 +1151,7 @@ function miniPhoneHTML(u){
       <div class="mini-notch"></div>
       <div class="mini-head">
         <div class="mav"><img src="images/profile.jpg" alt=""></div>
-        <div class="mt"><b>jasnauskaite <span style="color:var(--app-soft)">×</span> ${u.miniName}</b><span>${u.handle} · ${u.tagLine}</span></div>
+        <div class="mt"><b>jasnauskaite <span style="color:var(--app-soft)">×</span> ${u.miniName}</b><span>${u.handle}${(u.isOrganic || u.isPillar) ? '' : ' · ' + u.tagLine}</span></div>
       </div>
       <div class="mini-stats">
         <div class="ms"><b>${u.posts}</b><span>posts</span></div>
@@ -1176,7 +1177,7 @@ function renderWalls(mode){
       <div class="row-info">
         <div class="ri-kicker">${u.kicker}</div>
         <h3>${u.name}</h3>
-        <div class="ri-sub">${u.handle}${u.isOrganic ? '' : ' · ' + u.tagLine}</div>
+        <div class="ri-sub">${u.handle}${(u.isOrganic || u.isPillar) ? '' : ' · ' + u.tagLine}</div>
         <div class="row-nums">
           <div class="rn"><b>${u.views}</b><span>views</span></div>
           <div class="rn"><b>${u.er}</b><span>ER</span></div>
@@ -1196,8 +1197,9 @@ function resolveUnit(key){
   if (u) return u;
   const c = DATA.cases.find(x=>x.id===key);
   if (!c) return null;
-  return { key:c.id, name:c.brand, miniName:c.brand.toLowerCase(), tagLine:c.id==='organic'?'own feed':'paid partnership',
-           handle:c.handle, posts:c.posts, reel:c.reel, wall:c.wall, isOrganic:c.id==='organic' };
+  const isPillar = PILLAR_IDS.includes(c.id);
+  return { key:c.id, name:c.brand, miniName:c.brand.toLowerCase(), tagLine:isPillar?'content pillar':'paid partnership',
+           handle:c.handle, posts:c.posts, reel:c.reel, wall:c.wall, isOrganic:c.id==='organic', isPillar };
 }
 /* ============ POSTS POPUP (View all) ============ */
 const postsPop = document.getElementById('postsPop'), pp2Grid = document.getElementById('pp2Grid'),
