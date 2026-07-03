@@ -1532,8 +1532,10 @@ DATA.cases.forEach(c=>{
   } else {
     const isPillar = PILLAR_IDS.includes(c.id);
     UNITS.push({key:c.id, name:c.brand, miniName:c.brand.toLowerCase(),
-      tagLine:isPillar?'content pillar':'paid partnership',
-      kicker:isPillar?'Content pillar — her own audience':'Branded campaign',
+      /* brendai = „brand campaign" (aiškiau nei IG žargonas); Partnerships agregatas
+         (156 brendų) — be paantraštės, rodo tik „156 brands"; pillar'ai = „content pillar" */
+      tagLine:isPillar?'content pillar':(c.id==='partnerships'?'':'brand campaign'),
+      kicker:isPillar?'Content pillar — her own audience':'Brand campaign',
       handle:c.handle, posts:c.posts, views:c.views, er:c.er, top:c.top, reel:c.reel, wall:c.wall, isOrganic:c.id==='organic', isPillar});
   }
 });
@@ -1550,7 +1552,7 @@ function miniPhoneHTML(u){
       <div class="mini-notch"></div>
       <div class="mini-head">
         <div class="mav"><img src="images/profile.jpg" alt=""></div>
-        <div class="mt"><b>jasnauskaite <span style="color:var(--app-soft)">×</span> ${u.miniName}</b><span>${u.handle}${(u.isOrganic || u.isPillar) ? '' : ' · ' + u.tagLine}</span></div>
+        <div class="mt"><b>jasnauskaite <span style="color:var(--app-soft)">×</span> ${u.miniName}</b><span>${u.handle}${(u.isOrganic || u.isPillar || !u.tagLine) ? '' : ' · ' + u.tagLine}</span></div>
       </div>
       <div class="mini-stats">
         <div class="ms"><b>${u.posts}</b><span>posts</span></div>
@@ -1570,13 +1572,13 @@ function renderWalls(mode){
   UNITS.forEach(u=>{
     const w = document.createElement('div');
     w.className = 'wall-unit' + (u.isOrganic ? ' u-organic' : '');
-    const cap = `<div class="wall-cap"><b>${u.name}</b><span>${u.isOrganic ? 'her own feed' : u.tagLine}</span></div>`;
+    const cap = `<div class="wall-cap"><b>${u.name}</b><span>${u.isOrganic ? 'her own feed' : (u.tagLine || '')}</span></div>`;
     if (mode==='rows'){
       w.innerHTML = miniPhoneHTML(u) + `
       <div class="row-info">
         <div class="ri-kicker">${u.kicker}</div>
         <h3>${u.name}</h3>
-        <div class="ri-sub">${u.handle}${(u.isOrganic || u.isPillar) ? '' : ' · ' + u.tagLine}</div>
+        <div class="ri-sub">${u.handle}${(u.isOrganic || u.isPillar || !u.tagLine) ? '' : ' · ' + u.tagLine}</div>
         <div class="row-nums">
           <div class="rn"><b>${u.views}</b><span>views</span></div>
           <div class="rn"><b>${u.er}</b><span>ER</span></div>
