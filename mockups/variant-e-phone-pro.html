@@ -60,13 +60,14 @@ button{font-family:var(--sans);cursor:pointer}
   columns:2;column-gap:20px;scrollbar-width:thin}
 .pmore:hover .pmore-pop,.pmore:focus-visible .pmore-pop{opacity:1;visibility:visible;transform:translateY(0)}
 .pmore-pop .pp-head{column-span:all;font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:var(--ig-b);margin-bottom:10px}
-.pmore-pop .bx{display:block;font-family:var(--sans);font-size:12.5px;letter-spacing:0;text-transform:none;color:var(--ink-soft);
-  padding:3.5px 0;break-inside:avoid;transition:color .15s;text-decoration:none}
-.pmore-pop a.bx:hover{color:var(--ig-b)}
+.pmore-pop .bx{display:block;width:100%;text-align:left;font:inherit;font-family:var(--sans);font-size:12.5px;letter-spacing:0;text-transform:none;color:var(--ink-soft);
+  padding:3.5px 0;break-inside:avoid;transition:color .15s;text-decoration:none;border:0;background:none;cursor:pointer}
+.pmore-pop .bx:hover,.pmore-pop .bx:focus-visible{color:var(--ig-b);outline:none}
 .pmore-pop .bx b{color:var(--ink);font-weight:600}
-.pmore-pop .bx-plain{color:var(--ink-faint,#aaa89f);cursor:default}
-.pmore-pop .bx-arr{font-size:9px;opacity:0;transition:opacity .15s}
-.pmore-pop a.bx:hover .bx-arr{opacity:.6}
+.pmore-pop .bx-plain{color:var(--ink-faint,#aaa89f)}
+.pmore-pop .bx-plain:hover,.pmore-pop .bx-plain:focus-visible{color:var(--ig-b)}
+.pmore-pop .bx-arr{font-size:11px;opacity:0;transition:opacity .15s}
+.pmore-pop .bx:hover .bx-arr,.pmore-pop .bx:focus-visible .bx-arr{opacity:.6}
 
 /* right stats */
 .stats-wrap{display:flex;flex-direction:column}
@@ -429,11 +430,11 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
 /* brand text wall */
 .brandwall{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:34px 12px;
   display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;column-gap:0;row-gap:14px;max-width:100%}
-.brandwall .bx{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap;display:inline-flex;align-items:baseline;text-decoration:none;transition:color .15s}
+.brandwall .bx{font:inherit;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap;display:inline-flex;align-items:baseline;text-decoration:none;transition:color .15s,transform .12s;border:0;background:none;padding:0;margin:0;cursor:pointer}
 .brandwall .bx b{color:var(--ink);font-weight:600}
-.brandwall a.bx{cursor:pointer}
-.brandwall a.bx:hover{color:var(--ig-b)}
-.brandwall a.bx:hover b{color:var(--ig-b)}
+.brandwall .bx:hover,.brandwall .bx:focus-visible{color:var(--ig-b);outline:none}
+.brandwall .bx:hover b,.brandwall .bx:focus-visible b{color:var(--ig-b)}
+.brandwall .bx:active{transform:translateY(.5px)}
 .brandwall .bx::after{content:'·';margin:0 14px;color:#c9c4ba}
 .brandwall .bx:last-child::after{content:none;margin:0}
 
@@ -761,23 +762,23 @@ const DATA = {
       reel:'https://www.instagram.com/reel/DD46xnfNBmJ/', cover:'images/db/ig_18067130647780793.jpg',
       period:'2019 → 2026', made:[['156','brands'],['788','posts'],['70','repeat partners']],
       wall:[["images/db/ig_18067130647780793.jpg", "11.2M", "https://www.instagram.com/reel/DD46xnfNBmJ/"], ["images/db/ig_18389032630147037.jpg", "3.5M", "https://www.instagram.com/reel/DUBIIXDj5AJ/"], ["images/db/ig_17857298979560141.jpg", "1.5M", "https://www.instagram.com/reel/DRjZN_fCLXa/"], ["images/db/ig_18076084813764675.jpg", "1.2M", "https://www.instagram.com/reel/DMK9spgtfv-/"], ["images/db/ig_18064873301168785.jpg", "1.1M", "https://www.instagram.com/reel/DR6npUDCK23/"], ["images/db/ig_18247914613089382.jpg", "1.5M", "https://www.instagram.com/reel/CrvxzNUMtIt/"], ["images/db/ig_18013604012351711.jpg", "1.2M", "https://www.instagram.com/reel/DBLWsx8OG7f/"], ["images/db/ig_17931047808101374.jpg", "791K", "https://www.instagram.com/p/DQRlHaGiEfJ/"], ["images/db/ig_18043571680848754.jpg", "1.1M", "https://www.instagram.com/reel/DAjKJ_fNbjv/"], ["images/db/ig_17998893020691635.jpg", "1.1M", "https://www.instagram.com/reel/DBWssk2t-yO/"], ["images/db/ig_17910436434152803.jpg", "830K", "https://www.instagram.com/reel/DLeaWEINDFo/"], ["images/db/ig_18194630113333850.jpg", "643K", "https://www.instagram.com/reel/DSPITvBCBR1/"], ["images/db/ig_18062671117739197.jpg", "958K", "https://www.instagram.com/reel/DBje3xQNn17/"], ["images/db/ig_18067411913301085.jpg", "684K", "https://www.instagram.com/reel/DKH4TYNI_tZ/"], ["images/db/ig_17995289177195760.jpg", "754K", "https://www.instagram.com/reel/C03kKMxN6ta/"]] },
-    { id:'mionetto', brand:'Mionetto', handle:'@mionetto', posts:30, views:'17.1M', er:'6.8%', top:'6.9M',
+    { id:'mionetto', brand:'Mionetto', handle:'@mionetto', posts:30, views:'17.2M', er:'7.5%', top:'6.9M',
       reel:'https://www.instagram.com/reel/DNXetzOMT__/', cover:'images/db/ig_17875020749996951.jpg',
       period:'2024 → 2026', made:[['24','reels'],['6','tiktoks'],['30','posts']],
       wall:[["images/db/ig_18033565103697953.jpg", "6.9M", "https://www.instagram.com/reel/DNXetzOMT__/"], ["images/db/ig_17875020749996951.jpg", "3.4M", "https://www.instagram.com/reel/C4SX92Zt6pN/"], ["images/db/ig_18026839199640885.jpg", "1.8M", "https://www.instagram.com/reel/DG-SQyytdoI/"], ["images/db/ig_17910264744188075.jpg", "918K", "https://www.instagram.com/p/DM4n-6qN19d/"], ["images/db/ig_18303896626246220.jpg", "417K", "https://www.instagram.com/reel/DKWRHayI3Zb/"], ["images/db/ig_18484402999063901.jpg", "382K", "https://www.instagram.com/reel/DEsVR0TtO64/"], ["images/db/ig_18052938455411121.jpg", "208K", "https://www.instagram.com/reel/DTpUe_fiBCu/"], ["images/db/ig_17867024502544003.jpg", "176K", "https://www.instagram.com/p/DTp9vJQCCew/"], ["images/db/ig_18104336152754680.jpg", "161K", "https://www.instagram.com/reel/DTndqTCiLFF/"], ["images/db/ig_18342780139091849.jpg", "240K", "https://www.instagram.com/reel/DKpcgboNrea/"], ["images/db/tt_7567316738740587798.jpg", "191K", "https://www.tiktok.com/@jasnauskaite/video/7567316738740587798"], ["images/db/ig_17905231062190270.jpg", "225K", "https://www.instagram.com/p/DLc0e2uN_fA/"], ["images/db/ig_18024185435472079.jpg", "264K", "https://www.instagram.com/reel/C8jU8wJNyMX/"], ["images/db/ig_18063838112034845.jpg", "210K", "https://www.instagram.com/reel/DKjLkJwtPi_/"], ["images/db/ig_18384289588176914.jpg", "168K", "https://www.instagram.com/reel/DQcKKv3CBQ3/"]] },
-    { id:'akropolis', brand:'Akropolis', handle:'@akropolis', posts:53, views:'14.5M', er:'1.6%', top:'1.7M',
+    { id:'akropolis', brand:'Akropolis', handle:'@akropolis', posts:54, views:'14.6M', er:'2.1%', top:'1.7M',
       reel:'https://www.instagram.com/reel/DPDlAeZiEuJ/', cover:'images/db/ig_18081147002050824.jpg',
-      period:'2023 → 2026', made:[['37','reels'],['16','tiktoks'],['53','posts']],
+      period:'2023 → 2026', made:[['38','reels'],['16','tiktoks'],['54','posts']],
       wall:[["images/db/ig_18081147002050824.jpg", "1.7M", "https://www.instagram.com/reel/DPDlAeZiEuJ/"], ["images/db/ig_17857298979560141.jpg", "1.5M", "https://www.instagram.com/reel/DRjZN_fCLXa/"], ["images/db/ig_18064873301168785.jpg", "1.1M", "https://www.instagram.com/reel/DR6npUDCK23/"], ["images/db/ig_17931047808101374.jpg", "791K", "https://www.instagram.com/p/DQRlHaGiEfJ/"], ["images/db/ig_17910436434152803.jpg", "830K", "https://www.instagram.com/reel/DLeaWEINDFo/"], ["images/db/ig_18033968933733498.jpg", "377K", "https://www.instagram.com/reel/DSE7HPgjGA2/"], ["images/db/ig_18070117601149447.jpg", "375K", "https://www.instagram.com/reel/DNz2mq70H81/"], ["images/db/ig_18314716807284894.jpg", "284K", "https://www.instagram.com/reel/DWI5v9JCI28/"], ["images/db/ig_18063003548224739.jpg", "351K", "https://www.instagram.com/reel/DMhbbXmt4bk/"], ["images/db/ig_18550555906030466.jpg", "256K", "https://www.instagram.com/reel/DTXNRR9CIED/"], ["images/db/ig_18342032482091110.jpg", "363K", "https://www.instagram.com/reel/DKB5ul8NTMh/"], ["images/db/ig_17892331761270545.jpg", "261K", "https://www.instagram.com/reel/DLt5rwatNv-/"], ["images/db/ig_18140311774419094.jpg", "254K", "https://www.instagram.com/reel/DNfOHQws3re/"], ["images/db/ig_17987854541956866.jpg", "188K", "https://www.instagram.com/reel/DV_Sf4RCEee/"], ["images/db/ig_18114221812814486.jpg", "180K", "https://www.instagram.com/reel/DWyCAzHCJ48/"]],
       streams:[
         { id:'akropolis-creative', label:'Akropolis', sub:'Creative campaigns', kicker:'concept · production', handle:'@akropolis', posts:32, views:'4.9M', er:'3.2%', top:'469K', reel:'https://www.instagram.com/reel/DDjVYlSN-Qt/', wall:[["images/db/ig_18057074005822356.jpg", "469K", "https://www.instagram.com/reel/DDjVYlSN-Qt/"], ["images/db/ig_18054128705137176.jpg", "365K", "https://www.instagram.com/reel/DGdoiXStQMZ/"], ["images/db/ig_18043529411009914.jpg", "316K", "https://www.instagram.com/reel/DEr1JHHt5je/"], ["images/db/ig_18079042466500662.jpg", "211K", "https://www.instagram.com/reel/DNkXzZ7sxZi/"], ["images/db/ig_18071152916162391.jpg", "207K", "https://www.instagram.com/reel/DO6G51wiNxn/"], ["images/db/ig_18117560860599290.jpg", "149K", "https://www.instagram.com/reel/DTfyudOiC3b/"], ["images/db/ig_17890152801133720.jpg", "266K", "https://www.instagram.com/reel/DDADz7ZtEI5/"], ["images/db/ig_17928567312015498.jpg", "174K", "https://www.instagram.com/reel/DQ61jU7iI0k/"], ["images/db/ig_18022450361689661.jpg", "209K", "https://www.instagram.com/reel/DJj1Zz7oi3T/"], ["images/db/tt_7443105923561737494.jpg", "244K", "https://www.tiktok.com/@jasnauskaite/video/7443105923561737494"], ["images/db/ig_18062424730979161.jpg", "199K", "https://www.instagram.com/reel/DHlvnG6NF6w/"], ["images/db/ig_18091423114732208.jpg", "152K", "https://www.instagram.com/reel/DRrzXc2CBH7/"], ["images/db/ig_18126867478441735.jpg", "185K", "https://www.instagram.com/reel/DJn6oU1IQwI/"], ["images/db/tt_7504195490620181782.jpg", "157K", "https://www.tiktok.com/@jasnauskaite/video/7504195490620181782"], ["images/db/tt_7475022691016183062.jpg", "148K", "https://www.tiktok.com/@jasnauskaite/video/7475022691016183062"]] },
         { id:'akropolis-style', label:'Akropolis × Stilius', sub:'Style edit', kicker:'outfit · trend', handle:'@akropolis', posts:21, views:'9.6M', er:'2.0%', top:'1.7M', reel:'https://www.instagram.com/reel/DPDlAeZiEuJ/', wall:[["images/db/ig_18081147002050824.jpg", "1.7M", "https://www.instagram.com/reel/DPDlAeZiEuJ/"], ["images/db/ig_17857298979560141.jpg", "1.5M", "https://www.instagram.com/reel/DRjZN_fCLXa/"], ["images/db/ig_18064873301168785.jpg", "1.1M", "https://www.instagram.com/reel/DR6npUDCK23/"], ["images/db/ig_17931047808101374.jpg", "791K", "https://www.instagram.com/p/DQRlHaGiEfJ/"], ["images/db/ig_17910436434152803.jpg", "830K", "https://www.instagram.com/reel/DLeaWEINDFo/"], ["images/db/ig_18033968933733498.jpg", "377K", "https://www.instagram.com/reel/DSE7HPgjGA2/"], ["images/db/ig_18070117601149447.jpg", "375K", "https://www.instagram.com/reel/DNz2mq70H81/"], ["images/db/ig_18314716807284894.jpg", "284K", "https://www.instagram.com/reel/DWI5v9JCI28/"], ["images/db/ig_18063003548224739.jpg", "351K", "https://www.instagram.com/reel/DMhbbXmt4bk/"], ["images/db/ig_18550555906030466.jpg", "256K", "https://www.instagram.com/reel/DTXNRR9CIED/"], ["images/db/ig_18342032482091110.jpg", "363K", "https://www.instagram.com/reel/DKB5ul8NTMh/"], ["images/db/ig_17892331761270545.jpg", "261K", "https://www.instagram.com/reel/DLt5rwatNv-/"], ["images/db/ig_18140311774419094.jpg", "254K", "https://www.instagram.com/reel/DNfOHQws3re/"], ["images/db/ig_17987854541956866.jpg", "188K", "https://www.instagram.com/reel/DV_Sf4RCEee/"], ["images/db/ig_18114221812814486.jpg", "180K", "https://www.instagram.com/reel/DWyCAzHCJ48/"]] }
       ] },
-    { id:'hellmanns', brand:"Hellmann's", handle:'@hellmanns', posts:5, views:'15M', er:'6.0%', top:'11.2M',
+    { id:'hellmanns', brand:"Hellmann's", handle:'@hellmanns', posts:5, views:'12.2M', er:'7.5%', top:'11.2M',
       reel:'https://www.instagram.com/reel/DD46xnfNBmJ/', cover:'images/db/ig_18052706273223967.jpg',
       period:'winter 2025', made:[['5','reels'],['5','posts']],
       wall:[["images/db/ig_18067130647780793.jpg", "11.2M", "https://www.instagram.com/reel/DD46xnfNBmJ/"], ["images/db/ig_18052706273223967.jpg", "333K", "https://www.instagram.com/reel/DIYLIQ8tN8e/"], ["images/db/ig_17878566210381473.jpg", "241K", "https://www.instagram.com/reel/DNKnA2loYEu/"], ["images/db/ig_18186527266375277.jpg", "189K", "https://www.instagram.com/reel/DWa5l4jCOoT/"], ["images/db/ig_17917234257246923.jpg", "150K", "https://www.instagram.com/reel/DSjujJZiFPx/"]] },
-    { id:'nissan', brand:'Nissan', handle:'@nissan', posts:40, views:'6.7M', er:'1.2%', top:'3.5M',
+    { id:'nissan', brand:'Nissan', handle:'@nissan', posts:40, views:'6.7M', er:'1.3%', top:'3.5M',
       reel:'https://www.instagram.com/reel/DUBIIXDj5AJ/', cover:'images/db/ig_18389032630147037.jpg',
       period:'2022 → 2025', made:[['39','reels'],['1','tiktok'],['40','posts']],
       wall:[["images/db/ig_18389032630147037.jpg", "3.5M", "https://www.instagram.com/reel/DUBIIXDj5AJ/"], ["images/db/ig_18060157580628664.jpg", "253K", "https://www.instagram.com/p/DPtlaj6iOgA/"], ["images/db/ig_17976548642937073.jpg", "216K", "https://www.instagram.com/p/DPG0cf2iP7w/"], ["images/db/ig_18320194741099687.jpg", "291K", "https://www.instagram.com/reel/CxqaJMINKnX/"], ["images/db/ig_18074042596867369.jpg", "211K", "https://www.instagram.com/reel/DJhTrIft9dU/"], ["images/db/ig_18059528261187686.jpg", "148K", "https://www.instagram.com/reel/DPzAuz7CLoX/"], ["images/db/ig_18062190709464789.jpg", "201K", "https://www.instagram.com/reel/Cz5zcx2IWed/"], ["images/db/ig_17988110840891416.jpg", "133K", "https://www.instagram.com/reel/DRARSgHCMAi/"], ["images/db/ig_17902662906258183.jpg", "121K", "https://www.instagram.com/reel/DPOG-HRCLmX/"], ["images/db/ig_17952584507782243.jpg", "141K", "https://www.instagram.com/reel/C52nPEYtBaS/"], ["images/db/ig_17934923945980087.jpg", "92K", "https://www.instagram.com/reel/DMpN_JftU0e/"], ["images/db/ig_18013210549753191.jpg", "135K", "https://www.instagram.com/reel/CvrZO7yPjDr/"], ["images/db/ig_18082220170436030.jpg", "129K", "https://www.instagram.com/reel/C30fuMFNlxF/"], ["images/db/ig_17926575035875560.jpg", "125K", "https://www.instagram.com/reel/C7V3ye7oPIq/"], ["images/db/ig_17982484979158220.jpg", "123K", "https://www.instagram.com/reel/Cvt4qPaMfVE/"]] },
@@ -900,16 +901,26 @@ function introSlides(){
 /* aktyvūs slide'ai — intro ARBA brendo case */
 function activeSlides(){ return introMode ? introSlides() : slidesFor(DATA.cases.find(x=>x.id===cur)); }
 
+/* Turinio ramsčiai (organic auditorija) vs brendų kampanijos (paid) — label logikai */
+const PILLAR_IDS = ['organic','travel','fashion','couple','events'];
+
 function slidesFor(c){
   const rows = a => `<div class="case-rows">${a.map(p=>`<div class="cr"><b>${p[0]}</b><span>${p[1]}</span></div>`).join('')}</div>`;
+  const isPillar = PILLAR_IDS.includes(c.id);
+  /* ER omittama kai reikšmės nėra (per mažai views patikimam ER) */
+  const erPart = (c.er==null || c.er==='—' || c.er==='') ? '' : ` · ER ${c.er}`;
+  /* chip: pillar → CONTENT PILLAR; repeat brand → REPEAT PARTNER; kitas brand → BRAND PARTNER */
+  const chip = isPillar
+    ? '<span class="chip zero">🌱 CONTENT PILLAR</span>'
+    : (c.repeat!==false ? '<span class="chip alt">REPEAT PARTNER</span>' : '<span class="chip alt">BRAND PARTNER</span>');
   return [
     { img:c.cover, html:`
       <div class="case-num">${c.views}</div>
-      <div class="case-sub">views · ${c.posts} posts · ER ${c.er}</div>
-      <div class="case-chips"><span class="chip">TOP ${c.top}</span>${c.id==='organic'?'<span class="chip zero">🌱 ORGANIC</span>':'<span class="chip alt">REPEAT PARTNER</span>'}</div>
+      <div class="case-sub">views · ${c.posts} posts${erPart}</div>
+      <div class="case-chips"><span class="chip">TOP ${c.top}</span>${chip}</div>
       <a class="chip-link" href="${c.reel}" target="_blank" rel="noopener noreferrer">${play} watch on Instagram</a>` },
     { img:(c.wall[1] ? c.wall[1][0] : c.cover), html:`
-      <div class="case-kick">${c.id==='organic'?'her own feed':'the collaboration'}</div>
+      <div class="case-kick">${isPillar?'her own audience':'the collaboration'}</div>
       <div class="case-num" style="font-size:40px">${c.period}</div>
       ${rows(c.made)}` },
     { img:(c.wall[2] ? c.wall[2][0] : c.cover), html:`
@@ -918,9 +929,9 @@ function slidesFor(c){
       <button class="chip-link" data-unit="${c.id}">▦ view all ${c.wall.length} posts</button>` },
     { img:(c.wall[3] ? c.wall[3][0] : (c.wall[1] ? c.wall[1][0] : c.cover)), html:`
       <div class="case-kick">the takeaway</div>
-      <div class="case-num" style="font-size:34px">${c.id==='organic'?'Her own audience.':'A repeat partner.'}</div>
+      <div class="case-num" style="font-size:34px">${isPillar?'Her own audience.':(c.repeat!==false?'A repeat partner.':'A brand partner.')}</div>
       <div class="case-sub">${c.period}</div>
-      <a class="chip-link" href="${c.id==='organic'?c.reel:'mailto:osvaldas@reelize.lt'}"${c.id==='organic'?' target="_blank" rel="noopener noreferrer"':''}>${c.id==='organic'?play+' see the full feed':'✦ start a campaign'}</a>` }
+      <a class="chip-link" href="${isPillar?c.reel:'mailto:osvaldas@reelize.lt'}"${isPillar?' target="_blank" rel="noopener noreferrer"':''}>${isPillar?play+' see the full feed':'✦ start a campaign'}</a>` }
   ];
 }
 function renderSlide(){
@@ -965,6 +976,78 @@ function openIntro(){
   caseBars.innerHTML = activeSlides().map(()=>'<div class="cbar"><i></i></div>').join('');
   caseEl.classList.add('open');
   renderSlide(); startTimer();
+}
+
+/* ============ LAZY BRAND CASES (visi 156 brendai spustelėjami) ============
+   brand-cases.json parsisiunčiamas pirmo paspaudimo metu (relatyvus kelias →
+   /mockups/brand-cases.json kai serve'inama iš repo šaknies). Case objektas
+   sukonstruojamas iš JSON ir įdedamas į DATA.cases, kad panaudotų esamą
+   case-viewer'į (openCase / slidesFor / posts popup) be dublikacijos. */
+let _brandCasesData = null, _brandCasesPromise = null;
+function loadBrandCases(){
+  if (_brandCasesData) return Promise.resolve(_brandCasesData);
+  if (_brandCasesPromise) return _brandCasesPromise;
+  _brandCasesPromise = fetch('brand-cases.json')
+    .then(r => { if (!r.ok) throw new Error('brand-cases.json ' + r.status); return r.json(); })
+    .then(d => { _brandCasesData = d; return d; })
+    .catch(err => { _brandCasesPromise = null; throw err; });
+  return _brandCasesPromise;
+}
+/* JSON case → DATA.cases-suderinamas objektas */
+function buildCaseFromJson(jc){
+  const wall = (jc.items || []).map(it => [it.thumb, it.viewsFmt, it.permalink]);
+  const cover = wall.length ? wall[0][0] : 'images/profile.jpg';
+  const reel = (jc.items && jc.items[0] && jc.items[0].permalink) || 'https://instagram.com/jasnauskaite';
+  const made = [];
+  made.push([String(jc.posts), jc.posts === 1 ? 'post' : 'posts']);
+  if (jc.viewsFmt) made.push([jc.viewsFmt, 'views']);
+  if (jc.er != null) made.push([jc.er + '%', 'ER']);
+  return {
+    id: jc.slug, brand: jc.brand,
+    handle: '@' + jc.slug, posts: jc.posts,
+    views: jc.viewsFmt || '—',
+    er: (jc.er != null ? jc.er + '%' : null),
+    top: jc.topFmt || (wall.length ? wall[0][1] : '—'),
+    reel, cover,
+    period: jc.period || '', repeat: !!jc.repeat, _fromJson: true,
+    made, wall
+  };
+}
+/* atidaro bet kurį brendą pagal slug — lazy fetch + inject + openCase */
+function openCaseBySlug(slug){
+  loadBrandCases().then(d => {
+    const jc = d.cases && d.cases[slug];
+    if (!jc){ console.warn('No case for slug', slug); return; }
+    /* jei jau yra DATA.cases (curated arba anksčiau injectintas) — atidaryk tą */
+    if (!DATA.cases.some(c => c.id === slug)){
+      DATA.cases.push(buildCaseFromJson(jc));
+    }
+    openCase(slug);
+  }).catch(err => console.warn('brand-cases load failed:', err));
+}
+/* brendo rodomas vardas → slug (iš JSON brand laukų; fallback slugify) */
+let _nameToSlug = null;
+function slugifyBrand(name){
+  /* fallback tik jei vardo nėra JSON brand žemėlapyje (praktiškai nepasitaiko) */
+  return name.toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+function brandNameToSlug(name){
+  if (_brandCasesData && _brandCasesData.cases){
+    if (!_nameToSlug){
+      _nameToSlug = {};
+      for (const k in _brandCasesData.cases){ _nameToSlug[_brandCasesData.cases[k].brand] = k; }
+    }
+    if (_nameToSlug[name]) return _nameToSlug[name];
+  }
+  return slugifyBrand(name);
+}
+/* atidaro pagal rodomą vardą — jei JSON dar neįkeltas, įkelia ir tada mapina */
+function openBrandByName(name){
+  loadBrandCases().then(() => { openCaseBySlug(brandNameToSlug(name)); })
+    .catch(err => console.warn('brand-cases load failed:', err));
 }
 function closeCase(){
   caseEl.classList.remove('open'); stopTimer(); cur = null; paused = false; introMode = false;
@@ -1141,30 +1224,41 @@ renderWalls('rows'); // tik juostų režimas
 
 /* ============ BRAND TEXT WALL + „more brands" popover ============ */
 const FEATURED = new Set(DATA.cases.filter(c=>(c.handle||'').startsWith('@')).map(c=>c.brand));
-/* brendo „čipas": jei yra IG handle → <a> linkas į profilį, kitaip <span> tekstas */
+/* brendo „čipas": kiekvienas vardas — spustelėjamas → atidaro brendo case'ą
+   (visi 156 brendai turi case brand-cases.json). data-brand nešamas delegacijai. */
 function brandChip(name, handle){
   const inner = FEATURED.has(name) ? `<b>${name}</b>` : name;
-  return handle
-    ? `<a class="bx" href="https://instagram.com/${handle}" target="_blank" rel="noopener noreferrer" title="@${handle}">${inner}</a>`
-    : `<span class="bx bx-plain">${inner}</span>`;
+  const t = handle ? ` title="@${handle}"` : '';
+  return `<button type="button" class="bx bx-case${handle?'':' bx-plain'}" data-brand="${name.replace(/"/g,'&quot;')}"${t}>${inner}</button>`;
 }
-/* siena: featured paryškinti, su handle — linkai į profilį */
+/* siena: kiekvienas brendas — mygtukas, atidarantis case viewer'į */
 document.getElementById('brandwall').innerHTML =
   DATA.allBrands.map(([n,h])=>brandChip(n,h)).join('');
 document.getElementById('brandsCount').textContent = DATA.db.brandCount + ' brands';
 /* @db auto-fill: visi [data-db] elementai pasiima reikšmę iš DATA.db (vienas SSOT) */
 document.querySelectorAll('[data-db]').forEach(function(el){ var v=DATA.db[el.dataset.db]; if(v!=null) el.textContent=v; });
-/* kairės "+ N more brands" → hover popover (linkai į profilius) + click scroll */
+/* kairės "+ N more brands" → hover popover (spustelėjami → case) + click scroll */
 const moreN = DATA.db.brandCount - FEATURED.size;
 document.getElementById('pmoreN').textContent = moreN;
 document.getElementById('pmorePop').innerHTML =
-  `<div class="pp-head">${DATA.allBrands.length}+ BRANDS · TAP TO OPEN PROFILE</div>` +
-  DATA.allBrands.map(([n,h])=>h
-    ? `<a class="bx" href="https://instagram.com/${h}" target="_blank" rel="noopener noreferrer">${FEATURED.has(n)?`<b>${n}</b>`:n} <span class="bx-arr">↗</span></a>`
-    : `<span class="bx bx-plain">${FEATURED.has(n)?`<b>${n}</b>`:n}</span>`).join('');
+  `<div class="pp-head">${DATA.allBrands.length}+ BRANDS · TAP TO OPEN CASE</div>` +
+  DATA.allBrands.map(([n,h])=>
+    `<button type="button" class="bx bx-case${h?'':' bx-plain'}" data-brand="${n.replace(/"/g,'&quot;')}">${FEATURED.has(n)?`<b>${n}</b>`:n} <span class="bx-arr">›</span></button>`).join('');
+/* delegacija: bet kuris .bx-case (siena arba popover) → atidaro case pagal vardą */
+function _wireBrandCase(container){
+  if (!container) return;
+  container.addEventListener('click', function(e){
+    const b = e.target.closest('.bx-case');
+    if (!b || !container.contains(b)) return;
+    e.preventDefault();
+    openBrandByName(b.dataset.brand);
+  });
+}
+_wireBrandCase(document.getElementById('brandwall'));
+_wireBrandCase(document.getElementById('pmorePop'));
 function scrollToBrands(){ document.getElementById('brands').scrollIntoView({behavior:'smooth', block:'start'}); }
 document.getElementById('pmore').addEventListener('click', e=>{
-  if (e.target.closest('a.bx')) return; // brendo profilio linkas atsidaro pats
+  if (e.target.closest('.bx-case')) return; // brendo case mygtukas — tvarko _wireBrandCase
   e.preventDefault();
   scrollToBrands();
 });
