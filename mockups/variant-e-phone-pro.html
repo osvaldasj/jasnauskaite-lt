@@ -961,6 +961,10 @@ const PILLAR_IDS = ['organic','travel','fashion','couple','events'];
 
 /* jos bendras DB ER vidurkis (baseline) — sk.4 palyginimui. Iš JSON top-level. */
 function baselineER(){ return (_brandCasesData && _brandCasesData.baselineER) || 5.9; }
+/* ER patikimumo lubos: virš jų ER beveik tikrai giveaway/viral-komentarų
+   išpūstas (ne reprezentatyvus paid-kampanijos performance), tad „N× vidurkio"
+   skambėtų fake. Tokiems brendams sk.4 → reach-led (be ER palyginimo). Tune čia. */
+const ER_CEILING = 20;
 /* content-mix juostos iš themeCounts (top ~5, plotis ∝ count) */
 function mixBarsHTML(themeCounts){
   const entries = Object.entries(themeCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
@@ -1064,7 +1068,9 @@ function slidesFor(c){
 
   /* SLIDE 4 „the result" — adaptyvus proof */
   const base = baselineER();
-  const showER = (c.erNum != null && c.erNum > base);
+  /* ER blokas TIK kai baseline < erNum <= ER_CEILING. Virš lubų (outlier/giveaway)
+     → reach-led (kaip ir <= baseline arba null), be „N× vidurkio". */
+  const showER = (c.erNum != null && c.erNum > base && c.erNum <= ER_CEILING);
   const proofStats = `<div class="case-proof">
       <div class="pf"><b>${c.top}</b><span>Top post</span></div>
       <div class="pf"><b>${c.views}</b><span>Total reach</span></div>
