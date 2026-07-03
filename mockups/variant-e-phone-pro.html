@@ -1612,7 +1612,7 @@ function resolveUnit(key){
   const c = DATA.cases.find(x=>x.id===key);
   if (!c) return null;
   const isPillar = PILLAR_IDS.includes(c.id);
-  return { key:c.id, name:c.brand, miniName:c.brand.toLowerCase(), tagLine:isPillar?'content pillar':'paid partnership',
+  return { key:c.id, name:c.brand, miniName:c.brand.toLowerCase(), tagLine:isPillar?'content pillar':(c.id==='partnerships'?'':'brand campaign'),
            handle:c.handle, posts:c.posts, reel:c.reel, wall:c.wall, items:c.items, isOrganic:c.id==='organic', isPillar };
 }
 /* ============ POSTS POPUP (View all) ============ */
