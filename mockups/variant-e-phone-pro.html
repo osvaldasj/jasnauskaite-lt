@@ -1050,8 +1050,42 @@ function openCaseBySlug(slug){
     } else {
       hydrateCaseFromJson(existing, jc);              // curated → prisegam themed items
     }
-    openCase(slug);
+    /* Telefonas gali būti UŽRAKINTAS (lock z-30 dengia case z-25) IR toli virš
+       viewport'o (brendų siena/popover). Hero-list srautas atrakina prieš openCase
+       — kartojam tą patį: pirma centruojam telefoną, tada unlock → openCase, kad
+       case tikrai matytųsi (ne po lockscreen'u, ne už ekrano ribų). */
+    scrollPhoneIntoView();
+    unlock(() => openCase(slug));
   }).catch(err => console.warn('brand-cases load failed:', err));
+}
+/* Telefonas gali būti toli virš viewport'o (brendų siena ~5000px žemyn arba
+   „+152 more" popover). Case atsidaro TELEFONE, tad be scroll'o naudotojas nemato
+   jokio pokyčio ("telefonai glitchina"). Centruojam telefoną viewport'e.
+   Šiame puslapyje scrollcontainer = <body>{overflow:auto}, todėl element.scrollIntoView()
+   NEVEIKIA (browser'is nemato body kaip scroller'io) — skaičiuojam target ranka ir
+   varom window.scrollTo(). Bandom smooth (gražu), bet GARANTUOJAM galutinę poziciją:
+   jei po smooth scroll'as nepajudėjo (kai kur smooth suppressed), instant fallback.
+   Hero-list paspaudimams (telefonas jau matomas) — no-op. Telefono dydžio/transform
+   NEliečiam — tik puslapio scroll. */
+function scrollPhoneIntoView(){
+  const phoneEl = document.querySelector('.phone');
+  if (!phoneEl) return;
+  const rect = phoneEl.getBoundingClientRect();
+  const absTop = rect.top + window.scrollY;
+  const target = Math.max(0, absTop - Math.max(0, (window.innerHeight - rect.height) / 2));
+  const startY = window.scrollY;
+  /* jei jau iš esmės ten (hero) — nieko nedarom */
+  if (Math.abs(startY - target) < 8) return;
+  /* smooth animacija gražiam UX (real browser); reduced-motion → instant */
+  try { window.scrollTo({ top: target, behavior: reduced ? 'instant' : 'smooth' }); }
+  catch(_) { window.scrollTo(0, target); }
+  /* GARANTIJA: jei per ~120ms scroll'as visai nepajudėjo (smooth suppressed),
+     priverstinai instant — kad telefonas TIKRAI atsidurtų viewport'e. */
+  setTimeout(() => {
+    if (Math.abs(window.scrollY - startY) < 4 && Math.abs(window.scrollY - target) >= 8){
+      window.scrollTo({ top: target, behavior: 'instant' });
+    }
+  }, 120);
 }
 /* brendo rodomas vardas → slug (iš JSON brand laukų; fallback slugify) */
 let _nameToSlug = null;
@@ -1221,6 +1255,14 @@ function renderWalls(mode){
 }
 /* resolve unit (srautas) ARBA case pagal key */
 function resolveUnit(key){
+  /* jei case atidarytas ne per openCaseBySlug (pvz. hero-list → openCase tiesiogiai),
+     jis dar gali neturėti themed items. Jei JSON jau įkeltas — praturtinam dabar,
+     kad „view all" grupavimas būtų NUOSEKLUS nepriklausomai nuo įėjimo taško. */
+  const cAny = DATA.cases.find(x=>x.id===key);
+  if (cAny && !(cAny.items && cAny.items.length) && _brandCasesData && _brandCasesData.cases){
+    const jc = _brandCasesData.cases[key];
+    if (jc) hydrateCaseFromJson(cAny, jc);
+  }
   const u = unitByKey(key);
   if (u){
     /* jei tas pats case praturtintas themed items (curated → hydrate) — prisegam,
