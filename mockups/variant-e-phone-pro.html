@@ -248,6 +248,32 @@ button.chip-link{border:0;cursor:pointer;font-family:var(--sans)}
 .case-spot .spr:hover .sprt{outline:1.5px solid rgba(255,255,255,.85)}
 .case-spot .spr:hover .sprv{color:#F77737}
 .case-foot{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#fff;opacity:.72;margin-top:16px}
+/* ══ EDITORIAL PILLAR slide 2 — premium, kvėpuojantis ══ */
+/* rafinuotas scrim: viršus kvėpuoja (foto matosi), apačia gilesnė (tekstas skaitosi) */
+.cm-edit{position:absolute;inset:0;z-index:1;background:
+  linear-gradient(180deg,rgba(10,8,12,.28) 0%,rgba(10,8,12,.12) 26%,rgba(10,8,12,.42) 60%,rgba(10,8,12,.88) 100%)}
+.pl-head{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.02;margin-bottom:22px;text-shadow:0 2px 20px rgba(0,0,0,.45)}
+/* content mix (airy): plona juosta, sans temos vardas, mono % */
+.pl-mix{display:flex;flex-direction:column;gap:13px;max-width:290px}
+.pl-mix .plm-row{display:grid;grid-template-columns:78px 1fr 30px;align-items:center;gap:12px}
+.pl-mix .plm-name{font-size:12.5px;font-weight:500;letter-spacing:.01em;color:#fff;opacity:.94;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-mix .plm-track{height:3px;border-radius:2px;background:rgba(255,255,255,.16);overflow:hidden}
+.pl-mix .plm-track i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,#C13584,#E1306C,#F77737)}
+.pl-mix .plm-pct{text-align:right;font-family:var(--mono);font-size:10px;font-weight:600;color:#fff;opacity:.66;letter-spacing:.02em}
+.pl-yearline{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#fff;opacity:.6;margin:22px 0 8px}
+/* slim area sparkline */
+.pl-spark{max-width:300px}
+.pl-spark svg{display:block;width:100%;height:46px}
+.pl-spark-axis{display:flex;justify-content:space-between;margin-top:5px;font-family:var(--mono);font-size:9px;letter-spacing:.05em;color:#fff;opacity:.58}
+/* refined top-posts spotlight — 3 kortelės eilėje */
+.pl-spot{display:flex;gap:10px;max-width:300px;margin-top:10px}
+.pl-spot .pls{position:relative;flex:1;aspect-ratio:3/4;border-radius:12px;overflow:hidden;pointer-events:auto;box-shadow:0 6px 20px -8px rgba(0,0,0,.6);outline:1px solid rgba(255,255,255,.08);transition:transform .25s,outline-color .2s}
+.pl-spot .pls img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.pl-spot .pls:hover{transform:translateY(-3px);outline-color:rgba(255,255,255,.7)}
+.pl-spot .pls:hover img{transform:scale(1.05)}
+.pl-spot .pls .pls-v{position:absolute;left:8px;bottom:7px;font-size:11.5px;font-weight:700;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.85);letter-spacing:.01em}
+.pl-spot .pls::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.6) 100%)}
+.pl-spot .pls .pls-v{z-index:2}
 /* ER palyginimo blokas (sk.4, kai ER > vidurkio) */
 .case-er{max-width:300px}
 .case-er .erbig{font-size:58px;font-weight:700;letter-spacing:-.04em;line-height:.9;text-shadow:0 2px 16px rgba(0,0,0,.4)}
@@ -997,6 +1023,92 @@ function spotlightHTML(c){
     </a>`).join('')}</div>`;
 }
 
+/* ══ EDITORIAL PILLAR slide 2 — premium, airy, blends into whole story ══ */
+/* Turinio miksas (airy): top 4 temos + „others" sugrupuota; plonos juostos, sans
+   temos vardas, mono skaičius. Ne dashboard — kvėpuojantis redakcinis blokas. */
+function pillarMixHTML(themeCounts){
+  const all = Object.entries(themeCounts).sort((a,b)=>b[1]-a[1]);
+  const total = all.reduce((s,[,n])=>s+n, 0) || 1;
+  const top = all.slice(0,4);
+  const restN = all.slice(4).reduce((s,[,n])=>s+n, 0);
+  const rows = top.slice();
+  if (restN > 0) rows.push(['Other', restN]);
+  const max = rows[0] ? rows[0][1] : 1;
+  return `<div class="pl-mix">${rows.map(([t,n])=>`
+    <div class="plm-row">
+      <span class="plm-name">${t}</span>
+      <span class="plm-track"><i style="width:${Math.max(3, Math.round(n/max*100))}%"></i></span>
+      <span class="plm-pct">${Math.round(n/total*100)}%</span>
+    </div>`).join('')}</div>`;
+}
+/* Slim filled-area sparkline iš postsPerYear — „N metų nuoseklumo" elegantiškai,
+   maža vizualinė svoris. SVG area + linija + metų galai. */
+function pillarSparklineHTML(postsPerYear){
+  const years = Object.keys(postsPerYear).map(Number).sort((a,b)=>a-b);
+  if (!years.length) return '';
+  const vals = years.map(y=>postsPerYear[y]);
+  const max = Math.max(...vals, 1);
+  const W = 300, H = 46, n = years.length;
+  const x = i => n<=1 ? 0 : (i/(n-1))*W;
+  const y = v => H - (v/max)*(H-6) - 2;
+  const pts = vals.map((v,i)=>[x(i), y(v)]);
+  const line = pts.map((p,i)=>`${i?'L':'M'}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ');
+  const area = `${line} L${W} ${H} L0 ${H} Z`;
+  const dots = pts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="1.4" fill="rgba(255,255,255,.55)"/>`).join('');
+  const first = years[0], last = years[years.length-1];
+  return `<div class="pl-spark">
+    <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="plspk" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#E1306C" stop-opacity=".42"/><stop offset="1" stop-color="#E1306C" stop-opacity="0"/>
+      </linearGradient></defs>
+      <path d="${area}" fill="url(#plspk)"/>
+      <path d="${line}" fill="none" stroke="url(#plspkline)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+      <linearGradient id="plspkline" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#C13584"/><stop offset="1" stop-color="#F77737"/></linearGradient>
+      ${dots}
+    </svg>
+    <div class="pl-spark-axis"><span>${first}</span><span>${last}</span></div>
+  </div>`;
+}
+/* Refined top-posts spotlight (2-3 kortelės) — elegantiškesnės nei brand spr */
+function pillarSpotHTML(topItems, reel){
+  const items = (topItems || []).slice(0,3);
+  return `<div class="pl-spot">${items.map(it=>`
+    <a class="pls" href="${it.permalink||reel||'https://instagram.com/jasnauskaite'}" target="_blank" rel="noopener noreferrer" aria-label="Open post on Instagram">
+      <span class="pls-thumb"><img src="${it.thumb}" alt="" loading="lazy"></span>
+      <span class="pls-v">${it.viewsFmt}</span>
+    </a>`).join('')}</div>`;
+}
+/* Sudeda pillar slide 2 pagal tipą: organic → mix (hero) + sparkline;
+   single-theme → sparkline + top-posts spotlight. Foto fonas + editorial scrim. */
+function pillarSlide2(c, pd){
+  const bgImg = (pd.topItems && pd.topItems[0] && pd.topItems[0].thumb) || (c.wall[1] ? c.wall[1][0] : c.cover);
+  const span = pd.spanYears || (pd.postsPerYear ? Object.keys(pd.postsPerYear).length : 0);
+  if (c.id === 'organic'){
+    return { img:bgImg, sharp:true, editorial:true, html:`
+      <div class="case-kick">who she is</div>
+      <div class="pl-head">What her audience<br>follows her for.</div>
+      <div class="case-seclabel">Her feed by theme</div>
+      ${pillarMixHTML(pd.themeCounts)}
+      <div class="pl-yearline">${span} years · one feed</div>
+      ${pillarSparklineHTML(pd.postsPerYear)}` };
+  }
+  /* single-theme pillar: sparkline (hero) + top-posts spotlight.
+     Redakcinė antraštė per-pillar (natūrali kalba, ne „years of couple"). */
+  const HEAD = {
+    travel: 'years<br>on the road.',
+    fashion: 'years<br>of style.',
+    couple:  'years<br>of the love story.',
+    events:  'years<br>front row.'
+  };
+  const headTail = HEAD[c.id] || ('years of<br>' + c.brand.toLowerCase() + '.');
+  return { img:bgImg, sharp:true, editorial:true, html:`
+    <div class="case-kick">the throughline</div>
+    <div class="pl-head" style="font-size:31px">${span} ${headTail}</div>
+    ${pillarSparklineHTML(pd.postsPerYear)}
+    <div class="case-seclabel" style="margin-top:22px">Career-defining posts</div>
+    ${pillarSpotHTML(pd.topItems, c.reel)}` };
+}
+
 function slidesFor(c){
   const rows = a => `<div class="case-rows">${a.map(p=>`<div class="cr"><b>${p[0]}</b><span>${p[1]}</span></div>`).join('')}</div>`;
   const isPillar = PILLAR_IDS.includes(c.id);
@@ -1017,14 +1129,19 @@ function slidesFor(c){
       <div class="case-minigrid">${(c.featured || c.wall).slice(0,9).map(w=>`<a class="mg" href="${w[2]||c.reel}" target="_blank" rel="noopener noreferrer" aria-label="Open post on Instagram"><img src="${w[0]}" alt="" loading="lazy">${w[3]?`<em class="${w[3]==='TRAVEL'?'trv':''}">${w[3]==='TRAVEL'?'✈ ':''}${w[3]}</em>`:''}<span>▶ ${w[1]}</span></a>`).join('')}</div>
       <button class="chip-link" data-unit="${c.id}">▦ view all ${(c.items && c.items.length) || c.wall.length} posts</button>` };
 
-  /* ── PILLAR case'ai — NEliečiam (senos sk.2 ir sk.4) ── */
+  /* ── PILLAR case'ai — sk.1/3/4 palieku; sk.2 → editorial redesign ── */
   if (isPillar || !c.themeCounts){
-    return [
-      slide1,
-      { img:(c.wall[1] ? c.wall[1][0] : c.cover), html:`
+    const pd = (_brandCasesData && _brandCasesData.pillarsData && _brandCasesData.pillarsData[c.id]) || null;
+    /* editorial sk.2 tik tikriems pillarams su pillarsData; kitaip senasis fallback */
+    const slide2 = (isPillar && pd)
+      ? pillarSlide2(c, pd)
+      : { img:(c.wall[1] ? c.wall[1][0] : c.cover), html:`
         <div class="case-kick">${isPillar?'her own audience':'the collaboration'}</div>
         <div class="case-num" style="font-size:40px">${c.period}</div>
-        ${rows(c.made)}` },
+        ${rows(c.made)}` };
+    return [
+      slide1,
+      slide2,
       slide3,
       { img:(c.wall[3] ? c.wall[3][0] : (c.wall[1] ? c.wall[1][0] : c.cover)), html:`
         <div class="case-kick">the takeaway</div>
@@ -1121,12 +1238,14 @@ function renderSlide(){
   const sl = activeSlides()[slideIdx];
   /* slide 1 (showcase) — aštri reel kortelė + blur fonas; kiti slide'ai — tik blur fonas (turinys virš) */
   const card = (slideIdx===0 && !introMode) ? `<img class="cm-card" src="${sl.img}" alt=""${reduced?' style="animation:none"':''}>` : '';
-  /* intro story — aštri nuotrauka (cm-photo); brand case'ai — blur'intas fonas (cm-bg) žemos raiškos thumbnail'ui paslėpti */
-  const bg = introMode
+  /* intro story + editorial pillar sk.2 (sl.sharp) — aštri nuotrauka (cm-photo);
+     kiti brand case'ai — blur'intas fonas (cm-bg) žemos raiškos thumbnail'ui paslėpti */
+  const bg = (introMode || sl.sharp)
     ? `<div class="cm-photo" style="background-image:url('${sl.img}')"></div>`
     : `<div class="cm-bg" style="background-image:url('${sl.img}')"></div>`;
-  /* data-proof slide'ai (sk.2/sk.4) → stiprus tamsus scrim, kad juostos+tekstas skaitytųsi */
-  const scrim = (!introMode && sl.dark) ? `<div class="cm-scrim"></div>` : '';
+  /* scrim: editorial pillar (sl.editorial) → rafinuotas (viršus kvėpuoja, apačia gilesnė);
+     data-proof (sl.dark) → stiprus tamsus; kitaip — nieko (naudoja bendrą case-scrim) */
+  const scrim = introMode ? '' : (sl.editorial ? `<div class="cm-edit"></div>` : (sl.dark ? `<div class="cm-scrim"></div>` : ''));
   caseMedia.innerHTML = `${bg}${scrim}${card}`;
   caseBody.innerHTML = sl.html;
   [...caseBars.children].forEach((b,i)=>{
