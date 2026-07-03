@@ -1039,8 +1039,10 @@ function spotlightHTML(c){
 function pillarMixHTML(themeCounts){
   const all = Object.entries(themeCounts).sort((a,b)=>b[1]-a[1]);
   const total = all.reduce((s,[,n])=>s+n, 0) || 1;
-  const top = all.slice(0,4);
-  const restN = all.slice(4).reduce((s,[,n])=>s+n, 0);
+  /* top 6 temų (kad Beauty — jos kertinė kategorija — matytųsi atskira eilute,
+     ne sugrupuota į „Other"); likutis (pvz. Food) → „Other". */
+  const top = all.slice(0,6);
+  const restN = all.slice(6).reduce((s,[,n])=>s+n, 0);
   const rows = top.slice();
   if (restN > 0) rows.push(['Other', restN]);
   const max = rows[0] ? rows[0][1] : 1;
