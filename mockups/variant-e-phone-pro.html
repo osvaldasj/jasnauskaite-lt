@@ -236,6 +236,17 @@ button.chip-link{border:0;cursor:pointer;font-family:var(--sans)}
 .case-tl .tlbar{width:100%;max-width:30px;border-radius:4px 4px 0 0;background:linear-gradient(180deg,#E1306C,#F77737);min-height:4px;position:relative}
 .case-tl .tlbar b{position:absolute;top:-15px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.6)}
 .case-tl .tly{font-family:var(--mono);font-size:8.5px;letter-spacing:.04em;color:#fff;opacity:.72}
+/* spotlight — top-3 postų leaderboard (single-dimension brandams) */
+.case-spot{display:flex;flex-direction:column;gap:9px;max-width:300px}
+.case-spot .spr{display:grid;grid-template-columns:16px 44px 1fr 44px;align-items:center;gap:10px;pointer-events:auto}
+.case-spot .sprk{font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;opacity:.55;text-align:center}
+.case-spot .sprt{width:44px;height:52px;border-radius:8px;overflow:hidden;background:#222;position:relative}
+.case-spot .sprt img{width:100%;height:100%;object-fit:cover}
+.case-spot .sprbar{height:9px;border-radius:5px;background:rgba(255,255,255,.16);overflow:hidden}
+.case-spot .sprbar i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,#C13584,#E1306C,#F77737);min-width:6px}
+.case-spot .sprv{text-align:right;font-size:13px;font-weight:700;color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.5)}
+.case-spot .spr:hover .sprt{outline:1.5px solid rgba(255,255,255,.85)}
+.case-spot .spr:hover .sprv{color:#F77737}
 .case-foot{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#fff;opacity:.72;margin-top:16px}
 /* ER palyginimo blokas (sk.4, kai ER > vidurkio) */
 .case-er{max-width:300px}
@@ -966,6 +977,20 @@ function timelineHTML(postsPerYear){
     return `<div class="tlc"><div class="tlbar" style="height:${Math.round(n/max*100)}%"><b>${n}</b></div><span class="tly">'${String(y).slice(2)}</span></div>`;
   }).join('')}</div>`;
 }
+/* TOP-postų „spotlight" leaderboard — single-dimension brandams (1 tema+1 metai,
+   posts≥3): top 3 postai kaip didesnės kortelės su rangu + views juosta. Vizualiai
+   skiriasi nuo sk.3 uniforminio 9-grid (rangas + views + proporcinga juosta). */
+function spotlightHTML(c){
+  const items = (c.items || []).slice().sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,3);
+  const max = items.length ? (items[0].views || 1) : 1;
+  return `<div class="case-spot">${items.map((it,i)=>`
+    <a class="spr" href="${it.permalink||c.reel}" target="_blank" rel="noopener noreferrer" aria-label="Open post on Instagram">
+      <span class="sprk">${i+1}</span>
+      <span class="sprt"><img src="${it.thumb}" alt="" loading="lazy"></span>
+      <span class="sprbar"><i style="width:${Math.round((it.views||0)/max*100)}%"></i></span>
+      <span class="sprv">${it.viewsFmt}</span>
+    </a>`).join('')}</div>`;
+}
 
 function slidesFor(c){
   const rows = a => `<div class="case-rows">${a.map(p=>`<div class="cr"><b>${p[0]}</b><span>${p[1]}</span></div>`).join('')}</div>`;
@@ -1007,20 +1032,35 @@ function slidesFor(c){
   /* ── BRAND case'ai — data-proof sk.2 „the work" + sk.4 „the result" ── */
   const themeKeys = Object.keys(c.themeCounts || {});
   const yearKeys  = Object.keys(c.postsPerYear || {});
-  const span      = (c.spanYears != null ? c.spanYears : yearKeys.length);
-  const hasMix    = themeKeys.length >= 2;              // content-mix verta kai ≥2 temos
-  const hasTL     = yearKeys.length  >= 2;              // timeline verta kai ≥2 metai
-  /* PLONAS: 1 metai IR 1 tema → praleidžiam sk.2 visai (3 skaidrės) */
-  const thin      = span < 2 && themeKeys.length < 2;
+  const hasMix    = themeKeys.length >= 2;              // content-mix verta TIK kai ≥2 temos (niekada 1-bar)
+  const hasTL     = yearKeys.length  >= 2;              // timeline verta TIK kai ≥2 metai (niekada 1-bar)
+  const postsN    = c.posts || 0;
+  /* single-dimension (1 tema IR 1 metai) bet posts≥3 → spotlight (ne 1-bar diagrama) */
+  const spotlight = !hasMix && !hasTL && postsN >= 3;
+  /* PLONAS = sk.2 praleidžiam TIK kai posts≤2 (nieko nerodyti) */
+  const thin      = !hasMix && !hasTL && !spotlight;    // ⇔ posts ≤ 2
   const startYear = yearKeys.length ? Math.min(...yearKeys.map(Number)) : null;
+  const onlyTheme = themeKeys.length ? themeKeys[0] : '';
+  const onlyYear  = yearKeys.length === 1 ? yearKeys[0] : '';
 
-  /* SLIDE 2 „the work" — content mix + timeline (adaptyvus) */
-  const mixSection = hasMix ? `<div class="case-seclabel">Content mix</div>${mixBarsHTML(c.themeCounts)}` : '';
-  const tlSection  = hasTL  ? `<div class="case-seclabel">Timeline</div>${timelineHTML(c.postsPerYear)}` : '';
-  const slide2 = { img:(c.wall[1] ? c.wall[1][0] : c.cover), dark:true, html:`
+  /* SLIDE 2 „the work" — adaptyvus: mix ir/ar timeline, ARBA spotlight */
+  let slide2Body;
+  if (spotlight){
+    /* single-dimension: top-3 postų leaderboard + kontekstinė antraštė */
+    slide2Body = `
+      <div class="case-kick">the work</div>
+      <div class="case-seclabel">Top posts</div>
+      ${spotlightHTML(c)}
+      <div class="case-foot">${postsN} posts · ${onlyTheme}${onlyYear?` · ${onlyYear}`:''}</div>`;
+  } else {
+    const mixSection = hasMix ? `<div class="case-seclabel">Content mix</div>${mixBarsHTML(c.themeCounts)}` : '';
+    const tlSection  = hasTL  ? `<div class="case-seclabel">Timeline</div>${timelineHTML(c.postsPerYear)}` : '';
+    slide2Body = `
       <div class="case-kick">the work</div>
       ${mixSection}${tlSection}
-      <div class="case-foot">${c.posts} ${c.posts===1?'post':'posts'}${startYear?` · nuo ${startYear}`:''}</div>` };
+      <div class="case-foot">${postsN} ${postsN===1?'post':'posts'}${startYear?` · nuo ${startYear}`:''}</div>`;
+  }
+  const slide2 = { img:(c.wall[1] ? c.wall[1][0] : c.cover), dark:true, html: slide2Body };
 
   /* SLIDE 4 „the result" — adaptyvus proof */
   const base = baselineER();
