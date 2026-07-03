@@ -218,6 +218,41 @@ button.chip-link{border:0;cursor:pointer;font-family:var(--sans)}
 .age-story .asb{height:7px;border-radius:4px;background:rgba(255,255,255,.22);overflow:hidden}
 .age-story .asb i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#fff,#f6cfe6)}
 .age-story .asv{text-align:right;font-size:13.5px;font-weight:700;text-shadow:0 1px 6px rgba(0,0,0,.45)}
+/* ── DATA-PROOF slides (sk.2 „the work" + sk.4 „the result") ── */
+/* stiprus tamsus scrim po data slide'ų — kad balti tekstai+juostos skaitytųsi ant foto */
+.cm-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(12,10,14,.62) 0%,rgba(12,10,14,.55) 40%,rgba(12,10,14,.82) 100%)}
+.case-seclabel{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#fff;opacity:.62;margin:0 0 8px}
+.case-seclabel:not(:first-child){margin-top:20px}
+/* content mix — horizontalios temos juostos */
+.case-mix{display:flex;flex-direction:column;gap:7px;max-width:300px}
+.case-mix .mxr{display:grid;grid-template-columns:66px 1fr 26px;align-items:center;gap:9px}
+.case-mix .mxl{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#fff;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.case-mix .mxb{height:8px;border-radius:5px;background:rgba(255,255,255,.16);overflow:hidden}
+.case-mix .mxb i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,#C13584,#E1306C,#F77737);min-width:5px}
+.case-mix .mxv{text-align:right;font-size:12px;font-weight:700;color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.5)}
+/* timeline — mini stulpeliai per metus */
+.case-tl{display:flex;align-items:flex-end;gap:8px;height:56px;max-width:300px}
+.case-tl .tlc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;height:100%}
+.case-tl .tlbar{width:100%;max-width:30px;border-radius:4px 4px 0 0;background:linear-gradient(180deg,#E1306C,#F77737);min-height:4px;position:relative}
+.case-tl .tlbar b{position:absolute;top:-15px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.case-tl .tly{font-family:var(--mono);font-size:8.5px;letter-spacing:.04em;color:#fff;opacity:.72}
+.case-foot{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#fff;opacity:.72;margin-top:16px}
+/* ER palyginimo blokas (sk.4, kai ER > vidurkio) */
+.case-er{max-width:300px}
+.case-er .erbig{font-size:58px;font-weight:700;letter-spacing:-.04em;line-height:.9;text-shadow:0 2px 16px rgba(0,0,0,.4)}
+.case-er .ermult{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#111;background:linear-gradient(90deg,#F77737,#E1306C);background-clip:padding-box;padding:5px 11px;border-radius:8px;color:#fff}
+.case-cmp{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.case-cmp .cmr{display:grid;grid-template-columns:96px 1fr 42px;align-items:center;gap:9px}
+.case-cmp .cml{font-family:var(--mono);font-size:8.5px;letter-spacing:.05em;text-transform:uppercase;color:#fff;opacity:.9;white-space:nowrap}
+.case-cmp .cmb{height:9px;border-radius:5px;background:rgba(255,255,255,.16);overflow:hidden}
+.case-cmp .cmb i{display:block;height:100%;border-radius:5px;min-width:4px}
+.case-cmp .cmb.hi i{background:linear-gradient(90deg,#C13584,#E1306C,#F77737)}
+.case-cmp .cmb.lo i{background:rgba(255,255,255,.5)}
+.case-cmp .cmv{text-align:right;font-size:12.5px;font-weight:700;color:#fff}
+/* proof mini-statai (sk.4 apačia) */
+.case-proof{display:flex;gap:28px;margin-top:18px;border-top:1px solid rgba(255,255,255,.28);padding-top:14px}
+.case-proof .pf b{display:block;font-size:20px;font-weight:700;letter-spacing:-.02em;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.case-proof .pf span{font-family:var(--mono);font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:#fff;opacity:.72}
 .chip{background:rgba(255,255,255,.94);color:#111;font-size:11px;font-weight:700;padding:7px 12px;border-radius:9px;transform:rotate(-1.4deg);box-shadow:0 3px 12px rgba(0,0,0,.25)}
 .chip.alt{transform:rotate(1.2deg)}
 .chip.zero{background:#0a7d3c;color:#fff;transform:rotate(1.2deg)}
@@ -913,6 +948,25 @@ function activeSlides(){ return introMode ? introSlides() : slidesFor(DATA.cases
 /* Turinio ramsčiai (organic auditorija) vs brendų kampanijos (paid) — label logikai */
 const PILLAR_IDS = ['organic','travel','fashion','couple','events'];
 
+/* jos bendras DB ER vidurkis (baseline) — sk.4 palyginimui. Iš JSON top-level. */
+function baselineER(){ return (_brandCasesData && _brandCasesData.baselineER) || 5.9; }
+/* content-mix juostos iš themeCounts (top ~5, plotis ∝ count) */
+function mixBarsHTML(themeCounts){
+  const entries = Object.entries(themeCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const max = entries[0][1] || 1;
+  return `<div class="case-mix">${entries.map(([t,n])=>`
+    <div class="mxr"><span class="mxl">${t}</span><span class="mxb"><i style="width:${Math.round(n/max*100)}%"></i></span><span class="mxv">${n}</span></div>`).join('')}</div>`;
+}
+/* timeline stulpeliai iš postsPerYear (metai su ≥1 postu, aukštis ∝ count) */
+function timelineHTML(postsPerYear){
+  const years = Object.keys(postsPerYear).map(Number).sort((a,b)=>a-b);
+  const max = Math.max(...years.map(y=>postsPerYear[y]), 1);
+  return `<div class="case-tl">${years.map(y=>{
+    const n = postsPerYear[y];
+    return `<div class="tlc"><div class="tlbar" style="height:${Math.round(n/max*100)}%"><b>${n}</b></div><span class="tly">'${String(y).slice(2)}</span></div>`;
+  }).join('')}</div>`;
+}
+
 function slidesFor(c){
   const rows = a => `<div class="case-rows">${a.map(p=>`<div class="cr"><b>${p[0]}</b><span>${p[1]}</span></div>`).join('')}</div>`;
   const isPillar = PILLAR_IDS.includes(c.id);
@@ -922,26 +976,99 @@ function slidesFor(c){
   const chip = isPillar
     ? '<span class="chip zero">🌱 CONTENT PILLAR</span>'
     : (c.repeat!==false ? '<span class="chip alt">REPEAT PARTNER</span>' : '<span class="chip alt">BRAND PARTNER</span>');
-  return [
-    { img:c.cover, html:`
+  /* SLIDE 1 (stats) ir SLIDE 3 (gallery) — bendri visiems */
+  const slide1 = { img:c.cover, html:`
       <div class="case-num">${c.views}</div>
       <div class="case-sub">views · ${c.posts} posts${erPart}</div>
       <div class="case-chips"><span class="chip">TOP ${c.top}</span>${chip}</div>
-      <a class="chip-link" href="${c.reel}" target="_blank" rel="noopener noreferrer">${play} watch on Instagram</a>` },
-    { img:(c.wall[1] ? c.wall[1][0] : c.cover), html:`
-      <div class="case-kick">${isPillar?'her own audience':'the collaboration'}</div>
-      <div class="case-num" style="font-size:40px">${c.period}</div>
-      ${rows(c.made)}` },
-    { img:(c.wall[2] ? c.wall[2][0] : c.cover), html:`
+      <a class="chip-link" href="${c.reel}" target="_blank" rel="noopener noreferrer">${play} watch on Instagram</a>` };
+  const slide3 = { img:(c.wall[2] ? c.wall[2][0] : c.cover), html:`
       <div class="case-sub" style="font-size:15px;font-weight:700">${c.brand} — published wall</div>
       <div class="case-minigrid">${(c.featured || c.wall).slice(0,9).map(w=>`<a class="mg" href="${w[2]||c.reel}" target="_blank" rel="noopener noreferrer" aria-label="Open post on Instagram"><img src="${w[0]}" alt="" loading="lazy">${w[3]?`<em class="${w[3]==='TRAVEL'?'trv':''}">${w[3]==='TRAVEL'?'✈ ':''}${w[3]}</em>`:''}<span>▶ ${w[1]}</span></a>`).join('')}</div>
-      <button class="chip-link" data-unit="${c.id}">▦ view all ${(c.items && c.items.length) || c.wall.length} posts</button>` },
-    { img:(c.wall[3] ? c.wall[3][0] : (c.wall[1] ? c.wall[1][0] : c.cover)), html:`
-      <div class="case-kick">the takeaway</div>
-      <div class="case-num" style="font-size:34px">${isPillar?'Her own audience.':(c.repeat!==false?'A repeat partner.':'A brand partner.')}</div>
-      <div class="case-sub">${c.period}</div>
-      <a class="chip-link" href="${isPillar?c.reel:'mailto:osvaldas@reelize.lt'}"${isPillar?' target="_blank" rel="noopener noreferrer"':''}>${isPillar?play+' see the full feed':'✦ start a campaign'}</a>` }
-  ];
+      <button class="chip-link" data-unit="${c.id}">▦ view all ${(c.items && c.items.length) || c.wall.length} posts</button>` };
+
+  /* ── PILLAR case'ai — NEliečiam (senos sk.2 ir sk.4) ── */
+  if (isPillar || !c.themeCounts){
+    return [
+      slide1,
+      { img:(c.wall[1] ? c.wall[1][0] : c.cover), html:`
+        <div class="case-kick">${isPillar?'her own audience':'the collaboration'}</div>
+        <div class="case-num" style="font-size:40px">${c.period}</div>
+        ${rows(c.made)}` },
+      slide3,
+      { img:(c.wall[3] ? c.wall[3][0] : (c.wall[1] ? c.wall[1][0] : c.cover)), html:`
+        <div class="case-kick">the takeaway</div>
+        <div class="case-num" style="font-size:34px">${isPillar?'Her own audience.':(c.repeat!==false?'A repeat partner.':'A brand partner.')}</div>
+        <div class="case-sub">${c.period}</div>
+        <a class="chip-link" href="${isPillar?c.reel:'mailto:osvaldas@reelize.lt'}"${isPillar?' target="_blank" rel="noopener noreferrer"':''}>${isPillar?play+' see the full feed':'✦ start a campaign'}</a>` }
+    ];
+  }
+
+  /* ── BRAND case'ai — data-proof sk.2 „the work" + sk.4 „the result" ── */
+  const themeKeys = Object.keys(c.themeCounts || {});
+  const yearKeys  = Object.keys(c.postsPerYear || {});
+  const span      = (c.spanYears != null ? c.spanYears : yearKeys.length);
+  const hasMix    = themeKeys.length >= 2;              // content-mix verta kai ≥2 temos
+  const hasTL     = yearKeys.length  >= 2;              // timeline verta kai ≥2 metai
+  /* PLONAS: 1 metai IR 1 tema → praleidžiam sk.2 visai (3 skaidrės) */
+  const thin      = span < 2 && themeKeys.length < 2;
+  const startYear = yearKeys.length ? Math.min(...yearKeys.map(Number)) : null;
+
+  /* SLIDE 2 „the work" — content mix + timeline (adaptyvus) */
+  const mixSection = hasMix ? `<div class="case-seclabel">Content mix</div>${mixBarsHTML(c.themeCounts)}` : '';
+  const tlSection  = hasTL  ? `<div class="case-seclabel">Timeline</div>${timelineHTML(c.postsPerYear)}` : '';
+  const slide2 = { img:(c.wall[1] ? c.wall[1][0] : c.cover), dark:true, html:`
+      <div class="case-kick">the work</div>
+      ${mixSection}${tlSection}
+      <div class="case-foot">${c.posts} ${c.posts===1?'post':'posts'}${startYear?` · nuo ${startYear}`:''}</div>` };
+
+  /* SLIDE 4 „the result" — adaptyvus proof */
+  const base = baselineER();
+  const showER = (c.erNum != null && c.erNum > base);
+  const proofStats = `<div class="case-proof">
+      <div class="pf"><b>${c.top}</b><span>Top post</span></div>
+      <div class="pf"><b>${c.views}</b><span>Total reach</span></div>
+    </div>`;
+  const ctaLink = `<a class="chip-link" href="mailto:osvaldas@reelize.lt">✦ start a campaign</a>`;
+  let slide4Body;
+  if (thin){
+    /* PLONAS: viena pagrindinė metrika, be tuščių diagramų */
+    slide4Body = `
+      <div class="case-kick">the result</div>
+      <div class="case-num" style="font-size:52px">${c.views}</div>
+      <div class="case-sub">total reach · ${c.posts} ${c.posts===1?'post':'posts'}</div>
+      ${proofStats}
+      <div class="case-foot">trumpas bendradarbiavimas — be tuščių diagramų</div>
+      ${ctaLink}`;
+  } else if (showER){
+    /* ER > vidurkio → ER blokas + palyginimo juostos + N× */
+    const mult = (c.erNum / base).toFixed(1);
+    const loW  = Math.round(base / c.erNum * 100);     // „jos vidurkis" proporcinga brendo ER
+    slide4Body = `
+      <div class="case-kick">the result</div>
+      <div class="case-er">
+        <div class="erbig">${c.erNum}%</div>
+        <div class="ermult">${mult}× vidurkio</div>
+        <div class="case-cmp">
+          <div class="cmr"><span class="cml">Šis brendas</span><span class="cmb hi"><i style="width:100%"></i></span><span class="cmv">${c.erNum}%</span></div>
+          <div class="cmr"><span class="cml">Jos vidurkis</span><span class="cmb lo"><i style="width:${loW}%"></i></span><span class="cmv">${base}%</span></div>
+        </div>
+      </div>
+      ${proofStats}
+      ${ctaLink}`;
+  } else {
+    /* ER ≤ vidurkio ARBA null → reach-led (be ER palyginimo) */
+    slide4Body = `
+      <div class="case-kick">the result</div>
+      <div class="case-num" style="font-size:52px">${c.views}</div>
+      <div class="case-sub">total reach across ${c.posts} ${c.posts===1?'post':'posts'}</div>
+      ${proofStats}
+      ${ctaLink}`;
+  }
+  const slide4 = { img:(c.wall[3] ? c.wall[3][0] : (c.wall[1] ? c.wall[1][0] : c.cover)), dark:true, html: slide4Body };
+
+  /* PLONAS → 3 skaidrės (be sk.2); kitaip 4 */
+  return thin ? [slide1, slide3, slide4] : [slide1, slide2, slide3, slide4];
 }
 function renderSlide(){
   const sl = activeSlides()[slideIdx];
@@ -951,7 +1078,9 @@ function renderSlide(){
   const bg = introMode
     ? `<div class="cm-photo" style="background-image:url('${sl.img}')"></div>`
     : `<div class="cm-bg" style="background-image:url('${sl.img}')"></div>`;
-  caseMedia.innerHTML = `${bg}${card}`;
+  /* data-proof slide'ai (sk.2/sk.4) → stiprus tamsus scrim, kad juostos+tekstas skaitytųsi */
+  const scrim = (!introMode && sl.dark) ? `<div class="cm-scrim"></div>` : '';
+  caseMedia.innerHTML = `${bg}${scrim}${card}`;
   caseBody.innerHTML = sl.html;
   [...caseBars.children].forEach((b,i)=>{
     b.firstElementChild.style.width = i < slideIdx ? '100%' : '0';
@@ -1020,18 +1149,29 @@ function buildCaseFromJson(jc){
     handle: '@' + jc.slug, posts: jc.posts,
     views: jc.viewsFmt || '—',
     er: (jc.er != null ? jc.er + '%' : null),
+    erNum: (jc.er != null ? jc.er : null),           // skaitinis ER → adaptyvus proof (sk.4)
     top: jc.topFmt || (wall.length ? wall[0][1] : '—'),
     reel, cover,
     period: jc.period || '', repeat: !!jc.repeat, _fromJson: true,
     made, wall, featured,
-    items                                            // themed items → grouped popup
+    items,                                           // themed items → grouped popup
+    /* duomenų-įrodymo laukai (sk.2 content-mix + timeline, sk.4 proof) */
+    themeCounts: jc.themeCounts || null,
+    postsPerYear: jc.postsPerYear || null,
+    spanYears: (jc.spanYears != null ? jc.spanYears : null)
   };
 }
 /* curated case'ą (rankinis header/story) PRATURTINAM JSON themed postais, kad
    „view all" rodytų VISUS postus sugrupuotus pagal theme. Header/stats/period —
-   NEliečiam (paliekam rankinius). Praturtinam tik jei case dar neturi items. */
+   NEliečiam (paliekam rankinius). Duomenų-įrodymo laukus (themeCounts/postsPerYear/
+   spanYears/erNum) prisegam VISADA (net jei items jau buvo) — sk.2/sk.4 reikmėms. */
 function hydrateCaseFromJson(c, jc){
-  if (c.items && c.items.length) return;              // jau praturtinta
+  /* proof-data — visada (idempotentiška) */
+  if (c.themeCounts == null && jc.themeCounts) c.themeCounts = jc.themeCounts;
+  if (c.postsPerYear == null && jc.postsPerYear) c.postsPerYear = jc.postsPerYear;
+  if (c.spanYears == null && jc.spanYears != null) c.spanYears = jc.spanYears;
+  if (c.erNum == null && jc.er != null) c.erNum = jc.er;
+  if (c.items && c.items.length) return;              // items jau yra → tik proof-data virš
   const items = jc.items || [];
   if (!items.length) return;                          // nėra ką grupuoti → paliekam flat wall
   const toWall = arr => arr.map(it => [it.thumb, it.viewsFmt, it.permalink, (it.theme ? it.theme.toUpperCase() : '')]);
