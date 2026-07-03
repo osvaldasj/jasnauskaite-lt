@@ -1283,8 +1283,22 @@ function startTimer(){
 }
 function stopTimer(){ if (timer){ clearInterval(timer); timer = null; } }
 function openCase(id){
-  introMode = false; cur = id; slideIdx = 0; paused = false;
   const c = DATA.cases.find(x=>x.id===id);
+  /* SUVIENODINIMAS: hero-list atidarymai (openCase) turi rodyti TĄ PATĮ hidratuotą
+     data-proof case'ą kaip ir brendų sienos (openCaseBySlug). Jei brand-cases JSON
+     jau įkeltas — hidratuojam sinchroniškai; jei dar ne — įkeliam ir peratidarome.
+     Pillar'ai (ne brand-cases.json .cases) — natūraliai praeina (skaito pillarsData). */
+  if (c && c.themeCounts == null){
+    const jc = _brandCasesData && _brandCasesData.cases && _brandCasesData.cases[id];
+    if (jc){ hydrateCaseFromJson(c, jc); }
+    else if (!_brandCasesData){
+      loadBrandCases().then(d => {
+        const j = d.cases && d.cases[id];
+        if (j){ hydrateCaseFromJson(c, j); if (cur === id) openCase(id); }
+      }).catch(()=>{});
+    }
+  }
+  introMode = false; cur = id; slideIdx = 0; paused = false;
   caseBrand.textContent = '× ' + c.brand;
   caseBars.innerHTML = activeSlides().map(()=>'<div class="cbar"><i></i></div>').join('');
   caseEl.classList.add('open');
