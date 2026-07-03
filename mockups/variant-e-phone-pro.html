@@ -107,11 +107,11 @@ button{font-family:var(--sans);cursor:pointer}
 /* ============ LOCK SCREEN ============ */
 .lock{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;color:#fff;border:0;width:100%;
   background:linear-gradient(160deg,#3c3168 0%,#7b4397 34%,#c0667f 68%,#e8a87c 100%);
-  transition:transform .65s cubic-bezier(.32,0,.18,1),opacity .6s;cursor:pointer;font-family:var(--sans)}
+  transition:transform .65s cubic-bezier(.32,0,.18,1),opacity .6s,background 1.5s ease;cursor:pointer;font-family:var(--sans)}
 .lock.away{transform:translateY(-103%);opacity:.4}
 .lock .ltime{margin-top:88px;font-size:64px;font-weight:300;letter-spacing:-.02em;line-height:1}
 .lock .ldate{font-size:13px;font-weight:500;opacity:.85;margin-top:6px}
-.lock .notifs{margin-top:34px;display:flex;flex-direction:column;gap:9px;width:calc(100% - 36px)}
+.lock .notifs{margin-top:34px;display:flex;flex-direction:column;gap:0;width:calc(100% - 36px)}
 .notif{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.22);backdrop-filter:blur(18px);
   border-radius:18px;padding:11px 13px;text-align:left}
 .notif .nic{width:30px;height:30px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center}
@@ -162,7 +162,10 @@ button{font-family:var(--sans);cursor:pointer}
 .grid-tabs div.on{border-top-color:var(--app-ink)}
 .grid-tabs svg{width:18px;height:18px;stroke:var(--app-ink);fill:none;stroke-width:1.6;opacity:.85}
 .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding-bottom:20px}
-.ptile{position:relative;aspect-ratio:4/5;overflow:hidden;border:0;padding:0;background:#eee}
+.ptile{position:relative;aspect-ratio:4/5;overflow:hidden;border:0;padding:0;background:#eee;touch-action:manipulation}
+.ig-dbl-heart{position:absolute;left:50%;top:50%;width:46%;max-width:84px;aspect-ratio:1;transform:translate(-50%,-50%) scale(0);pointer-events:none;z-index:25;color:#fff;filter:drop-shadow(0 3px 14px rgba(0,0,0,.4));animation:igDblHeart .9s cubic-bezier(.17,.89,.32,1.28) forwards}
+.ig-dbl-heart svg{width:100%;height:100%;fill:currentColor;display:block}
+@keyframes igDblHeart{0%{transform:translate(-50%,-50%) scale(0) rotate(-15deg);opacity:0}20%{opacity:1}35%{transform:translate(-50%,-50%) scale(1.15) rotate(0);opacity:1}75%{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}100%{transform:translate(-50%,-50%) scale(.92) rotate(0);opacity:0}}
 .ptile img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
 .ptile:hover img{transform:scale(1.06)}
 .ptile .views{position:absolute;left:6px;bottom:6px;display:flex;align-items:center;gap:4px;color:#fff;font-size:10px;font-weight:600;
@@ -471,7 +474,7 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
 }
 @media (max-width:560px){
   .site-nav{gap:14px}
-  .phone{width:min(330px,92vw)}
+  .phone{width:330px}
 }
 
 /* ============ REDUCED MOTION ============ */
@@ -479,10 +482,27 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
   *,*::before,*::after{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
 }
+/* ════ EASTER EGGS (added 2026-06-14) ════ */
+.notif.n-in{animation:jk-slide .5s cubic-bezier(0.22,1,0.36,1)}
+@keyframes jk-slide{from{opacity:0;transform:translateY(-12px) scale(.97)}to{opacity:1;transform:none}}
+.jk-confetti{position:fixed;top:-16px;width:9px;height:14px;border-radius:2px;z-index:99999;pointer-events:none;animation:jk-fall 3s linear forwards}
+@keyframes jk-fall{to{transform:translateY(106vh) rotate(560deg);opacity:.35}}
+
+html,body{overflow-x:hidden;max-width:100vw}
+.phone{transform-origin:top center}
+
+.notif{max-height:150px;overflow:hidden;margin-bottom:9px;transition:max-height .55s cubic-bezier(0.22,1,0.36,1),opacity .45s,transform .5s,margin-bottom .5s}.notif:last-child{margin-bottom:0}.notif.n-enter{max-height:0;opacity:0;margin-bottom:0;transform:translateY(-8px)}.notif.n-show{max-height:150px;opacity:1;margin-bottom:9px;transform:none}.notif.n-leave{max-height:0;opacity:0;margin-bottom:0;transform:translateY(-6px)}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.plist-grouphead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:24px 0 12px;padding:16px 14px 0;border-top:1px solid rgba(26,26,26,.1);cursor:pointer}
+.plist-grouphead .pgh-t{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);transition:color .2s}
+.plist-grouphead .pgh-m{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--ink-soft);white-space:nowrap}
+.plist-grouphead:hover .pgh-t{color:#C13584}
 </style>
 </head>
 <body>
 
+<h1 class="sr-only">Inidė Jasnauskaitė — Fashion, Beauty &amp; Lifestyle Content Creator, Vilnius</h1>
 <header class="site-head">
   <a class="wordmark" href="#work">Inidė Jasnauskaitė</a>
   <nav class="site-nav" aria-label="Site">
@@ -498,7 +518,7 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
 
   <!-- LEFT: brand list controls the phone -->
   <div class="col-left">
-    <p class="klabel plist-head">Selected partners</p>
+    <p class="klabel plist-head">Content pillars</p>
     <div id="plist"></div>
     <div class="pmore" id="pmore" role="button" tabindex="0" aria-label="See all brands">+ <span id="pmoreN">64</span> more brands →
       <div class="pmore-pop" id="pmorePop"></div>
@@ -562,7 +582,7 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
           <div class="case-scrim"></div>
           <div class="case-bars" id="caseBars"></div>
           <div class="case-head">
-            <div class="chav"><img src="images/profile.jpg" alt=""></div>
+            <div class="chav"><img src="images/profile.jpg" alt="Inidė Jasnauskaitė"></div>
             <div class="cht">jasnauskaite <span id="caseBrand"></span></div>
             <button class="case-close" id="caseClose" aria-label="Close case"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
           </div>
@@ -595,9 +615,9 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
           <div class="ldate" id="ldate">Thursday, June 12</div>
           <div class="notifs">
             <div class="notif"><div class="nic ig"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff" stroke="none"/></svg></div>
-              <div class="nt"><div class="nrow"><span>Instagram</span><span>now</span></div><div class="nmsg">mionetto and 169 other brands follow you</div></div></div>
+              <div class="nt"><div class="nrow"><span>Instagram</span><span>now</span></div><div class="nmsg">mionetto and 153 other brands follow you</div></div></div>
             <div class="notif"><div class="nic ig"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff" stroke="none"/></svg></div>
-              <div class="nt"><div class="nrow"><span>Instagram</span><span>2m ago</span></div><div class="nmsg">Your reel passed 14,000,000 views</div></div></div>
+              <div class="nt"><div class="nrow"><span>Instagram</span><span>2m ago</span></div><div class="nmsg">Your reel is over-performing 🔥</div></div></div>
             <div class="notif"><div class="nic tt"><svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></div>
               <div class="nt"><div class="nrow"><span>TikTok</span><span>5m ago</span></div><div class="nmsg">Your video is trending in Lithuania 🔥</div></div></div>
           </div>
@@ -628,7 +648,7 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
     <div class="numcell" tabindex="0"><div class="v" data-db="followers">364K</div><div class="l">IG followers</div><div class="nf">About the size of a city. None of them bought.</div></div>
     <div class="numcell" tabindex="0"><div class="v" data-db="engagement">5.0%</div><div class="l">Engagement</div><div class="nf">Platform average is 1.9%. But who's counting.</div></div>
     <div class="numcell" tabindex="0"><div class="v" data-db="totalViews">570M+</div><div class="l">Total views</div><div class="nf">Most of these views came from outside Lithuania.</div></div>
-    <div class="numcell" tabindex="0"><div class="v" data-db="brandPartners">170</div><div class="l">Brand partners</div><div class="nf">70 of them came back for seconds.</div></div>
+    <div class="numcell" tabindex="0"><div class="v" data-db="brandPartners">154</div><div class="l">Brand partners</div><div class="nf">70 of them came back for seconds.</div></div>
   </div>
   <p class="numbers-note"><b>Most brands come back.</b> <span data-db="brandedPosts">784</span> branded posts over 8 years, against a <span data-db="platformAvg">1.9%</span> platform-average engagement.</p>
 </section>
@@ -665,7 +685,7 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
   <div class="ep-card">
     <button class="ep-x" id="epX" aria-label="Close">✕</button>
     <div class="ep-kick">Get in touch</div>
-    <div class="ep-avatar"><img src="images/profile.jpg" alt=""></div>
+    <div class="ep-avatar"><img src="images/profile.jpg" alt="Inidė Jasnauskaitė"></div>
     <div class="ep-mail" id="epMail">osvaldas@reelize.lt</div>
     <div class="ep-sub">Replies within 24h · Vilnius, Lithuania</div>
     <div class="ep-btns">
@@ -680,7 +700,7 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
   <div class="pp2-backdrop" id="pp2Backdrop"></div>
   <div class="pp2-card">
     <div class="pp2-head">
-      <div class="pp2-av"><img src="images/profile.jpg" alt=""></div>
+      <div class="pp2-av"><img src="images/profile.jpg" alt="Inidė Jasnauskaitė"></div>
       <div class="pp2-meta"><b id="pp2Title">jasnauskaite × brand</b><span id="pp2Sub"></span></div>
       <button class="pp2-x" id="pp2X" aria-label="Close">✕</button>
     </div>
@@ -709,8 +729,8 @@ const DATA = {
     followers:'364K', totalViewsShort:'570M', totalViews:'570M+',
     engagement:'5.0%', platformAvg:'1.9%',
     /* AUTO — perskaičiuoja build-content-data.py iš content DB: */
-    brandedPosts:'784', brandPartners:'170', brandCount:170,
-    repeatPartners:'70', topReel:'37.2M', otherBrands:169
+    brandedPosts:'784', brandPartners:'154', brandCount:154,
+    repeatPartners:'70', topReel:'37.2M', otherBrands:153
   },
   /* @db wall įrašai: [nuotrauka, views, posto URL, kategorija] — TIKRI postai iš Reelize
      content DB (build-content-data.py snapshot'ina + parsisiunčia thumbnail'us).
@@ -737,9 +757,9 @@ const DATA = {
       reel:'https://www.instagram.com/reel/C7TS_lJNYzJ/', cover:'images/db/ig_18023453573130504.jpg',
       period:'since 2019', made:[['329','posts'],['141M','reach'],['21.4M','top reel']],
       wall:[["images/db/ig_18023453573130504.jpg", "3.7M", "https://www.instagram.com/reel/C7TS_lJNYzJ/"], ["images/db/ig_17875020749996951.jpg", "3.4M", "https://www.instagram.com/reel/C4SX92Zt6pN/"], ["images/db/ig_17948076026764915.jpg", "2.9M", "https://www.instagram.com/reel/DB0ll6ltNcc/"], ["images/db/ig_17965823648810597.jpg", "2.4M", "https://www.instagram.com/reel/DCwilcYNOtE/"], ["images/db/ig_18076179206332585.jpg", "1.6M", "https://www.instagram.com/reel/DRH0RoBCKTA/"], ["images/db/ig_18138678439550997.jpg", "1.2M", "https://www.instagram.com/reel/DZJ7smKoHTu/"], ["images/db/ig_18003071498644085.jpg", "2.1M", "https://www.instagram.com/reel/C_U8s8WtprA/"], ["images/db/ig_18084872743964286.jpg", "1.4M", "https://www.instagram.com/reel/DQd0OCpiDMq/"], ["images/db/ig_18026839199640885.jpg", "1.8M", "https://www.instagram.com/reel/DG-SQyytdoI/"], ["images/db/ig_18032688455110865.jpg", "1.9M", "https://www.instagram.com/reel/DC1uFkut2Pl/"], ["images/db/ig_18060840716281843.jpg", "1.4M", "https://www.instagram.com/reel/DJmVE5sIii7/"], ["images/db/ig_18019718786007967.jpg", "1.3M", "https://www.instagram.com/reel/C2kImlGNFcT/"], ["images/db/ig_18072530299925084.jpg", "904K", "https://www.instagram.com/reel/DJqf6JQtgzw/"], ["images/db/ig_17878185548973223.jpg", "1M", "https://www.instagram.com/reel/CzGIv7Ktni6/"], ["images/db/ig_17973238898880703.jpg", "537K", "https://www.instagram.com/reel/DYM57LVISK3/"]] },
-    { id:'partnerships', brand:'Partnerships', handle:'170 brands', posts:784, views:'122M', er:'5.0%', top:'11.2M',
+    { id:'partnerships', brand:'Partnerships', handle:'154 brands', posts:784, views:'122M', er:'5.0%', top:'11.2M',
       reel:'https://www.instagram.com/reel/DD46xnfNBmJ/', cover:'images/db/ig_18067130647780793.jpg',
-      period:'2019 → 2026', made:[['170','brands'],['784','posts'],['70','repeat partners']],
+      period:'2019 → 2026', made:[['154','brands'],['784','posts'],['70','repeat partners']],
       wall:[["images/db/ig_18067130647780793.jpg", "11.2M", "https://www.instagram.com/reel/DD46xnfNBmJ/"], ["images/db/ig_18389032630147037.jpg", "3.5M", "https://www.instagram.com/reel/DUBIIXDj5AJ/"], ["images/db/ig_17857298979560141.jpg", "1.5M", "https://www.instagram.com/reel/DRjZN_fCLXa/"], ["images/db/ig_18076084813764675.jpg", "1.2M", "https://www.instagram.com/reel/DMK9spgtfv-/"], ["images/db/ig_18064873301168785.jpg", "1.1M", "https://www.instagram.com/reel/DR6npUDCK23/"], ["images/db/ig_18247914613089382.jpg", "1.5M", "https://www.instagram.com/reel/CrvxzNUMtIt/"], ["images/db/ig_18013604012351711.jpg", "1.2M", "https://www.instagram.com/reel/DBLWsx8OG7f/"], ["images/db/ig_17931047808101374.jpg", "791K", "https://www.instagram.com/p/DQRlHaGiEfJ/"], ["images/db/ig_18043571680848754.jpg", "1.1M", "https://www.instagram.com/reel/DAjKJ_fNbjv/"], ["images/db/ig_17998893020691635.jpg", "1.1M", "https://www.instagram.com/reel/DBWssk2t-yO/"], ["images/db/ig_17910436434152803.jpg", "830K", "https://www.instagram.com/reel/DLeaWEINDFo/"], ["images/db/ig_18194630113333850.jpg", "643K", "https://www.instagram.com/reel/DSPITvBCBR1/"], ["images/db/ig_18062671117739197.jpg", "958K", "https://www.instagram.com/reel/DBje3xQNn17/"], ["images/db/ig_18067411913301085.jpg", "684K", "https://www.instagram.com/reel/DKH4TYNI_tZ/"], ["images/db/ig_17995289177195760.jpg", "754K", "https://www.instagram.com/reel/C03kKMxN6ta/"]] },
     { id:'mionetto', brand:'Mionetto', handle:'@mionetto', posts:30, views:'17.1M', er:'6.8%', top:'6.9M',
       reel:'https://www.instagram.com/reel/DNXetzOMT__/', cover:'images/db/ig_17875020749996951.jpg',
@@ -774,7 +794,7 @@ const DATA = {
     '784 branded posts in 8 years — a new one every 3.7 days, on average.',
     'Her top reel hit 37.2M views. The algorithm just likes the work.',
     'Her engagement rate is 5.0%. The platform average is 1.9%. You do the math.',
-    'Of her 170 brand partners, 70 came back for 3+ posts. Mionetto leads with 30.',
+    'Of her 154 brand partners, 70 came back for 3+ posts. Mionetto leads with 30.',
     'She has never bought a follower. The 364K showed up on their own.',
     'A Mionetto reel starring her grandmother hit 16.7M views. Casting is everything.',
     'A car campaign and a skincare reel, filmed the same week. Range is the job.',
@@ -802,10 +822,13 @@ const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* ============ LOCK SCREEN ============ */
 const lock = document.getElementById('lock');
 let locked = true;
+const LOCK_WALL={morning:'linear-gradient(160deg,#243049 0%,#6f6fa8 38%,#e29b8f 72%,#f3c89a 100%)',day:'linear-gradient(160deg,#2f3d80 0%,#7d6fb8 38%,#c98fb0 72%,#efc59a 100%)',golden:'linear-gradient(160deg,#3c2f63 0%,#9b4f80 38%,#d4726a 72%,#f0a86a 100%)',night:'linear-gradient(160deg,#0e1130 0%,#281f57 40%,#553874 72%,#7a466a 100%)'};
 function tickClock(){
   const d = new Date();
   document.getElementById('ltime').textContent = d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
   document.getElementById('ldate').textContent = d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  var hr=d.getHours(); var wk=(hr>=6&&hr<11)?'morning':(hr>=11&&hr<17)?'day':(hr>=17&&hr<21)?'golden':'night';
+  if(typeof lock!=='undefined' && lock) lock.style.background=LOCK_WALL[wk];
 }
 tickClock(); setInterval(tickClock, 30000);
 function unlock(cb){
@@ -838,9 +861,15 @@ tiles.slice(0,12).forEach(t => {
   const el = document.createElement('button');
   el.className = 'ptile';
   el.innerHTML = `<img src="${t.img}" alt=""><span class="views">${play}${t.v}</span>`;
-  el.addEventListener('click', () => t.caseId ? openCase(t.caseId) : window.open('https://instagram.com/jasnauskaite','_blank','noopener'));
+  const act = () => t.caseId ? openCase(t.caseId) : window.open('https://instagram.com/jasnauskaite','_blank','noopener');
+  el.addEventListener('click', () => {
+    const now = Date.now();
+    if(el._lt && now - el._lt < 320){ clearTimeout(el._tt); el._lt = 0; igHeartBurst(el); }
+    else { el._lt = now; clearTimeout(el._tt); el._tt = setTimeout(() => { el._lt = 0; act(); }, 320); }
+  });
   pgrid.appendChild(el);
 });
+function igHeartBurst(host){ if(!host) return; var h=document.createElement('div'); h.className='ig-dbl-heart'; h.innerHTML='<svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>'; host.appendChild(h); setTimeout(function(){ h.remove(); }, 950); }
 
 /* ============ CASE VIEWER (state machine) ============ */
 const caseEl = document.getElementById('case'), caseMedia = document.getElementById('caseMedia'),
@@ -974,20 +1003,28 @@ document.addEventListener('keydown', e=>{
 const plist = document.getElementById('plist');
 const screen = document.getElementById('screen');
 let prevEl = null, prevHide = null;
-DATA.cases.forEach(c=>{
+function makeRow(c){
   const r = document.createElement('div');
   r.className = 'prow'; r.dataset.case = c.id; r.setAttribute('role','button'); r.tabIndex = 0;
   r.innerHTML = `<span class="pname">${c.brand}</span><span class="pmet">${c.views}</span>`;
   r.addEventListener('click', ()=>{ hidePreview(); unlock(()=>openCase(c.id)); });
   r.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); r.click(); }});
-  r.addEventListener('mouseenter', ()=>{
-    if (cur || locked) return;
-    clearTimeout(prevHide);
-    showPreview(c);
-  });
+  r.addEventListener('mouseenter', ()=>{ if (cur || locked) return; clearTimeout(prevHide); showPreview(c); });
   r.addEventListener('mouseleave', ()=>{ prevHide = setTimeout(hidePreview, 220); });
-  plist.appendChild(r);
-});
+  return r;
+}
+const _byId = id => DATA.cases.find(c=>c.id===id);
+['organic','travel','fashion','couple','events'].forEach(id=>{ const c=_byId(id); if(c) plist.appendChild(makeRow(c)); });
+const _pc = _byId('partnerships');
+if(_pc){
+  const gh = document.createElement('div');
+  gh.className = 'plist-grouphead'; gh.setAttribute('role','button'); gh.tabIndex = 0;
+  gh.innerHTML = `<span class="pgh-t">Brand partnerships</span><span class="pgh-m">${_pc.handle} · ${_pc.views}</span>`;
+  gh.addEventListener('click', ()=>{ hidePreview(); unlock(()=>openCase('partnerships')); });
+  gh.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); gh.click(); }});
+  plist.appendChild(gh);
+}
+['mionetto','akropolis','hellmanns','nissan'].forEach(id=>{ const c=_byId(id); if(c) plist.appendChild(makeRow(c)); });
 function showPreview(c){
   hidePreview();
   prevEl = document.createElement('div');
@@ -1272,6 +1309,42 @@ document.addEventListener('visibilitychange', ()=>{
   if (document.hidden){ document.title = _awayTitles[_awayIdx % _awayTitles.length]; _awayIdx++; }
   else document.title = _realTitle;
 });
+/* ════ EASTER EGGS (added 2026-06-14) ════ */
+(function(){
+  function fit(){var p=document.querySelector('.phone');if(!p)return;var s=Math.min(1,window.innerWidth/342);p.style.transform=(s<1?'scale('+s.toFixed(3)+')':'');p.style.marginBottom=(s<1?Math.round(-712*(1-s))+'px':'');}
+  window.addEventListener('resize',fit); fit(); setTimeout(fit,300);
+  var box=document.querySelector('.notifs'); if(!box)return;
+  var IG='<div class="nic ig"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff" stroke="none"/></svg></div>';
+  var TT='<div class="nic tt"><svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></div>';
+  var pool=[
+    {a:IG,n:'Instagram',t:'just now',m:'New brand collaboration request 💌'},
+    {a:IG,n:'Instagram',t:'now',m:'Your story is on the Explore page ✨'},
+    {a:TT,n:'TikTok',t:'2m ago',m:'Your sound is trending 🎵'},
+    {a:IG,n:'Instagram',t:'now',m:'Someone shared your reel to their story'},
+    {a:IG,n:'Instagram',t:'5m ago',m:'A new brand just started following you'},
+    {a:TT,n:'TikTok',t:'now',m:'Your video is taking off 🔥'},
+    {a:IG,n:'Instagram',t:'1m ago',m:'New DM from a brand 👀'},
+    {a:IG,n:'Instagram',t:'now',m:'Your latest reel is over-performing 📈'},
+    {a:TT,n:'TikTok',t:'3m ago',m:'Trending in Lithuania today 🔥'},
+    {a:IG,n:'Instagram',t:'now',m:'Added to a campaign brief ✦'},
+    {a:IG,n:'Instagram',t:'2m ago',m:'Saved & reshared all morning 🤍'},
+    {a:TT,n:'TikTok',t:'now',m:'Your collab content just went live ✨'}
+  ];
+  var last=-1;
+  function pick(){var i;do{i=Math.floor(Math.random()*pool.length);}while(i===last&&pool.length>1);last=i;return pool[i];}
+  function rotate(){var pp=pick();var el=document.createElement('div');el.className='notif n-enter';el.innerHTML=pp.a+'<div class="nt"><div class="nrow"><span>'+pp.n+'</span><span>'+pp.t+'</span></div><div class="nmsg">'+pp.m+'</div></div>';box.insertBefore(el,box.firstChild);void el.offsetHeight;requestAnimationFrame(function(){el.classList.remove('n-enter');el.classList.add('n-show');});if(box.children.length>3){var lst=box.children[box.children.length-1];lst.classList.add('n-leave');setTimeout(function(){if(lst.parentNode)lst.parentNode.removeChild(lst);},560);} }
+  setInterval(rotate, 6500);
+})();
+(function(){ /* Konami → confetti */
+  var seq=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'],pr=0;
+  document.addEventListener('keydown',function(e){
+    var k=(e.key||'').toLowerCase()===seq[pr].toLowerCase()?e.key:e.key;
+    if((e.key===seq[pr])||((e.key||'').toLowerCase()===seq[pr].toLowerCase())){pr++;if(pr===seq.length){pr=0;jkConfetti();}}
+    else{pr=(e.key===seq[0])?1:0;}
+  });
+  function jkConfetti(){var cols=['#833AB4','#C13584','#E1306C','#F77737','#FCAF45'];
+    for(var i=0;i<90;i++){(function(i){var d=document.createElement('div');d.className='jk-confetti';d.style.left=(Math.random()*100)+'vw';d.style.background=cols[i%cols.length];d.style.animationDelay=(Math.random()*0.5)+'s';document.body.appendChild(d);setTimeout(function(){d.remove();},3300);})(i);}}
+})();
 </script>
 </body>
 </html>
