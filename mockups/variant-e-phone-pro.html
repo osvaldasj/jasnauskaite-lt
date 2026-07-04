@@ -273,11 +273,19 @@ button.chip-link{border:0;cursor:pointer;font-family:var(--sans)}
 .pl-mix .plm-track{height:3px;border-radius:2px;background:rgba(255,255,255,.16);overflow:hidden}
 .pl-mix .plm-track i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,#C13584,#E1306C,#F77737)}
 .pl-mix .plm-pct{text-align:right;font-family:var(--mono);font-size:10px;font-weight:600;color:#fff;opacity:.66;letter-spacing:.02em}
-.pl-yearline{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#fff;opacity:.6;margin:22px 0 8px}
-/* slim area sparkline */
-.pl-spark{max-width:300px}
-.pl-spark svg{display:block;width:100%;height:46px}
-.pl-spark-axis{display:flex;justify-content:space-between;margin-top:5px;font-family:var(--mono);font-size:9px;letter-spacing:.05em;color:#fff;opacity:.58}
+/* MILESTONES — vertikalus editorial sąrašas: IG-gradient taškas + plona
+   jungianti linija kairėje, mono metai/skaičius + sans tekstas, airy */
+.pl-miles{display:flex;flex-direction:column;max-width:300px}
+.plm-mile{position:relative;display:flex;align-items:baseline;gap:12px;padding:7px 0 7px 22px;color:#fff;text-decoration:none}
+.plm-mile::before{content:'';position:absolute;left:5px;top:0;bottom:0;width:1px;background:rgba(255,255,255,.22)}
+.plm-mile:first-child::before{top:50%}
+.plm-mile:last-child::before{bottom:50%}
+.plm-mile .plm-dot{position:absolute;left:1.5px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;
+  background:linear-gradient(135deg,#C13584,#E1306C,#F77737);box-shadow:0 0 0 2.5px rgba(255,255,255,.14)}
+.plm-mile b{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.02em;min-width:52px;text-shadow:0 1px 6px rgba(0,0,0,.45)}
+.plm-mile .plm-txt{font-size:12.5px;font-weight:500;opacity:.92}
+a.plm-mile .plm-txt::after{content:' ↗';font-size:10px;opacity:.65}
+a.plm-mile:hover b,a.plm-mile:focus-visible b{color:#F77737}
 /* refined top-posts spotlight — 3 kortelės eilėje */
 .pl-spot{display:flex;gap:10px;max-width:300px;margin-top:10px}
 .pl-spot .pls{position:relative;flex:1;aspect-ratio:3/4;border-radius:12px;overflow:hidden;pointer-events:auto;box-shadow:0 6px 20px -8px rgba(0,0,0,.6);outline:1px solid rgba(255,255,255,.08);transition:transform .25s,outline-color .2s}
@@ -478,6 +486,9 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
   border:1px solid var(--ink);border-radius:999px;padding:10px 22px;transition:all .2s}
 .row-link:hover{background:var(--ink);color:var(--paper)}
 .walls.mode-rows .wall-cap{display:none}
+/* rows režime View-all yra row-info'je (.row-link) — mini-phone footer mygtukas
+   dubliuotųsi, tad slepiam TIK čia (grid/shelf režimai savo mygtuką pasilieka) */
+.walls.mode-rows .mini-foot{display:none}
 .mini-phone{width:256px;border-radius:38px;background:#1B1B1D;padding:7px;position:relative;
   box-shadow:inset 0 0 0 1px #3a3a3c,0 18px 44px -14px rgba(0,0,0,.32);transition:transform .3s}
 .wall-unit:hover .mini-phone{transform:translateY(-6px)}
@@ -1072,38 +1083,31 @@ function pillarMixHTML(themeCounts){
       <span class="plm-pct">${Math.round(n/total*100)}%</span>
     </div>`).join('')}</div>`;
 }
-/* Slim filled-area sparkline iš postsPerYear — „N metų nuoseklumo" elegantiškai,
-   maža vizualinė svoris. SVG area + linija + metų galai. */
-function pillarSparklineHTML(postsPerYear){
-  const years = Object.keys(postsPerYear).map(Number).sort((a,b)=>a-b);
-  if (!years.length) return '';
-  const vals = years.map(y=>postsPerYear[y]);
-  const max = Math.max(...vals, 1);
-  const W = 300, H = 46, n = years.length;
-  const x = i => n<=1 ? 0 : (i/(n-1))*W;
-  const y = v => H - (v/max)*(H-6) - 2;
-  const pts = vals.map((v,i)=>[x(i), y(v)]);
-  const line = pts.map((p,i)=>`${i?'L':'M'}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ');
-  const area = `${line} L${W} ${H} L0 ${H} Z`;
-  const peakI = vals.indexOf(max);                 // piko taškas (daugiausiai postų)
-  const dots = pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${i===peakI?2.4:1.4}" fill="${i===peakI?'#fff':'rgba(255,255,255,.55)'}"/>`).join('');
-  const first = years[0], last = years[years.length-1];
-  const peakYear = years[peakI];
-  /* Aiškus label — ką rodo kreivė (postai per metus) + pikas, kad nebūtų „koks čia grafikas" */
-  const cap = `<div style="font:600 8px/1.3 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.58);margin-bottom:6px">Posts / year · peak ${max} in ${peakYear}</div>`;
-  return `<div class="pl-spark">
-    ${cap}
-    <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
-      <defs><linearGradient id="plspk" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#E1306C" stop-opacity=".42"/><stop offset="1" stop-color="#E1306C" stop-opacity="0"/>
-      </linearGradient></defs>
-      <path d="${area}" fill="url(#plspk)"/>
-      <path d="${line}" fill="none" stroke="url(#plspkline)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
-      <linearGradient id="plspkline" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#C13584"/><stop offset="1" stop-color="#F77737"/></linearGradient>
-      ${dots}
-    </svg>
-    <div class="pl-spark-axis"><span>${first}</span><span>${last}</span></div>
-  </div>`;
+/* MILESTONES — 3 redakcinės eilutės, sąžiningai iš pillarsData:
+   1) pirmas postas (min postsPerYear metai) · 2) didžiausi metai (peak count,
+   praleidžiama jei tik 1 metai) · 3) top reel (topItems[0].viewsFmt — metų
+   nerodome, item'e jų nėra; views IR YRA milestone'as, eilutė = linkas). */
+function pillarMilestonesHTML(c, pd){
+  const ppy = pd.postsPerYear || {};
+  const years = Object.keys(ppy).map(Number).sort((a,b)=>a-b);
+  const word = c.id === 'organic' ? '' : c.brand.toLowerCase();
+  const rows = [];
+  if (years.length){
+    rows.push({ k: years[0], t: c.id==='organic' ? 'first post' : `first ${word} post` });
+    if (years.length > 1){
+      const peak = years.reduce((a,y)=>ppy[y]>ppy[a]?y:a, years[0]);
+      rows.push({ k: peak, t: `biggest year — ${ppy[peak]} posts` });
+    }
+  }
+  const top = pd.topItems && pd.topItems[0];
+  if (top) rows.push({ k: top.viewsFmt, t: c.id==='organic' ? 'her biggest reel' : `her top ${word} reel`, href: top.permalink });
+  return `<div class="case-seclabel">Milestones</div>
+  <div class="pl-miles">${rows.map(r=>{
+    const inner = `<span class="plm-dot"></span><b>${r.k}</b><span class="plm-txt">${r.t}</span>`;
+    return r.href
+      ? `<a class="plm-mile" href="${r.href}" target="_blank" rel="noopener noreferrer">${inner}</a>`
+      : `<div class="plm-mile">${inner}</div>`;
+  }).join('')}</div>`;
 }
 /* Refined top-posts spotlight (2-3 kortelės) — elegantiškesnės nei brand spr */
 function pillarSpotHTML(topItems, reel){
@@ -1133,8 +1137,8 @@ function pillarBgFor(id){
   }
   return null;
 }
-/* Sudeda pillar slide 2 pagal tipą: organic → mix (hero) + sparkline;
-   single-theme → sparkline + top-posts spotlight. Foto fonas + editorial scrim. */
+/* Sudeda pillar slide 2 pagal tipą: organic → mix (hero) + milestones;
+   single-theme → milestones + top-posts spotlight. Foto fonas + editorial scrim. */
 function pillarSlide2(c, pd){
   const bgImg = pillarBgFor(c.id) || (pd.topItems && pd.topItems[0] && pd.topItems[0].thumb) || (c.wall[1] ? c.wall[1][0] : c.cover);
   const span = pd.spanYears || (pd.postsPerYear ? Object.keys(pd.postsPerYear).length : 0);
@@ -1144,10 +1148,9 @@ function pillarSlide2(c, pd){
       <div class="pl-head">What her audience<br>follows her for.</div>
       <div class="case-seclabel">Her feed by theme</div>
       ${pillarMixHTML(pd.themeCounts)}
-      <div class="pl-yearline">${span} years · one feed</div>
-      ${pillarSparklineHTML(pd.postsPerYear)}` };
+      ${pillarMilestonesHTML(c, pd)}` };
   }
-  /* single-theme pillar: sparkline (hero) + top-posts spotlight.
+  /* single-theme pillar: milestones (stuburas) + top-posts spotlight.
      Redakcinė antraštė per-pillar (natūrali kalba, ne „years of couple"). */
   const HEAD = {
     travel: 'years<br>on the road.',
@@ -1159,7 +1162,7 @@ function pillarSlide2(c, pd){
   return { img:bgImg, sharp:true, editorial:true, html:`
     <div class="case-kick">the throughline</div>
     <div class="pl-head" style="font-size:31px">${span} ${headTail}</div>
-    ${pillarSparklineHTML(pd.postsPerYear)}
+    ${pillarMilestonesHTML(c, pd)}
     <div class="case-seclabel" style="margin-top:22px">Career-defining posts</div>
     ${pillarSpotHTML((pd.topItems||[]).filter(t=>t.thumb!==bgImg), c.reel)}` };
 }
@@ -1189,25 +1192,28 @@ function slidesFor(c){
       <div class="case-minigrid">${(c.featured || c.wall).slice(0,9).map(w=>`<a class="mg" href="${w[2]||c.reel}" target="_blank" rel="noopener noreferrer" aria-label="Open post on Instagram"><img src="${w[0]}" alt="" loading="lazy">${w[3]?`<em class="${w[3]==='TRAVEL'?'trv':''}">${w[3]==='TRAVEL'?'✈ ':''}${w[3]}</em>`:''}<span>▶ ${w[1]}</span></a>`).join('')}</div>
       <button class="chip-link" data-unit="${c.id}">▦ view all ${(c.items && c.items.length) || c.wall.length} posts</button>` };
 
-  /* ── PILLAR case'ai — sk.1/3/4 palieku; sk.2 → editorial redesign ── */
+  /* ── PILLAR case'ai (3 skaidrės: stats → the work → gallery; takeaway
+     skaidrė pašalinta — jautėsi tuščia) ir brand case'ai be themeCounts
+     (partnerships agregatas / nehidratuoti curated — jiems lieka 4 su CTA) ── */
   if (isPillar || !c.themeCounts){
     const pd = (_brandCasesData && _brandCasesData.pillarsData && _brandCasesData.pillarsData[c.id]) || null;
     /* editorial sk.2 tik tikriems pillarams su pillarsData; kitaip senasis fallback */
     const slide2 = (isPillar && pd)
       ? pillarSlide2(c, pd)
       : { img:(c.wall[1] ? c.wall[1][0] : c.cover), html:`
-        <div class="case-kick">${isPillar?'her own audience':'the collaboration'}</div>
+        <div class="case-kick">${isPillar?'the work':'the collaboration'}</div>
         <div class="case-num" style="font-size:40px">${c.period}</div>
         ${rows(c.made)}` };
+    if (isPillar) return [slide1, slide2, slide3];
     return [
       slide1,
       slide2,
       slide3,
       { img:(c.wall[3] ? c.wall[3][0] : (c.wall[1] ? c.wall[1][0] : c.cover)), html:`
         <div class="case-kick">the takeaway</div>
-        <div class="case-num" style="font-size:34px">${isPillar?'Her own audience.':(c.id==='partnerships'?DATA.db.brandPartners+' brands and counting.':(c.repeat===true?'A repeat partner.':'A brand partner.'))}</div>
+        <div class="case-num" style="font-size:34px">${c.id==='partnerships'?DATA.db.brandPartners+' brands and counting.':(c.repeat===true?'A repeat partner.':'A brand partner.')}</div>
         <div class="case-sub">${c.period}</div>
-        <a class="chip-link" href="${isPillar?c.reel:'mailto:osvaldas@reelize.lt'}"${isPillar?' target="_blank" rel="noopener noreferrer"':''}>${isPillar?play+' see the full feed':'✦ start a campaign'}</a>` }
+        <a class="chip-link" href="mailto:osvaldas@reelize.lt">✦ start a campaign</a>` }
     ];
   }
 
@@ -1583,7 +1589,7 @@ DATA.cases.forEach(c=>{
       /* brendai = „brand campaign" (aiškiau nei IG žargonas); Partnerships agregatas
          (156 brendų) — be paantraštės, rodo tik „156 brands"; pillar'ai = „content pillar" */
       tagLine:isPillar?'content pillar':(c.id==='partnerships'?'':'brand campaign'),
-      kicker:isPillar?'Content pillar — her own audience':'Brand campaign',
+      kicker:isPillar?'Content pillar':'Brand campaign',
       handle:c.handle, posts:c.posts, views:c.views, er:c.er, top:c.top, reel:c.reel, wall:c.wall, isOrganic:c.id==='organic', isPillar});
   }
 });
