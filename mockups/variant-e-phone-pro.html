@@ -191,6 +191,11 @@ button{font-family:var(--sans);cursor:pointer}
 @keyframes cmZoom{from{transform:scale(1.16)}to{transform:scale(1)}}
 /* intro story — aštri pilno ekrano nuotrauka (be blur), subtilus ken-burns zoom */
 .case-media .cm-photo{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(1.05);transform:scale(1.02);animation:kenburns 8s ease-out forwards}
+/* editorial pillar sk.2 fonas — šaltinis 135×240 thumb: švelnus art-directed
+   backdrop (soft blur + zoom) vietoj aštraus pikselizuoto upscale. Intro story
+   (hi-res covers) lieka aštri — klasė dedama tik ne-intro editorial slide'ams. */
+.case-media .cm-photo.editorial{filter:blur(6px) saturate(1.08) brightness(.94);transform:scale(1.14);animation:kbSoft 8s ease-out forwards}
+@keyframes kbSoft{from{transform:scale(1.14)}to{transform:scale(1.2)}}
 /* aštri „reel kortelė" — rodoma mažesniu dydžiu, kur thumbnail'as atrodo ryškiai */
 .case-media .cm-card{position:absolute;top:15%;left:50%;transform:translateX(-50%);width:54%;aspect-ratio:9/16;
   object-fit:cover;border-radius:16px;box-shadow:0 20px 55px rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.14);
@@ -1095,10 +1100,29 @@ function pillarSpotHTML(topItems, reel){
       <span class="pls-v">${it.viewsFmt}</span>
     </a>`).join('')}</div>`;
 }
+/* Unikalus sk.2 fonas kiekvienam pillar'ui — deterministinis used-set algoritmas
+   (fiksuota PILLAR_IDS tvarka, nepriklauso nuo atidarymo eilės): fonui imamas
+   PIRMAS topItems narys, kurio thumb (a) nelygus TO case slide-1 cover'iui ir
+   (b) dar nepriskirtas ankstesnio pillar'o fonui. Fallback — topItems[0].
+   Su esamais duomenimis → 5 unikalūs fonai, nė vienas nesutampa su savo cover. */
+function pillarBgFor(id){
+  const claimed = new Set();
+  for (const pid of PILLAR_IDS){
+    const p  = _brandCasesData && _brandCasesData.pillarsData && _brandCasesData.pillarsData[pid];
+    const cc = DATA.cases.find(x=>x.id===pid);
+    const tops = (p && p.topItems) || [];
+    const hit  = tops.find(t => t.thumb && t.thumb !== (cc && cc.cover) && !claimed.has(t.thumb));
+    const pick = (hit && hit.thumb) || (tops[0] && tops[0].thumb)
+      || (cc && cc.wall && cc.wall[1] ? cc.wall[1][0] : (cc && cc.cover));
+    if (pid === id) return pick;
+    if (pick) claimed.add(pick);
+  }
+  return null;
+}
 /* Sudeda pillar slide 2 pagal tipą: organic → mix (hero) + sparkline;
    single-theme → sparkline + top-posts spotlight. Foto fonas + editorial scrim. */
 function pillarSlide2(c, pd){
-  const bgImg = (pd.topItems && pd.topItems[0] && pd.topItems[0].thumb) || (c.wall[1] ? c.wall[1][0] : c.cover);
+  const bgImg = pillarBgFor(c.id) || (pd.topItems && pd.topItems[0] && pd.topItems[0].thumb) || (c.wall[1] ? c.wall[1][0] : c.cover);
   const span = pd.spanYears || (pd.postsPerYear ? Object.keys(pd.postsPerYear).length : 0);
   if (c.id === 'organic'){
     return { img:bgImg, sharp:true, editorial:true, html:`
@@ -1123,7 +1147,7 @@ function pillarSlide2(c, pd){
     <div class="pl-head" style="font-size:31px">${span} ${headTail}</div>
     ${pillarSparklineHTML(pd.postsPerYear)}
     <div class="case-seclabel" style="margin-top:22px">Career-defining posts</div>
-    ${pillarSpotHTML(pd.topItems, c.reel)}` };
+    ${pillarSpotHTML((pd.topItems||[]).filter(t=>t.thumb!==bgImg), c.reel)}` };
 }
 
 function slidesFor(c){
@@ -1262,7 +1286,7 @@ function renderSlide(){
   /* intro story + editorial pillar sk.2 (sl.sharp) — aštri nuotrauka (cm-photo);
      kiti brand case'ai — blur'intas fonas (cm-bg) žemos raiškos thumbnail'ui paslėpti */
   const bg = (introMode || sl.sharp)
-    ? `<div class="cm-photo" style="background-image:url('${sl.img}')"></div>`
+    ? `<div class="cm-photo${(!introMode && sl.editorial) ? ' editorial' : ''}" style="background-image:url('${sl.img}')"></div>`
     : `<div class="cm-bg" style="background-image:url('${sl.img}')"></div>`;
   /* scrim: editorial pillar (sl.editorial) → rafinuotas (viršus kvėpuoja, apačia gilesnė);
      data-proof (sl.dark) → stiprus tamsus; kitaip — nieko (naudoja bendrą case-scrim) */
