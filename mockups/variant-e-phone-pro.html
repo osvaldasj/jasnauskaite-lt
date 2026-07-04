@@ -524,13 +524,22 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
 /* brand text wall */
 .brandwall{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:34px 12px;
   display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;column-gap:0;row-gap:14px;max-width:100%}
-.brandwall .bx{font:inherit;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap;display:inline-flex;align-items:baseline;text-decoration:none;transition:color .15s,transform .12s;border:0;background:none;padding:0;margin:0;cursor:pointer}
+/* tap target: padding išplečia hit-area iki ~44px aukščio; neigiamas vertikalus
+   margin kompensuoja layout'ą — vizualus tankis nesikeičia (B10) */
+.brandwall .bx{font:inherit;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap;display:inline-flex;align-items:baseline;text-decoration:none;transition:color .15s,transform .12s;border:0;background:none;padding:14px 3px;margin:-14px 0;cursor:pointer}
 .brandwall .bx b{color:var(--ink);font-weight:600}
 .brandwall .bx:hover,.brandwall .bx:focus-visible{color:var(--ig-b);outline:none}
 .brandwall .bx:hover b,.brandwall .bx:focus-visible b{color:var(--ig-b)}
 .brandwall .bx:active{transform:translateY(.5px)}
 .brandwall .bx::after{content:'·';margin:0 14px;color:#c9c4ba}
 .brandwall .bx:last-child::after{content:none;margin:0}
+/* touch affordance (B10): desktop turi :hover spalvą, touch — dotted underline
+   + hint eilutė po antrašte (desktop'e paslėpta) */
+.bw-hint{display:none}
+@media (hover:none){
+  .brandwall .bx{text-decoration:underline dotted;text-underline-offset:4px;text-decoration-color:#c9c4ba}
+  .bw-hint{display:inline}
+}
 
 /* contact */
 .contact-band{text-align:center;padding:110px 40px 70px}
@@ -569,7 +578,12 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
   section.band{padding:60px 18px}
 }
 @media (max-width:560px){
-  .site-nav{gap:14px}
+  /* header telpa iki 360px: wordmark nelūžta į 2 eilutes, visos 4 nuorodos
+     matomos ir paspaudžiamos (B12) */
+  .site-head{padding:12px 12px}
+  .wordmark{font-size:11px;letter-spacing:.04em;white-space:nowrap}
+  .site-nav{gap:9px}
+  .site-nav a{font-size:9.5px;letter-spacing:.08em}
   .phone{width:330px}
 }
 
@@ -760,7 +774,7 @@ html,body{overflow-x:hidden;max-width:100vw}
 
 <!-- ================= BRAND WALL ================= -->
 <section class="band" id="brands">
-  <div class="band-head"><span class="klabel">Nº 03</span><h2>Trusted by <span id="brandsCount"></span></h2></div>
+  <div class="band-head"><span class="klabel">Nº 03</span><h2>Trusted by <span id="brandsCount"></span></h2><span class="klabel bw-hint">tap a brand to open its case</span></div>
   <div class="brandwall" id="brandwall"></div>
   <p style="text-align:center;max-width:660px;margin:26px auto 0;font-size:13.5px;line-height:1.55;color:var(--ink-soft)"><b style="color:var(--ink)">Every one with a published post.</b> Many more brands live only in stories — gone in 24 hours, and never counted here. The real number is higher.</p>
 </section>
@@ -1306,7 +1320,12 @@ function startTimer(){
     prog += TICK;
     const f = caseBars.children[slideIdx] && caseBars.children[slideIdx].firstElementChild;
     if (f) f.style.width = Math.min(100, prog/SLIDE_MS*100) + '%';
-    if (prog >= SLIDE_MS) next();
+    if (prog >= SLIDE_MS){
+      /* paskutinė skaidrė (CTA) — NEBE auto-close: timeris sustoja, progress
+         lieka pilnas. Uždarymas — X / Escape / manual tap dešinėn. */
+      if (slideIdx >= activeSlides().length - 1) stopTimer();
+      else next();
+    }
   }, TICK);
 }
 function stopTimer(){ if (timer){ clearInterval(timer); timer = null; } }
@@ -1690,8 +1709,9 @@ function openPostsPopup(u){
   }
   pp2Grid.scrollTop = 0;
   postsPop.classList.add('show');
+  if (cur) paused = true;                       // story timeris pauzuojamas po popup'u
 }
-function closePostsPopup(){ postsPop.classList.remove('show'); }
+function closePostsPopup(){ postsPop.classList.remove('show'); if (cur) paused = false; }
 document.getElementById('pp2X').addEventListener('click', closePostsPopup);
 document.getElementById('pp2Backdrop').addEventListener('click', closePostsPopup);
 /* „View all" mygtukai → posts popup (event delegation) */
@@ -1845,8 +1865,9 @@ function openEmailPop(addr){
   epMail.textContent = a; epOpen.href = 'mailto:' + a;
   epCopy.textContent = 'Copy email'; epCopy.classList.remove('done');
   emailPop.classList.add('show');
+  if (cur) paused = true;                       // story timeris pauzuojamas po popup'u
 }
-function closeEmailPop(){ emailPop.classList.remove('show'); }
+function closeEmailPop(){ emailPop.classList.remove('show'); if (cur) paused = false; }
 document.getElementById('epX').addEventListener('click', closeEmailPop);
 document.getElementById('epBackdrop').addEventListener('click', closeEmailPop);
 epCopy.addEventListener('click', ()=>{
