@@ -1129,12 +1129,17 @@ function pillarSlide2(c, pd){
 function slidesFor(c){
   const rows = a => `<div class="case-rows">${a.map(p=>`<div class="cr"><b>${p[0]}</b><span>${p[1]}</span></div>`).join('')}</div>`;
   const isPillar = PILLAR_IDS.includes(c.id);
-  /* ER omittama kai reikšmės nėra (per mažai views patikimam ER) */
-  const erPart = (c.er==null || c.er==='—' || c.er==='') ? '' : ` · ER ${c.er}`;
-  /* chip: pillar → CONTENT PILLAR; repeat brand → REPEAT PARTNER; kitas brand → BRAND PARTNER */
+  /* ER omittama kai reikšmės nėra (per mažai views patikimam ER) ARBA virš
+     ER_CEILING (outlier/giveaway — ta pati politika kaip sk.4 showER) */
+  const erVal = (c.erNum != null) ? c.erNum : parseFloat(c.er);
+  const erPart = (c.er==null || c.er==='—' || c.er==='' || (isFinite(erVal) && erVal > ER_CEILING)) ? '' : ` · ER ${c.er}`;
+  /* chip: pillar → CONTENT PILLAR; partnerships agregatas → N BRANDS;
+     repeat===true (iš DB) → REPEAT PARTNER; kitaip (false/undefined) → BRAND PARTNER */
   const chip = isPillar
     ? '<span class="chip zero">🌱 CONTENT PILLAR</span>'
-    : (c.repeat!==false ? '<span class="chip alt">REPEAT PARTNER</span>' : '<span class="chip alt">BRAND PARTNER</span>');
+    : (c.id==='partnerships'
+        ? `<span class="chip alt">${DATA.db.brandPartners} BRANDS</span>`
+        : (c.repeat===true ? '<span class="chip alt">REPEAT PARTNER</span>' : '<span class="chip alt">BRAND PARTNER</span>'));
   /* SLIDE 1 (stats) ir SLIDE 3 (gallery) — bendri visiems */
   const slide1 = { img:c.cover, html:`
       <div class="case-num">${c.views}</div>
@@ -1162,7 +1167,7 @@ function slidesFor(c){
       slide3,
       { img:(c.wall[3] ? c.wall[3][0] : (c.wall[1] ? c.wall[1][0] : c.cover)), html:`
         <div class="case-kick">the takeaway</div>
-        <div class="case-num" style="font-size:34px">${isPillar?'Her own audience.':(c.repeat!==false?'A repeat partner.':'A brand partner.')}</div>
+        <div class="case-num" style="font-size:34px">${isPillar?'Her own audience.':(c.id==='partnerships'?DATA.db.brandPartners+' brands and counting.':(c.repeat===true?'A repeat partner.':'A brand partner.'))}</div>
         <div class="case-sub">${c.period}</div>
         <a class="chip-link" href="${isPillar?c.reel:'mailto:osvaldas@reelize.lt'}"${isPillar?' target="_blank" rel="noopener noreferrer"':''}>${isPillar?play+' see the full feed':'✦ start a campaign'}</a>` }
     ];
@@ -1339,7 +1344,7 @@ function buildCaseFromJson(jc){
   const made = [];
   made.push([String(jc.posts), jc.posts === 1 ? 'post' : 'posts']);
   if (jc.viewsFmt) made.push([jc.viewsFmt, 'views']);
-  if (jc.er != null) made.push([jc.er + '%', 'ER']);
+  if (jc.er != null && jc.er <= ER_CEILING) made.push([jc.er + '%', 'ER']);
   return {
     id: jc.slug, brand: jc.brand,
     handle: '@' + jc.slug, posts: jc.posts,
@@ -1367,6 +1372,7 @@ function hydrateCaseFromJson(c, jc){
   if (c.postsPerYear == null && jc.postsPerYear) c.postsPerYear = jc.postsPerYear;
   if (c.spanYears == null && jc.spanYears != null) c.spanYears = jc.spanYears;
   if (c.erNum == null && jc.er != null) c.erNum = jc.er;
+  if (c.repeat == null && jc.repeat != null) c.repeat = !!jc.repeat;  // chip/takeaway iš DB flag'o
   if (c.items && c.items.length) return;              // items jau yra → tik proof-data virš
   const items = jc.items || [];
   if (!items.length) return;                          // nėra ką grupuoti → paliekam flat wall
