@@ -1,18 +1,10 @@
-User-agent: *
+User-Agent: *
 Allow: /
 
-# AI crawlers welcome
-User-agent: GPTBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Google-Extended
+User-Agent: GPTBot
+User-Agent: ClaudeBot
+User-Agent: PerplexityBot
+User-Agent: Google-Extended
 Allow: /
 
 Sitemap: https://jasnauskaite.lt/sitemap.xml
-LLMs: https://jasnauskaite.lt/llms.txt

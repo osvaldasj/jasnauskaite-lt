@@ -1,63 +1,143 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://jasnauskaite.lt/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://jasnauskaite.lt/links/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://jasnauskaite.lt/insights/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://jasnauskaite.lt/insights/creative-freedom-better-results/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://jasnauskaite.lt/insights/long-term-vs-one-off-partnerships/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://jasnauskaite.lt/insights/what-creators-want-from-brands/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://jasnauskaite.lt/insights/mistakes-brands-make-with-creators/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://jasnauskaite.lt/insights/how-to-measure-influencer-marketing-roi/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://jasnauskaite.lt/insights/how-to-write-creator-brief/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://jasnauskaite.lt/insights/reels-vs-tiktok-vs-stories-brand-guide/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<url>
+<loc>https://jasnauskaite.lt/</loc>
+<lastmod>2026-10-04</lastmod>
+<changefreq>weekly</changefreq>
+<priority>1</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/links/</loc>
+<lastmod>2026-10-04</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/insights/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/" />
+<lastmod>2026-03-26</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/lt/insights/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/" />
+<lastmod>2026-03-26</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/insights/creative-freedom-better-results/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/creative-freedom-better-results/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/creative-freedom-better-results/" />
+<lastmod>2026-03-25</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/insights/long-term-vs-one-off-partnerships/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/long-term-vs-one-off-partnerships/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/long-term-vs-one-off-partnerships/" />
+<lastmod>2026-03-25</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/insights/what-creators-want-from-brands/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/what-creators-want-from-brands/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/what-creators-want-from-brands/" />
+<lastmod>2026-03-25</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/insights/mistakes-brands-make-with-creators/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/mistakes-brands-make-with-creators/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/mistakes-brands-make-with-creators/" />
+<lastmod>2026-03-25</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/insights/how-to-measure-influencer-marketing-roi/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/how-to-measure-influencer-marketing-roi/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/how-to-measure-influencer-marketing-roi/" />
+<lastmod>2026-03-26</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/insights/how-to-write-creator-brief/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/how-to-write-creator-brief/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/how-to-write-creator-brief/" />
+<lastmod>2026-03-26</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/insights/reels-vs-tiktok-vs-stories-brand-guide/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/reels-vs-tiktok-vs-stories-brand-guide/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/reels-vs-tiktok-vs-stories-brand-guide/" />
+<lastmod>2026-03-26</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/lt/insights/creative-freedom-better-results/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/creative-freedom-better-results/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/creative-freedom-better-results/" />
+<lastmod>2026-03-25</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/lt/insights/long-term-vs-one-off-partnerships/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/long-term-vs-one-off-partnerships/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/long-term-vs-one-off-partnerships/" />
+<lastmod>2026-03-25</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/lt/insights/what-creators-want-from-brands/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/what-creators-want-from-brands/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/what-creators-want-from-brands/" />
+<lastmod>2026-03-25</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/lt/insights/mistakes-brands-make-with-creators/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/mistakes-brands-make-with-creators/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/mistakes-brands-make-with-creators/" />
+<lastmod>2026-03-25</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/lt/insights/how-to-measure-influencer-marketing-roi/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/how-to-measure-influencer-marketing-roi/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/how-to-measure-influencer-marketing-roi/" />
+<lastmod>2026-03-26</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/lt/insights/how-to-write-creator-brief/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/how-to-write-creator-brief/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/how-to-write-creator-brief/" />
+<lastmod>2026-03-26</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://jasnauskaite.lt/lt/insights/reels-vs-tiktok-vs-stories-brand-guide/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://jasnauskaite.lt/insights/reels-vs-tiktok-vs-stories-brand-guide/" />
+<xhtml:link rel="alternate" hreflang="lt" href="https://jasnauskaite.lt/lt/insights/reels-vs-tiktok-vs-stories-brand-guide/" />
+<lastmod>2026-03-26</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
+</url>
 </urlset>

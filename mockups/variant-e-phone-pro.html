@@ -562,6 +562,11 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
 .cpill{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--ink);border-radius:999px;padding:12px 26px;transition:all .2s}
 .cpill:hover{background:var(--ink);color:var(--paper)}
 .foot{padding:30px;text-align:center;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);border-top:1px solid var(--hair)}
+.foot p{margin:0}
+.foot-ins{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;margin:0 auto 18px;max-width:900px}
+.foot-ins a{color:var(--ink-soft);transition:color .2s;padding:6px 0}
+.foot-ins a:hover{color:var(--ink)}
+.foot-ins-h{color:var(--ink);padding:6px 0}
 
 /* ============ RESPONSIVE ============ */
 @media (max-width:1023px){
@@ -593,6 +598,8 @@ section.band{max-width:1360px;margin:0 auto;padding:90px 40px}
      matomos ir paspaudžiamos (B12) */
   .site-head{padding:12px 12px}
   .wordmark{font-size:11px;letter-spacing:.04em;white-space:nowrap}
+  /* 5 nuorodos netelpa šalia wordmark: Numbers sekcija vis tiek iškart po header */
+  .site-nav a[href="#numbers"]{display:none}
   .site-nav{gap:9px}
   .site-nav a{font-size:9.5px;letter-spacing:.08em}
   .phone{width:330px}
@@ -629,6 +636,7 @@ html,body{overflow-x:hidden;max-width:100vw}
   <nav class="site-nav" aria-label="Site">
     <a href="#work">Work</a>
     <a href="#numbers">Numbers</a>
+    <a href="/insights/">Insights</a>
     <a class="nav-links" href="/links/">Links</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -800,7 +808,17 @@ html,body{overflow-x:hidden;max-width:100vw}
     <a class="cpill" href="/links/">All links →</a>
   </div>
 </section>
-<footer class="foot">© 2026 jasnauskaite.lt — Vilnius, Lithuania</footer>
+<footer class="foot">
+  <nav class="foot-ins" aria-label="Insights">
+    <span class="foot-ins-h">Insights</span>
+    <a href="/insights/how-to-measure-influencer-marketing-roi/">Measuring influencer ROI</a>
+    <a href="/insights/how-to-write-creator-brief/">Writing a creator brief</a>
+    <a href="/insights/reels-vs-tiktok-vs-stories-brand-guide/">Reels vs TikTok vs Stories</a>
+    <a href="/insights/">All insights →</a>
+    <a href="/lt/insights/" hreflang="lt" lang="lt">Įžvalgos LT →</a>
+  </nav>
+  <p>© 2026 jasnauskaite.lt — Vilnius, Lithuania</p>
+</footer>
 
 <!-- ================= EMAIL POPUP ================= -->
 <div class="email-pop" id="emailPop" role="dialog" aria-modal="true" aria-label="Contact Inidė">
